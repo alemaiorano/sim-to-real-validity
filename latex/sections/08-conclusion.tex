@@ -1,0 +1,17 @@
+\section{Conclusion}
+
+We tested whether persona-based copy simulation predicts how a real audience ranks
+marketing copy, using the Upworthy A/B-test archive as held-out ground truth, and whether the
+persona machinery helps at all. Two findings stand out. First, ground-truth reliability is the
+binding constraint: most A/B tests lack a statistically distinguishable winner, so validity can
+only be assessed on the reliable subset. Second---counter to the premise of persona
+simulation---conditioning on personas \emph{degrades} predictive validity: a no-persona zero-shot
+ranker achieves a medium-sized rank correlation ($\tau=\baseTau{}$) and \baseTopOne{} top-1
+accuracy, while the demographically grounded ten-persona panel reaches only $\tau=\kendallTau{}$
+and \topOneAcc{}, with non-overlapping confidence intervals. For predicting aggregate engagement,
+the lesson is to query the model's population-level prior directly rather than role-play specific
+personas. This does not rule out personas for goals where heterogeneity matters (segmentation,
+qualitative objection-finding), but for ranking copy by expected clicks they are, today, worse
+than not using them. The artifact-first replication package makes every number reproducible, and
+the protocol---reliability filtering, construct-matched elicitation, and a no-persona
+baseline---transfers to stronger ground truth and to other copy domains.

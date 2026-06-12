@@ -1,0 +1,68 @@
+\section{Experimental Setup}
+\label{sec:setup}
+
+\paragraph{Corpus.}
+We use the exploratory split of the Upworthy Research Archive~\citep{matiasUpworthy}. Rows are
+grouped into packages (A/B tests) by test id; within a package we aggregate impressions and
+clicks per \emph{distinct headline}, since variants that differ only by image cannot be
+distinguished by a text-only simulator. We keep packages with $\geq 2$ distinct headlines and
+$\geq 3{,}000$ impressions per headline-variant, the latter for click-through reliability in
+online controlled experiments~\citep{kohavi2009controlled}. This yields \sensNVariants{} eligible
+variants across \sensNPackages{} A/B tests; the corpus is locked with a content hash and never re-hosted.
+
+\paragraph{Ground-truth reliability filtering.}
+Within-package click-through differences are often tiny and statistically indistinguishable from
+noise; validating a predictor against a noisy label is ill-posed. We therefore mark a package as
+having a \emph{reliable winner} when its top-CTR headline significantly beats the runner-up by a
+one-sided two-proportion $z$-test ($p<0.05$). The \textbf{primary analysis} uses the
+reliable-winner packages ($n=\nPackages{}$); a \textbf{sensitivity analysis} reports all
+predicted packages. This filters on ground-truth reliability, \emph{not} on effect direction, so
+it does not bias the validity estimate.
+
+\paragraph{Metrics.}
+Ranking agreement is measured \emph{within} each package by top-1 winner accuracy, Kendall's
+$\tau$~\citep{kendall1938}, and Spearman's $\rho$~\citep{spearman1904}, aggregated across
+packages with $95\%$ percentile bootstrap confidence intervals ($10{,}000$ resamples over
+packages, seed $42$)~\citep{efron1979bootstrap}. The top-1 baseline is the expected accuracy of
+random guessing given each package's variant count. We additionally report a decision-relevant
+metric---the \emph{fraction of achievable CTR lift captured} by the top-1 pick (0 = picks the
+worst variant, 1 = the real best)---since a copy tool is ultimately judged by the click-through it
+secures, not only by rank correlation.
+
+\paragraph{Replication and robustness.}
+Beyond the primary (exploratory) split we replicate on two further independent Upworthy splits
+(holdout, confirmatory) and on two further platforms/domains: MIND news (2019, grouped by
+subcategory) and Reddit title reposts (2008--12, same image and subreddit, different titles). The
+same reliable-winner filter (one-sided two-proportion $z$-test on the per-variant outcome rate) is
+applied to every dataset---click-through for Upworthy and MIND, upvote ratio for Reddit. We also
+probe prompt sensitivity with a third-person persona framing and a reworded baseline.
+
+\paragraph{Power and effect-size thresholds.}
+Following Cohen~\citep{cohen1988power}, we pre-register $\tau,\rho \geq 0.10$ (with a CI excluding
+zero) as the bar for a meaningful effect. A power analysis ($\alpha{=}0.05$, power$=0.80$) gives
+the required package counts: $n{=}347$ to detect $\rho{=}0.15$ and $n{=}663$ to detect the
+observed top-1 margin. Using all eligible packages supplies $n=\nPackages{}$ reliable packages,
+which powers the rank-correlation claim around $\rho{\approx}0.15$; we therefore report top-1
+accuracy as an under-powered secondary outcome rather than over-claiming.
+
+\paragraph{No-persona baseline.}
+To isolate the marginal value of persona conditioning, we run a baseline that removes the
+demographic disaggregation: a single generic ``typical U.S.\ social-media news reader in 2014''
+prompt with no demographic profile---equivalently, one \emph{aggregate} (population-level)
+persona---scored and aggregated identically to the panel. For a fair comparison it
+receives the same per-variant query budget as the panel ($P{\times}D=30$ samples per variant, here
+as $30$ draws of the single prompt).
+
+\paragraph{Model selection.}
+A pilot compared \texttt{gemini-3.1-flash-lite}, \texttt{gemini-2.5-flash}, and
+\texttt{gemini-3.5-flash} on a common subset; their validity confidence intervals were mutually
+overlapping (statistically indistinguishable), so we select the cheapest and fastest,
+\texttt{gemini-3.1-flash-lite}, for the full study.
+
+\paragraph{Reproducibility and replication.}
+All randomness is seeded (corpus sampling, bootstrap, and LLM generation; seeds in
+Appendix~\ref{sec:appendix}). The primary estimate averages $D{=}3$ Monte~Carlo draws (distinct
+seeds) per persona, because a seed-stability check showed single-seed rank estimates vary by
+$\approx \stabTauSD{}$ in $\tau$---non-trivial relative to the effect size; the
+sensitivity-only (non-reliable) packages use a single draw. Predictions are written
+incrementally to a per-observation checkpoint, making runs crash-safe and resumable.

@@ -1,0 +1,36 @@
+% Sim-to-real protocol diagram (self-contained TikZ; no external data).
+% figure* spans both columns; resizebox keeps the horizontal pipeline within \textwidth.
+\begin{figure*}[t]
+  \centering
+  \resizebox{0.92\textwidth}{!}{%
+  \begin{tikzpicture}[
+    font=\footnotesize,
+    box/.style={draw, rounded corners, align=center, inner sep=5pt, minimum height=10mm, minimum width=22mm},
+    data/.style={box, fill=green!8},
+    proc/.style={box, fill=blue!6},
+    res/.style={box, fill=gray!8},
+    >=Stealth, node distance=8mm and 14mm,
+  ]
+    \node[data] (arch) {Upworthy A/B archive\\\scriptsize(headline variants,\\\scriptsize real click-through)};
+    \node[proc, right=of arch] (filt) {Reliability filter\\\scriptsize(significant winner,\\\scriptsize two-proportion $z$)};
+    \node[data, right=of filt] (rel) {Reliable\\packages};
+    \node[proc, above right=4mm and 16mm of rel] (panel) {Persona panel\\\scriptsize(10, Pew-grounded)};
+    \node[proc, below right=4mm and 16mm of rel] (base) {No-persona\\\scriptsize zero-shot baseline};
+    \coordinate (fork) at ($(panel.east)!0.5!(base.east)$);
+    \node[res, right=12mm of fork, anchor=west] (score) {Click-intent\\\scriptsize$\to$ within-package\\\scriptsize ranking};
+    \node[res, right=of score] (val) {Validity vs.\ real CTR\\\scriptsize($\tau$, $\rho$, top-1;\\\scriptsize bootstrap CI)};
+
+    \draw[->] (arch) -- (filt);
+    \draw[->] (filt) -- (rel);
+    \draw[->] (rel.east) -- (panel.west);
+    \draw[->] (rel.east) -- (base.west);
+    \draw[->] (panel.east) -- (score.north west);
+    \draw[->] (base.east) -- (score.south west);
+    \draw[->] (score) -- (val);
+  \end{tikzpicture}%
+  }
+  \caption{The sim-to-real validity protocol. Real A/B tests are filtered to those with a
+  statistically reliable winner; the persona panel and a no-persona baseline each score the
+  variants, which are ranked within each package and compared to the real click-through ordering.}
+  \label{fig:protocol}
+\end{figure*}

@@ -1,0 +1,33 @@
+# LaTeX build artifacts
+latex/*.aux
+latex/*.bbl
+latex/*.blg
+latex/*.log
+latex/*.out
+latex/*.synctex.gz
+latex/sections/*.aux
+# but DO version the compiled paper PDF (camera-ready artifact)
+!latex/main.pdf
+
+# Local Python env
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+
+# Regenerable intermediate artifacts (reproducible from scripts; not redistributed)
+data/sim_predictions.jsonl
+data/joined.csv
+data/predictions/
+
+# Raw third-party corpora — downloaded locally, never re-hosted (see DATA_SOURCES.md)
+data/upworthy_raw/
+data/mind_raw/
+data/reddit_raw/
+# Locked corpus JSONs (large, fully regenerable from raw via the ingest scripts; manifests kept)
+datasets/*-subset-*.json
+datasets/*-confirmatory-*.json
+datasets/*-holdout-*.json
+!datasets/*.manifest.json

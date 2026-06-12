@@ -1,0 +1,80 @@
+\section{Discussion and Threats to Validity}
+\label{sec:discussion}
+
+\paragraph{Why persona conditioning hurts.}
+The base model, asked directly, holds a usable population-level prior on what gets clicked---
+plausibly because clickability patterns are abundant in its pretraining data. Conditioning on a
+specific persona (``you are a 68-year-old retiree\ldots'') reframes the task as first-person
+role-play, which substitutes an idiosyncratic, stereotyped guess for that prior; averaging across
+a ten-persona panel does not recover it, because each response is biased rather than merely noisy
+---a caricature effect documented for LLM persona simulations~\citep{cheng2023compost}, where
+persona conditioning can surface implicit bias and degrade performance on objective
+tasks~\citep{gupta2024bias}. Seen another way, our no-persona baseline is itself a single
+\emph{aggregate} persona (a ``typical reader''); the finding is then that \emph{disaggregating}
+the audience into a demographic panel hurts an \emph{aggregate} prediction task---each
+disaggregated draw adds role-play bias without adding signal the aggregate query lacks.
+Empirically this is what we see: the panel's scores are no less spread within a package than the
+baseline's (within-package SD \personaSpreadSD{} vs.\ \baseSpreadSD{}), so personas err by
+\emph{systematic mis-ordering}, not indecision. In \nBaseRightPersonaWrong{} of \eaNPackages{}
+reliable packages the baseline ranks the true winner first while the panel does not; these are
+typically curiosity-gap or feel-good headlines (Appendix, Table~\ref{tab:error_examples}).
+This is consistent with silicon-sampling working best for \emph{distributional} questions about
+populations~\citep{argyleSiliconSampling} while underperforming for a \emph{point} prediction of
+aggregate engagement, where the unconditioned prior is the better estimator. It also aligns with
+independent reports that personas in prompts do not improve---and can
+degrade---performance~\citep{zheng2024helpful}, and that the persona effect is small and scales
+with the persona--outcome correlation~\citep{hu2024persona}. The latter predicts our
+domain-dependence (Section~\ref{sec:results}): the baseline's advantage is large on controlled
+copy A/B tests and shrinks where persona-relevant variance is lower.
+
+\paragraph{Construct validity (RQ3).}
+We elicit a \emph{click-intent} signal matched to the benchmark's engagement (click-through)
+outcome, and claim relative ranking rather than absolute CTR~\citep{cronbach1955construct}. A
+residual construct gap remains---headlines are editorial, and a \emph{stated} click-intent is not
+identical to \emph{revealed} clicking---which bounds the achievable validity and plausibly
+contributes to the small effect size. Tools that instead elicit a purchase- or conversion-intent
+construct would face an even wider gap to a click outcome; matching the elicited construct to the
+measured outcome is itself a design lesson.
+
+\paragraph{Statistical-conclusion validity.}
+An initial small-sample pilot overestimated the effect---roughly double the powered estimate---and
+at the full sample it falls to $\tau=\kendallTau{}$, a cautionary instance of small-sample
+optimism. We pre-registered
+effect-size thresholds and report bootstrap CIs and seed-stability (SD $=\stabTauSD{}$ in $\tau$)
+to make the weakness of the effect explicit. Top-1 accuracy is under-powered and reported as
+secondary.
+
+\paragraph{External validity and temporal mismatch.}
+Evidence is from English-language editorial headlines circa 2013--2015, whereas the LLM was
+trained on a later and broader slice of the web. This temporal gap cuts both ways: the model may
+have absorbed post-2015 clickbait conventions that inflate the no-persona baseline, or it may
+have ingested the Upworthy archive itself. We cannot fully rule out either, and flag it as a
+threat; a contemporaneous benchmark would isolate it. Generalisation to marketing landing-page or
+ad copy, other languages, and current audiences likewise requires further ground truth
+(live deployment outcomes or a human panel), which we leave to future work.
+
+\paragraph{Internal validity.}
+Model, temperature, and all seeds are pinned and recorded per prediction; the persona panel is
+derived from the benchmark audience~\citep{holcomb2013newsuse} rather than internal personas to
+avoid authoring bias (Appendix~\ref{sec:appendix}). A model comparison found the result stable
+across three model tiers (Table~\ref{tab:model_comparison}).
+
+\paragraph{Design choices not exhausted.}
+Our estimate fixes one elicitation prompt and one panel size. The aggregation rule, by contrast,
+is no longer a free parameter: a sweep over six rules---including median, rank-fusion (Borda), and
+pairwise majority (Condorcet)---leaves the conclusion intact (Table~\ref{tab:h5agg}, RQ3), and
+locates the failure in genuine persona mis-ordering rather than the pooling step. Richer
+psychographic personas, chain-of-thought elicitation, and larger panels could still shift the
+effect; we report a single well-controlled configuration and leave a sensitivity sweep over those
+remaining choices to future work. The failure is not specific to the Gemini family: re-running the
+full protocol on a different family (OpenAI \xfModel{}) reproduces it on all \xfN{} reliable-winner
+packages---the no-persona baseline again outranks the persona panel (Kendall $\tau$ \xfBaselineTau{}
+vs.\ \xfPersonaTau{}; top-1 \xfBaselineTop{} vs.\ \xfPersonaTop{}), and the paired per-package
+baseline$-$panel gap is significant in both metrics ($\tau$ gap \xfGapTau{}, 95\% CI
+$[\xfGapTauCILow{}, \xfGapTauCIHigh{}]$; top-1 gap \xfGapTopPP{}pp, 95\% CI $[\xfGapTopPPCILow{},
+\xfGapTopPPCIHigh{}]$; both exclude $0$). Effective persona adoption is therefore not simply an
+emergent capability the tested tiers lack: a larger frontier model from an unrelated family fails the
+same way. Whether \emph{any} model configuration makes persona conditioning beneficial for this
+task remains open.
+The companion baseline (Section~\ref{sec:results}) isolates the value of persona conditioning
+against a no-persona zero-shot ranker.

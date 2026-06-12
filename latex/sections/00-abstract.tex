@@ -1,0 +1,27 @@
+% Abstract — every number is a macro from variables.tex (auto-generated). No raw digits.
+\begin{abstract}
+Marketers increasingly use large language models (LLMs) as ``synthetic personas'' to predict how
+an audience will react to a piece of copy before it ships, encouraged by evidence that
+profile-conditioned LLMs can mimic human samples~\citep{argyleSiliconSampling}. But is that
+prediction actually valid against real behaviour---and does the persona machinery help? We present
+a sim-to-real validity study using the Upworthy Research Archive~\citep{matiasUpworthy}---thousands
+of headline A/B tests in which real readers were shown competing variants and their clicks
+recorded---as held-out ground truth. We compare a ten-persona panel, grounded in the real
+audience's demographics~\citep{holcomb2013newsuse}, against a no-persona zero-shot baseline that
+simply asks the model how likely a typical reader is to click. Two findings stand out. First,
+\textbf{ground-truth reliability is the binding constraint}: most A/B tests have no statistically
+distinguishable winner~\citep{kohavi2009controlled}, so validity can only be measured on the
+reliable subset ($n=\nPackages{}$). Second, and counter to the persona-simulation premise,
+\textbf{persona conditioning degrades predictive validity}: the no-persona baseline ranks variants
+markedly better (Kendall $\tau=\baseTau{}$, a medium effect; top-1 accuracy \baseTopOne{}) than the
+persona panel ($\tau=\kendallTau{}$; top-1 \topOneAcc{}), with non-overlapping confidence
+intervals. Asking the model directly taps an accurate population-level prior on what gets clicked,
+whereas forcing it to role-play specific personas injects bias and noise. The result replicates
+across three independent Upworthy splits and holds in direction on a different-domain, more-recent
+news dataset, and is robust to seed, prompt phrasing, and model choice---it holds across three
+Gemini tiers and reproduces on a different model family (OpenAI gpt-4.1) with a significant paired
+gap. The practical takeaway:
+for predicting aggregate engagement, a plain LLM ranker beats persona simulation---synthetic
+personas are not merely a weak predictor, they are worse than not using them. All numbers are
+regenerated from a public, artifact-first replication package.
+\end{abstract}

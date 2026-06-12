@@ -1,0 +1,12 @@
+{
+  "source": "SNAP Reddit submissions (Lakkaraju et al., ICWSM 2013)",
+  "source_sha256": "c1c4459adb8e7a680ca34e720bca7ad5860eb35bc3f89844c5a2f27c7809a6d2",
+  "lock_date": "2026-06-04",
+  "min_votes": 300,
+  "outcome": "upvote ratio up/(up+down); winner via one-sided two-proportion z (p<0.05)",
+  "grouping": "image_id x subreddit (content+community held constant; title varies)",
+  "n_packages": 7332,
+  "n_packages_significant_winner": 5393,
+  "n_variants": 19918,
+  "corpus_sha256": "963cec43177a99569bfba79f87cb6c7cda4b9e345f49f644e64e773629986c1c"
+}

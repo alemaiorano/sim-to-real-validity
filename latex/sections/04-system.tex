@@ -1,0 +1,44 @@
+\section{Method Under Test}
+\label{sec:system}
+
+We evaluate persona-based copy simulation as a \emph{method}, instantiated as a controlled
+research harness rather than any specific deployed product: given a piece of copy and an audience,
+the harness instantiates a panel of synthetic personas and elicits each persona's reaction, then
+aggregates these into a ranking. We make the instantiation fully explicit (personas, prompt, and
+aggregation below) so the result is attributable to the technique, not to an opaque product
+configuration. The harness and all its inputs are released in the replication package.
+
+\paragraph{Persona panel.}
+The panel is a fixed, versioned set of $P=10$ personas (Appendix~\ref{sec:appendix}). To avoid
+authoring bias, the personas are authored from public demographics rather than reused from any
+product; they are constructed to represent the real Upworthy-era audience---U.S.\ social-media news consumers
+circa 2013--2015---using the demographic structure reported by Pew
+Research~\citep{holcomb2013newsuse} (age, gender, and platform mix, e.g.\ Facebook news
+consumers skewing female and Twitter news consumers skewing younger). Each persona is a short
+natural-language profile (age band, gender, primary platform, news-engagement level, and a
+behavioural description).
+
+\paragraph{Elicitation and the predicted score.}
+For each headline variant and each persona we query an instruction-tuned LLM
+(\texttt{gemini-3.1-flash-lite}; selected by the model comparison in Section~\ref{sec:setup}),
+conditioning on the persona profile and asking, in the persona's voice, how likely they are to
+click the headline. The model returns a structured \texttt{click\_intent} value in $[0,1]$.
+
+Crucially, the \textbf{predicted score} we evaluate is this \emph{click-intent}, aggregated by the
+\textbf{arithmetic mean} over the panel (and over Monte~Carlo draws):
+\[
+\texttt{pred\_score}(v) \;=\; \frac{1}{P D}\sum_{i=1}^{P}\sum_{d=1}^{D} \texttt{click\_intent}_{i,d}(v).
+\]
+We use the simple mean for interpretability; alternative aggregations (median, rank fusion) are a
+sensitivity dimension we leave to future work (Section~\ref{sec:discussion}). We elicit
+click-intent directly because the benchmark outcome is click-through (engagement); the construct
+alignment and its limits are analysed in Section~\ref{sec:discussion}. Within a package, variants
+are ranked by \texttt{pred\_score}; the no-persona baseline (Section~\ref{sec:setup}) uses the
+identical scoring and aggregation with a single generic reader and no demographic conditioning.
+
+\paragraph{Sampling and reproducibility.}
+Generation uses temperature $0.8$ (the simulator's robust-sampling setting) with a fixed seed
+forwarded to the model; each Monte~Carlo draw uses a distinct seed, and every prediction record
+stores the model id, seed, temperature, draw count, and panel size for provenance. The reported
+primary estimate averages $D{=}3$ draws per persona to control seed-level sampling noise
+(Section~\ref{sec:setup}).

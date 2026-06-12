@@ -1,0 +1,41 @@
+\section{Related Work}
+
+\paragraph{LLMs as proxies for human populations.}
+A growing body of work uses language models conditioned on demographic or attitudinal profiles
+to approximate human samples---``silicon sampling''~\citep{argyleSiliconSampling}---and surveys
+the promise and limits of LLMs as tools for computational social science~\citep{ziems2024css}.
+The evidence, however, is mixed. On the supportive side, profile-conditioned models can reproduce
+aggregate survey \emph{distributions}~\citep{argyleSiliconSampling}, and agents grounded in a
+two-hour interview \emph{per person} replicate that individual's survey responses at $\approx$85\% of
+the person's own two-week test--retest reliability~\citep{park2024agents}---though both successes are
+on \emph{stated attitudes}, and the latter buys its fidelity with rich per-person grounding rather
+than the cheap demographic profile we test. On the cautionary side,
+LLM ``survey responses'' latch onto spurious option ordering rather than
+meaning~\citep{dominguezolmedo2024questioning}; persona variables explain less than 10\% of the
+variance in subjective annotation and help only when the persona--outcome correlation is
+strong~\citep{hu2024persona}; assigning personas can surface biases and \emph{degrade}
+performance on objective tasks~\citep{zheng2024helpful}; and persona simulations tend toward
+\emph{caricature}~\citep{cheng2023compost}; and ad-hoc persona \emph{generation} itself injects
+systematic bias, with election and survey forecasts deviating from real
+outcomes~\citep{li2025personacatch}. Our work contributes a direct sim-to-real
+\emph{validity} test against measured real-world behaviour (not survey distributions), and—unlike
+prior work focused on accuracy or annotation—isolates the marginal effect of persona conditioning
+with a no-persona baseline on a copy-ranking task.
+
+\paragraph{The Upworthy archive and headline performance.}
+The Upworthy Research Archive~\citep{matiasUpworthy} has supported large-scale analyses of what
+makes headlines succeed; for example, negativity in headlines increases consumption at
+scale~\citep{robertson2023negativity}. These works model \emph{aggregate} drivers of clicks; we
+instead use the archive as a held-out benchmark to test whether an external persona-based
+simulator can \emph{predict} the within-test winner. Most directly, concurrent work on the same
+archive~\citep{ye2024lola} reports that pure-LLM headline prediction (prompting, embeddings,
+fine-tuning) only marginally beats random; our results refine this picture by showing that
+\emph{after} filtering to A/B tests with a reliable winner, a no-persona LLM ranker is in fact a
+medium-strength predictor---and that adding personas erases this. The finding that personas can
+introduce harmful bias echoes work on LLM simulations producing
+\emph{caricatures}~\citep{cheng2023compost}.
+
+\paragraph{Construct validity and effect sizes.}
+We frame the intent-vs-engagement mismatch using the classical construct-validity
+framework~\citep{cronbach1955construct} and pre-register effect-size thresholds following
+Cohen~\citep{cohen1988power}.
