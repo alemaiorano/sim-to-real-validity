@@ -2,15 +2,15 @@
 \begin{abstract}
 Marketers increasingly use large language models (LLMs) as ``synthetic personas'' to predict how
 an audience will react to a piece of copy before it ships, encouraged by evidence that
-profile-conditioned LLMs can mimic human samples~\citep{argyleSiliconSampling}. But is that
+profile-conditioned LLMs can mimic human samples. But is that
 prediction actually valid against real behaviour---and does the persona machinery help? We present
-a sim-to-real validity study using the Upworthy Research Archive~\citep{matiasUpworthy}---thousands
+a sim-to-real validity study using the Upworthy Research Archive---thousands
 of headline A/B tests in which real readers were shown competing variants and their clicks
 recorded---as held-out ground truth. We compare a ten-persona panel, grounded in the real
-audience's demographics~\citep{holcomb2013newsuse}, against a no-persona zero-shot baseline that
+audience's demographics, against a no-persona zero-shot baseline that
 simply asks the model how likely a typical reader is to click. Two findings stand out. First,
 \textbf{ground-truth reliability is the binding constraint}: most A/B tests have no statistically
-distinguishable winner~\citep{kohavi2009controlled}, so validity can only be measured on the
+distinguishable winner, so validity can only be measured on the
 reliable subset ($n=\nPackages{}$). Second, and counter to the persona-simulation premise,
 \textbf{persona conditioning degrades predictive validity}: the no-persona baseline ranks variants
 markedly better (Kendall $\tau=\baseTau{}$, a medium effect; top-1 accuracy \baseTopOne{}) than the
