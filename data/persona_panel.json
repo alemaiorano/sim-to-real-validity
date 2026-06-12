@@ -1,0 +1,26 @@
+{
+  "_doc": "Persona panel for the sim-to-real study. Demographics anchored to Pew Research (Holcomb, Gottfried, Mitchell 2013, 'News Use Across Social Media Platforms', n=5173 US adults) — the Upworthy-era audience. Cited as holcomb2013newsuse. Panel is FIXED and versioned for replicability; the same panel is applied to every package. NOT derived from internal product personas (authoring-bias control).",
+  "_version": "1.0",
+  "_grounding": {
+    "source": "holcomb2013newsuse",
+    "facts_used": [
+      "~half of Facebook and Twitter users get news there; Facebook is the largest news gateway",
+      "Twitter news consumers skew younger than Facebook",
+      "Facebook news consumers more likely female than YouTube/Twitter/LinkedIn",
+      "social news consumers are mobile-heavy",
+      "platform mix spans Facebook, Twitter, YouTube, with smaller LinkedIn/Reddit"
+    ]
+  },
+  "personas": [
+    {"id": "p01", "age_group": "18-29", "gender": "female", "platform": "Facebook", "news_engagement": "incidental", "political_lean": "left", "description": "29-year-old woman, scrolls Facebook on her phone during breaks; clicks human-interest and feel-good stories shared by friends; rarely seeks news directly."},
+    {"id": "p02", "age_group": "18-29", "gender": "male", "platform": "Twitter", "news_engagement": "active", "political_lean": "left", "description": "24-year-old man, heavy Twitter user, follows journalists and culture accounts; clicks surprising or contrarian takes; low tolerance for clickbait he's seen before."},
+    {"id": "p03", "age_group": "30-49", "gender": "female", "platform": "Facebook", "news_engagement": "incidental", "political_lean": "moderate", "description": "38-year-old working mother, checks Facebook in the evening; drawn to headlines about family, health, and local impact; shares uplifting or outrage-inducing stories."},
+    {"id": "p04", "age_group": "30-49", "gender": "male", "platform": "Reddit", "news_engagement": "active", "political_lean": "moderate", "description": "41-year-old man, browses Reddit and Facebook; skeptical of sensational headlines, clicks when a headline promises concrete information or a strong narrative payoff."},
+    {"id": "p05", "age_group": "50-64", "gender": "female", "platform": "Facebook", "news_engagement": "incidental", "political_lean": "left", "description": "57-year-old woman, mostly on Facebook; clicks emotionally resonant stories and anything about social causes she follows; less drawn to internet-slang headlines."},
+    {"id": "p06", "age_group": "50-64", "gender": "male", "platform": "Facebook", "news_engagement": "moderate", "political_lean": "right", "description": "60-year-old man, reads news on Facebook and cable; clicks political and economic headlines, distrusts overtly hyped 'you won't believe' framing."},
+    {"id": "p07", "age_group": "18-29", "gender": "female", "platform": "YouTube", "news_engagement": "incidental", "political_lean": "left", "description": "22-year-old college student, video-first, on YouTube and Instagram; clicks visually evocative or identity-relevant headlines; very sensitive to authenticity."},
+    {"id": "p08", "age_group": "30-49", "gender": "male", "platform": "Facebook", "news_engagement": "incidental", "political_lean": "left", "description": "45-year-old man, casual Facebook user; clicks curiosity-gap headlines that promise a quick interesting fact, especially maps, lists, and 'what happened next' stories."},
+    {"id": "p09", "age_group": "65+", "gender": "female", "platform": "Facebook", "news_engagement": "moderate", "political_lean": "moderate", "description": "68-year-old retiree, active on Facebook with family; clicks heartwarming, nostalgic, or cause-driven stories; avoids headlines that feel like tricks."},
+    {"id": "p10", "age_group": "30-49", "gender": "female", "platform": "Twitter", "news_engagement": "active", "political_lean": "left", "description": "34-year-old professional, follows news and advocacy on Twitter; clicks data-driven or justice-oriented angles; fatigued by repetitive viral formats."}
+  ]
+}

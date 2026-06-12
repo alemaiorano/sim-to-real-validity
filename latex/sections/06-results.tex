@@ -1,0 +1,111 @@
+\section{Results}
+\label{sec:results}
+
+\paragraph{Ground-truth reliability is the binding constraint.}
+Of the \sensNPackages{} eligible packages, only \nPackages{} (\reliableFraction{}) have a
+statistically reliable within-package winner (Figure~\ref{fig:reliability}).
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.92\linewidth]{figures/reliability.pdf}
+  \caption{Distribution of the one-sided $p$-value for the top-vs-runner-up CTR difference across
+  the eligible A/B tests. Only the tests to the left of the dashed cutoff have a statistically
+  reliable winner; the rest cannot be predicted by construction.}
+  \label{fig:reliability}
+\end{figure} In the remainder the real click-through difference is indistinguishable
+from noise, so no predictor can recover the ordering by construction. The primary analysis is
+therefore restricted to the \nPackages{} reliable packages.
+
+\paragraph{Personas vs.\ a no-persona baseline (RQ1).}
+Table~\ref{tab:validity} reports within-package ranking agreement (Section~\ref{sec:framework})
+on the reliable packages for both methods. The headline result is that \emph{persona conditioning
+hurts}. The no-persona zero-shot baseline ranks variants well---Kendall $\tau=\baseTau{}$ (95\% CI
+[\baseTauCILow{}, \baseTauCIHigh{}]), a medium effect by Cohen's
+conventions~\citep{cohen1988power}, with top-1 accuracy \baseTopOne{} (95\% CI
+[\baseTopOneCILow{}, \baseTopOneCIHigh{}]) against a random baseline of \randomTopOne{}. The
+ten-persona panel is far weaker: $\tau=\kendallTau{}$ (95\% CI
+[\kendallTauCILow{}, \kendallTauCIHigh{}]) and top-1 \topOneAcc{}, with confidence intervals that
+do not overlap the baseline's on any metric (Figure~\ref{fig:comparison}). Persona conditioning
+thus does not merely fail to help---it actively degrades a usable signal that the base model
+already has.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.92\linewidth]{figures/comparison.pdf}
+  \caption{Headline result: the no-persona baseline outperforms the persona panel on every
+  metric, with non-overlapping 95\% bootstrap CIs, on the reliable-winner packages.}
+  \label{fig:comparison}
+\end{figure}
+
+\paragraph{The persona panel in isolation.}
+Considered on its own, the panel's predictive validity is weak but statistically significant
+($\tau$ and $\rho$ CIs exclude zero), at or below Cohen's small-effect threshold. Its top-1 CI
+includes the random baseline, so it does not reliably pick the single best variant; it is, if
+anything, slightly better at flagging the \emph{worst} variant (\bottomOneAcc{}) than the best
+(\topOneAcc{}), detecting clearly weak copy more readily than winners.
+
+\input{tables/validity}
+
+\paragraph{Sensitivity analysis.}
+Including all \sensNPackages{} predicted packages (i.e.\ without the reliability filter) the
+effect is weaker but remains significant ($\tau=\sensKendallTau{}$, 95\% CI
+[\sensKendallTauCILow{}, \sensKendallTauCIHigh{}]; $\rho=\sensSpearmanRho{}$), as expected when
+noisy-label packages are added.
+
+\paragraph{Does validity track signal strength? (RQ2).}
+Across \hThreeN{} packages spanning the full range of ground-truth signal strength, stronger
+real effects are associated with slightly higher top-1 success (Spearman $\hThreeTopOne{}$, 95\%
+CI [\hThreeTopOneCILow{}, \hThreeTopOneCIHigh{}]), while the association with the full
+rank-correlation is null. The simulator captures a small amount of signal that surfaces mainly
+when the real effect is large.
+
+\paragraph{Replication across datasets and a different domain (RQ3).}
+The finding replicates. Table~\ref{tab:replication} repeats the comparison on three independent
+Upworthy splits and on a different-domain, more-recent dataset (MIND news, 2019). On all three
+Upworthy A/B splits the no-persona baseline beats the persona panel by a large, consistent
+margin (Kendall $\tau$ gap between \repGapMin{} and \repGapMax{}); the powered confirmatory split
+($n=\confNPackages{}$) gives the cleanest contrast ($\tau=\confBaselineTau{}$ baseline vs.\
+$\confPersonaTau{}$ persona). On MIND---where ``packages'' compare \emph{different} articles
+within a topic rather than headline variants of one story---the direction is the same but the gap
+is small ($\mindGap{}$), as expected when persona-relevant variance is lower. A boundary case is
+Reddit title reposts (same image, different titles): there upvotes are dominated by posting time
+and visibility rather than the title, \emph{neither} method predicts the outcome (both
+$\tau\approx0$), and the gap vanishes---the baseline's advantage appears only where the outcome is
+actually predictable from the copy. We also report a
+decision-relevant metric, the fraction of achievable CTR lift captured by the top-1 pick: the
+baseline captures more than the panel in every dataset (Table~\ref{tab:replication}).
+\input{tables/replication}
+
+\paragraph{Robustness: seed and model (RQ3).}
+On a 100-package subset re-run under three seeds, top-1 accuracy is highly stable
+(SD $=\stabTopOneSD{}$) while the rank coefficient varies by SD $=\stabTauSD{}$ in $\tau$---
+non-trivial relative to the effect size, which is why the primary estimate averages multiple
+draws. The persona-vs-baseline gap is also consistent across model tiers: on all three
+\texttt{gemini} models the no-persona baseline beats the persona panel
+(Table~\ref{tab:cross_model_gap}), so ``personas hurt'' is not an artefact of a single model. Nor
+is it a prompt artefact: a third-person persona framing and a reworded baseline leave both sides
+essentially unchanged---the persona panel stays weak under either framing and the baseline stays
+strong---so the gap is not driven by the specific wording of either prompt.
+
+\paragraph{The reported gap is a conservative lower bound.}
+The baseline is \emph{less} granular than the panel: on \baseTieRate{} of packages all its
+variants receive an identical score and the top-1 pick is a tie, broken arbitrarily. This barely
+moves the metric (baseline top-1 \baseTopOne{} under arbitrary tie-breaking vs.\ \baseTopOneFair{}
+under fair $1/k$ tie credit), and on the non-tied packages the baseline reaches
+\baseTopOneNonDegen{}. Because ties drag the baseline's score down,
+the persona-vs-baseline gap we report is, if anything, an \emph{under}-estimate of the baseline's
+true advantage.
+
+\paragraph{Robustness: aggregation rule (RQ3).}
+The primary estimate pools the panel with an arithmetic mean; to rule out that the result is an
+artefact of this one choice, we re-aggregate the \emph{same} per-persona observations under six
+rules (Table~\ref{tab:h5agg}). None recovers baseline validity---every persona configuration's
+$\tau$ confidence interval lies entirely below the baseline. Two patterns are informative. First,
+the panel median lifts $\tau$ above the panel mean (Table~\ref{tab:h5agg}),
+so the mean is partly dragged by a skewed per-persona score distribution---yet even this best case
+remains far below the baseline. Second, rank-fusion (Borda) and pairwise majority (Condorcet),
+which discard score \emph{levels} and use only each persona's \emph{ordering}, land at
+$\tau\!\approx\!0.08$, no better than the mean; per-persona $z$-normalisation does not help either.
+The failure therefore lies in genuine mis-ordering by the personas, not in per-persona scale or
+offset that a smarter pooling rule could correct.
+\input{tables/h5_aggregation}

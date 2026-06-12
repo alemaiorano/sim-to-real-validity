@@ -1,0 +1,25 @@
+\section{Sim-to-Real Validity Framework}
+\label{sec:framework}
+
+\paragraph{Setup.}
+Figure~\ref{fig:protocol} summarises the protocol. A \emph{package} is an A/B test containing two
+or more copy \emph{variants} shown to the same real audience; each variant $v$ has an observed
+click-through rate $\mathrm{CTR}(v)$ and a simulator-predicted score $\texttt{pred\_score}(v)$
+(Section~\ref{sec:system}).
+\input{figures/protocol} Because variants
+within a package share an audience, the package defines a controlled comparison.
+
+\paragraph{Why ranking, not absolute CTR.}
+We evaluate \emph{within-package ranking} rather than absolute CTR for two reasons. First, CTR
+levels vary across packages for reasons unrelated to copy (topic, timing, audience), so only the
+within-package contrast is attributable to the copy. Second, the simulator's score and the
+benchmark outcome are different constructs (intent vs.\ engagement; Section~\ref{sec:discussion}),
+so a ranking criterion is robust to scale and calibration differences. Concretely, a useful
+copy simulator need not predict the CTR number---it needs to order candidate variants the way
+the real audience does.
+
+\paragraph{Metrics.}
+For each package we compare the CTR ordering and the \texttt{pred\_score} ordering with: top-1
+winner accuracy (did the predicted best variant match the real best), Kendall's
+$\tau$~\citep{kendall1938}, and Spearman's $\rho$~\citep{spearman1904}. Package-level values are
+aggregated across packages with bootstrap confidence intervals (Section~\ref{sec:setup}).

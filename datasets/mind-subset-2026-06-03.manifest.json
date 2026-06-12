@@ -1,0 +1,13 @@
+{
+  "source": "MIND (Microsoft News Dataset, Nov 2019) via HF jchoi0406/MINDNews",
+  "source_sha256": "19e1e182c3335abea01305cdac97865828f561d6e58d38a870101e855cc248d0",
+  "lock_date": "2026-06-03",
+  "seed": 42,
+  "min_impressions": 200,
+  "max_variants_per_pkg": 10,
+  "grouping": "by news subcategory (topic-controlled); compares different articles (caveat)",
+  "n_packages": 125,
+  "n_packages_significant_winner": 74,
+  "n_variants": 922,
+  "corpus_sha256": "103c3822a169bb8bcdcdb7b6bcee53ce575cb357411a9d097a0afb78228ac47b"
+}

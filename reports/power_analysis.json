@@ -1,0 +1,26 @@
+{
+  "alpha": 0.05,
+  "power": 0.8,
+  "effect_thresholds_cohen1988": {
+    "small": 0.1,
+    "medium": 0.3,
+    "large": 0.5
+  },
+  "n_required_correlation": {
+    "r=0.1": 783,
+    "r=0.15": 347,
+    "r=0.2": 194,
+    "r=0.3": 85
+  },
+  "n_required_top1_vs_baseline": {
+    "p0=0.312,p1=0.363 (observed +5.1pp)": 663,
+    "p0=0.312,p1=0.412 (+10pp)": 175,
+    "p0=0.312,p1=0.462 (+15pp)": 79
+  },
+  "current_primary_n_significant": 124,
+  "available_in_full_eligible_pool": {
+    "eligible_packages": 1695,
+    "significant_winner_packages": 399,
+    "significant_rate": 0.235
+  }
+}

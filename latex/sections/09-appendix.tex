@@ -1,0 +1,70 @@
+\section{Persona Panel, Prompt, and Reproducibility Details}
+\label{sec:appendix}
+
+\paragraph{Persona panel and how it was constructed.}
+The panel is $P{=}10$ fixed personas. They were authored from aggregate demographics by a
+deterministic, documented procedure rather than ad hoc, to limit authorial bias:
+(i) we took the audience descriptors reported by Pew for U.S.\ social-media news consumers in the
+Upworthy era~\citep{holcomb2013newsuse}---age band, gender, primary platform (Facebook, Twitter,
+YouTube, Reddit), and news-engagement level (incidental/moderate/active);
+(ii) we allocated the ten persona slots to cover this joint space in rough proportion to the
+reported population (e.g.\ Facebook as the dominant news gateway, Twitter news consumers skewing
+younger, Facebook news consumers skewing female);
+(iii) for each cell we wrote a single behavioural sentence describing \emph{clicking} tendencies,
+deliberately avoiding brand-specific content; the panel is authored from public demographics and
+is not reused from any product. The complete, versioned panel ships in the replication package
+(\texttt{data/persona\_panel.json}) with the grounding facts recorded inline; the procedure is
+fully specified there so the panel can be regenerated or extended. We treat persona
+\emph{psychographics} (beyond demographics) as out of scope and a direction for future work.
+
+\paragraph{Elicitation prompt (verbatim template).}
+\begin{quote}\small
+You are simulating a specific person reacting to a news headline on social media in 2014.\\
+Person: \{persona description\} (age \{band\}, \{gender\}, mainly on \{platform\}, news
+engagement: \{level\}).\\
+Headline: ``\{headline\}''\\
+As this exact person, how likely are you to click this headline? Respond ONLY with JSON:
+\{"click\_intent": <number between 0 and 1>\}.
+\end{quote}
+
+\paragraph{Predicted score.}
+$\texttt{pred\_score}(v)=\frac{1}{P D}\sum_{i,d}\texttt{click\_intent}_{i,d}(v)$ over $P$
+personas and $D$ draws. Variants are ranked by \texttt{pred\_score} within each package.
+
+\paragraph{Seeds.}
+Corpus sampling seed $42$; bootstrap seed $42$ ($10{,}000$ resamples); LLM generation seed
+$42{+}d$ for draw $d$ (forwarded to the model's \texttt{generationConfig}). Each prediction
+record stores model id, seed, temperature ($0.8$), draw count, and panel size.
+
+\paragraph{Coverage and parse failures.}
+LLM JSON parse failures are rare ($<1\%$ of calls) and retried; a package enters the metrics only
+when \emph{all} its variants are scored (matching the primary join), so no package is ever ranked
+from partial coverage. Per-persona draws that fail are simply averaged over the remaining draws.
+
+\paragraph{Ground-truth reliability test.}
+A package has a reliable winner when its top-CTR headline beats the runner-up by a one-sided
+two-proportion $z$-test at $p<0.05$~\citep{kohavi2009controlled}. \reliableFraction{} of eligible
+A/B tests pass this filter.
+
+\paragraph{Model comparison (pilot).}
+Table~\ref{tab:model_comparison} reports the pilot that motivated the model choice: three
+\texttt{gemini} tiers on a common subset, with overlapping validity intervals.
+\input{tables/model_comparison}
+
+\paragraph{Cross-model robustness.}
+Table~\ref{tab:cross_model_gap} shows the persona-vs-baseline gap on all three model tiers; the
+baseline wins on every one. All runs disable model thinking (\texttt{thinkingBudget}=0): the task
+is a single scalar rating, and \texttt{flash-lite} performs no thinking by default, so this makes
+the configuration explicit and the comparison fair and inexpensive.
+\input{tables/cross_model_gap}
+
+\paragraph{Full persona panel.}
+Table~\ref{tab:persona_panel} lists the ten personas; full behavioural descriptions ship in the
+replication package (\texttt{data/persona\_panel.json}).
+\input{tables/persona_panel}
+
+\paragraph{Error-analysis examples.}
+Table~\ref{tab:error_examples} shows real winning headlines the no-persona baseline ranked first
+but the panel did not, illustrating the systematic mis-ordering discussed in
+Section~\ref{sec:discussion}.
+\input{tables/error_examples}

@@ -1,0 +1,6 @@
+# Verification-grade reproduction (regenerate tables/figures/variables from reports/) needs only:
+numpy>=1.24
+matplotlib>=3.7
+# No SciPy: Spearman/Kendall/top-1 and bootstrap CIs are computed directly in compute_validity.py.
+# The deep tier (run_predictions.py) additionally calls the Gemini REST API via the stdlib
+# (urllib) and needs GEMINI_API_KEY in the environment — no extra Python package required.

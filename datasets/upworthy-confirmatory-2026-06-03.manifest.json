@@ -1,0 +1,16 @@
+{
+  "source": "Upworthy Research Archive (Matias et al., Scientific Data 2021)",
+  "source_doi": "10.1038/s41597-021-00934-7",
+  "source_sha256": "b2a88288c88f2b67d40413c9bdbebe79a1c0b5d9a9354180549f59f3bfff685f",
+  "lock_date": "2026-06-03",
+  "seed": 42,
+  "min_variants_per_package": 2,
+  "min_impressions": 3000,
+  "sample_packages": 0,
+  "n_packages": 7994,
+  "n_packages_significant_winner": 1866,
+  "n_variants": 33347,
+  "winner_significance_test": "two-proportion z-test, top vs runner-up, one-sided p<0.05 (kohavi2009controlled)",
+  "corpus_file": "upworthy-confirmatory-2026-06-03.json",
+  "corpus_sha256": "aae212fb7697c37d11e290f963391f3d3c610406727fbe055e4605e4b6b8083e"
+}

@@ -1,0 +1,8 @@
+{
+  "dataset": "upworthy-exploratory (primary, significant-winner)",
+  "n_packages": 398,
+  "tie_rate": 0.1784,
+  "top1_arbitrary_tiebreak": 0.4925,
+  "top1_fair_tiebreak": 0.5002,
+  "top1_non_degenerate": 0.5291
+}

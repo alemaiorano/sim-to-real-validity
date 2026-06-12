@@ -1,0 +1,101 @@
+{
+  "n_packages": 398,
+  "discriminativeness_within_pkg_sd": {
+    "baseline_mean_sd": 0.0538,
+    "persona_mean_sd": 0.0543,
+    "interpretation": "lower SD = scores compressed = less discriminative"
+  },
+  "n_baseline_right_persona_wrong": 126,
+  "examples": [
+    {
+      "package_id": "5149261ecb477300020089c4",
+      "winner_headline": "Bookmark This For When You\u2019re Sad And Instantly Be 100 Times Happier",
+      "winner_real_ctr": 0.0138,
+      "n_variants": 4
+    },
+    {
+      "package_id": "5149eb48b245f00002007fdd",
+      "winner_headline": "10 Amazing International Photos That Will Give You Some Perspective",
+      "winner_real_ctr": 0.0192,
+      "n_variants": 4
+    },
+    {
+      "package_id": "516e6a39f91cf00002018bfb",
+      "winner_headline": "If You Saw Someone Bullying A Kid For Being Gay Would You Speak Out? Me Too. Except On Fri",
+      "winner_real_ctr": 0.0111,
+      "n_variants": 2
+    },
+    {
+      "package_id": "5171a7135f5c190002027134",
+      "winner_headline": "If You Watch Hilary Swank Annoy A Whiny Senator, $1 Will Go To Punching Malaria In The Fac",
+      "winner_real_ctr": 0.0167,
+      "n_variants": 3
+    },
+    {
+      "package_id": "51ac00840f1cc5189f00116d",
+      "winner_headline": "Seven Wonderful People Share Secrets That Are Killing Them.  This Could Change Your Life.",
+      "winner_real_ctr": 0.0199,
+      "n_variants": 4
+    },
+    {
+      "package_id": "51ae2eb8983cae9d69002b3b",
+      "winner_headline": "A 9-Year-Old Asks McDonald\u2019s CEO A Simple Question. She\u2019s Not Lovin\u2019 His Response.",
+      "winner_real_ctr": 0.0323,
+      "n_variants": 4
+    },
+    {
+      "package_id": "51aebbebd8dd72f1fa001b39",
+      "winner_headline": "Did These Words Really Come Out Of Conan's Mouth?",
+      "winner_real_ctr": 0.0445,
+      "n_variants": 3
+    },
+    {
+      "package_id": "51ba68ce112e93f2c9003535",
+      "winner_headline": "We Use This Word So Often We Probably Don't Realize We're Saying It. Who Knew It Could Hur",
+      "winner_real_ctr": 0.0168,
+      "n_variants": 4
+    },
+    {
+      "package_id": "51baa594968c9215f2005e20",
+      "winner_headline": "Did You Know You Can Go For A Swim In Google Earth?",
+      "winner_real_ctr": 0.0088,
+      "n_variants": 3
+    },
+    {
+      "package_id": "51c8cc33bd57ec06e200319e",
+      "winner_headline": "Cookie Monster Is In Jail? I'm Actually Really Happy About The Reason Why.",
+      "winner_real_ctr": 0.023,
+      "n_variants": 4
+    },
+    {
+      "package_id": "51ca3c71c20728a83d0006d2",
+      "winner_headline": "These Facts Scare The Crap Out Of Me. And They Should Scare The Crap Out Of You, Too.",
+      "winner_real_ctr": 0.0132,
+      "n_variants": 4
+    },
+    {
+      "package_id": "51cb818726349f6404002e6f",
+      "winner_headline": "After You Watch Ellen's Wedding Video, You''ll Wonder, 'What's Law Got To Do With It?'",
+      "winner_real_ctr": 0.0243,
+      "n_variants": 4
+    },
+    {
+      "package_id": "51e55bcae8433e8be700681c",
+      "winner_headline": "When His Sister Died He Received Some Money. Watch What He Used It For.",
+      "winner_real_ctr": 0.0239,
+      "n_variants": 2
+    },
+    {
+      "package_id": "521f6da54268583a4e0007f5",
+      "winner_headline": "What If The Women In Your Life Had No Choice But To Keep Having Babies, Even If It Killed ",
+      "winner_real_ctr": 0.0305,
+      "n_variants": 2
+    },
+    {
+      "package_id": "522bb141721078606d0001cf",
+      "winner_headline": "Half Of Us Perform This Illegal Act After We Graduate College. It's Really Not OK.",
+      "winner_real_ctr": 0.074,
+      "n_variants": 3
+    }
+  ]
+}

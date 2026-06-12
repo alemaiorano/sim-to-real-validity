@@ -1,0 +1,13 @@
+claim,paper_location,supporting_artifact
+"Persona panel predictive validity is weak (Kendall tau=0.084, top-1 34.6%) on the reliable subset (n=399)","Abstract; Section 6 (Results); Table validity","latex/tables/validity.tex; reports/correlation.json"
+"No-persona baseline ranks variants markedly better (tau=0.361, top-1 49.2%) with non-overlapping CIs","Abstract; Section 6; Table validity","latex/tables/validity.tex; reports/correlation.json; reports/baseline_comparison.json"
+"Ground-truth reliability is the binding constraint: most A/B tests have no distinguishable winner","Section 5 (Setup); Section 6","datasets/upworthy-subset-2026-06-03.manifest.json; reports/correlation.json"
+"Intent-vs-engagement construct gap (RQ2): product intent proxy is a worse CTR predictor than direct click-intent","Section 6; Section 7 (Discussion, threats to validity)","reports/correlation.json; reports/h003.json"
+"Result replicates across three independent Upworthy splits and holds in direction on MIND (cross-domain)","Section 6 (Replication); Table replication","latex/tables/replication.tex; reports/replication.json"
+"Robust to seed, prompt phrasing, and model choice across three Gemini tiers","Section 6; Table model_comparison / cross_model_gap","latex/tables/model_comparison.tex; latex/tables/cross_model_gap.tex; reports/cross_model_gap.json; reports/stability.json; reports/pilot_model_comparison.json"
+"Reproduces on a different model family (OpenAI gpt-4.1) with a significant paired gap (baseline tau=0.300, top-1 49.1%)","Section 6 (cross-family)","reports/crossfamily_gpt41.json; reports/cross_model_gap.json"
+"Where the simulator mis-ranks: error analysis of objections vs CTR","Section 6; Table error_examples","latex/tables/error_examples.tex; reports/error_analysis.json"
+"Baseline ties handling does not drive the gap (robustness)","Section 6; Section 7","reports/baseline_ties.json"
+"Aggregation/panel-size (H5) analysis","Section 6 / Appendix; Table h5_aggregation","latex/tables/h5_aggregation.tex; reports/h5_aggregation.json; reports/h5_aggregation.csv; reports/h5_aggregation_report.md"
+"Sample-size / power justification for the reliable-subset design","Section 5; Appendix","reports/power_analysis.json"
+"Fixed ten-persona panel grounded in Upworthy-era audience demographics (Holcomb 2013); not reused from any product","Section 4 (System); Appendix; Table persona_panel","latex/tables/persona_panel.tex; data/persona_panel.json"

@@ -1,0 +1,53 @@
+\section{Introduction}
+
+Before launching a campaign, marketers want to know which version of a message will land. A fast-
+growing practice replaces (or precedes) live A/B testing with \emph{synthetic audience
+simulation}: a large language model (LLM) is conditioned on a set of audience ``personas'' and
+asked to react to each candidate message, and the message its personas prefer is shipped. The
+appeal is obvious---instant, cheap feedback---and it is encouraged by findings that
+profile-conditioned LLMs can reproduce aspects of real human samples, an idea sometimes called
+``silicon sampling''~\citep{argyleSiliconSampling}.
+
+The appeal, however, outruns the evidence. The premise that a synthetic persona predicts how a
+\emph{real} audience behaves is rarely tested against real outcomes, because doing so requires
+ground truth that pairs concrete copy with measured audience response. We borrow the
+\emph{sim-to-real} framing from robotics---how well does behaviour measured in simulation transfer
+to the real world?---and instantiate it with the Upworthy Research
+Archive~\citep{matiasUpworthy}: thousands of A/B tests (which we call \emph{packages}) in which
+competing headline variants were shown to the same real traffic and their click-through rates
+recorded. This lets us ask, for held-out copy never seen during persona design, whether the
+simulator orders the variants the way the audience did.
+
+We report two main findings. First, the dominant obstacle is not the model but the data: in most
+A/B tests the real winner is not statistically distinguishable from the runner-up, so no predictor
+can recover it---validity is only meaningful on the reliable subset. Second, and contrary to the
+premise of persona simulation, \emph{persona conditioning hurts}: a no-persona zero-shot baseline
+that simply asks the model how likely a typical reader is to click ranks the variants markedly
+better (a medium effect) than the demographically grounded ten-persona panel (a small,
+barely-significant effect), with non-overlapping confidence intervals. The base model holds an
+accurate population-level prior on clickability; forcing it to role-play specific personas pulls
+it away from that prior. We pre-register effect-size thresholds and report seed-stability and a
+model comparison so neither effect is overstated.
+
+\paragraph{Contributions.}
+\begin{enumerate}[leftmargin=*]
+  \item A reproducible \emph{sim-to-real} validity protocol for copy simulation, using a public,
+        held-out A/B-tested benchmark~\citep{matiasUpworthy} as ground truth.
+  \item A ground-truth-reliability filtering step (significant-winner A/B tests) that prevents
+        validating a predictor against statistical noise~\citep{kohavi2009controlled}.
+  \item A within-package ranking evaluation with a construct-matched click-intent elicitation,
+        a no-persona zero-shot baseline that isolates the value of persona conditioning,
+        pre-registered effect-size thresholds~\citep{cohen1988power}, bootstrap CIs, seed-stability,
+        and a cost/quality model comparison.
+  \item An artifact-first replication package: every reported number is regenerated from
+        aggregated artifacts by public scripts.
+\end{enumerate}
+
+\paragraph{Research questions.}
+\begin{description}[leftmargin=*]
+  \item[RQ1] Do the personas' predicted ranking match the real click-through ranking on copy with
+        a reliable winner, and do they beat a no-persona zero-shot baseline?
+  \item[RQ2] Does predictive validity increase with the strength of the real effect?
+  \item[RQ3] Is the result robust to the intent-vs-engagement construct gap, to seed sampling,
+        and to model choice?
+\end{description}
