@@ -6,9 +6,9 @@ persona, for a click-intent in [0,1]. pred_score per variant = mean click-intent
 panel (and draws). Output: one JSONL per model under data/predictions/<model>.jsonl, in the
 schema validated by 02_run_personas.py.
 
-This is the study harness for the system under test. It calls the Gemini API directly; it
-does NOT touch the product database (no Prisma) — only GEMINI_API_KEY is needed, read from
-apps/api/.env (value never printed). Pilot vs full run is controlled by --packages.
+This study harness calls the Gemini API directly. GEMINI_API_KEY is read from the
+environment or a local .env; its value is never printed. Pilot vs full run is
+controlled by --packages.
 
 Usage:
   python scripts/run_predictions.py --models gemini-3.1-flash-lite,gemini-2.5-flash,gemini-3.5-flash \
@@ -29,7 +29,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 PAPER_DIR = Path(__file__).resolve().parents[1]
-REPO_ROOT = PAPER_DIR  # package root; set GEMINI_API_KEY in env or a local .env
 DATASETS = PAPER_DIR / "datasets"
 PANEL = PAPER_DIR / "data" / "persona_panel.json"
 OUT_DIR = PAPER_DIR / "data" / "predictions"
@@ -44,7 +43,7 @@ def fail(msg: str) -> None:
 def load_api_key() -> str:
     key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not key:
-        for env in (REPO_ROOT / "apps" / "api" / ".env", REPO_ROOT / ".env"):
+        for env in (PAPER_DIR / ".env",):
             if env.exists():
                 for line in env.read_text().splitlines():
                     if line.startswith("GEMINI_API_KEY="):
@@ -53,7 +52,7 @@ def load_api_key() -> str:
             if key:
                 break
     if not key:
-        fail("GEMINI_API_KEY not found in env or apps/api/.env")
+        fail("GEMINI_API_KEY not found in environment or local .env")
     return key
 
 

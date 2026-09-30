@@ -16,6 +16,8 @@ __pycache__/
 
 # Secrets
 .env
+.env.*
+!.env.example
 
 # Regenerable intermediate artifacts (reproducible from scripts; not redistributed)
 data/sim_predictions.jsonl

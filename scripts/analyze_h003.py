@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""H003 (doesitstand science #1): does the simulator's predictive validity rise with the
+"""H003 (RQ2): does the simulator's predictive validity rise with the
 ground-truth signal strength of the A/B test? Now answerable across the FULL p-range because
 predictions cover all 1695 packages (not only significant ones).
 

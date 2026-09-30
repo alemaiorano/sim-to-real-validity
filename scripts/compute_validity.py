@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Compute within-package ranking validity from data/joined.csv.
 
-Outputs reports/correlation.json (RQ1) and reports/construct_validity.json (RQ2).
+Outputs reports/correlation.json (primary and sensitivity estimates).
 All ranking is WITHIN package, since Upworthy variants share an audience only
-within a package (see README construct-validity note). Package-level scores are
+within a package. Package-level scores are
 aggregated with a percentile bootstrap CI over packages.
 
 No SciPy dependency: Spearman/Kendall/top-1 are computed directly. Fails loudly

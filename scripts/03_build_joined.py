@@ -9,6 +9,7 @@ not cover the corpus (partial coverage would silently bias the ranking metrics).
 """
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import sys
@@ -16,7 +17,7 @@ from pathlib import Path
 
 PAPER_DIR = Path(__file__).resolve().parents[1]
 DATASETS_DIR = PAPER_DIR / "datasets"
-PREDICTIONS = PAPER_DIR / "data" / "sim_predictions.jsonl"
+PREDICTIONS = PAPER_DIR / "data" / "predictions" / "gemini-3_1-flash-lite-sig3.jsonl"
 OUT = PAPER_DIR / "data" / "joined.csv"
 
 
@@ -33,11 +34,11 @@ def latest_corpus() -> Path:
     return candidates[-1]
 
 
-def load_predictions() -> dict[tuple[str, str], float]:
-    if not PREDICTIONS.exists():
-        fail(f"predictions missing: {PREDICTIONS}; run the simulator + 02_run_personas.py")
+def load_predictions(predictions: Path = PREDICTIONS) -> dict[tuple[str, str], float]:
+    if not predictions.exists():
+        fail(f"predictions missing: {predictions}; run run_predictions.py + 02_run_personas.py")
     preds: dict[tuple[str, str], float] = {}
-    with PREDICTIONS.open() as fh:
+    with predictions.open() as fh:
         for line in fh:
             line = line.strip()
             if not line:
@@ -48,8 +49,13 @@ def load_predictions() -> dict[tuple[str, str], float]:
 
 
 def main() -> None:
-    corpus = json.loads(latest_corpus().read_text())
-    preds = load_predictions()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--predictions", type=Path, default=PREDICTIONS,
+                    help="prediction JSONL (default: primary persona panel)")
+    ap.add_argument("--corpus", type=Path, help="locked corpus JSON (default: Upworthy exploratory)")
+    args = ap.parse_args()
+    corpus = json.loads((args.corpus or latest_corpus()).read_text())
+    preds = load_predictions(args.predictions)
 
     rows = []
     included = skipped = 0

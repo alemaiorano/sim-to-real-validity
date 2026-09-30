@@ -6,7 +6,9 @@ Outputs latex/figures/*.pdf. Reads reports/baseline_comparison.json and the lock
 """
 from __future__ import annotations
 
+import argparse
 import json
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -43,8 +45,12 @@ def fig_comparison() -> None:
 
 
 def fig_reliability() -> None:
-    corpus = json.loads(next(c for c in sorted(DATASETS.glob("upworthy-subset-*.json"))
-                             if not c.name.endswith(".manifest.json")).read_text())
+    candidates = [c for c in sorted(DATASETS.glob("upworthy-subset-*.json"))
+                  if not c.name.endswith(".manifest.json")]
+    if not candidates:
+        sys.exit("[figures][FATAL] Upworthy corpus missing; restore it via DATA_SOURCES.md "
+                 "or use --comparison-only to regenerate the report-backed figure")
+    corpus = json.loads(candidates[-1].read_text())
     pvals = [p["winner_p_one_sided"] for p in corpus]
     sig = sum(1 for p in pvals if p < 0.05)
     fig, ax = plt.subplots(figsize=(5.2, 3.0))
@@ -59,5 +65,10 @@ def fig_reliability() -> None:
 
 
 if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--comparison-only", action="store_true",
+                    help="regenerate comparison.pdf from reports without the raw corpus")
+    args = ap.parse_args()
+    if not args.comparison_only:
+        fig_reliability()
     fig_comparison()
-    fig_reliability()

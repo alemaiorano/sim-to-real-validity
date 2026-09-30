@@ -2,14 +2,17 @@ cff-version: 1.2.0
 message: "If you use this replication package or the sim-to-real validity protocol, please cite our work:"
 authors:
   - family-names: "Maiorano"
-    given-names: "A. C."
+    given-names: "Alexandre Cristovão"
 title: "Do Synthetic Personas Predict Real Audience Response? A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy Simulation"
 url: "https://github.com/alemaiorano/sim-to-real-validity"
 preferred-citation:
-  type: unpublished
+  type: article
   authors:
     - family-names: "Maiorano"
-      given-names: "A. C."
+      given-names: "Alexandre Cristovão"
   title: "Do Synthetic Personas Predict Real Audience Response? A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy Simulation"
   year: 2026
-  notes: "Preprint"
+  journal: "arXiv"
+  doi: "10.48550/arXiv.2609.25010"
+  url: "https://arxiv.org/abs/2609.25010"
+  notes: "Preprint, arXiv:2609.25010"

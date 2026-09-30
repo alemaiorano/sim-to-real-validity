@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Qualitative/quantitative error analysis (RQ: why do personas hurt?).
 
-Uses existing artifacts (persona = data/sim_predictions.jsonl, baseline =
+Uses existing artifacts (persona = data/predictions/gemini-3_1-flash-lite-sig3.jsonl, baseline =
 data/predictions/gemini-3_1-flash-lite-baseline.jsonl, corpus). Computes:
   (1) discriminativeness: mean within-package SD of pred_score for baseline vs persona
       (if personas compress scores, they wash out signal -> caricature/averaging effect);
@@ -31,7 +31,7 @@ def main() -> None:
     corpus = json.loads(next(c for c in sorted(DATASETS.glob("upworthy-subset-*.json"))
                              if not c.name.endswith(".manifest.json")).read_text())
     sig = [p for p in corpus if p.get("winner_significant")]
-    persona = load(PAPER_DIR / "data" / "sim_predictions.jsonl")
+    persona = load(PAPER_DIR / "data" / "predictions" / "gemini-3_1-flash-lite-sig3.jsonl")
     base = load(PAPER_DIR / "data" / "predictions" / "gemini-3_1-flash-lite-baseline.jsonl")
 
     base_sd, persona_sd = [], []
