@@ -9,7 +9,7 @@ two-proportion z-test (top vs runner-up) for the reliable-winner filter (same as
 Caveat: resubmission timing/visibility confounds raw score; using the RATIO and grouping by
 subreddit mitigates this, and the source paper studies exactly the title effect given content.
 
-Output: research/datasets/reddit-subset-<DATE>.json (same schema). Fails loudly if input absent.
+Output: datasets/reddit-subset-<DATE>.json (same schema). Fails loudly if input absent.
 """
 from __future__ import annotations
 

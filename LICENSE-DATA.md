@@ -16,3 +16,8 @@ https://creativecommons.org/licenses/by/4.0/
 The underlying third-party corpora (Upworthy Research Archive, MIND, SNAP
 Reddit) are **not redistributed** here and retain their own licenses — see
 `DATA_SOURCES.md`.
+
+The illustrative headlines in `reports/error_analysis.json` and the generated
+error-examples table are excerpts from the Upworthy Research Archive
+(Matias et al., 2021, https://doi.org/10.1038/s41597-021-00934-7), also licensed
+CC BY 4.0. The examples are selected and truncated for presentation.

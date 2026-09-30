@@ -13,7 +13,7 @@ locked corpus JSON whose every variant carries the REAL click-through rate.
 The subset is HELD-OUT: it is never shown to the persona-authoring step, so any
 predictive signal measured later is generalization evidence, not self-reference.
 
-Output: research/datasets/upworthy-subset-<LOCK_DATE>.json   (corpus)
+Output: datasets/upworthy-subset-<LOCK_DATE>.json   (corpus)
         sibling .manifest.json                               (sha256 + sampling params)
 
 Hard rule: this script FAILS LOUDLY if the input is absent or its schema is

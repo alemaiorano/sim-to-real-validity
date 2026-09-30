@@ -1,147 +1,139 @@
 # Research Replication Guide
 
-How to reproduce the empirical results, figures, macros, and statistical
-artifacts in the paper **"Do Synthetic Personas Predict Real Audience Response?
-A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy
-Simulation."**
+Replication package for [the arXiv preprint](https://arxiv.org/abs/2609.25010),
+DOI [10.48550/arXiv.2609.25010](https://doi.org/10.48550/arXiv.2609.25010).
+Run all commands from the repository root, preferably in a disposable clone
+when recomputing results. Python 3.11+ and `pip install -r requirements.txt`
+provide the analysis dependencies. PDF builds also need `pdflatex` and `bibtex`.
 
-The package supports three tiers. Most readers only need the **verification
-tier** (no API key, no raw data).
+## Tier 1 — Verify tables and rebuild the PDF
 
----
-
-## System Requirements
-
-- **Python** 3.11+ with `numpy` and `matplotlib` (`pip install -r requirements.txt`)
-- **LaTeX** with `pdflatex` + `bibtex` (TeX Live or MiKTeX) to rebuild the PDF
-- **Deep tier only:** `GEMINI_API_KEY` in the environment, plus the public raw
-  corpora (see `DATA_SOURCES.md`)
-
----
-
-## Tier 1 — Verification (no API key, no raw data)
-
-Every macro, table, figure, and the PDF regenerate from the committed
-`reports/`:
+This path needs no API keys or raw-data downloads. It reexports the committed
+result artifacts and uses the included figures to rebuild the manuscript.
+It does not independently recompute the statistics from raw observations.
 
 ```bash
-pip install -r requirements.txt
-
-# 1. macros (single source of truth for every number in the prose)
-python scripts/generate_paper_variables.py        # -> latex/variables.tex
-
-# 2. tables
+python scripts/generate_paper_variables.py
 python scripts/generate_validity_table.py
 python scripts/generate_replication_table.py
 python scripts/generate_crossmodel_table.py
+python scripts/generate_pilot_table.py
 python scripts/generate_h5_table.py
 python scripts/generate_supplementary_tables.py
 
-# 3. figures
-python scripts/generate_figures.py                # -> latex/figures/*.pdf (needs data/joined.csv; see Tier 2)
-
-# 4. PDF
 cd latex
 pdflatex -interaction=nonstopmode main && bibtex main \
   && pdflatex -interaction=nonstopmode main && pdflatex -interaction=nonstopmode main
 ```
 
-Output: `latex/main.pdf`. The figure step needs the joined table; the two
-figures shipped under `latex/figures/` are pre-built, so the PDF rebuilds
-without re-running Tier 2.
-
----
-
-## Tier 2 — Analysis (rebuild `reports/` from the corpora + predictions)
-
-Restore the locked corpora and the harness predictions, then recompute the
-aggregated artifacts.
+The output is `latex/main.pdf`. To regenerate only the comparison figure from
+`reports/baseline_comparison.json`, without downloading a corpus:
 
 ```bash
-# A. restore + verify the corpora (see DATA_SOURCES.md for downloads + hashes)
-python scripts/01_ingest_upworthy.py --input data/upworthy_raw/upworthy-exploratory.csv
-python scripts/build_mind_corpus.py
-python scripts/build_reddit_corpus.py
+python scripts/generate_figures.py --comparison-only
+```
 
-# B. (predictions) either restore data/predictions/ or regenerate via Tier 3
+The reliability histogram needs the restored Upworthy exploratory corpus:
+`datasets/upworthy-subset-2026-06-03.json`. After following `DATA_SOURCES.md`,
+`python scripts/generate_figures.py` regenerates both numerical figures.
+The protocol diagram is the included `latex/figures/protocol.tex`.
 
-# C. join + statistics  (all paper numbers flow from these)
+## Tier 2 — Recompute statistics from corpus and predictions
+
+Restore and hash-check the corpus as described in `DATA_SOURCES.md`. Restore
+historical predictions if you have them, or collect new predictions via Tier 3.
+The primary persona file is `data/predictions/gemini-3_1-flash-lite-sig3.jsonl`.
+The runner, validator, join and error analysis use this same file by default.
+
+```bash
+python scripts/02_run_personas.py --validate-only
 python scripts/03_build_joined.py
 python scripts/compute_validity.py
-python scripts/analyze_replication.py
 python scripts/analyze_h003.py
 python scripts/error_analysis.py
 python scripts/analyze_baseline_ties.py
-python scripts/power_analysis.py
+python scripts/analyze_h5_aggregation.py
 ```
 
-Then re-run Tier 1 to regenerate the macros/tables/figures from the refreshed
-`reports/`.
-
----
-
-## Tier 3 — Deep (re-run the LLM harness end to end)
-
-Regenerate the raw per-persona predictions. Requires `GEMINI_API_KEY`.
+To analyze another model or split, select its file explicitly:
 
 ```bash
-export GEMINI_API_KEY="<your-key>"   # value is never printed by the scripts
+python scripts/02_run_personas.py --validate-only --predictions <prediction-file.jsonl>
+python scripts/03_build_joined.py --predictions <prediction-file.jsonl> --corpus <corpus.json>
+```
 
-# PRIMARY: significant subset, persona panel (3 draws) + no-persona baseline (30 draws)
-python scripts/run_predictions.py --models gemini-3.1-flash-lite --significant-only --packages 0 --draws 3  --seed 42 --out-suffix=-sig3
+`compute_validity.py` analyzes only the joined predictions supplied. Joining
+only the significant subset cannot reproduce the published all-package
+sensitivity analysis. The latter requires the corresponding historical
+all-package predictions. Raw historical predictions are not included here.
+
+For replication, restore all five corpora and the corresponding persona and
+baseline files before `python scripts/analyze_replication.py`. Exact filenames
+are listed in its `DSETS` mapping; missing datasets are explicitly skipped.
+Do not replace the committed five-dataset report with a partial run.
+
+The historical summaries `baseline_comparison.json`, `cross_model_gap.json`
+and `stability.json` have no dedicated recomputation script in this package.
+They remain inputs to the verification exporters. Likewise, `power_analysis.py`
+is an earlier planning calculation (its recorded primary n is 124), not a
+runner that updates the final sample size. These limits also exist in the
+original research tree; the package does not claim a complete raw-to-report
+rebuild of every historical artifact.
+
+## Tier 3 — Collect new Gemini predictions
+
+This tier calls paid provider APIs. Supply your own key through
+`GEMINI_API_KEY` or a local, gitignored `.env`. Corpus files must already exist.
+Use the recorded experimental configuration when comparing with the paper;
+provider availability and model changes can prevent exact historical replay.
+A fixed seed does not guarantee identical generations across provider updates.
+
+```bash
+export GEMINI_API_KEY="<your-key>"
+
+# Primary panel: all significant-winner packages, 3 draws per persona.
+python scripts/run_predictions.py --models gemini-3.1-flash-lite --significant-only --packages 0 --draws 3 --seed 42 --out-suffix=-sig3
+# Primary no-persona baseline: 30 draws per variant.
 python scripts/run_predictions.py --baseline --models gemini-3.1-flash-lite --significant-only --packages 0 --draws 30 --seed 42 --out-suffix=-baseline
+# All-package, single-draw run used by the exploratory replication condition.
 python scripts/run_predictions.py --models gemini-3.1-flash-lite --packages 0 --draws 1 --seed 42 --out-suffix=-full
 
-# Cross-tier robustness: repeat with --models gemini-2.5-flash and gemini-3.5-flash
-# Replication splits: pass --corpus datasets/<name>-<date>.json with the matching --out-suffix
-
-# validate the produced predictions against the schema before joining
 python scripts/02_run_personas.py --validate-only
 ```
 
-Then continue with Tier 2 (join + statistics) and Tier 1 (assets).
+Cross-tier runs use the paper's other recorded Gemini models. Other datasets
+use `--corpus` and the output suffixes expected by `analyze_replication.py`.
+Checkpoint reuse is valid only for the same model, corpus, prompt variant,
+seed, temperature and draw configuration; use distinct suffixes for new runs.
 
----
+## Cross-family replication — Azure OpenAI
 
-## Reference Results
-
-| Metric | Persona panel (P=10) | No-persona baseline | Notes |
-| :--- | :---: | :---: | :--- |
-| Kendall τ | 0.084 [0.020, 0.147] | **0.361 [0.289, 0.430]** | within-package rank concordance |
-| Top-1 accuracy | 34.6% | **49.2%** | predicted #1 == real #1 |
-| Reliable packages | 399 | 399 | statistically distinguishable winner |
-| Variants | 1,494 | 1,494 | |
-| Cross-family (gpt-4.1) baseline τ | — | 0.300 | top-1 49.1% |
-
-The headline result: **persona conditioning degrades predictive validity** —
-the no-persona baseline outranks the persona panel with non-overlapping CIs.
-
----
-
-## Validation & audits (pre-submission)
+`scripts/tier2_crossmodel.py` is the original GPT-4.1 study runner adapted to
+standalone paths. It reuses the Gemini harness's prompt builder/parser and the
+same ranking metrics, keeping the experimental comparison unchanged.
+Credentials and endpoint are supplied only through environment variables;
+no external credential files or product services are read.
 
 ```bash
-# citation integrity (authorship via Crossref/arXiv) — confirm Upworthy DOI authors
-python <path-to>/validate_citations.py --tex-root latex --bib latex/references.bib --crossref
-
-# reproducibility audit (orphan floats / undefined refs)
-python <path-to>/audit_latex_refs.py latex
+export AZURE_OPENAI_API_KEY="<your-key>"
+export AZURE_OPENAI_BASE_URL="<your-resource-base-url>"
+export AZURE_OPENAI_DEPLOYMENT="<your-gpt-4.1-deployment>"
+python scripts/tier2_crossmodel.py --draws 3 --baseline-draws 10 --temperature 0.8
 ```
 
----
+The default outputs are checkpoints and an `upworthy_<deployment>.json`
+summary under the gitignored `data/predictions/crossfamily/`. `--output-dir`
+can select another local directory. The summary includes persona/baseline
+metrics and paired per-package gaps, matching the structure of
+`reports/crossfamily_gpt41.json`. The runner does not overwrite that published
+artifact. A new provider run is a new experiment, not proof that the archived
+result has been reproduced exactly.
 
-## Troubleshooting
+## Local checks
 
-- **`predictions artifact missing`** — Tier 1 doesn't need predictions; for Tiers 2–3 restore `data/predictions/` or run Tier 3.
-- **Corpus hash mismatch** — re-download the raw source and re-run the ingest script; the manifest `corpus_sha256` is deterministic under `--seed 42`.
-- **`GEMINI_API_KEY not found`** — export it in the environment (Tier 3 only); the scripts never print the value.
-
----
-
-## Citation
-
-```text
-Maiorano, A. C. (2026). Do Synthetic Personas Predict Real Audience Response?
-A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy
-Simulation. Preprint.
+```bash
+python -m unittest discover -s tests -v
 ```
+
+The tests exercise the real producer/validator/join with stubbed provider
+transports and temporary synthetic corpora. They need no keys or network.

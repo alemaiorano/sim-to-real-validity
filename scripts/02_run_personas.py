@@ -1,20 +1,8 @@
 #!/usr/bin/env python3
-"""Contract + validator for the persona-prediction artifact.
+"""Validate the per-variant predictions produced by run_predictions.py.
 
-The persona simulation runs in the product API (TypeScript,
-`apps/api/src/services/simulation-runner.ts`), not here. This script does NOT
-call the LLM. It (a) documents the exact schema the API must emit, and
-(b) validates a produced `data/sim_predictions.jsonl` against that schema so the
-downstream join can trust it. Missing predictions are a BLOCKER, not an action item.
-
-How to produce the predictions (to be wired as an API/CLI batch job):
-  For each package variant in the locked corpus, run the simulator with personas
-  derived from the Upworthy audience (NOT internal product personas), one record
-  per (package_id, variant_id), capturing the raw `intentProxy` + `microSurvey`
-  fields plus a single scalar `pred_score` used for ranking.
-
-Each JSONL line MUST match REQUIRED_FIELDS below. `pred_score` is the scalar the
-ranking metrics consume; document its definition in latex/sections/05-setup.tex.
+The primary file contains mean click-intent over the persona panel and draws.
+Select another model/split with --predictions. This validator makes no LLM calls.
 """
 from __future__ import annotations
 
@@ -24,20 +12,14 @@ import sys
 from pathlib import Path
 
 PAPER_DIR = Path(__file__).resolve().parents[1]
-PREDICTIONS = PAPER_DIR / "data" / "sim_predictions.jsonl"
+PREDICTIONS = PAPER_DIR / "data" / "predictions" / "gemini-3_1-flash-lite-sig3.jsonl"
 
-# Design decision (locked 2026-06-03): the PRIMARY pred_score is a dedicated click-intent
-# elicitation (mean over personas of "would you click this headline?", 0-1), because it
-# matches the Upworthy CTR construct. The product's UNMODIFIED intentProxy is also captured
-# as a SECONDARY signal: comparing how well click-intent vs purchaseLikelihood predict real
-# CTR is precisely the RQ2 construct-gap measurement. Both must be present per record.
+# pred_score is mean click-intent in [0,1], matching the benchmark outcome.
 REQUIRED_FIELDS = {
     "package_id": str,
     "variant_id": str,
     "pred_score": (int, float),   # PRIMARY: mean click-intent in [0,1], used for ranking
 }
-# SECONDARY (product intact) — enables the RQ2 construct-gap comparison.
-REQUIRED_INTENT = {"trialLikelihood", "demoLikelihood", "purchaseLikelihood"}
 
 
 def fail(msg: str) -> None:
@@ -45,16 +27,16 @@ def fail(msg: str) -> None:
     sys.exit(1)
 
 
-def validate() -> None:
-    if not PREDICTIONS.exists():
+def validate(predictions: Path = PREDICTIONS) -> None:
+    if not predictions.exists():
         fail(
-            f"predictions artifact missing: {PREDICTIONS}\n"
-            f"  Produce it by running the product simulator over the locked corpus\n"
+            f"predictions artifact missing: {predictions}\n"
+            f"  Produce it by running scripts/run_predictions.py over the locked corpus\n"
             f"  (one JSONL line per package variant). This is a hard blocker."
         )
     n = 0
     seen_packages: set[str] = set()
-    with PREDICTIONS.open() as fh:
+    with predictions.open() as fh:
         for i, line in enumerate(fh, 1):
             line = line.strip()
             if not line:
@@ -70,11 +52,6 @@ def validate() -> None:
                     fail(f"line {i}: field '{field}' has wrong type")
                 if field == "pred_score" and not (0.0 <= float(rec[field]) <= 1.0):
                     fail(f"line {i}: pred_score {rec[field]} out of [0,1]")
-            # intentProxy is the SECONDARY (RQ2 construct-gap) signal; optional during the
-            # pilot. If present it must be well-formed.
-            intent = rec.get("intentProxy")
-            if intent is not None and not REQUIRED_INTENT.issubset(intent):
-                fail(f"line {i}: intentProxy present but missing {sorted(REQUIRED_INTENT)}")
             seen_packages.add(rec["package_id"])
             n += 1
     print(f"[personas] OK: {n} prediction records across {len(seen_packages)} packages")
@@ -83,10 +60,12 @@ def validate() -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--validate-only", action="store_true",
-                    help="validate data/sim_predictions.jsonl against the contract")
+                    help="validate the selected per-variant predictions against the contract")
+    ap.add_argument("--predictions", type=Path, default=PREDICTIONS,
+                    help="prediction JSONL (default: primary persona panel)")
     args = ap.parse_args()
     if args.validate_only:
-        validate()
+        validate(args.predictions)
     else:
         print(__doc__)
 

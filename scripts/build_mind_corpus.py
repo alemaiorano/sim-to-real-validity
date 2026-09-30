@@ -8,7 +8,7 @@ SUBCATEGORY (topic-controlled "packages"); within a package we rank by aggregate
 real headline clickability in a recent, different domain; unlike Upworthy it compares DIFFERENT
 articles within a topic, so content (not only wording) varies — documented as a threat.
 
-Output: research/datasets/mind-subset-<DATE>.json (same schema: packages -> variants with
+Output: datasets/mind-subset-<DATE>.json (same schema: packages -> variants with
 headline, impressions, clicks, real_ctr; winner_significant tag). Fails loudly if inputs absent.
 """
 from __future__ import annotations

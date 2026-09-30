@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/Code%20License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![License: CC BY 4.0](https://img.shields.io/badge/Data%20License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Paper: Preprint](https://img.shields.io/badge/Paper-Preprint-blue)](https://github.com/alemaiorano/sim-to-real-validity)
+[![Paper: arXiv](https://img.shields.io/badge/arXiv-2609.25010-b31b1b)](https://arxiv.org/abs/2609.25010)
 
 > **Do synthetic personas predict real audience response? An artifact-first sim-to-real validity study.**
 
@@ -10,10 +10,14 @@ This repository is the **public replication package** for the research paper:
 
 **"Do Synthetic Personas Predict Real Audience Response? A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy Simulation"**.
 
-Every number, table, and figure in the paper regenerates from the versioned
-artifacts and scripts shipped here. The persona simulation harness is included
-in full (`scripts/run_predictions.py` + `data/persona_panel.json`); only the
-raw per-persona LLM generations (large, fully regenerable) are withheld.
+[Read the preprint](https://arxiv.org/abs/2609.25010) ·
+[DOI: 10.48550/arXiv.2609.25010](https://doi.org/10.48550/arXiv.2609.25010).
+
+Every numerical macro and table regenerates from the versioned result
+artifacts. The PDF rebuilds using the included figures; regenerating the
+reliability figure also needs the public Upworthy corpus. Both the Gemini
+and Azure OpenAI study harnesses are included, together with the fixed
+persona panel. Raw per-persona generations are not redistributed.
 
 ---
 
@@ -41,9 +45,9 @@ machinery actually helps, along three lines:
 
 ## 🚀 Quick Start
 
-Every table, figure, and macro in the paper regenerates from the committed
-artifacts in `reports/`. **No API keys or raw-data downloads are required for
-the verification path.**
+Every numerical macro and table regenerates from the committed artifacts in
+`reports/`. **No API keys or raw-data downloads are required to rebuild the
+PDF with the included figures.**
 
 ### Prerequisites
 - Python ≥ 3.11 (`pip install -r requirements.txt` → numpy, matplotlib)
@@ -60,6 +64,7 @@ python scripts/generate_paper_variables.py
 python scripts/generate_validity_table.py
 python scripts/generate_replication_table.py
 python scripts/generate_crossmodel_table.py
+python scripts/generate_pilot_table.py
 python scripts/generate_h5_table.py
 python scripts/generate_supplementary_tables.py
 
@@ -102,8 +107,8 @@ plain LLM ranker beats persona simulation.
 This repository is a **verification-grade, harness-included** artifact package:
 
 - **`latex/`** — LaTeX manuscript sources with auto-generated tables/figures, `references.bib`, and the compiled `main.pdf`.
-- **`scripts/`** — the full pipeline: corpus ingestion, the persona/baseline LLM harness (`run_predictions.py`), validity statistics, error analysis, and every table/figure exporter.
-- **`reports/`** — versioned aggregated result artifacts (correlation, construct validity, replication, cross-model gap, error analysis). Every paper number flows from these.
+- **`scripts/`** — corpus ingestion, Gemini (`run_predictions.py`) and Azure OpenAI (`tier2_crossmodel.py`) study harnesses, validity statistics, error analysis, and table/figure exporters.
+- **`reports/`** — versioned aggregated result artifacts (correlation, signal strength, replication, cross-model gap, error analysis). These support the paper's numerical claims.
 - **`data/persona_panel.json`** — the fixed, versioned ten-persona panel (the system under test).
 - **`datasets/*.manifest.json`** — locked corpus manifests (sha256 + sampling params) for provenance; the corpora themselves are public and regenerable, not re-hosted.
 - **`SCOPE.md`** — artifact scope and IP boundary (what is included, excluded, and why).
@@ -130,7 +135,7 @@ If you use this package or the sim-to-real validity protocol, please cite our wo
 ```text
 Maiorano, A. C. (2026). Do Synthetic Personas Predict Real Audience Response?
 A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy
-Simulation. Preprint.
+Simulation. arXiv:2609.25010. https://doi.org/10.48550/arXiv.2609.25010
 ```
 
 ## 📄 License
