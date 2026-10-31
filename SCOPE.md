@@ -6,16 +6,18 @@ This is a correction draft of the original research release at
 | Evidence tier | Supported | Limit |
 |---|---|---|
 | Historical verification | Reexport original report values with correct gamma labels | Does not independently validate raw observations or historical valid denominators |
-| Corrected offline GPT diagnostic | Recompute metrics from an exact recovered scalar checkpoint | Checkpoint not distributed; original responses absent; unequal budgets remain |
+| Corrected offline GPT diagnostic | Recompute metrics from the recovered scalar checkpoint included in the separate bundle | Original response texts absent; historical unequal budgets remain |
 | Corrected software | New winner screen, gamma/tau-b, expected tie credit, strict parser, per-metric counts | Does not retroactively change historical generations |
-| New experiments | Study-specific Gemini and Azure OpenAI collectors | Paid, user-configured, no guarantee of historical provider replay |
+| New matched-budget experiment | Raw-backed comparison of Gemini 3.1 Flash-Lite and GPT-4.1 on the corrected exploratory cohort | New generations; historical selection; request protocols differ across models; no broad five-dataset rerun |
 
 Included: LaTeX sources/PDF, generated assets, original aggregate reports and manifests,
 corrected GPT derivatives with input hashes, fixed persona panel, analysis and collection scripts,
 offline tests, audit plan/consensus, and a dated correction record.
 
-Excluded: raw third-party corpora, original provider response texts, recovered scalar checkpoint,
-credentials, commercial product code, and the monorepo's embedded paper copy.
+The separate replication bundle contains exact new response bytes, requests, the exploratory
+source/corpus, and the recovered historical GPT scalar checkpoint. These large inputs are not
+Git blobs. Excluded: unrecovered historical response texts, credentials, commercial product code,
+and the monorepo's embedded paper copy.
 The study harness is standalone and is not an evaluation of a deployed commercial application.
 
 Original `reports/` artifacts and `datasets/` manifests are preserved byte for byte.
@@ -24,6 +26,7 @@ legacy field names to gamma. Corrected producers reject destinations under `repo
 existing output files. New corpus builders require a new directory and write a new lock date.
 See REPLICATION and DATA_SOURCES for the distinction between historical restoration and corrected ingestion.
 
-The main scientific limit is unresolved historical Gemini raw-data availability.
-This revision does not certify the entire original study under corrected methods or claim
-publication readiness from the plan review alone.
+New Gemini generations address the reproducibility of the new experiment; they do not restore
+missing historical observations. The revision does not certify all historical datasets under
+corrected methods or establish general persona harm. Publication and remote artifact deposition
+remain separate author actions.

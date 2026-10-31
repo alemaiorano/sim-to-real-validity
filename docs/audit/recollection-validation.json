@@ -1,0 +1,160 @@
+{
+  "date": "2026-10-31",
+  "analysis_source_before_comparative_results": "3e1e32baa2e5fb85cd843a6ea8ad27379f055db6",
+  "collector_sources": {
+    "original": "cba15e9cd676ba9c871f873e1b6ad3bc7b094996",
+    "azure_amendment": "b1836a5de5ae727e7650b82a4f1bc38039ee6556"
+  },
+  "tests": {
+    "count": 43,
+    "result": "OK",
+    "log_sha256": "bd2726b041f4a02a7378646e8cca8cedcd85ca0fb4aad1fd25987c87caebc83d",
+    "command": "python3 -B -m unittest discover -s tests -v"
+  },
+  "checks": {
+    "final-raw-mirrors": {
+      "gemini": {
+        "sha256": "9c9477ed413f8867a22e98dd729eebba21b35b349233ea30529431e2faef06da",
+        "bytes": 124287537,
+        "mirror_identical": true
+      },
+      "azure": {
+        "sha256": "587853ce1d7e3340e1410facc9d75deed8430d5d070d8520cdd97498d0440355",
+        "bytes": 78568598,
+        "mirror_identical": true
+      }
+    },
+    "metrics-oracle": {
+      "gemini": {
+        "package_metric_cells_checked": 3420,
+        "variant_arm_rows_checked": 1202,
+        "observation_rows_checked": 36060,
+        "all_means_denominators_and_valid_ids_match": true,
+        "rank_oracles": "scipy.stats.kendalltau and spearmanr",
+        "other_oracles": "direct pair/extrema/lift definitions, no production metric import"
+      },
+      "azure": {
+        "package_metric_cells_checked": 3396,
+        "variant_arm_rows_checked": 1202,
+        "observation_rows_checked": 36060,
+        "all_means_denominators_and_valid_ids_match": true,
+        "rank_oracles": "scipy.stats.kendalltau and spearmanr",
+        "other_oracles": "direct pair/extrema/lift definitions, no production metric import"
+      }
+    },
+    "portable-replay-verification": {
+      "gemini": {
+        "byte_identical": true,
+        "sha256": "2b5038153ff4a4f7cfb0a016728b747ef5f60d4fb38e8d5ba1b6dc01461d24a1",
+        "provider_calls": 0
+      },
+      "azure": {
+        "byte_identical": true,
+        "sha256": "c9ec473919e78133a8ca0633dc53c6a40611d47d62ed4182fe84b161ab1460ad",
+        "provider_calls": 0
+      }
+    },
+    "references-and-floats": {
+      "references": 24,
+      "unresolved_citations": [],
+      "uncited_bib_entries": [],
+      "unresolved_crossrefs": [],
+      "orphan_floats": [],
+      "old_bibliography_identity_checks": "reuse unchanged24 source identities from docs/audit/bibliography.json and original-reference-checks.json"
+    },
+    "historical-artifact-immutability": {
+      "original_reports": 14,
+      "original_manifests": 5,
+      "identical": true,
+      "paths": [
+        "reports/baseline_comparison.json",
+        "reports/baseline_ties.json",
+        "reports/correlation.json",
+        "reports/cross_model_gap.json",
+        "reports/crossfamily_gpt41.json",
+        "reports/error_analysis.json",
+        "reports/h003.json",
+        "reports/h5_aggregation.csv",
+        "reports/h5_aggregation.json",
+        "reports/h5_aggregation_report.md",
+        "reports/pilot_model_comparison.json",
+        "reports/power_analysis.json",
+        "reports/replication.json",
+        "reports/stability.json",
+        "datasets/mind-subset-2026-06-03.manifest.json",
+        "datasets/upworthy-subset-2026-06-03.manifest.json",
+        "datasets/upworthy-confirmatory-2026-06-03.manifest.json",
+        "datasets/reddit-subset-2026-06-04.manifest.json",
+        "datasets/upworthy-holdout-2026-06-03.manifest.json"
+      ]
+    },
+    "export-byte-stability": {
+      "byte_identical": true,
+      "sha256": {
+        "latex/tables/recollection.tex": "736533b9086c4d64034888cacc37fd514657dd2193b2bdee7745a6f7f0d38f97",
+        "latex/recollection_variables.tex": "41d4e88e3a8b28c6e3bfba2cc9effa429257c87d9bb8e2226cffad1c8f0666ed"
+      }
+    },
+    "pdf-validation": {
+      "pages": 12,
+      "warnings": 0,
+      "overfull_boxes": 0,
+      "pdf_sha256": "bdb7858989cee25fbee43f5d283e80e33a9a6e689c08e900e25c4d62c226aef6",
+      "deterministic_rebuild": true,
+      "SOURCE_DATE_EPOCH": 1793404800,
+      "visual_review": "all12pages plus detailed new tables; no clipping"
+    }
+  },
+  "collection": {
+    "gemini": {
+      "planned_observations": 36060,
+      "terminal_observations": 36060,
+      "unresolved_observations": 0,
+      "n_primary_packages": 188,
+      "excluded_primary_package_ids": [
+        "527a9550674673c7350004e6",
+        "528e6bc8f7ead40afd003394"
+      ],
+      "terminal_model_version_counts": {
+        "gemini-3.1-flash-lite": 36060
+      },
+      "token_counts": [
+        3829479,
+        470722
+      ],
+      "accounted_usd_conservative": "3.3281075",
+      "journal_sha256": "9c9477ed413f8867a22e98dd729eebba21b35b349233ea30529431e2faef06da",
+      "rank_valid_n": {
+        "panel": 185,
+        "baseline": 137
+      },
+      "rank_paired_n": 136
+    },
+    "azure": {
+      "planned_observations": 36060,
+      "terminal_observations": 36060,
+      "unresolved_observations": 0,
+      "n_primary_packages": 188,
+      "excluded_primary_package_ids": [
+        "529ebc4e6bba840626000161",
+        "532a28b48bf2b3dc4100002b"
+      ],
+      "terminal_model_version_counts": {
+        "gpt-4.1-2025-04-14": 36000,
+        "unknown": 60
+      },
+      "token_counts": [
+        1250222,
+        359994
+      ],
+      "accounted_usd_conservative": "10.927120",
+      "journal_sha256": "587853ce1d7e3340e1410facc9d75deed8430d5d070d8520cdd97498d0440355",
+      "rank_valid_n": {
+        "panel": 188,
+        "baseline": 188
+      },
+      "rank_paired_n": 188
+    }
+  },
+  "scope": "implementation/numerical checks; immutable target review recorded separately; no remote publication or submission"
+}

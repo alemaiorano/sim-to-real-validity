@@ -1,13 +1,16 @@
 # Replication and verification
 
-Use Python 3.11+, `pip install -r requirements.txt`; PDF compilation also needs
+For exact new-report reproduction use CPython 3.12.3 on Linux/WSL
+(the collector/replay imports POSIX `fcntl`),
+`pip install -r requirements.txt`; PDF compilation also needs
 `pdflatex` and `bibtex`. Run commands from the repository root.
 
 ## 1. Reexport reports and build the revised PDF
 
 Run the exporters listed in README. They verify hashes before reading historical reports.
-`generate_reanalysis_assets.py` separately reads the committed GPT derivative and selection
-diagnostic. This verifies displayed numbers, not all original raw observations.
+`generate_reanalysis_assets.py` separately reads the committed historical GPT derivative and selection
+diagnostic. `generate_recollection_assets.py` reads the new raw-backed matched-experiment reports,
+verifies their hashes and plan identity, and refuses unfinished observations. This verifies displayed numbers, not all original raw observations.
 
 ```bash
 python scripts/generate_figures.py --comparison-only
@@ -27,7 +30,8 @@ python scripts/generate_figures.py --historical-corpus /path/to/upworthy-subset-
 
 ## 2. Offline historical GPT replay and corrected diagnostic
 
-The exact recovered checkpoint is **not included**. Required SHA256 values:
+The recovered checkpoint is included in the separate replication bundle at
+`historical-gpt41/checkpoint.jsonl`; it is not a Git repository blob. Required SHA256 values:
 
 | Input | SHA256 |
 |---|---|
@@ -81,27 +85,74 @@ These commands do not reconstruct missing historical Gemini observations. Some h
 summaries lack a dedicated original raw-to-report producer. Original implementations remain
 accessible at the pinned Git commit, not as silent legacy branches in the corrected estimators.
 
-## 4. New provider experiments (optional, paid)
+## 4. New matched-budget experiment: replay without API calls
 
-No provider run is needed for verification above. A future run is a new experiment.
-Set `GEMINI_API_KEY` or Azure OpenAI environment variables yourself; do not commit credentials.
-Select an explicit corpus and approved/available provider model for your own environment.
+This is a new collection, not a reconstruction of the missing historical Gemini generations.
+The frozen protocol is `paired-raw-retained-v2`, source commit
+`cba15e9cd676ba9c871f873e1b6ad3bc7b094996`, with the explicit content-filter continuation
+amendment at `b1836a5de5ae727e7650b82a4f1bc38039ee6556`. The original plan and pre-amendment
+Azure bytes remain unchanged and are preserved as a snapshot. Use the **final source bundle**
+for replay of the amended Azure chain; the earlier collector bundle cannot read its new marker.
+The standalone replication bundle contains:
+
+- `matched-v2/`: exact corpus/CSV/panel, frozen observation and request plans, and raw journals.
+- `matched-v2/snapshots/`: immutable raw bytes used by each report.
+- `derived/`: final raw-replay reports and reviewer CSVs with response hashes, variant means,
+  package metrics, coverage, and exclusions.
+- `historical-gpt41/`: recovered original scalar checkpoint and historical replay evidence.
+- `matched-v1/`: compatibility probes, explicitly excluded from scientific v2 results.
+- Git bundles containing frozen collection source and final paper/exporter source.
+- `ARTIFACT_README.txt`, validation evidence, file checksum manifest and archive checksum.
+
+Verify the archive checksum before extraction, then run `sha256sum -c SHA256SUMS` from the
+extracted artifact root. Restore source with `git clone --branch
+research/sim-to-real-corrections-2026-10-31 SOURCE_FINAL.bundle source` (substitute the actual
+bundle path). Work from `source`; the original pinned producer is available in its history.
+Use the recorded CPython 3.12.3 environment. Floating-point `sum` changed in Python 3.12;
+older interpreters are not asserted to reproduce exact ranks/bytes. Set a shell variable to the extracted artifact directory:
 
 ```bash
-python scripts/run_predictions.py --models MODEL_ID --corpus /path/to/corpus.json \
-  --significant-only --packages 0 --draws 3 --seed 42 --out-suffix=-panel
-python scripts/run_predictions.py --models MODEL_ID --corpus /path/to/corpus.json \
-  --baseline --significant-only --packages 0 --draws 30 --seed 42 --out-suffix=-baseline
-python scripts/tier2_crossmodel.py --corpus /path/to/corpus.json \
-  --draws 3 --baseline-draws 10 --output-dir /new/path/crossfamily
+ARTIFACT_ROOT=/absolute/path/to/extracted/artifact
+python scripts/analyze_recollection.py --run-dir "$ARTIFACT_ROOT/matched-v2" \
+  --backend gemini --output /new/path/gemini.json
+python scripts/analyze_recollection.py --run-dir "$ARTIFACT_ROOT/matched-v2" \
+  --backend azure --output /new/path/azure.json
+cmp /new/path/gemini.json "$ARTIFACT_ROOT/derived/gemini.json"
+cmp /new/path/azure.json "$ARTIFACT_ROOT/derived/azure.json"
+python scripts/export_recollection_observations.py --run-dir "$ARTIFACT_ROOT/matched-v2" \
+  --backend gemini --report /new/path/gemini.json --output-dir /new/path/gemini-reviewer
+python scripts/export_recollection_observations.py --run-dir "$ARTIFACT_ROOT/matched-v2" \
+  --backend azure --report /new/path/azure.json --output-dir /new/path/azure-reviewer
+python scripts/generate_recollection_assets.py
 ```
 
-Gemini outputs use `strict-json-v2` plus a configuration fingerprint in filenames.
-GPT uses the same namespace and strict parser; its default budget remains unequal and no seed
-is sent. Use a matched budget for a future matched-budget hypothesis. Configurations bind corpus,
-panel, prompts, model, temperature, and sampling; terminal parse failures remain missing.
-Transport errors retry within bounds. Repeated seeds do not guarantee identical provider outputs.
-Revised collectors never resume historical checkpoints.
+Replay verifies the input hashes, allocation, sent requests, journal hash chain, exact response
+bytes, choice indices, strict parsing and token accounting. Its primary package policy requires
+all 30 planned scores in each arm for every variant; failed observations and exclusions remain
+visible. Score budgets are matched **within model**. Azure requested three choices per call
+symmetrically in both arms; Gemini requested one. Choices are not presumed independent.
+The report intervals resample packages and condition on selection and recorded generations.
+Available-observation sensitivity has different coverage and must not replace the primary result.
+
+No API key is needed for these operations. The frozen plan includes historical absolute backup
+locations as provenance; offline replay does not require those directories. Blank reviewer CSV
+scores/metrics are missing/undefined, never imputed zero. Raw journals retain errors and retries. An Azure `content_filter` /
+`ResponsibleAIPolicyViolation` refusal remains terminal missing and is never retried or rewritten.
+The explicit mirrored amendment pins the original prefix, source and unchanged scientific
+allocation; a new journal marker records its application. Other permanent errors retain global
+stops. Content-dependent exclusions and the pause are disclosed; no comparative performance
+was used to choose this amendment.
+
+## 5. Future paid collection
+
+Future generations create a new experiment and require a new plan/run directory. Provider aliases,
+best-effort seeds, quota and infrastructure can change. The current `recollect.py prepare` freezes
+these study-specific inputs and checks their hashes; `collect` uses only an explicitly supplied
+environment file. It supports bounded retries, durable response retention, fixed costs and
+rate limits. Review source/configuration against the actual provider before a new paid session.
+Never merge future observations into this checkpoint or historical scalar files. Credentials
+are excluded from the replication bundle. `run_predictions.py` and `tier2_crossmodel.py` are
+separate harnesses with different protocols; they do not reproduce this collection.
 
 ## Checks
 

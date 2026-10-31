@@ -2,14 +2,19 @@
 \label{sec:discussion}
 The comparisons make a generic-reader baseline necessary for this task. A persona panel adds
 assumptions about audience composition and behavior that require predictive validation.
-Historical Upworthy reports and the conditional GPT diagnostic favor the baseline; Reddit
-decision metrics favor the panel. Findings depend on configuration and outcome.
+The new matched-score comparisons favor the baseline in valid rank comparisons, expected top-1
+and captured lift, but do not establish a bottom-1 advantage. Gemini rank means exclude constant
+outputs with explicit arm-specific counts; top-1 retains those packages through expected tie
+credit. Historical Upworthy reports and the scalar GPT diagnostic also favor the baseline;
+historical Reddit decision metrics favor the panel. Findings depend on configuration and outcome.
 
 \paragraph{Mechanism remains open.}
 The baseline may use general headline knowledge, while role-play may add unhelpful conditioning.
 Neither explanation was isolated experimentally. Similar score spreads, selected error examples,
 and rank-only aggregation failures cannot distinguish bias from noise or identify a mechanism.
-A balanced, interleaved experiment retaining raw responses would better test those hypotheses.
+The new balanced, interleaved collection tests the panel/baseline comparison with retained raw
+responses, but does not separately manipulate demographic content, role-play, or response noise.
+It therefore does not by itself identify those mechanisms.
 Intent versus engagement remains a construct-validity limitation~\citep{cronbach1955construct}.
 
 \paragraph{Ground truth and generalization.}
@@ -22,9 +27,14 @@ are not excluded by a historical corpus.
 
 \paragraph{Reproduction limits.}
 Aggregate reports allow reexport, not complete verification of their generating process.
-Gemini observations and some historical report producers were not recovered. The GPT checkpoint
+Historical Gemini observations and some historical report producers were not recovered. The GPT checkpoint
 supports replay and partial reanalysis, but range-checking stored scalars cannot retroactively
-validate the permissive parser. New strict-parser checkpoints cannot be mixed with legacy scores.
+validate the permissive parser. The new strict-parser observations have complete raw lineage and matched within-model score
+budgets; they are not mixed with legacy scores. Azure multi-choice and Gemini single-choice
+requests differ operationally. Returned aliases are not immutable model snapshots, and request
+seeds do not guarantee determinism. A single collection session does not estimate provider drift
+or generation variability. Content filtering can cause exclusions associated with content or arm;
+the Azure technical pause also divides its collection in time. The historically selected cohort limits generalization.
 Prompt robustness, deterministic demographic-to-panel construction, full Reddit subset lineage,
 and preregistration chronology remain evidence gaps.
 

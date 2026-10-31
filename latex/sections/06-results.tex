@@ -1,5 +1,35 @@
 \section{Results}
 \label{sec:results}
+\paragraph{New raw-backed comparison (RQ1).}
+Tables~\ref{tab:new_gemini} and \ref{tab:new_azure} give the matched-budget experiment,
+separating it from all historical values below. The complete-package policy retains
+\newGeminiN{} Gemini packages and \newGptN{} GPT-4.1 packages; exclusions are respectively
+\newGeminiExcludedN{} and \newGptExcludedN{}. Reports retain every planned observation and
+failure, with metric-specific valid and paired IDs.
+
+For Gemini, panel and baseline Kendall $\tau_b$ are \newGeminiPanelTau{} and
+\newGeminiBaselineTau{}; the paired baseline-minus-panel gap is \newGeminiGapTau{}
+(CI [\newGeminiGapTauLow{}, \newGeminiGapTauHigh{}]) on \newGeminiPairedTauN{} valid pairs.
+Expected top-1 is \newGeminiPanelTopOne{} versus \newGeminiBaselineTopOne{}, with paired gap
+\newGeminiGapTopOne{} percentage points (CI
+[\newGeminiGapTopOneLow{}, \newGeminiGapTopOneHigh{}]).
+
+For GPT-4.1, panel and baseline Kendall $\tau_b$ are \newGptPanelTau{} and
+\newGptBaselineTau{}; the paired gap is \newGptGapTau{}
+(CI [\newGptGapTauLow{}, \newGptGapTauHigh{}]) on \newGptPairedTauN{} valid pairs.
+Expected top-1 is \newGptPanelTopOne{} versus \newGptBaselineTopOne{}, with paired gap
+\newGptGapTopOne{} percentage points (CI [\newGptGapTopOneLow{}, \newGptGapTopOneHigh{}]).
+In Gemini, $\tau_b$ is undefined on \newGeminiBaselineRankUndefinedN{} baseline packages
+and \newGeminiPanelRankUndefinedN{} panel packages. Marginal means therefore use different valid
+sets; their difference is not the paired gap. The paired rank comparison uses their valid
+intersection, while top-1 includes every complete package with expected credit for ties.
+Baseline-minus-panel CIs exclude zero for the rank metrics, top-1 and captured lift in both
+configurations; bottom-1 CIs include zero. These are pointwise conditional estimates.
+Gamma and $\tau_b$ have distinct rows and denominators; neither is substituted for the other.
+These conditional package-bootstrap intervals omit repeated-generation uncertainty and do not
+compare model families causally. The historical GPT diagnostic is a separate experiment.
+\input{tables/recollection}
+
 \paragraph{Historical Upworthy comparison (RQ1).}
 Table~\ref{tab:validity} and Figure~\ref{fig:comparison} retain original estimates.
 The generic baseline has higher gamma (\baseGamma{} versus \goodmanGamma{}) and top-1
@@ -30,7 +60,8 @@ Nonsignificant packages need not be unpredictable.}
 \paragraph{Signal strength (RQ2).}
 The historical association between the legacy signal statistic and top-1 is Spearman
 \hThreeTopOne{} (CI [\hThreeTopOneCILow{}, \hThreeTopOneCIHigh{}]) over \hThreeN{} packages.
-It has not been recomputed for Gemini under corrected screening and tie handling.
+It has not been recomputed for historical Gemini under corrected screening and tie handling.
+The new selected-cohort experiment does not reconstruct this all-package historical analysis.
 
 \paragraph{Dataset comparisons (RQ3).}
 Table~\ref{tab:replication} shows higher baseline gamma on the three Upworthy splits and a smaller
@@ -71,5 +102,5 @@ paired packages. Baseline Kendall $\tau_b$ is \correctedBaseTau{} versus \correc
 Paired CIs for the displayed gaps exclude zero, supporting a positive baseline gap in this
 retrospective diagnostic. It is not independent replication, repaired raw parsing, or a
 budget-matched estimate. Gamma and tau-b remain separate. Corrected historical Gemini estimates
-are unavailable pending recovery of its observations.
+remain unavailable; the new Gemini table describes different generations and a different configuration.
 \input{tables/corrected_gpt}

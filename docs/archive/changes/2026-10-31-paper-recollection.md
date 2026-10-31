@@ -79,3 +79,45 @@ by credentials/quota/budget. Recompute from saved responses independently of API
 paper assets, audit claims against observed outcomes and package the artifact. Preserve and report
 partial evidence if an external limit prevents completion. No journal submission or remote
 publication is authorized by this task.
+
+## Integration and portability
+
+The correction manuscript now distinguishes historical report verification, scalar-checkpoint
+reanalysis, and the new raw-retained experiment. The new report/table exporter rejects unfinished
+observations or mismatched report/plan hashes. Reviewer exports preserve observation IDs and
+request/choice/response hashes, variant means with missingness, and package metrics including
+undefined fields. Their source is the exact immutable journal snapshot checked by offline replay.
+The exporter is separate from frozen collection dependencies and does not affect running calls.
+
+Retain environment versions and exact input hashes, not credentials. The final archive uses a
+file manifest and SHA256SUMS, includes both collector and final-source Git bundles, and must be
+verified after copying to Linux backup and the Windows volume. The Windows destination is outside
+OneDrive. Future remote deposition and journal submission remain author actions.
+
+Exporter validation: a real stubbed Azure producer returns heterogeneous choices out of order;
+CSV export must keep choice lineage and empty undefined rank coefficients, refuse changed reports
+and existing output directories. All 17 focal collection/retention/export tests pass. No live
+provider calls are part of the tests.
+
+## Completed result
+
+All 72,120 planned observations reached terminal outcomes: 72,058 valid and 62 missing.
+Gemini completed 36,060 requests plus two transport retries; two numeric-string outputs remained
+invalid. Azure completed 12,020 three-choice requests plus ten transport retries; twenty content
+refusals left sixty scores absent. Each model retained 188 complete primary packages, with
+different excluded IDs. No semantic draw was replaced. V2 and retained V1 probes account for
+USD14.2565545 at conservative rates, not provider invoices.
+
+The baseline has positive paired gaps for valid rank metrics, expected top-1 and lift in both
+configurations. Bottom-1 intervals include zero. Gemini rank counts are 185 panel, 137 baseline
+and 136 paired: 51 baseline and three panel packages are undefined, with two overlapping.
+Constant predictions are not imputed zero. Top-1 uses all 188 complete packages with expected tie
+credit. Marginal rank mean differences are not substituted for paired estimates.
+
+Analysis/export code was frozen at 3e1e32b before comparative analysis. Reports are byte-identical
+when replayed in an offline clone restored from its Git bundle. A SciPy/direct-definition oracle
+checked 6,816 package-metric cells, all 72,120 observation rows and 2,404 variant-arm rows. Means,
+undefined values, valid IDs and denominators match. New tables/prose read hash-pinned reports.
+All 24 references resolve, every float is discussed, 19 historical artifacts remain byte-identical,
+and the 12-page PDF has no warnings or overfull boxes and a deterministic rebuild.
+See docs/audit/recollection-validation.json for reproducible checks and source/artifact pins.

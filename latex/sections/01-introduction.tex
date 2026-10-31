@@ -14,10 +14,12 @@ Undefined coefficients were excluded without effective denominators. Claims abou
 superiority everywhere, prompt robustness, and a causal explanation also exceeded the artifacts.
 
 This revision distinguishes historical tables, retaining original numbers with corrected labels,
-from an offline GPT-4.1 reanalysis. The latter reuses recovered checkpoint scores after replay
-of the pinned original producer reproduces the published report. It changes selection, metrics,
-and tie credit, but cannot undo historical response parsing. No new provider generations were
-collected for this revision.
+from an offline historical GPT-4.1 diagnostic and a new matched-budget experiment. The diagnostic
+reuses recovered checkpoint scores after replay of the pinned original producer reproduces the
+published report; it cannot undo historical response parsing or unequal budgets. The new experiment
+collects both model families on the same corrected Upworthy cohort, with raw responses preserved
+and matched score counts within each model. It addresses those collection limitations for new
+observations, without retroactively validating historical generations or other datasets.
 
 We ask (RQ1) how this panel and generic baseline compare within tested packages, (RQ2) how
 agreement varies with the observed outcome signal, and (RQ3) what the dataset, aggregation,
