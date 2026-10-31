@@ -12,9 +12,9 @@ and the original manifests remain unchanged.
 The archive authors' 2024 report identifies a randomization-risk window from 25 June 2013
 through 10 January 2014 inclusive~\citep{matias2024correction}. The preserved CSV contains creation dates but neither the documented problem flag nor a
 risk indicator. Calendar-date overlap identifies \riskCorpusN{} corpus packages, \riskLegacyN{}
-historically selected packages and \riskSelectedN{} packages in the new selected cohort.
+supplementary-screen packages and \riskSelectedN{} packages in the primary selected cohort.
 These counts mark window membership, not individually proven defects. Bonferroni screening
-cannot repair historical allocation problems.
+cannot repair allocation problems.
 
 A post-hoc offline sensitivity, specified after the primary collection, excludes an entire experiment if any row for that experiment in the preserved CSV has a
 creation date that falls
@@ -24,14 +24,6 @@ metrics and bootstrap procedure. Primary reports are preserved unchanged. Dates 
 window are not a certification of valid randomization; this sensitivity is not confirmatory
 or an independent replication.
 
-\paragraph{Archived winner screen.}
-The archived aggregate comparisons use the observed best variant and runner-up. The procedure chose the observed best variant and compared it with the observed runner-up
-using a one-sided pooled two-proportion $z$ test at $p<0.05$, selecting \legacySelectedN{} packages.
-The direction was chosen from the data: even a two-arm null comparison can pass in either
-direction, so the nominal one-sided threshold does not imply a five-percent false-positive rate.
-Comparing only the runner-up need not separate a winner from every opponent. Outcome selection
-changes the evaluation population. Packages failing a screen are not thereby unpredictable.
-
 \paragraph{Simultaneous winner screen.}
 The primary experiment requires a unique observed maximum and compares it with every opponent using
 two-sided pooled $z$ tests. For $k$ variants the comparison family contains $m=k(k-1)/2$ unordered
@@ -40,16 +32,25 @@ The screening statistic is $\min(1,m\max_{j\ne w}p_{wj})$. Bonferroni's inequali
 adjustment~\citep{nistBonferroni}. The nominal bound is approximate and per package, conditional on
 independent binomial observations and adequate normal approximation. It is not an across-package
 false-discovery guarantee or proof of a population winner. Repeated exposures and Reddit voting
-further limit these assumptions. In the restored corpus \newSelectedN{} packages pass, all within
-the historical selected set. A stricter screen does not demonstrate that removed packages had
+further limit these assumptions. In the locked corpus \newSelectedN{} packages pass, all within
+the supplementary selected set described below. A stricter screen does not demonstrate that removed packages had
 false winners.
 
-\paragraph{New matched-budget collection.}
+\paragraph{Supplementary winner screen.}
+The supplementary aggregate comparisons use the observed best variant and runner-up,
+comparing them using a one-sided pooled two-proportion $z$ test at $p<0.05$, selecting \legacySelectedN{} packages.
+The direction was chosen from the data: even a two-arm null comparison can pass in either
+direction, so the nominal one-sided threshold does not imply a five-percent false-positive rate.
+Comparing only the runner-up need not separate a winner from every opponent. Outcome selection
+changes the evaluation population. Packages failing a screen are not thereby unpredictable.
+
+\paragraph{Matched-budget collection.}
 We froze the protocol and its source before collection. Both Gemini 3.1 Flash-Lite and Azure GPT-4.1 score
 every variant of the same \newSelectedN{}-package simultaneously screened exploratory cohort. This cohort
-was selected from previously examined outcomes; it is not a new held-out population, nor a
-recovery of historical generations. No new MIND, Reddit, other Upworthy split, prompt-robustness,
-or multi-seed experiment is claimed.
+was selected from previously examined outcomes and is not a held-out population. The
+matched-budget protocol is evaluated on this Upworthy cohort only; MIND, Reddit, other Upworthy
+splits, model tiers, seeds and aggregation rules are covered by the supplementary analyses,
+which do not establish prompt robustness.
 
 Each variant is allocated three observations for each of ten fixed personas and thirty generic-reader
 observations. Package and variant order is shuffled with a recorded seed; baseline/persona
@@ -67,7 +68,7 @@ The primary analysis retains a package only when every planned observation is va
 arms for all its variants. This also makes equal-persona and observation-weighted panel means
 identical. Failures are never replaced with additional semantic draws; bounded retries address
 transient transport failures only. Available-observation arm summaries are reported separately as sensitivity
-analyses, with their own coverage. The new primary policy is stricter than the historical
+analyses, with their own coverage. The primary policy is stricter than the scalar-checkpoint analysis
 requirement of at least one valid score per variant. Operational compatibility probes are retained
 separately and excluded. An Azure prompt refusal initially triggered a global HTTP400 stop. Before comparative analysis,
 a documented technical amendment classified only the confirmed content-filter refusal type as
@@ -85,7 +86,7 @@ Each paired gap uses packages valid in both arms for that metric. Empty estimate
 not zero. Percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$
 \citep{efron1979bootstrap}. They condition on selection and recorded scores and omit generation,
 selection, and outcome-measurement uncertainty. These are pointwise estimation intervals, not
-simultaneous guarantees across metrics or models. Historical coefficient-specific valid counts
+simultaneous guarantees across metrics or models. Supplementary aggregate coefficient-specific valid counts
 are not fully recorded; coverage totals are not those denominators.
 
 \paragraph{Planning and robustness scope.}
@@ -93,6 +94,6 @@ We report coefficient estimates and intervals without assigning standardized eff
 categories~\citep{cohen1988power}. The analysis does not establish prospective power for
 averages of within-package coefficients or equivalence. Time-stamped preregistration of all thresholds is not established.
 
-Historical robustness artifacts cover three Upworthy splits, MIND~\citep{wu2020mind},
+Supplementary reports cover three Upworthy splits, MIND~\citep{wu2020mind},
 Reddit~\citep{lakkaraju2013name}, three Gemini models, seed runs, and aggregation. Prompt robustness is not evaluated by these artifacts. Reddit's manifest records many
 more selected packages than the evaluated subset; its subset-selection procedure is undocumented.

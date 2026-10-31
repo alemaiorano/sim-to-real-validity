@@ -1,14 +1,13 @@
 # Do Synthetic Personas Predict Real Audience Response?
 
-This is the **public Git replication package for the v2 manuscript**:
+This is the **public Git replication package for the paper**:
 *Do Synthetic Personas Predict Real Audience Response? A Headline-Ranking Study with a
 Generic-Reader Baseline*.
 
 [Paper PDF](latex/main.pdf) · [arXiv preprint](https://arxiv.org/abs/2609.25010) ·
 [Replication guide](REPLICATION.md) · [Distribution scope](SCOPE.md) · [Citation](CITATION.cff)
 
-The repository update and the submission of a new arXiv version are separate. This package
-provides source, aggregate artifacts and executable reexport. Full raw replay additionally
+This package provides the manuscript source, aggregate artifacts and executable reexport. Full raw replay additionally
 requires the separately retained companion bundle; it is not downloadable from this repository.
 
 ## Reproduce from Git without API keys
@@ -27,11 +26,8 @@ make verify
 make test
 ```
 
-For the v2 proposal before integration into the default branch, first run
-`git switch research/sim-to-real-v2-2026-10-31`.
-
 `make reproduce` runs the ten existing exporters and compiles the paper with the fixed
-`SOURCE_DATE_EPOCH`. Included empirical figures are used unchanged; regenerating the archived
+`SOURCE_DATE_EPOCH`. Included empirical figures are used unchanged; regenerating the supplementary
 screen histogram requires the exact locked Upworthy corpus. `make verify` checks the listed Git
 payload files against `REPLICATION_SHA256SUMS`; the Git commit identifies the checksum file itself.
 `make test` exercises the offline producers and consumers with stubbed transports. No model
@@ -43,27 +39,27 @@ when its numerical content agrees.
 
 ## Results and boundaries
 
-The study compares a fixed ten-persona panel with a generic-reader baseline. The new experiment
+The study compares a fixed ten-persona panel with a generic-reader baseline. The primary experiment
 allocates thirty scores per arm and variant within each model. Its primary comparisons favor the
 baseline on valid ranks, expected top-1 and captured lift. A post-hoc exclusion of the archive's
 randomization-risk period retains positive top-1/lift contrasts, while Gemini tau-b and Spearman
-intervals include zero. Bottom-1 intervals include zero in both models. Archived Reddit decision
+intervals include zero. Bottom-1 intervals include zero in both models. Supplementary Reddit decision
 metrics favor the panel. These are conditional results for the specified panel/cohort/protocol,
 not a universal or causal conclusion.
 
 | Location | Contents |
 |---|---|
 | `latex/` | Current paper/PDF, generated tables/macros and figures |
-| `reports/` | Immutable archived aggregate reports |
-| `reanalysis/2026-10-31/` | Retrospective GPT scalar diagnostic and selection/replay provenance |
-| `recollection/2026-10-31/` | New matched-budget reports and six-metric post-hoc period sensitivity |
+| `reports/` | Immutable supplementary aggregate reports |
+| `reanalysis/2026-10-31/` | GPT scalar-checkpoint analysis and selection/replay provenance |
+| `recollection/2026-10-31/` | Primary matched-budget reports and six-metric post-hoc period sensitivity |
 | `data/persona_panel.json` | Fixed panel input |
 | `datasets/*.manifest.json` | Original corpus locks and input hashes; full corpora are not Git blobs |
 | `scripts/`, `tests/` | Statistical owners, exporters, collection/replay tools and offline checks |
 
-Archived comparisons and retrospective GPT diagnostics retain their own budgets, screening and
-tie policies. Historical Gemini observations, original GPT response texts and some subset lineage
-remain unavailable. New generations are a separate experiment. All numerical results trace to
+Supplementary comparisons and the GPT checkpoint analysis retain their own budgets, screening and
+tie policies. Supplementary Gemini observations, GPT checkpoint response texts and some subset lineage
+remain unavailable. Primary observations and supplementary scores retain separate protocol identities. All numerical results trace to
 artifacts via [CLAIMS_TO_ARTIFACTS.csv](CLAIMS_TO_ARTIFACTS.csv) and the
 [source-driven evidence ledger](docs/audit/full-text-claim-ledger.json). The [native DoesItStand review](docs/audit/doesitstand-v2-review.md) and
 [technical adjudication](docs/audit/doesitstand-v2-adjudication.md) are preserved separately.

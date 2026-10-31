@@ -10,7 +10,7 @@
     "scripts/analysis_io.py": "f6d427be0cd27184a6594a1833dade168f5586b09ee770140d9dcd2d6e0aea32",
     "scripts/compare_winner_filters.py": "82e6d8212a578baa991bf3066386a6b2bb9cec57cef51f7b8a06e02c0977026f",
     "scripts/replay_historical_gpt.py": "e82553576ad9faf4f233bdf063890c6b49509096c2f2c03329a7131be519b945",
-    "scripts/generate_reanalysis_assets.py": "46bbe3f8411c5b10f1ed603164aefbda2765e687a548af685e34c62b2fc584a6"
+    "scripts/generate_reanalysis_assets.py": "a22595cffeec350c167c5d59dad0de406cb5f80a0e4becafe54e1d2e668b2bb2"
   },
   "artifacts_sha256": {
     "gpt41.json": "f7e53ebd58596e758d2759ebb09cd638482472916f2aa8d31a3e2ad1a22e914d",
@@ -26,5 +26,12 @@
     "previous_sha256": "c2f11a09e59df588147f1988d56c75626db7d7a6e282e66d1bc8a1dfc0fa84d7",
     "current_sha256": "46bbe3f8411c5b10f1ed603164aefbda2765e687a548af685e34c62b2fc584a6",
     "change": "Caption replaces Corrected winner with Simultaneous winner; all numerical derivatives, estimator source and input pins unchanged."
+  },
+  "manuscript_presentation_amendment": {
+    "base_commit": "b808b66486c2d5427f57768da4a7416d8e4d9841",
+    "exporter": "scripts/generate_reanalysis_assets.py",
+    "previous_sha256": "46bbe3f8411c5b10f1ed603164aefbda2765e687a548af685e34c62b2fc584a6",
+    "current_sha256": "a22595cffeec350c167c5d59dad0de406cb5f80a0e4becafe54e1d2e668b2bb2",
+    "change": "Caption names the checkpoint analysis by protocol/evidence role; report bytes, estimators and all numerical cells unchanged."
   }
 }

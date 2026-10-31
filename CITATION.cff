@@ -15,4 +15,4 @@ preferred-citation:
   journal: "arXiv"
   doi: "10.48550/arXiv.2609.25010"
   url: "https://arxiv.org/abs/2609.25010"
-  notes: "Replication package for the v2 manuscript; the DOI identifies the arXiv preprint, whose version history is separate from this repository"
+  notes: "Replication package for the paper; cite the arXiv preprint identified by this DOI"

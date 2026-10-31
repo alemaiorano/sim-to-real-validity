@@ -11,17 +11,17 @@ The prompt requests JSON with a \texttt{click\_intent} number in $[0,1]$
 \widehat{s}(v)=\frac{1}{|O_v|}\sum_{(i,d)\in O_v}y_{i,d}(v).
 \]
 With complete draws this equals the mean over personas and draws. With missing draws it can
-differ from the historical H5 mean, which weights draw-collapsed personas equally. The supplementary aggregation comparison evaluates these alternative rules.
+differ from the supplementary aggregation mean, which weights draw-collapsed personas equally. The supplementary aggregation comparison evaluates these alternative rules.
 
 \paragraph{Sampling and parsing.}
-The historical Gemini configuration used temperature $0.8$, three draws per persona and thirty
-generic baseline draws per variant. The historical GPT-4.1 run instead used three draws per persona
-versus ten baseline draws and sent no generation seed. The new experiment below matches the score
-budget and records request seeds for both providers. Seeds alone do not guarantee identical
+The primary experiment uses temperature $0.8$, three draws per persona and thirty generic-reader
+draws per variant, with request seeds recorded for both providers. The supplementary Gemini
+comparison uses the same nominal draw allocation. The GPT-4.1 scalar-checkpoint analysis instead
+uses three draws per persona versus ten baseline draws; its requests sent no generation seed. Seeds alone do not guarantee identical
 provider responses over time.
 
-Archived scalars were produced by a permissive parser that could extract a first number,
+Supplementary scalars were produced by a permissive parser that could extract a first number,
 clamp values, and accept booleans; event frequencies are unknown. The matched-budget collector
 accepts only a finite, non-boolean JSON number in range under the exact requested key. Invalid
-parses are recorded as terminal missing observations. Configuration hashes and a new protocol
-namespace prevent mixing new checkpoints with legacy scores.
+parses are recorded as terminal missing observations. Configuration hashes and separate protocol
+namespaces prevent mixing primary checkpoints with supplementary scores.
