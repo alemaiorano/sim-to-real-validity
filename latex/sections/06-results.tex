@@ -1,7 +1,7 @@
 \section{Results}
-\paragraph{New raw-backed comparison (RQ1).}
-Tables~\ref{tab:new_gemini} and \ref{tab:new_azure} give the matched-budget experiment,
-separating it from all historical values below. The complete-package policy retains
+\paragraph{Primary matched-budget comparison (RQ1).}
+Tables~\ref{tab:new_gemini} and \ref{tab:new_azure} give the primary matched-budget experiment.
+Supplementary comparisons below retain their own protocols and evidence boundaries. The complete-package policy retains
 \newGeminiN{} Gemini packages and \newGptN{} GPT-4.1 packages; exclusions are respectively
 \newGeminiExcludedN{} and \newGptExcludedN{}. Reports retain every planned observation and
 failure, with metric-specific valid and paired IDs.
@@ -26,7 +26,7 @@ Baseline-minus-panel CIs exclude zero for the rank metrics, top-1 and captured l
 configurations; bottom-1 CIs include zero. These are pointwise conditional estimates.
 Gamma and $\tau_b$ have distinct rows and denominators; neither is substituted for the other.
 These conditional package-bootstrap intervals omit repeated-generation uncertainty and do not
-compare model families causally. The historical GPT diagnostic is a separate experiment.
+compare model families causally. The GPT scalar-checkpoint analysis uses a separate collection protocol.
 \input{tables/recollection}
 
 \paragraph{Post-hoc randomization-window sensitivity.}
@@ -48,38 +48,39 @@ conditional measure; it is not substituted for the uncertain tau-b result. Botto
 include zero for both models. These are post-hoc, pointwise intervals, not an equivalence test.
 \input{tables/window_sensitivity}
 
-\paragraph{Historical Upworthy comparison (RQ1).}
-Table~\ref{tab:validity} and Figure~\ref{fig:comparison} retain original estimates.
+\paragraph{Supplementary Upworthy comparison (RQ1).}
+Table~\ref{tab:validity} and Figure~\ref{fig:comparison} give supplementary aggregate estimates.
 The generic baseline has higher gamma (\baseGamma{} versus \goodmanGamma{}) and top-1
-(\baseTopOne{} versus \topOneAcc{}). These are conditional descriptions under the legacy screen
+(\baseTopOne{} versus \topOneAcc{}). These are conditional descriptions under the top-versus-runner-up screen
 and tie rule. Marginal CIs are not a paired test, and gamma is not assigned a calibrated
 medium-effect interpretation.
 \input{tables/validity}
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/comparison.pdf}
-\caption{Historical comparison under the legacy screen. Coefficient-specific valid counts are
+\caption{Supplementary comparison under the top-versus-runner-up screen. Coefficient-specific valid counts are
 unavailable. The displayed rank coefficient is gamma.}
 \label{fig:comparison}
 \end{figure}
 
-Figure~\ref{fig:reliability} shows the historical screening statistic, not calibrated winner
-probabilities. The archived all-package panel gamma is \sensGamma{} (CI
-[\sensGammaCILow{}, \sensGammaCIHigh{}]), also retaining legacy metric and parsing semantics.
+Figure~\ref{fig:reliability} shows the supplementary screening statistic, not calibrated winner
+probabilities. The supplementary all-package panel gamma is \sensGamma{} (CI
+[\sensGammaCILow{}, \sensGammaCIHigh{}]), with the aggregate-report metric and parsing semantics.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/reliability.pdf}
-\caption{Historical one-sided top-versus-runner-up screen selecting \legacySelectedN{} packages.
+\caption{Supplementary one-sided top-versus-runner-up screen selecting \legacySelectedN{} packages.
 Selection of direction from observed rates invalidates a literal one-sided false-positive-rate interpretation.
 Nonsignificant packages need not be unpredictable.}
 \label{fig:reliability}
 \end{figure}
 
 \paragraph{Signal strength (RQ2).}
-The historical association between the legacy signal statistic and top-1 is Spearman
+The association between the supplementary screening statistic and top-1 is Spearman
 \hThreeTopOne{} (CI [\hThreeTopOneCILow{}, \hThreeTopOneCIHigh{}]) over \hThreeN{} packages.
-It has not been recomputed for historical Gemini under simultaneous screening and expected tie credit.
-The new selected-cohort experiment does not reconstruct this all-package historical analysis.
+The available aggregate does not support recomputing this association under simultaneous
+screening and expected tie credit. The primary selected-cohort experiment does not estimate
+this all-package association.
 
 \paragraph{Dataset comparisons (RQ3).}
 Table~\ref{tab:replication} shows higher baseline gamma on the three Upworthy splits and a smaller
@@ -88,13 +89,13 @@ difference on MIND, where packages compare articles. On Reddit, the panel has hi
 The direction of the contrast therefore depends on dataset and metric. Reddit gamma
 CIs include zero; this establishes neither equivalence nor absence of a title-related signal.
 Posting time and visibility were not tested as explanations. Subset-selection and coverage
-limitations further restrict interpretation. The historical summary does not record draw
+limitations further restrict interpretation. The aggregate summary does not record draw
 counts or evaluated package IDs, so cross-dataset protocol equivalence is not independently
 verified by those aggregates.
 \input{tables/replication}
 
 \paragraph{Seed, model, ties, and aggregation.}
-The archived three-seed SDs (\stabGammaSD{} for gamma; \stabTopOneSD{} for top-1) use the
+The supplementary three-seed SDs (\stabGammaSD{} for gamma; \stabTopOneSD{} for top-1) use the
 population convention over those seeds, not sample SDs or precise general-variability estimates.
 The baseline has higher gamma on three tested Gemini tiers (Table~\ref{tab:cross_model_gap},
 Appendix~\ref{sec:appendix}); evaluated IDs are not retained to verify a shared subset.
@@ -104,16 +105,16 @@ The tie report rounds scores before counting constant packages; the rank code us
 equality. That count cannot recover excluded gamma values. Undefined coefficients cannot be
 silently assigned zero, and the reports do not justify a conservative-lower-bound claim for the gap.
 
-Table~\ref{tab:h5agg} preserves six historical aggregation rules, all with lower reported gamma
+Table~\ref{tab:h5agg} preserves six supplementary aggregation rules, all with lower reported gamma
 than the baseline. Equal-persona and observation-weighted means can differ with missing draws.
 The reports do not establish why their top-1 results differ, or whether bias, sampling noise,
 scale, or another factor explains relative performance.
 \input{tables/h5_aggregation}
 
-\paragraph{Retrospective GPT-4.1 diagnostic.}
+\paragraph{GPT-4.1 scalar-checkpoint analysis.}
 The recovered checkpoint contains scalars, not original responses. Offline replay of the pinned
 producer reproduces all published cross-family report fields within numerical tolerance.
-Historical coverage is \xfN{} panel and \xfPairedN{} baseline/paired packages.
+Collection coverage is \xfN{} panel and \xfPairedN{} baseline/paired packages.
 Thirty panel observations versus ten baseline draws and no generation seed make it
 an unequal-budget comparison.
 
@@ -121,7 +122,7 @@ Table~\ref{tab:corrected_gpt} applies simultaneous screening and tie-aware estim
 Coverage becomes \correctedPanelN{} panel, \correctedBaseN{} baseline, and \correctedPairedN{}
 paired packages. Baseline Kendall $\tau_b$ is \correctedBaseTau{} versus \correctedPanelTau{}.
 Paired CIs for the displayed gaps exclude zero, supporting a positive baseline gap in this
-retrospective diagnostic. It is not an independent replication or a budget-matched estimate, and does not validate
-raw parsing. Gamma and tau-b remain separate. A historical Gemini reanalysis with these
-estimators is unavailable; the new Gemini table describes different generations and a different configuration.
+checkpoint analysis. It is not an independent replication or a budget-matched estimate, and does not validate
+raw parsing. Gamma and tau-b remain separate. The supplementary Gemini observations are unavailable for applying these estimators; the
+primary Gemini comparison uses its own retained generations and configuration.
 \input{tables/corrected_gpt}

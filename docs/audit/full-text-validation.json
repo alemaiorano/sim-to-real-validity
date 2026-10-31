@@ -1,80 +1,101 @@
 {
-  "base_commit": "1326962cd6e3b4bb41f889737ffcbc8516655171",
-  "scope": "Standalone v2 source and new mathematical/CSV verification. Earlier raw replay/source review reused only for unchanged pinned components; their targets remain explicit.",
-  "tests_passed": 47,
-  "tests_log": "v2-audit/tests-csv-final.log",
+  "base_commit": "b808b66486c2d5427f57768da4a7416d8e4d9841",
+  "scope": "One coherent manuscript; editorial framing, caption/figure labels and public metadata. Numerical reports, estimator/collector source, test source and bibliography unchanged.",
+  "current_evidence": "docs/audit/manuscript-presentation.json",
   "coverage": {
     "paragraphs": 56,
     "tables": 11,
     "figures": 3,
     "cited_references": 25
   },
-  "formula_oracle": "v2-audit/formula-oracle-result.json",
-  "independent_csv": "v2-audit/ingestion-independent-result.json",
-  "numerical_assets_preserved": 16,
   "pdf": {
+    "sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
+    "bytes": 367434,
     "pages": 13,
-    "bytes": 368987,
-    "sha256": "03d0a905d62521fd32a70d796556562df91790f6a4bd2ec2e70bb468c8127c02",
     "overfull": false,
     "undefined_refs_or_cites": false,
-    "underfull_layout_messages": true,
     "JSON_placeholder_literal_glyphs_verified": true
   },
-  "own_erratum_audit_narrative_removed": true,
-  "external_Upworthy_Author_Correction_bibliography_title_preserved": true,
-  "doesitstand": {
-    "initial_run": {
-      "reviewed_source_commit": "58051e9c1553e5712c8606f260e8ddbb9a9e7582",
-      "pdf_sha256": "bb46041c0f214ab0a83af3d85ae9bc5b4bc3f0d33ad7989fceabc882b1d9251a",
-      "tool_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
-      "exit_code": 0,
-      "meta_decision": "Weak Accept",
-      "overall_score": 6,
-      "confidence": 4,
-      "calls": 13,
-      "guard_passed": true,
-      "references_automatically_resolved": 23,
-      "references_total": 25,
-      "references_manual_primary_resolution": 2,
-      "claims_checker_counts": {
-        "supported": 3,
-        "unsupported": 0,
-        "uncertain": 1
+  "reused_evidence": "docs/audit/history/pre-presentation-b808b66-full-text-validation.json",
+  "reuse_boundary": "Prior formula/CSV/raw-replay/bibliography evidence applies to identical pinned source and data only. Earlier native reviews cover their original hashes. Current review above covers this exact PDF, and the clean-clone check reran all 47 offline tests.",
+  "scientific_provider_calls": 0,
+  "no_assertion_of_actual_journal_review": true,
+  "clean_clone_reproduction": {
+    "target_commit": "d0af68fbfbe0655b8c1ecbdc4ea9dd1da6d557e9",
+    "clone_started_clean": true,
+    "checks": [
+      {
+        "command": "make verify",
+        "exit_code": 0,
+        "log": "clean-clone-1-verify.log"
       },
-      "advisory_limits": "Review contains false positives and overbroad paraphrases; source/numeric evidence adjudication retained separately. No blanket scientific-acceptance claim.",
-      "artifacts": "v2-audit/doesitstand-e2e and v2-audit/DOESITSTAND_ADJUDICATION.md",
-      "new_scientific_generations": 0
-    },
-    "final_run": {
-      "source_commit": "25a8b2c47f0090852abbc9ad23412e91ea3bffaf",
-      "pdf_sha256": "03d0a905d62521fd32a70d796556562df91790f6a4bd2ec2e70bb468c8127c02",
-      "final_native_exit": 0,
-      "final_meta_decision": "Weak Accept",
-      "overall_score": 6,
-      "confidence": 4,
-      "final_calls": 13,
-      "final_guard_raw_passed": false,
-      "final_guard_encoding_TikZ_false_positives": 6,
-      "native_claim_counts": {
-        "supported": 3,
-        "unsupported": 1,
-        "uncertain": 0
+      {
+        "command": "make reproduce",
+        "exit_code": 0,
+        "log": "clean-clone-2-reproduce.log"
       },
-      "native_reference_counts": {
-        "resolved": 23,
-        "total": 25,
-        "author_mismatches": 0
+      {
+        "command": "make verify",
+        "exit_code": 0,
+        "log": "clean-clone-3-verify.log"
       },
-      "manual_reference_primary_resolution": 2,
-      "tool_source_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
-      "review_prompt_version": "v3",
-      "manuscript_version": "v2",
-      "raw_review": "docs/audit/doesitstand-v2-review.md",
-      "adjudication": "docs/audit/doesitstand-v2-adjudication.md",
-      "semantics": "Native advisory review, not human editorial acceptance. Raw failed encoding/claim signals are preserved and adjudicated; no blanket PASS is asserted. Full SDK journals stay in the separate retained companion."
-    }
+      {
+        "command": "make test",
+        "exit_code": 0,
+        "log": "clean-clone-4-test.log"
+      },
+      {
+        "command": "make checksums",
+        "exit_code": 0,
+        "log": "clean-clone-5-checksums.log"
+      }
+    ],
+    "same_catalog_after_regeneration": true,
+    "checksum_probe_detected_changed_Makefile": true,
+    "checksum_probe_restored_and_verified": true,
+    "clone_finished_clean": true,
+    "payload_files": 144,
+    "pdf_sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
+    "tests_passed": 47,
+    "provider_calls": 0
   },
-  "replication": "Frozen exact inputs retained; new newline-aware ingester is not used to mutate saved-generation inputs.",
-  "clean_bundle_byte_replay": "v2-audit/v2-bundle-replay.json"
+  "source_only_archive_reproduction": {
+    "source_commit": "d0af68fbfbe0655b8c1ecbdc4ea9dd1da6d557e9",
+    "source_archive": "paper-source.tar.gz",
+    "source_archive_sha256": "f8b96bf2b694d0fc757e13a01d214258355502bcd921e12ec772fd2ff5d3e071",
+    "source_files": 30,
+    "rebuilt_PDF_byte_identical": true,
+    "pdf_sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
+    "SOURCE_DATE_EPOCH": 1793404800
+  },
+  "doesitstand": {
+    "source_commit": "d0af68fbfbe0655b8c1ecbdc4ea9dd1da6d557e9",
+    "pdf_sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
+    "tool_source_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
+    "review_prompt_version": "v3",
+    "native_exit": 0,
+    "native_meta_decision": "Accept",
+    "overall_score": 7,
+    "confidence": 4,
+    "calls": 13,
+    "accounted_usd_conservative_not_invoice": 0.8168355,
+    "scientific_provider_calls": 0,
+    "guard_raw_passed": false,
+    "guard_TikZ_encoding_false_positives": 6,
+    "native_claim_counts": {
+      "supported_count": 3,
+      "unsupported_count": 1,
+      "uncertain_count": 0
+    },
+    "native_reference_counts": {
+      "resolved": 23,
+      "total": 25,
+      "author_mismatches": 0
+    },
+    "manually_verified_primary_web_references_reused": 2,
+    "native_potential_hallucinations": 0,
+    "raw_review": "docs/audit/doesitstand-review.md",
+    "adjudication": "docs/audit/doesitstand-adjudication.md",
+    "semantics": "Automated advisory, not journal acceptance or an independent human gate. Raw failed guard and unsupported summary paraphrase preserved and adjudicated. Current manuscript PDF is unchanged from reviewed source; later changes are public evidence/documentation only. SDK-object journals remain in separate retained companion."
+  }
 }

@@ -1,0 +1,126 @@
+{
+  "base_commit": "b808b66486c2d5427f57768da4a7416d8e4d9841",
+  "scope": "Editorial reframing only; checks below concern changed presentation and exact reuse boundaries, not a new mathematical or empirical audit.",
+  "immutable_payload_files": 61,
+  "immutable_payload_sha256": {
+    "data/persona_panel.json": "3ff13e5eb82486ed0de24ccfad7e6a0844de053c29f5f056fb636432b329aaac",
+    "datasets/mind-subset-2026-06-03.manifest.json": "adfb96a0c2a272e0b9f9aa7f8025b3b6fa6e788fd177dba1ce49ca9dacaef921",
+    "datasets/reddit-subset-2026-06-04.manifest.json": "3c42813ce2851342b3e0a0a95f257cb1769b5974dcbce9996d825f2abeefb1b5",
+    "datasets/upworthy-confirmatory-2026-06-03.manifest.json": "d4008f8bcf2554fdf42ac63b97f7121779a562c1923bc0eed98d487646edbfc9",
+    "datasets/upworthy-holdout-2026-06-03.manifest.json": "dd2177cce14896c935fbe24da8049695708da901b803020dc0f27525c54bf6ca",
+    "datasets/upworthy-subset-2026-06-03.manifest.json": "a778d5bf8e9abfe4ffd33d8f995a0adde177b13202ccb531858b0b60ef5f13a9",
+    "reanalysis/2026-10-31/corpus_rebuild_verification.json": "6ab2a9af88ce405957ae293ea8980a61623541194f8d007908c5eeef6ca9c3e3",
+    "reanalysis/2026-10-31/filter_comparison.json": "1ec56349123eb6c31dfb20adf9f6c2986c904c01641f97de70be985f2aed4b46",
+    "reanalysis/2026-10-31/gpt41.json": "f7e53ebd58596e758d2759ebb09cd638482472916f2aa8d31a3e2ad1a22e914d",
+    "reanalysis/2026-10-31/legacy_gpt_verification.json": "a8f25330b137065c7d6fdef4be89e4196c13351a39a90f77ac8f7d3086822e4a",
+    "recollection/2026-10-31/README.md": "4fca75c96eeb3063727f39993a8f2e21a027e4c0b8a78b3f1bc7e6c805d1502f",
+    "recollection/2026-10-31/azure.json": "c9ec473919e78133a8ca0633dc53c6a40611d47d62ed4182fe84b161ab1460ad",
+    "recollection/2026-10-31/gemini.json": "2b5038153ff4a4f7cfb0a016728b747ef5f60d4fb38e8d5ba1b6dc01461d24a1",
+    "recollection/2026-10-31/window_sensitivity.json": "e8c7ced60e4636ebf697e7d63b4033f4909bf765fdbb8a1d5930050bae4375a6",
+    "reports/baseline_comparison.json": "00371d26b6095956d595f0e011c085d678e30c9d1ece020b1cef2b1fd2e8b1dd",
+    "reports/baseline_ties.json": "76625f5090b83784d150759f4af47679789b5ac7666719b4774f36d2cc9cf689",
+    "reports/correlation.json": "0182594bbb1f1565152981398d463cd755796dc6b8ea4bfb0652754e109bfaf1",
+    "reports/cross_model_gap.json": "76bb2c7e757de2d6fbc548cab74c81747b17a7ea9ddeca808b75a22f644af370",
+    "reports/crossfamily_gpt41.json": "bab2539460870beae9ee5d5d3150d2beecfb3fa27381623faae96d70b072b86f",
+    "reports/error_analysis.json": "8857cb519119550cc3405270d58d47491082ee0a20385fac4914a4d56b9e1410",
+    "reports/h003.json": "af4044f776dc6e10bf235ed91961ae43c664a1af6ed399ae04ec34b7d03d5a2a",
+    "reports/h5_aggregation.csv": "30e2eea3192171671a7264b45822b90319f0277a4ffc82eee8b878f09353cd85",
+    "reports/h5_aggregation.json": "483e4224b07a7855ee757080527e58f2580de02b0d2b27319030abd0eb356a4e",
+    "reports/h5_aggregation_report.md": "f25f482d2ad4ca69f74ddaa6cff67c9c49fb9d36a62db2cb3e706fcb74a2a298",
+    "reports/legacy-provenance.json": "4962f708ae100d5c95e76909593bd0b0b3e4a5c3eeaa51c6290564a652b6ef2e",
+    "reports/pilot_model_comparison.json": "d5932d14bf8a9765eb8491601add34d4c94004a9698c608b28f9605ba0e1c9a6",
+    "reports/power_analysis.json": "d0a7d42067025678ddeebd3306d2d7a55644b894045bd323aa2719ad2624ad8c",
+    "reports/replication.json": "0c00409ccd8a216f1a1920578c104a1d7212050085c3b979f126632c72666e5e",
+    "reports/stability.json": "a2e7144c96d884766a7d51d260f003bd4d9291407900898ceab69cea76a79688",
+    "scripts/01_ingest_upworthy.py": "95672387b8c516cc8810fde256b266cb2ff7c3995786902c6eee1f360e5cb3f5",
+    "scripts/02_run_personas.py": "05d682af8da202ba6512b14bd7a1bf33629981bbce8df074ba35cc9dd834d18b",
+    "scripts/03_build_joined.py": "83742c85cb001b6bc3f932d4a6bace2c174ff98a0cc6a34a307c9e2ada0e8f57",
+    "scripts/analysis_io.py": "f6d427be0cd27184a6594a1833dade168f5586b09ee770140d9dcd2d6e0aea32",
+    "scripts/analyze_baseline_ties.py": "737204a53b7c91f445ed5d3211560a716152363520b43f392bd0e2952a787129",
+    "scripts/analyze_h003.py": "7da0a132d0bac06e00376b44ffa2bf0f98bf9a994a16c8fc481510fb977bc82f",
+    "scripts/analyze_h5_aggregation.py": "2fcce673e324df824c9da24c4d1bbb7520537e7cd1800146884d3bc5065cad64",
+    "scripts/analyze_pilot.py": "aae3889d6334c536ae5eac0237efc39691def6da5a0eef0370a74b7dfd879127",
+    "scripts/analyze_randomization_window.py": "f6ebcb3383fde53adae0265b65b77433b75a2b1ca218cc2f09da408e4970ecb4",
+    "scripts/analyze_recollection.py": "38aff73849e22d379937889f46322920a4dae151a7dfeda680f39e773be2de2c",
+    "scripts/analyze_replication.py": "b768085c2b591a47640467bc38d99bffbf78fbd59078545087b02d06db979bfe",
+    "scripts/build_mind_corpus.py": "42366baa220ec15f6d32301726b90746a2afbd9b48be0110a66b4e2a0d30eaef",
+    "scripts/build_reddit_corpus.py": "2b2c1d896b517761bd671b0fecd0444fda8054c6bbf067c356578d117d9b4556",
+    "scripts/build_replication_checksums.py": "75bdd6a13540eeb9c5fdaf16655c05301e597e4ce19887bc17c7fe00bb08faae",
+    "scripts/check_onedrive_sync.ps1": "ae8e7bd80803924f88b727783c66f7bcbb44d532443e6b9bf820e031dc9d2584",
+    "scripts/compare_winner_filters.py": "82e6d8212a578baa991bf3066386a6b2bb9cec57cef51f7b8a06e02c0977026f",
+    "scripts/compute_validity.py": "aaccfc01dc6672b6f6eddbb418685d0cd55630d55f33dda9d1635640ac9309c7",
+    "scripts/error_analysis.py": "de492bd241e3a34adf40bcad3ee07a1b4ab03ca461e5ec1f01202eeec3452cdf",
+    "scripts/export_recollection_observations.py": "d4fadcbb8b6fc6ff8bc6983a289644ae9d5a255b9ff4590904e9b623d93dd0b3",
+    "scripts/historical_results.py": "1b9a76a2919ca8662ab8153cffb3bda1198645ae9bbbdf25e9454a9fe8f3e890",
+    "scripts/power_analysis.py": "4bbae8ca4a0fe82de928cfaa8b3aa5b4a2650b019f402fddda2ac03e21e6c5c2",
+    "scripts/protect_windows_paper_archive.ps1": "fa96c60d5febf1101cbcc8fbd636c192bafa13e294ff4e8893e9892385a6279c",
+    "scripts/reanalyze_checkpoint.py": "2cc52db24bf9ab847c7fe4d8e47899254240425eaead5b2b72ea00175b93540d",
+    "scripts/recollect.py": "49dd1464434113c7ad0113f7a7f6013311822b46e464c64def4ca3ac46d66d69",
+    "scripts/replay_historical_gpt.py": "e82553576ad9faf4f233bdf063890c6b49509096c2f2c03329a7131be519b945",
+    "scripts/run_predictions.py": "0977faaad6ceb4f73ce3aec4c6bb7bd3c070929f519ed286efb2e3e30d748419",
+    "scripts/tier2_crossmodel.py": "1fbd935a3f8b299e2b982197075c28fc91f93d8350a798bbb4f6003677dc1db9",
+    "scripts/winner_filter.py": "6dea65e32a5b7c43eec6c43826fa77b9f24f1ed027f2a2e9b2667bf48ab7bceb",
+    "tests/test_corrections.py": "a8acfee6b2600abeb200d46153886716039e336847408bacb33bac465b69b757",
+    "tests/test_randomization_window.py": "73cc85a13a2bccafb9f1430f1fe70374d39158354c1497a0a98fd29a2d901234",
+    "tests/test_recollection.py": "496936bb515700979d63b87889f0a564986ba8d9e71641d58c2cc8b319e867b2",
+    "tests/test_replication.py": "08c556e37fed3180e3db15ea9be3b48021604307f4bcbed6d7c5b0ded1a1a4ca"
+  },
+  "macro_files_byte_unchanged": [
+    "latex/variables.tex",
+    "latex/reanalysis_variables.tex",
+    "latex/recollection_variables.tex",
+    "latex/window_sensitivity_variables.tex"
+  ],
+  "tables": [
+    {
+      "path": "latex/tables/corrected_gpt.tex",
+      "all_body_cells_unchanged": true
+    },
+    {
+      "path": "latex/tables/cross_model_gap.tex",
+      "all_body_cells_unchanged": true
+    },
+    {
+      "path": "latex/tables/error_examples.tex",
+      "all_body_cells_unchanged": true
+    },
+    {
+      "path": "latex/tables/h5_aggregation.tex",
+      "all_body_cells_unchanged": true
+    },
+    {
+      "path": "latex/tables/model_comparison.tex",
+      "all_body_cells_unchanged": true
+    },
+    {
+      "path": "latex/tables/persona_panel.tex",
+      "all_body_cells_unchanged": true
+    },
+    {
+      "path": "latex/tables/recollection.tex",
+      "all_body_cells_unchanged": true
+    },
+    {
+      "path": "latex/tables/replication.tex",
+      "all_body_cells_unchanged": true
+    },
+    {
+      "path": "latex/tables/validity.tex",
+      "all_body_cells_unchanged": true
+    },
+    {
+      "path": "latex/tables/window_sensitivity.tex",
+      "all_body_cells_unchanged": true
+    }
+  ],
+  "figure_transformation_AST_unchanged_except_two_titles": true,
+  "histogram_packages": 1695,
+  "histogram_selected": 399,
+  "bibliography_and_primary_resolution_evidence_byte_unchanged": true,
+  "no_own_historical_new_version_story_in_extracted_pdf": true,
+  "build_without_overfull_undefined_missing_glyphs": true,
+  "pdf_sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
+  "pdf_bytes": 367434,
+  "scientific_provider_calls": 0,
+  "no_actual_journal_peer_review_or_acceptance_invented": true
+}

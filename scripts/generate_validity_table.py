@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate latex/tables/validity.tex (tab:validity, RQ1) — the headline comparison of the
+"""Generate latex/tables/validity.tex (tab:validity, RQ1) — the supplementary comparison of the
 no-persona baseline vs. the persona panel — from reports/baseline_comparison.json, falling back
 to the panel-only result in reports/correlation.json if the baseline is absent.
 
@@ -41,7 +41,7 @@ def main() -> None:
             f"    No-persona baseline & {cell(b['top1'], pct=True)} & {cell(b['gamma'])} & {cell(b['rho'])} \\\\\n",
             f"    Persona panel & {cell(p['top1'], pct=True)} & {cell(p['gamma'])} & {cell(p['rho'])} \\\\\n",
         ]
-        caption = (f"Historical Upworthy exploratory estimates under the legacy winner screen. "
+        caption = (f"Supplementary Upworthy exploratory estimates under the top-versus-runner-up screen. "
                    f"Panel $n_{{total}}={p['n']}$; baseline $n_{{total}}={b['n']}$; "
                    "correlation-specific valid counts are unavailable. The stored rank coefficient "
                    "is Goodman--Kruskal gamma, not Kendall tau. Top-1 uses first-index tie breaking. "
