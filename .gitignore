@@ -22,6 +22,7 @@ __pycache__/
 # Regenerable intermediate artifacts (reproducible from scripts; not redistributed)
 data/sim_predictions.jsonl
 data/joined.csv
+data/joined-corrected.csv
 data/predictions/
 
 # Raw third-party corpora — downloaded locally, never re-hosted (see DATA_SOURCES.md)

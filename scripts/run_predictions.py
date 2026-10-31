@@ -17,9 +17,10 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
+import math
 import json
 import os
-import re
 import sys
 import threading
 import time
@@ -27,6 +28,7 @@ import urllib.request
 import urllib.error
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from winner_filter import evaluate_winner
 
 PAPER_DIR = Path(__file__).resolve().parents[1]
 DATASETS = PAPER_DIR / "datasets"
@@ -69,6 +71,8 @@ def latest_corpus(corpus_path: str | None = None) -> list[dict]:
     return json.loads(cands[-1].read_text())
 
 
+COLLECTION_PROTOCOL = "strict-json-v2"
+
 JSON_TAIL = "Respond ONLY with JSON: {\"click_intent\": <number between 0 and 1>}."
 
 
@@ -91,20 +95,27 @@ def build_prompt(persona: dict, headline: str, variant: str = "default") -> str:
             f"As this exact person, how likely are you to click this headline? {JSON_TAIL}")
 
 
-_FLOAT = re.compile(r"-?\d*\.?\d+")
+def _unique_json_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate JSON object key")
+        result[key] = value
+    return result
 
 
 def parse_click_intent(text: str) -> float | None:
+    """Only a finite JSON number in [0,1]; malformed/out-of-domain is terminal."""
     try:
-        obj = json.loads(text)
-        v = float(obj["click_intent"])
-        return v if 0.0 <= v <= 1.0 else max(0.0, min(1.0, v))
-    except Exception:
-        m = _FLOAT.search(text or "")
-        if m:
-            v = float(m.group())
-            return max(0.0, min(1.0, v))
-    return None
+        obj = json.loads(text, object_pairs_hook=_unique_json_object)
+        if not isinstance(obj, dict) or set(obj) != {"click_intent"}:
+            return None
+        value = obj["click_intent"]
+        if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= 1:
+            return None
+        return float(value)
+    except (ValueError, TypeError, OverflowError):
+        return None
 
 
 def call_model(key: str, model: str, prompt: str, temperature: float, seed: int,
@@ -113,11 +124,9 @@ def call_model(key: str, model: str, prompt: str, temperature: float, seed: int,
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
             "temperature": temperature,
-            "seed": seed,                       # reproducibility (Gemini honours seed)
+            "seed": seed,                       # forwarded; does not guarantee provider replay
             "responseMimeType": "application/json",
-            # Disable thinking: the task is a single scalar judgment, not multi-step reasoning.
-            # flash-lite performs no thinking by default; this makes the config explicit, fair
-            # across model tiers, and ~7x cheaper on thinking-enabled tiers.
+            # Preserve the historical requested thinking configuration.
             "thinkingConfig": {"thinkingBudget": 0},
         },
     }).encode()
@@ -162,6 +171,8 @@ def main() -> None:
                     help="prompt-robustness ablation variant")
     args = ap.parse_args()
 
+    if args.draws < 1 or args.concurrency < 1 or args.packages < 0 or not math.isfinite(args.temperature):
+        ap.error("draws/concurrency must be positive; packages nonnegative; temperature finite")
     key = load_api_key()
     if args.baseline:
         panel = [{"id": "baseline"}]   # single generic reader; --draws controls samples/variant
@@ -169,7 +180,7 @@ def main() -> None:
         panel = json.loads(PANEL.read_text())["personas"]
     corpus = latest_corpus(args.corpus)
     if args.significant_only:
-        corpus = [p for p in corpus if p.get("winner_significant")]
+        corpus = [p for p in corpus if evaluate_winner(p["variants"])["selected"]]
     if args.packages > 0:               # 0 = all packages; otherwise take the first N
         corpus = corpus[: args.packages]
     if not corpus:
@@ -183,21 +194,42 @@ def main() -> None:
 
     for model in models:
         t0 = time.time()
-        safe = model.replace(".", "_")
-        out = OUT_DIR / f"{safe}{args.out_suffix}.jsonl"
+        safe = model.replace(".", "_").replace("/", "_").replace("\\", "_")
+        config = {"protocol": COLLECTION_PROTOCOL, "model": model, "corpus": corpus,
+                  "panel": panel, "variant": args.variant, "temperature": args.temperature,
+                  "seed": args.seed, "draws": args.draws}
+        config["prompt_sha256"] = hashlib.sha256(json.dumps(
+            [build_prompt(p, "{headline}", args.variant) for p in panel], sort_keys=True).encode()).hexdigest()
+        fingerprint = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
+        stem = f"{safe}{args.out_suffix}-{COLLECTION_PROTOCOL}-{fingerprint[:16]}"
+        out = OUT_DIR / f"{stem}.jsonl"
+        if out.exists():
+            fail(f"final predictions already exist: {out}; use a new suffix for a new run")
         # Per-observation checkpoint, appended+flushed as calls complete so a mid-run crash
         # loses nothing and the run is resumable (skip already-recorded observations).
-        ckpt = OUT_DIR / f".checkpoint-{safe}{args.out_suffix}.jsonl"
+        ckpt = OUT_DIR / f".checkpoint-{stem}.jsonl"
 
         done: set[tuple[str, str, str, int]] = set()
         results: dict[tuple[str, str], list[float]] = {}
+        expected = {(p["package_id"], v["variant_id"], persona["id"], d)
+                    for p in corpus for v in p["variants"] for persona in panel for d in range(args.draws)}
         if ckpt.exists():
             for line in ckpt.read_text().splitlines():
                 if not line.strip():
                     continue
                 r = json.loads(line)
-                done.add((r["package_id"], r["variant_id"], r["persona_id"], r["draw"]))
-                results.setdefault((r["package_id"], r["variant_id"]), []).append(r["value"])
+                if r.get("config_sha256") != fingerprint or r.get("collection_protocol") != COLLECTION_PROTOCOL:
+                    fail("checkpoint protocol/configuration mismatch")
+                obs_key = (r["package_id"], r["variant_id"], r["persona_id"], r["draw"])
+                if type(r["draw"]) is not int or obs_key not in expected or obs_key in done:
+                    fail("duplicate or out-of-configuration checkpoint observation")
+                done.add(obs_key)
+                if r["status"] == "valid":
+                    if type(r["value"]) not in (int, float) or not math.isfinite(r["value"]) or not 0 <= r["value"] <= 1:
+                        fail("invalid score in checkpoint")
+                    results.setdefault((r["package_id"], r["variant_id"]), []).append(r["value"])
+                elif r["status"] != "invalid_or_unavailable" or r["value"] is not None:
+                    fail("unknown checkpoint status")
             print(f"[run] {model}: resuming, {len(done)} observations already in checkpoint")
 
         tasks = [(pkg["package_id"], v["variant_id"], v["headline"], persona, d)
@@ -215,19 +247,21 @@ def main() -> None:
                 for fut in as_completed(futs):
                     pid, vid, persona_id, d = futs[fut]
                     val = fut.result()
-                    if val is None:
-                        miss += 1
-                        continue
-                    ok += 1
+                    miss += val is None
+                    ok += val is not None
                     with lock:
                         ckpt_fh.write(json.dumps({"package_id": pid, "variant_id": vid,
-                                                  "persona_id": persona_id, "draw": d, "value": val}) + "\n")
+                                                  "persona_id": persona_id, "draw": d, "value": val,
+                                                  "status": "valid" if val is not None else "invalid_or_unavailable",
+                                                  "collection_protocol": COLLECTION_PROTOCOL,
+                                                  "config_sha256": fingerprint}) + "\n")
                         ckpt_fh.flush()
-                    results.setdefault((pid, vid), []).append(val)
+                    if val is not None:
+                        results.setdefault((pid, vid), []).append(val)
         finally:
             ckpt_fh.close()
 
-        with out.open("w") as fh:
+        with out.open("x") as fh:
             for pkg in corpus:
                 for v in pkg["variants"]:
                     scores = results.get((pkg["package_id"], v["variant_id"]), [])
@@ -238,6 +272,8 @@ def main() -> None:
                         "variant_id": v["variant_id"],
                         "pred_score": sum(scores) / len(scores),
                         "model": model,
+                        "collection_protocol": COLLECTION_PROTOCOL,
+                        "config_sha256": fingerprint,
                         "n_obs": len(scores),
                         "n_personas": len(panel),
                         "draws": args.draws,

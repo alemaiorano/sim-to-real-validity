@@ -1,111 +1,127 @@
 \section{Results}
-\label{sec:results}
+\paragraph{New raw-backed comparison (RQ1).}
+Tables~\ref{tab:new_gemini} and \ref{tab:new_azure} give the matched-budget experiment,
+separating it from all historical values below. The complete-package policy retains
+\newGeminiN{} Gemini packages and \newGptN{} GPT-4.1 packages; exclusions are respectively
+\newGeminiExcludedN{} and \newGptExcludedN{}. Reports retain every planned observation and
+failure, with metric-specific valid and paired IDs.
 
-\paragraph{Ground-truth reliability is the binding constraint.}
-Of the \sensNPackages{} eligible packages, only \nPackages{} (\reliableFraction{}) have a
-statistically reliable within-package winner (Figure~\ref{fig:reliability}).
+For Gemini, panel and baseline Kendall $\tau_b$ are \newGeminiPanelTau{} and
+\newGeminiBaselineTau{}; the paired baseline-minus-panel gap is \newGeminiGapTau{}
+(CI [\newGeminiGapTauLow{}, \newGeminiGapTauHigh{}]) on \newGeminiPairedTauN{} valid pairs.
+Expected top-1 is \newGeminiPanelTopOne{} versus \newGeminiBaselineTopOne{}, with paired gap
+\newGeminiGapTopOne{} percentage points (CI
+[\newGeminiGapTopOneLow{}, \newGeminiGapTopOneHigh{}]).
 
+For GPT-4.1, panel and baseline Kendall $\tau_b$ are \newGptPanelTau{} and
+\newGptBaselineTau{}; the paired gap is \newGptGapTau{}
+(CI [\newGptGapTauLow{}, \newGptGapTauHigh{}]) on \newGptPairedTauN{} valid pairs.
+Expected top-1 is \newGptPanelTopOne{} versus \newGptBaselineTopOne{}, with paired gap
+\newGptGapTopOne{} percentage points (CI [\newGptGapTopOneLow{}, \newGptGapTopOneHigh{}]).
+In Gemini, $\tau_b$ is undefined on \newGeminiBaselineRankUndefinedN{} baseline packages
+and \newGeminiPanelRankUndefinedN{} panel packages. Marginal means therefore use different valid
+sets; their difference is not the paired gap. The paired rank comparison uses their valid
+intersection, while top-1 includes every complete package with expected credit for ties.
+Baseline-minus-panel CIs exclude zero for the rank metrics, top-1 and captured lift in both
+configurations; bottom-1 CIs include zero. These are pointwise conditional estimates.
+Gamma and $\tau_b$ have distinct rows and denominators; neither is substituted for the other.
+These conditional package-bootstrap intervals omit repeated-generation uncertainty and do not
+compare model families causally. The historical GPT diagnostic is a separate experiment.
+\input{tables/recollection}
+
+\paragraph{Post-hoc randomization-window sensitivity.}
+Table~\ref{tab:window_sensitivity} excludes \windowGeminiExcludedN{} Gemini and
+\windowGptExcludedN{} GPT-4.1 complete primary packages in the documented risk window,
+leaving respectively \windowGeminiN{} and \windowGptN{} packages. Expected top-1 gaps remain
+\windowGeminiGapTopOne{} percentage points (CI [\windowGeminiGapTopOneLow{},
+\windowGeminiGapTopOneHigh{}]) and \windowGptGapTopOne{} points
+(CI [\windowGptGapTopOneLow{}, \windowGptGapTopOneHigh{}]). Captured-lift gaps also remain positive
+with pointwise CIs excluding zero.
+
+Gemini's Kendall $\tau_b$ gap becomes \windowGeminiGapTau{}
+(CI [\windowGeminiGapTauLow{}, \windowGeminiGapTauHigh{}]) on
+\windowGeminiPairedTauN{} valid pairs; its tau-b and Spearman intervals include zero.
+GPT-4.1's tau-b gap is \windowGptGapTau{} (CI [\windowGptGapTauLow{},
+\windowGptGapTauHigh{}]) on \windowGptPairedTauN{} pairs. Thus the primary Gemini rank contrast
+is not robust across this cohort restriction and all rank estimators. Gamma remains a distinct
+conditional measure; it is not substituted for the uncertain tau-b result. Bottom-1 intervals
+include zero for both models. These are post-hoc, pointwise intervals, not an equivalence test.
+\input{tables/window_sensitivity}
+
+\paragraph{Historical Upworthy comparison (RQ1).}
+Table~\ref{tab:validity} and Figure~\ref{fig:comparison} retain original estimates.
+The generic baseline has higher gamma (\baseGamma{} versus \goodmanGamma{}) and top-1
+(\baseTopOne{} versus \topOneAcc{}). These are conditional descriptions under the legacy screen
+and tie rule. Marginal CIs are not a paired test, and gamma is not assigned a calibrated
+medium-effect interpretation.
+\input{tables/validity}
 \begin{figure}[t]
-  \centering
-  \includegraphics[width=0.92\linewidth]{figures/reliability.pdf}
-  \caption{Distribution of the one-sided $p$-value for the top-vs-runner-up CTR difference across
-  the eligible A/B tests. Only the tests to the left of the dashed cutoff have a statistically
-  reliable winner; the rest cannot be predicted by construction.}
-  \label{fig:reliability}
-\end{figure} In the remainder the real click-through difference is indistinguishable
-from noise, so no predictor can recover the ordering by construction. The primary analysis is
-therefore restricted to the \nPackages{} reliable packages.
-
-\paragraph{Personas vs.\ a no-persona baseline (RQ1).}
-Table~\ref{tab:validity} reports within-package ranking agreement (Section~\ref{sec:framework})
-on the reliable packages for both methods. The headline result is that \emph{persona conditioning
-hurts}. The no-persona zero-shot baseline ranks variants well---Kendall $\tau=\baseTau{}$ (95\% CI
-[\baseTauCILow{}, \baseTauCIHigh{}]), a medium effect by Cohen's
-conventions~\citep{cohen1988power}, with top-1 accuracy \baseTopOne{} (95\% CI
-[\baseTopOneCILow{}, \baseTopOneCIHigh{}]) against a random baseline of \randomTopOne{}. The
-ten-persona panel is far weaker: $\tau=\kendallTau{}$ (95\% CI
-[\kendallTauCILow{}, \kendallTauCIHigh{}]) and top-1 \topOneAcc{}, with confidence intervals that
-do not overlap the baseline's on any metric (Figure~\ref{fig:comparison}). Persona conditioning
-thus does not merely fail to help---it actively degrades a usable signal that the base model
-already has.
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=0.92\linewidth]{figures/comparison.pdf}
-  \caption{Headline result: the no-persona baseline outperforms the persona panel on every
-  metric, with non-overlapping 95\% bootstrap CIs, on the reliable-winner packages.}
-  \label{fig:comparison}
+\centering
+\includegraphics[width=\linewidth]{figures/comparison.pdf}
+\caption{Historical comparison under the legacy screen. Coefficient-specific valid counts are
+unavailable. The displayed rank coefficient is gamma.}
+\label{fig:comparison}
 \end{figure}
 
-\paragraph{The persona panel in isolation.}
-Considered on its own, the panel's predictive validity is weak but statistically significant
-($\tau$ and $\rho$ CIs exclude zero), at or below Cohen's small-effect threshold. Its top-1 CI
-includes the random baseline, so it does not reliably pick the single best variant; it is, if
-anything, slightly better at flagging the \emph{worst} variant (\bottomOneAcc{}) than the best
-(\topOneAcc{}), detecting clearly weak copy more readily than winners.
+Figure~\ref{fig:reliability} shows the historical screening statistic, not calibrated winner
+probabilities. The archived all-package panel gamma is \sensGamma{} (CI
+[\sensGammaCILow{}, \sensGammaCIHigh{}]), also retaining legacy metric and parsing semantics.
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/reliability.pdf}
+\caption{Historical one-sided top-versus-runner-up screen selecting \legacySelectedN{} packages.
+Selection of direction from observed rates invalidates a literal one-sided false-positive-rate interpretation.
+Nonsignificant packages need not be unpredictable.}
+\label{fig:reliability}
+\end{figure}
 
-\input{tables/validity}
+\paragraph{Signal strength (RQ2).}
+The historical association between the legacy signal statistic and top-1 is Spearman
+\hThreeTopOne{} (CI [\hThreeTopOneCILow{}, \hThreeTopOneCIHigh{}]) over \hThreeN{} packages.
+It has not been recomputed for historical Gemini under simultaneous screening and expected tie credit.
+The new selected-cohort experiment does not reconstruct this all-package historical analysis.
 
-\paragraph{Sensitivity analysis.}
-Including all \sensNPackages{} predicted packages (i.e.\ without the reliability filter) the
-effect is weaker but remains significant ($\tau=\sensKendallTau{}$, 95\% CI
-[\sensKendallTauCILow{}, \sensKendallTauCIHigh{}]; $\rho=\sensSpearmanRho{}$), as expected when
-noisy-label packages are added.
-
-\paragraph{Does validity track signal strength? (RQ2).}
-Across \hThreeN{} packages spanning the full range of ground-truth signal strength, stronger
-real effects are associated with slightly higher top-1 success (Spearman $\hThreeTopOne{}$, 95\%
-CI [\hThreeTopOneCILow{}, \hThreeTopOneCIHigh{}]), while the association with the full
-rank-correlation is null. The simulator captures a small amount of signal that surfaces mainly
-when the real effect is large.
-
-\paragraph{Replication across datasets and a different domain (RQ3).}
-The finding replicates. Table~\ref{tab:replication} repeats the comparison on three independent
-Upworthy splits and on a different-domain, more-recent dataset (MIND news, 2019). On all three
-Upworthy A/B splits the no-persona baseline beats the persona panel by a large, consistent
-margin (Kendall $\tau$ gap between \repGapMin{} and \repGapMax{}); the powered confirmatory split
-($n=\confNPackages{}$) gives the cleanest contrast ($\tau=\confBaselineTau{}$ baseline vs.\
-$\confPersonaTau{}$ persona). On MIND---where ``packages'' compare \emph{different} articles
-within a topic rather than headline variants of one story---the direction is the same but the gap
-is small ($\mindGap{}$), as expected when persona-relevant variance is lower. A boundary case is
-Reddit title reposts (same image, different titles): there upvotes are dominated by posting time
-and visibility rather than the title, \emph{neither} method predicts the outcome (both
-$\tau\approx0$), and the gap vanishes---the baseline's advantage appears only where the outcome is
-actually predictable from the copy. We also report a
-decision-relevant metric, the fraction of achievable CTR lift captured by the top-1 pick: the
-baseline captures more than the panel in every dataset (Table~\ref{tab:replication}).
+\paragraph{Dataset comparisons (RQ3).}
+Table~\ref{tab:replication} shows higher baseline gamma on the three Upworthy splits and a smaller
+difference on MIND, where packages compare articles. On Reddit, the panel has higher top-1
+(\redditPanelTop{} versus \redditBaseTop{}) and lift (\redditPanelLift{} versus \redditBaseLift{}).
+The direction of the contrast therefore depends on dataset and metric. Reddit gamma
+CIs include zero; this establishes neither equivalence nor absence of a title-related signal.
+Posting time and visibility were not tested as explanations. Subset-selection and coverage
+limitations further restrict interpretation. The historical summary does not record draw
+counts or evaluated package IDs, so cross-dataset protocol equivalence is not independently
+verified by those aggregates.
 \input{tables/replication}
 
-\paragraph{Robustness: seed and model (RQ3).}
-On a 100-package subset re-run under three seeds, top-1 accuracy is highly stable
-(SD $=\stabTopOneSD{}$) while the rank coefficient varies by SD $=\stabTauSD{}$ in $\tau$---
-non-trivial relative to the effect size, which is why the primary estimate averages multiple
-draws. The persona-vs-baseline gap is also consistent across model tiers: on all three
-\texttt{gemini} models the no-persona baseline beats the persona panel
-(Table~\ref{tab:cross_model_gap}), so ``personas hurt'' is not an artefact of a single model. Nor
-is it a prompt artefact: a third-person persona framing and a reworded baseline leave both sides
-essentially unchanged---the persona panel stays weak under either framing and the baseline stays
-strong---so the gap is not driven by the specific wording of either prompt.
+\paragraph{Seed, model, ties, and aggregation.}
+The archived three-seed SDs (\stabGammaSD{} for gamma; \stabTopOneSD{} for top-1) use the
+population convention over those seeds, not sample SDs or precise general-variability estimates.
+The baseline has higher gamma on three tested Gemini tiers (Table~\ref{tab:cross_model_gap},
+Appendix~\ref{sec:appendix}); evaluated IDs are not retained to verify a shared subset.
+This cannot establish universal model or prompt robustness.
 
-\paragraph{The reported gap is a conservative lower bound.}
-The baseline is \emph{less} granular than the panel: on \baseTieRate{} of packages all its
-variants receive an identical score and the top-1 pick is a tie, broken arbitrarily. This barely
-moves the metric (baseline top-1 \baseTopOne{} under arbitrary tie-breaking vs.\ \baseTopOneFair{}
-under fair $1/k$ tie credit), and on the non-tied packages the baseline reaches
-\baseTopOneNonDegen{}. Because ties drag the baseline's score down,
-the persona-vs-baseline gap we report is, if anything, an \emph{under}-estimate of the baseline's
-true advantage.
+The tie report rounds scores before counting constant packages; the rank code uses exact
+equality. That count cannot recover excluded gamma values. Undefined coefficients cannot be
+silently assigned zero, and the reports do not justify a conservative-lower-bound claim for the gap.
 
-\paragraph{Robustness: aggregation rule (RQ3).}
-The primary estimate pools the panel with an arithmetic mean; to rule out that the result is an
-artefact of this one choice, we re-aggregate the \emph{same} per-persona observations under six
-rules (Table~\ref{tab:h5agg}). None recovers baseline validity---every persona configuration's
-$\tau$ confidence interval lies entirely below the baseline. Two patterns are informative. First,
-the panel median lifts $\tau$ above the panel mean (Table~\ref{tab:h5agg}),
-so the mean is partly dragged by a skewed per-persona score distribution---yet even this best case
-remains far below the baseline. Second, rank-fusion (Borda) and pairwise majority (Condorcet),
-which discard score \emph{levels} and use only each persona's \emph{ordering}, land at
-$\tau\!\approx\!0.08$, no better than the mean; per-persona $z$-normalisation does not help either.
-The failure therefore lies in genuine mis-ordering by the personas, not in per-persona scale or
-offset that a smarter pooling rule could correct.
+Table~\ref{tab:h5agg} preserves six historical aggregation rules, all with lower reported gamma
+than the baseline. Equal-persona and observation-weighted means can differ with missing draws.
+The reports do not establish why their top-1 results differ, or whether bias, sampling noise,
+scale, or another factor explains relative performance.
 \input{tables/h5_aggregation}
+
+\paragraph{Retrospective GPT-4.1 diagnostic.}
+The recovered checkpoint contains scalars, not original responses. Offline replay of the pinned
+producer reproduces all published cross-family report fields within numerical tolerance.
+Historical coverage is \xfN{} panel and \xfPairedN{} baseline/paired packages.
+Thirty panel observations versus ten baseline draws and no generation seed make it
+an unequal-budget comparison.
+
+Table~\ref{tab:corrected_gpt} applies simultaneous screening and tie-aware estimators to those scores.
+Coverage becomes \correctedPanelN{} panel, \correctedBaseN{} baseline, and \correctedPairedN{}
+paired packages. Baseline Kendall $\tau_b$ is \correctedBaseTau{} versus \correctedPanelTau{}.
+Paired CIs for the displayed gaps exclude zero, supporting a positive baseline gap in this
+retrospective diagnostic. It is not an independent replication or a budget-matched estimate, and does not validate
+raw parsing. Gamma and tau-b remain separate. A historical Gemini reanalysis with these
+estimators is unavailable; the new Gemini table describes different generations and a different configuration.
+\input{tables/corrected_gpt}

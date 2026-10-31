@@ -1,4 +1,4 @@
-The aggregated result artifacts (`reports/`), the fixed persona panel
+The aggregated result artifacts (`reports/`, `reanalysis/`, and `recollection/`), the fixed persona panel
 (`data/persona_panel.json`), the corpus manifests (`datasets/*.manifest.json`),
 and the generated figures/tables in this repository are provided under the
 Creative Commons Attribution 4.0 International license.

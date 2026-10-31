@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from historical_results import read_historical, historical_csv
 
 PAPER_DIR = Path(__file__).resolve().parents[1]
 REPORTS = PAPER_DIR / "reports"
@@ -29,23 +30,25 @@ def cell(d: dict, pct: bool = False) -> str:
 
 def main() -> None:
     comp = REPORTS / "baseline_comparison.json"
-    corr = json.loads((REPORTS / "correlation.json").read_text())
+    corr = read_historical("correlation.json")
     rand = corr["random_top1_baseline"]
     n = corr["n_packages"]
 
     if comp.exists():
-        d = json.loads(comp.read_text())
+        d = read_historical("baseline_comparison.json")
         b, p = d["baseline"], d["panel"]
         rows = [
-            f"    No-persona baseline & {cell(b['top1'], pct=True)} & {cell(b['tau'])} & {cell(b['rho'])} \\\\\n",
-            f"    Persona panel & {cell(p['top1'], pct=True)} & {cell(p['tau'])} & {cell(p['rho'])} \\\\\n",
+            f"    No-persona baseline & {cell(b['top1'], pct=True)} & {cell(b['gamma'])} & {cell(b['rho'])} \\\\\n",
+            f"    Persona panel & {cell(p['top1'], pct=True)} & {cell(p['gamma'])} & {cell(p['rho'])} \\\\\n",
         ]
-        caption = (f"Headline result: a no-persona zero-shot ranker vs.\\ the persona panel on the "
-                   f"reliable-winner packages ($n={n}$). The no-persona baseline is substantially "
-                   f"better on every metric (non-overlapping CIs). Random top-1 baseline "
-                   f"{rand*100:.1f}\\%. 95\\% bootstrap CIs.")
+        caption = (f"Historical Upworthy exploratory estimates under the legacy winner screen. "
+                   f"Panel $n_{{total}}={p['n']}$; baseline $n_{{total}}={b['n']}$; "
+                   "correlation-specific valid counts are unavailable. The stored rank coefficient "
+                   "is Goodman--Kruskal gamma, not Kendall tau. Top-1 uses first-index tie breaking. "
+                   f"Random top-1 reference {rand*100:.1f}\\%. Marginal 95\\% bootstrap CIs; "
+                   "the reported screen and decision tie rule are retained.")
     else:
-        t1, tau, rho = corr["top1_accuracy"], corr["kendall_tau"], corr["spearman_rho"]
+        t1, tau, rho = corr["top1_accuracy"], corr["goodman_kruskal_gamma"], corr["spearman_rho"]
         rows = [f"    Persona panel & {cell(t1, pct=True)} & {cell(tau)} & {cell(rho)} \\\\\n"]
         caption = (f"Within-package ranking validity of the persona panel ($n={n}$). Random top-1 "
                    f"baseline {rand*100:.1f}\\%. 95\\% bootstrap CIs.")
@@ -56,7 +59,7 @@ def main() -> None:
         f"  \\caption{{{caption}}}\n  \\label{{tab:validity}}\n",
         "  \\small\n",
         "  \\begin{tabular}{lccc}\n    \\toprule\n",
-        "    Method & Top-1 [95\\% CI] & Kendall $\\tau$ [95\\% CI] & Spearman $\\rho$ [95\\% CI] \\\\\n",
+        "    Method & Top-1 [95\\% CI] & Goodman--Kruskal $\\gamma$ [95\\% CI] & Spearman $\\rho$ [95\\% CI] \\\\\n",
         "    \\midrule\n", *rows, "    \\bottomrule\n  \\end{tabular}\n\\end{table*}\n",
     ]
     OUT.parent.mkdir(parents=True, exist_ok=True)

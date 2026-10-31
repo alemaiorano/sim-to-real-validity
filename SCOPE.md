@@ -1,86 +1,43 @@
-# Artifact Scope — Sim-to-Real Validity of Persona-Based Copy Simulation
+# Public replication package scope
 
-Replication package for the paper *"Do Synthetic Personas Predict Real Audience
-Response? A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based
-Copy Simulation."*
+This repository accompanies the v2 manuscript of *Do Synthetic Personas Predict Real Audience
+Response? A Headline-Ranking Study with a Generic-Reader Baseline*. The manuscript/PDF reviewed
+at `25a8b2c47f0090852abbc9ad23412e91ea3bffaf` is preserved. The earlier research release is
+`7c1ab46b5d881529b79769fb870ed1f2fb98619c`; archived values are retained under their own protocols.
+Repository publication and submission of a new arXiv version are separate actions.
 
-This package is **verification-grade and harness-included**: every numerical
-macro and table can be reexported from the shipped result
-artifacts. The PDF uses the included figures; regenerating the reliability
-histogram additionally requires the public Upworthy corpus. Gemini and Azure
-OpenAI study runners are included. Reexporting a report is distinct from
-recomputing it from historical raw observations.
-
-## Reproducibility tiers
-
-| Tier | What it reproduces | Needs |
+| Evidence tier | What this Git package supports | Boundary |
 |---|---|---|
-| **Verification** | macros, tables and PDF using included figures; comparison figure from its report | committed `reports/`, included figures + Python + LaTeX. No API key, no raw data. |
-| **Analysis** | statistics supported by the shipped analysis scripts | restored corpora + historical predictions or new provider runs. Historical rebuild limits are listed in `REPLICATION.md`. |
-| **Deep** | new per-persona/baseline predictions under the recorded protocol | public corpora + Gemini or Azure OpenAI credentials. New runs need not match historical generations. |
+| Committed report reexport | Rebuild all numerical macros/tables and the PDF from versioned aggregate artifacts | Reexport does not reconstruct original model observations |
+| Archived comparisons | Read original report values with explicit gamma, coverage and tie semantics | Missing original responses/valid denominators remain unavailable |
+| Retrospective GPT-4.1 diagnostic | Inspect committed metrics, paired IDs, input hashes and offline replay code | Replaying the recovered scalar checkpoint requires the separate companion bundle; original response texts are absent and 30/10 budgets remain unequal |
+| Matched-budget experiment | Inspect separate Gemini/GPT-4.1 reports, counts, exclusions, paired IDs and producer lineage | Full raw-byte replay requires the retained companion bundle, not this Git checkout alone |
+| Post-hoc period sensitivity | Inspect all six metrics, valid IDs and provenance outside the documented risk window | Post hoc and conditional; remaining dates are not certified randomized; Gemini tau-b/Spearman intervals include zero |
 
-## Why the harness *is* included (unlike a product replication)
+## Included in Git
 
-The persona simulation evaluated here is a **study-specific, self-contained
-harness** — `scripts/run_predictions.py` calls Gemini directly with the fixed
-panel in `data/persona_panel.json` and an inline prompt template.
-`scripts/tier2_crossmodel.py` repeats that protocol on Azure OpenAI and reuses
-the same prompt builder, parser and ranking metrics. Both runners operate
-independently of product databases, orchestration and proprietary engines.
-The method under test is the *general technique* (persona-conditioned vs.
-no-persona LLM ranking), not a specific product, so it is released in full. This
-is the same controlled-harness discipline used to keep the conflict-of-interest
-mitigation honest (see the paper's Ethics statement).
+- Current LaTeX source/PDF, figures, generated tables and numerical macros.
+- Original aggregate reports, corpus manifests and their hash-pinned provenance.
+- Matched-experiment and period-sensitivity reports under `recollection/2026-10-31/`.
+- Retrospective GPT metrics and diagnostics under `reanalysis/2026-10-31/`; the folder name
+  describes analysis of existing scalar observations, not a separate publication category.
+- The fixed persona panel, statistical/collection/replay scripts, tests and evidence ledgers.
+- Citation and license metadata, reproduction commands and `REPLICATION_SHA256SUMS`.
 
-## Included
+## Separate retained companion
 
-| Path | Contents | Why it is safe |
-|---|---|---|
-| `latex/` | LaTeX sources, sections, auto-generated tables/figures, `references.bib`, compiled `main.pdf` | The paper itself; public on publication |
-| `scripts/` | corpus ingestion (`01_ingest_upworthy.py`, `build_mind_corpus.py`, `build_reddit_corpus.py`), the persona/baseline harness (`run_predictions.py`, `tier2_crossmodel.py`, `02_run_personas.py`), join + validity (`03_build_joined.py`, `compute_validity.py`), analyses (`analyze_*`, `error_analysis.py`, `power_analysis.py`), and all table/figure exporters (`generate_*`) | Study harness + paper-asset generation; decoupled from any product |
-| `reports/` | Aggregated result artifacts: correlation, signal strength, replication, cross-model gap, error analysis, power, stability (JSON/CSV/MD) | Result numbers, not raw generations; back every paper claim |
-| `data/persona_panel.json` | The fixed, versioned ten-persona panel (system under test) | Authored from public demographics; not reused from any product |
-| `datasets/*.manifest.json` | Locked corpus manifests (source + corpus sha256, sampling seed/params) | Provenance only; the corpora are public and regenerable |
-| `tests/` | Offline producer/consumer and credential-boundary regression checks | Temporary synthetic inputs and stubbed provider transports |
-| root | `README.md`, `SCOPE.md`, `REPLICATION.md`, `DATA_SOURCES.md`, `CLAIMS_TO_ARTIFACTS.csv`, `CITATION.cff`, `LICENSE`, `LICENSE-DATA.md`, `requirements.txt` | Documentation and metadata |
+The complete companion holds exact exploratory inputs, raw journals including failures,
+request/allocation plans, immutable snapshots, reviewer CSVs and the recovered historical GPT
+scalar checkpoint. It is retained separately and is **not downloadable from this Git package**.
+The repository's third-party corpus redistribution policy remains unchanged. The private backup
+also contains operational retention and review evidence that is not a public dataset deposit.
+Do not use a private OneDrive path as a public download link or claim full raw replay from Git alone.
 
-## Excluded — bulky / regenerable / not redistributable
+Missing historical Gemini observations and GPT response texts are not replaced by new generations.
+Code/prompt changes do not silently rewrite the old `reports/` files, original manifests or frozen
+experiment inputs. Current analysis outputs require new destinations. The newline-aware CSV reader
+creates a separate derivative; exact saved-generation replay uses its original input hash.
 
-| Item | Reason |
-|---|---|
-| `data/sim_predictions.jsonl`, `data/predictions/`, `data/joined.csv` | Historical per-persona observations and joined tables are not included. New runs can collect the same kind of data but are not guaranteed to recreate it exactly. Aggregated reports support the verification path. |
-| `data/upworthy_raw/`, `data/mind_raw/`, `data/reddit_raw/` | Raw third-party corpora — public but not re-hosted. Retrieve + verify via `DATA_SOURCES.md` and the committed manifests. |
-| `datasets/*-subset-*.json` (locked corpora) | Large derived corpora; regenerate deterministically from the raw source with the ingest scripts (each must match its manifest `corpus_sha256`). |
-| `.env` | API keys / secrets. Set `GEMINI_API_KEY` in the environment for the deep tier. |
-| Internal experiment plans, product implementation and credential configuration | They are not inputs to this paper's controlled study and are unnecessary for replication. |
-
-## Consequence for re-derivation
-
-- The PDF rebuilds fully from the shipped sources + `reports/` (verification tier).
-- `generate_paper_variables.py` and the `generate_*_table.py` / `generate_figures.py`
-  exporters regenerate the macros, tables and comparison figure from `reports/`.
-  The reliability figure instead reads the restored Upworthy corpus.
-- Recomputing statistics needs the corresponding corpora and raw predictions.
-  Some historical reports lack dedicated recomputation scripts in the original
-  tree and this package. See `REPLICATION.md` for the supported paths and limits.
-
-## Structure
-
-```
-sim-to-real-validity/
-├── README.md
-├── SCOPE.md                 (this file)
-├── REPLICATION.md
-├── DATA_SOURCES.md
-├── CLAIMS_TO_ARTIFACTS.csv
-├── CITATION.cff
-├── LICENSE                  (MIT — code)
-├── LICENSE-DATA.md          (CC BY 4.0 — artifacts)
-├── requirements.txt
-├── latex/                   paper sources + auto-generated tables/figures + main.pdf
-├── scripts/                 ingestion, harness, analysis, exporters
-├── tests/                   offline regression checks
-├── reports/                 aggregated result artifacts (every paper number)
-├── data/persona_panel.json  the fixed persona panel (SUT)
-└── datasets/                corpus manifests (provenance)
-```
+The study harness is separate from any deployed commercial product. Provider aliases and seeds do
+not guarantee future generations. The statistical intervals condition on the selected cohorts and
+recorded scores; they do not isolate a causal mechanism or show universal persona harm.

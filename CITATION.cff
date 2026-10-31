@@ -3,16 +3,16 @@ message: "If you use this replication package or the sim-to-real validity protoc
 authors:
   - family-names: "Maiorano"
     given-names: "Alexandre Cristovão"
-title: "Do Synthetic Personas Predict Real Audience Response? A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy Simulation"
+title: "Do Synthetic Personas Predict Real Audience Response? A Headline-Ranking Study with a Generic-Reader Baseline"
 url: "https://github.com/alemaiorano/sim-to-real-validity"
 preferred-citation:
   type: article
   authors:
     - family-names: "Maiorano"
       given-names: "Alexandre Cristovão"
-  title: "Do Synthetic Personas Predict Real Audience Response? A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy Simulation"
+  title: "Do Synthetic Personas Predict Real Audience Response? A Headline-Ranking Study with a Generic-Reader Baseline"
   year: 2026
   journal: "arXiv"
   doi: "10.48550/arXiv.2609.25010"
   url: "https://arxiv.org/abs/2609.25010"
-  notes: "Preprint, arXiv:2609.25010"
+  notes: "Replication package for the v2 manuscript; the DOI identifies the arXiv preprint, whose version history is separate from this repository"

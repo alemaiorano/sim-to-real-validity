@@ -1,0 +1,87 @@
+Plano de correção do paper sim-to-real — proposta para validação Astra high
+Data: 2026-10-31. Perfil do implementador: Vibe Coding. Auditor da proposta: Independent QA consultivo, read-only.
+Objetivo: corrigir métodos, rótulos, alegações e reconstrução do paper público, sem inventar resultados novos e preservando o release histórico.
+Decisão: tornar a revisão concreta e verificável em branch dedicada após resolver as objeções do auditor.
+Fonte científica: alemaiorano/sim-to-real-validity@7c1ab46b5d881529b79769fb870ed1f2fb98619c (main remoto confirmado nesse SHA).
+Fonte do audit: /home/maioale/eval-artifacts/marketing-simulator/paper-audit/2026-10-31-sim-to-real-7c1ab46/audit-results.json e evidence/.
+Snapshot idêntico do release público: mesmo diretório /snapshot; 78 blobs verificados.
+Destino proposto: clone local separado /home/maioale/.codex/worktrees/sim-to-real-paper-corrections, branch research/sim-to-real-corrections-2026-10-31 a partir do SHA público.
+O marketing-simulator tem uma cópia antiga embutida do paper e um checkout main em uso por outros trabalhos; não será misturado neste primeiro diff do repositório científico. Nenhum push, merge, arXiv, deploy, email ou endosso autorizado.
+Envelope: trabalho local e bibliografia pública; zero chamadas experimentais LLM. Não repetir coletas para substituir evidência histórica ausente.
+
+Estado dos dados:
+- Predições e checkpoints não encontrados nas cópias locais delimitadas. Pergunta assíncrona enviada ao usuário para indicar backup.
+- Existe corpus Upworthy exploratório em /home/maioale/projects/git/marketing-simulator/research/datasets/upworthy-subset-2026-06-03.json; ainda será conferido contra hash.
+- Missing raw não impede corrigir texto e software, mas impede afirmar novas estimativas históricas corrigidas.
+- Reusar provas do audit cujo pin coincide; complementar somente os contratos alterados.
+
+Proposta de decisões científicas (criticar antes de implementar):
+1. Separar resultados históricos e resultados corrigidos.
+   Preservar reports/*.json/csv e manifests históricos byte a byte. Não substituir 0,361, 0,084 ou 399 por valores fabricados.
+   Revisar o manuscrito como revisão transparente dos resultados históricos: chamar o coeficiente publicado de gamma de Goodman–Kruskal, explicar seleção do vencedor a partir dos mesmos resultados usados no teste, n_total versus n_valid não retido e ausência de recomputação histórica.
+   Não rotular o PDF atualizado como confirmação dos efeitos sob o filtro corrigido. Corrigir título/resumo/conclusão para delimitar o ensaio estudado e caráter condicional, sem universalizar personas.
+   Acrescentar nota de correção de primeira leitura e descrição versionada dos resultados legados.
+
+2. A01/A02/A03: implementar os owners estatísticos existentes.
+   Renomear o estimador legado para goodman_kruskal_gamma sem mudar sua fórmula. Implementar tau-b real, com semântica explícita para indefinidos, se o auditor confirmar que isso é o menor corte coerente.
+   Evitar manter função kendall_tau que continua retornando gamma. Atualizar consumidores para as identidades reais.
+   Exportar contagens n_total/n_valid/n_undefined por métrica e preservar populações comuns para comparação pareada.
+   Top-1 e lift devem ter política explícita para empates máximos, incluindo empate parcial; não zerar coeficientes indefinidos implicitamente nem inferir 71 exclusões do relatório arredondado.
+   Novo filtro: proposta conservadora de comparações bilaterais simultâneas entre pares (Bonferroni sobre todos os pares, selecionando vencedor somente se superior a todos os concorrentes). Validar a proposta estatística; não basta trocar p unilateral por bilateral no top vs runner-up multivariantes.
+   Reusar a função de filtragem em Upworthy/MIND/Reddit, sem implementações divergentes. Separar corpus/manifest novo dos locks históricos; nunca sobrescrever o corpus de 2026-06-03/04 com a nova política.
+
+3. A04/A08 e lacunas: corrigir interpretação.
+   Retirar alegações de que não significância implica imprevisibilidade; classificar mecanismo de viés como hipótese.
+   Remover poder de 80% não demonstrado para a média dos coeficientes e distinguir números históricos de planejamento; 991 da contraprova não é novo requisito de amostra.
+   Clarificar SD populacional de três seeds sem tratar fórmula como erro por si só; não afirmar preregistro sem cadeia temporal verificável.
+   Não inventar representatividade/determinismo do painel, recorte Reddit de 600 ou resultados de prompt; fornecer limites e campo pendente no registro de correções.
+
+4. A05/A06/A07/A10: corrigir instrumentos e alegações sem reescrever observações passadas.
+   Parser de intenção estrito no domínio [0,1]; remover extração de primeiro número e clamping que transforma saída inválida em previsão. Retenção do status da falha e comportamento de retry explícitos; mudanças em coleta só futuras, não evidência histórica.
+   Reusar agregação primária na referência H5 (pesos por observação), distinguindo agregadores que dão peso por persona. Demonstrar contraprova com draws faltantes.
+   Esclarecer GPT-4.1 30 vs 10 chamadas, n=399/395, gap pareado n=395 e ausência de seed.
+   Remover ou qualificar robustez ao prompt até recuperar artefatos.
+
+5. A09/A11/A13/A14 e editorial:
+   Corrigir exceção Reddit e legendas, além de menções a agregação como futuro.
+   Rótulos de gamma nos exportadores/figuras, legendas com n_total e n_valid indisponível quando desconhecido, notas claras sobre artefatos históricos.
+   Atualizar disponibilidade e README/REPLICATION/SCOPE/CLAIMS_TO_ARTIFACTS: distinguir reexportação de reconstrução estatística; adicionar produtores somente onde forem necessários para software já alterado, não um framework genérico.
+   Incluir fontes primárias MIND e Reddit, conferir metadados, resolver versão de Park; manter fonte de autoria legítima.
+   Melhorar a legibilidade do diagrama quando o recorte couber sem alterar dados.
+   Gerar tabelas, macros, figuras que não dependem de raw e PDF pelos produtores; nunca editar números manualmente.
+
+6. Verificação/entrega:
+   Tests reais de métricas versus SciPy (empates parciais/totais), filtro com controles nulos e seleção de vencedor, parser (JSON inválido, fora de faixa, boolean/NaN), retries com stub, H5 por observação versus por persona, exportador histórico sem fingir n_valid.
+   Suite publicada, reexportação determinística, checagem de labels/citações, build PDF e revisão visual; bibliografia válida reaproveitada, validar só referências alteradas/novas.
+   Changeset datado em docs/archive/changes com matriz A01–A14/G/M: corrigido no software/texto, não recomputado ou evidência ausente.
+   Congelar commit e obter review de diff em contexto novo conforme contrato. Não usar consenso como prova estatística.
+   Entregar branch/commit, plano consensual, PDF revisado, checks e limites. Se raw continuar ausente, marcar a recomputação como pendência concreta, sem anunciar fechamento científico ou publicação pronta.
+
+Perguntas prioritárias para Astra:
+- Este escopo é cientificamente honesto e suficiente como revisão condicionada a falta de raw?
+- Gamma histórico + tau-b futuro é necessário ou escopo excessivo? Como nomear schema/exports sem adulterar reports históricos?
+- O filtro simultâneo proposto tem a garantia que alegamos? Qual menor critério conservador justificado?
+- Quais mudanças devem ser feitas agora e quais devem aguardar raw?
+- Há achados do audit que precisam ser readjudicados em vez de reparados?
+- O destino no repositório público evita deriva melhor que modificar a cópia embutida? Há algum limite material de autoridade?
+
+Consenso proposto após crítica Astra (v2, substitui escolhas abertas da v1):
+- Runtime estatístico continua stdlib; SciPy apenas como oráculo de teste quando instalado.
+- Novo filtro z bilateral + Bonferroni sobre todos os pares m=k(k−1)/2, vencedor único deve superar todos os concorrentes. p_aj=min(1,m*max_j p_wj). Calibração APROXIMADA, por pacote, sob hipóteses do teste; sem alegar vencedor absolutamente confiável/FDR/ausência de viés/causalidade observacional.
+- Demonstrar inclusão dos novos IDs nos 399 IDs legados no corpus exploratório conferido, sem regravar lock histórico.
+- Gamma legado e tau_b real no owner existente, chaves inequívocas em novos relatórios. Adapter explícito dos campos legados para apresentação; nenhum alias chamado kendall_tau pode retornar gamma.
+- Novas métricas usam crédito esperado de desempate uniforme no conjunto de máximos; lift usa a mesma distribuição. Cada métrica e gap pareado exporta seu próprio n. Coeficientes indefinidos permanecem None, não zero.
+- H5 referência primária usa peso por observação; agregação por persona é distinta. Preservar observações por draw na leitura, não perdê-las antes da comparação.
+- Parser estrito; falha de conteúdo pode ser terminal-invalid explícito sem retry automático. Documentar comportamento, não tentar refazer invalidos à força. Versionar arquivo de checkpoint do coletor para impedir reutilização silenciosa dos valores pós-parser legado.
+- Produtores novos não sobrescrevem reports/manifests legados. Exigir destino de análise novo e recusar colisão; histórico permanece pinado para reexportação.
+- Checkpoint GPT recuperado em /home/maioale/projects/git/marketing-simulator/research/papers/persona-validity-boundary/tier2/.ckpt-upworthy-gpt-4.1.jsonl (SHA256 da6128db7ec7ead14aecd2269d25969e750f54bc1996e64c1cff78fd32614529,59474 observações/399pacotes) pode ser reanalisado offline SOMENTE após reproduzir o relatório legado de1818bytes e checar IDs/cobertura. Novos derivados separados, sem chamar essa análise confirmatória independente. val já é pós-parser: não autoriza corrigir o parser retroativamente nem provar que as respostas eram válidas.
+- A reanálise GPT não qualifica as métricas primárias Gemini ainda sem predições.
+- O destino consensual é o repositório público separado, branch dedicada, main remoto no mesmo7c1. A cópia embutida do monorepo fica explicitamente fora deste diff, sem fingir sincronização.
+- Aceite desta fase: correções de software/texto, reexportação histórica honestamente rotulada, PDF revisado, testes e diagnóstico offline recuperável. Não afirmar conclusão científica corrigida para todos os braços, nem publicar/push/merge sem autorização posterior.
+
+Fechamento PA01–PA06 (v3):
+- Aceitos os seis itens do relatório Astra. Não inferir cronologia de escolha do protocolo a partir da seleção estatística.
+- Top1/bottom1 esperados para máximos/mínimos reais múltiplos: interseção / quantidade de máximos/mínimos previstos; lift real constante indefinido. Métrica vazia: média/IC ausentes, nunca zero artificial. n_paired próprio de cada contraste.
+- H5 mantém a identidade do estimador mean histórico por persona, explicitamente rotulado; acrescenta referência mean_observation para novos cálculos sem rebatizar ou apagar a série antiga.
+- Reanálise GPT somente após reproduzir produtor legado e conferir hash, IDs, duplicatas, cobertura e domínio; conferir inclusão do filtro novo no legado. Score pós-parser continua com validade textual desconhecida.
+- Guard de destino deve recusar escrita em reports legados e em arquivo já existente. Coleta corrigida com namespace de parser e configuração que não aceita checkpoint legado silenciosamente.

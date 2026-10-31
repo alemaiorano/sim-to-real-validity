@@ -1,36 +1,26 @@
-% Sim-to-real protocol diagram (self-contained TikZ; no external data).
-% figure* spans both columns; resizebox keeps the horizontal pipeline within \textwidth.
+% Authored schematic; no empirical numbers or external data.
 \begin{figure*}[t]
-  \centering
-  \resizebox{0.92\textwidth}{!}{%
-  \begin{tikzpicture}[
-    font=\footnotesize,
-    box/.style={draw, rounded corners, align=center, inner sep=5pt, minimum height=10mm, minimum width=22mm},
-    data/.style={box, fill=green!8},
-    proc/.style={box, fill=blue!6},
-    res/.style={box, fill=gray!8},
-    >=Stealth, node distance=8mm and 14mm,
-  ]
-    \node[data] (arch) {Upworthy A/B archive\\\scriptsize(headline variants,\\\scriptsize real click-through)};
-    \node[proc, right=of arch] (filt) {Reliability filter\\\scriptsize(significant winner,\\\scriptsize two-proportion $z$)};
-    \node[data, right=of filt] (rel) {Reliable\\packages};
-    \node[proc, above right=4mm and 16mm of rel] (panel) {Persona panel\\\scriptsize(10, Pew-grounded)};
-    \node[proc, below right=4mm and 16mm of rel] (base) {No-persona\\\scriptsize zero-shot baseline};
-    \coordinate (fork) at ($(panel.east)!0.5!(base.east)$);
-    \node[res, right=12mm of fork, anchor=west] (score) {Click-intent\\\scriptsize$\to$ within-package\\\scriptsize ranking};
-    \node[res, right=of score] (val) {Validity vs.\ real CTR\\\scriptsize($\tau$, $\rho$, top-1;\\\scriptsize bootstrap CI)};
-
-    \draw[->] (arch) -- (filt);
-    \draw[->] (filt) -- (rel);
-    \draw[->] (rel.east) -- (panel.west);
-    \draw[->] (rel.east) -- (base.west);
-    \draw[->] (panel.east) -- (score.north west);
-    \draw[->] (base.east) -- (score.south west);
-    \draw[->] (score) -- (val);
-  \end{tikzpicture}%
-  }
-  \caption{The sim-to-real validity protocol. Real A/B tests are filtered to those with a
-  statistically reliable winner; the persona panel and a no-persona baseline each score the
-  variants, which are ranked within each package and compared to the real click-through ordering.}
-  \label{fig:protocol}
+\centering
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw, rounded corners, align=center, inner sep=5pt, text width=2.7cm, minimum height=12mm},
+  >=Stealth, node distance=7mm and 8mm
+]
+\node[box,fill=green!8] (data) {Observed variants\\and outcomes};
+\node[box,fill=blue!6,right=of data] (screen) {Versioned\\winner screen};
+\node[box,fill=blue!6,above right=2mm and 8mm of screen] (panel) {Persona panel\\mean score};
+\node[box,fill=blue!6,below right=2mm and 8mm of screen] (base) {Generic reader\\mean score};
+\coordinate (mid) at ($(panel.east)!0.5!(base.east)$);
+\node[box,fill=gray!8,right=8mm of mid,anchor=west] (metrics) {Within-package\\ranking metrics\\and bootstrap CIs};
+\draw[->] (data) -- (screen);
+\draw[->] (screen.east) -- (panel.west);
+\draw[->] (screen.east) -- (base.west);
+\draw[->] (panel.east) -- (metrics.north west);
+\draw[->] (base.east) -- (metrics.south west);
+\end{tikzpicture}
+\caption{Comparison protocol. Outcomes determine selection; the two scoring arms are compared
+within selected packages. Archived outputs use gamma and the legacy screen. The primary experiment and retrospective
+diagnostic additionally report tau-b and simultaneous selection. Selection does not establish
+that excluded packages are unpredictable.}
+\label{fig:protocol}
 \end{figure*}

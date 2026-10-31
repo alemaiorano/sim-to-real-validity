@@ -1,0 +1,23 @@
+{
+  "source_commit": "7c1ab46b5d881529b79769fb870ed1f2fb98619c",
+  "producer_file_sha256": {
+    "scripts/tier2_crossmodel.py": "edc845387f75ab082d0305f8a0c46b178dee7721c47ad26849833e99a93334c8",
+    "scripts/run_predictions.py": "815aea49725ff371ac1d0d7f16a792c6f1cee577a9ddadf20c68f9b19e36d542",
+    "scripts/compute_validity.py": "44c5a397d45e8547b0f3cb95481fa0cc2d6618e8768130de250242cc10c1bf35",
+    "data/persona_panel.json": "3ff13e5eb82486ed0de24ccfad7e6a0844de053c29f5f056fb636432b329aaac",
+    "reports/crossfamily_gpt41.json": "bab2539460870beae9ee5d5d3150d2beecfb3fa27381623faae96d70b072b86f"
+  },
+  "corpus_sha256": "523034f1fd86d4a432a57b29eb25230418dba119c3367ec04622815114cc9f85",
+  "checkpoint_sha256": "da6128db7ec7ead14aecd2269d25969e750f54bc1996e64c1cff78fd32614529",
+  "observations": 59474,
+  "legacy_packages": 399,
+  "provider_calls": 0,
+  "missing_observation_stubs": 286,
+  "differences": [],
+  "numeric_tolerance": {
+    "absolute": 1e-12,
+    "relative": 1e-12
+  },
+  "legacy_reproduced": true,
+  "original_responses_available": false
+}
