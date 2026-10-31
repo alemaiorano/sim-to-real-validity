@@ -61,8 +61,8 @@ Supplementary comparisons and the GPT checkpoint analysis retain their own budge
 tie policies. Supplementary Gemini observations, GPT checkpoint response texts and some subset lineage
 remain unavailable. Primary observations and supplementary scores retain separate protocol identities. All numerical results trace to
 artifacts via [CLAIMS_TO_ARTIFACTS.csv](CLAIMS_TO_ARTIFACTS.csv) and the
-[source-driven evidence ledger](docs/audit/full-text-claim-ledger.json). The [native automated-review review](docs/audit/automated-review-v2-review.md) and
-[technical adjudication](docs/audit/automated-review-v2-adjudication.md) are preserved separately.
+[source-driven evidence ledger](docs/audit/full-text-claim-ledger.json). The [native automated-review review](docs/audit/automated-review-review.md) and
+[technical adjudication](docs/audit/automated-review-adjudication.md) are preserved separately.
 Earlier methodological and review records remain under `docs/` with explicit source targets.
 
 Code: [MIT](LICENSE). Aggregate results, fixed panel, manifests and generated assets:

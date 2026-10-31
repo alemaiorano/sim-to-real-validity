@@ -19,3 +19,13 @@ The execution envelope permits one final native automated-review review, at most
 under the retained conservative accounting adapter. No scientific observations are regenerated.
 Source/PDF/review and the complete raw companion are to be preserved in a new protected archive,
 with the earlier versions retained and OneDrive client synchronization checked.
+
+Execution complete on frozen paper source d0af68fbfbe0655b8c1ecbdc4ea9dd1da6d557e9:
+clean clone verified all 144 payload hashes, reexported an identical PDF, passed 47 tests and
+regenerated the identical catalog. The 30-file TeX-only archive also rebuilt that PDF exactly.
+One native automated-review run finished (13 calls, conservative USD 0.8168355, no scientific calls),
+with automated Accept, overall 7 and confidence 4. Its six TikZ heuristic flags and one unsupported
+summary-context paraphrase remain raw, with separate source-backed adjudication. Subsequent
+changes only add these public evidence records and update their links/checksum catalog; the
+reviewed PDF and scientific payload stay unchanged. Publication and retention receipts are
+external to the payload to avoid self-reference.
