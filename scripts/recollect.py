@@ -11,6 +11,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from decimal import Decimal
 import fcntl
+from email.utils import parsedate_to_datetime
 import hashlib
 import json
 from pathlib import Path
@@ -26,7 +27,7 @@ from run_predictions import build_prompt, parse_click_intent
 from winner_filter import evaluate_winner, POLICY
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL = "paired-raw-retained-v1"
+PROTOCOL = "paired-raw-retained-v2"
 CODE = ["recollect.py", "analyze_recollection.py", "run_predictions.py", "compute_validity.py", "winner_filter.py"]
 
 
@@ -94,7 +95,36 @@ def make_tasks(cohort, panel):
     return tasks
 
 
-def prepare(run, backup, corpus_path, csv_path, azure_base):
+def make_requests(tasks, backend):
+    """Azure batches three choices per request symmetrically in both arms."""
+    if backend == "gemini":
+        return [{**t, "observations": [{k: v for k, v in t.items() if k != "prompt"}]} for t in tasks]
+    groups = {}
+    order = []
+    for task in tasks:
+        key = task["package_id"], task["variant_id"], task["persona_id"]
+        group = (key if task["persona_id"] != "baseline" else
+                 (*key, task["pair"] % 10))
+        if group not in groups:
+            groups[group] = []
+            order.append(group)
+        groups[group].append(task)
+    requests = []
+    for group in order:
+        observations = sorted(groups[group], key=lambda t: t["pair"])
+        if len(observations) != 3 or len({t["prompt"] for t in observations}) != 1:
+            raise ValueError("each Azure request must contain exactly three identical-prompt observations")
+        first = observations[0]
+        requests.append({"task_id": digest(encoded(["azure", *group])),
+                         "package_id": first["package_id"], "variant_id": first["variant_id"],
+                         "persona_id": first["persona_id"], "seed": 42 + first["pair"] % 10,
+                         "prompt": first["prompt"], "observations": [
+                             {**{k: v for k, v in t.items() if k not in {"prompt", "seed"}},
+                              "choice_index": index} for index, t in enumerate(observations)]})
+    return requests
+
+
+def prepare(run, backup, corpus_path, csv_path, azure_base, prior_liability=None):
     """Freeze population and allocation before any model scores are inspected."""
     run, backup = Path(run).resolve(), Path(backup).resolve()
     if run == backup or run.is_relative_to(backup) or backup.is_relative_to(run):
@@ -111,6 +141,8 @@ def prepare(run, backup, corpus_path, csv_path, azure_base):
     panel = json.loads(panel_bytes)["personas"]
     cohort = [p for p in json.loads(corpus_bytes) if evaluate_winner(p["variants"])["selected"]]
     tasks = make_tasks(cohort, panel)
+    requests = {backend: make_requests(tasks, backend) for backend in ["gemini", "azure"]}
+    prior_liability = prior_liability or {"gemini": "0", "azure": "0"}
     plan = {
         "protocol": PROTOCOL, "created_utc": now(),
         "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
@@ -122,6 +154,10 @@ def prepare(run, backup, corpus_path, csv_path, azure_base):
         "selected_package_ids": sorted(p["package_id"] for p in cohort),
         "observations_per_arm_variant": 30, "planned_observations_per_model": len(tasks),
         "task_plan_sha256": digest(encoded(tasks)), "temperature": .8, "max_output_tokens": 64,
+        "request_plan_sha256": {backend: digest(encoded(rows)) for backend, rows in requests.items()},
+        "requests_per_model": {backend: len(rows) for backend, rows in requests.items()},
+        "azure_choice_policy": "n=3 in both arms; exact unique indices 0..2 required; request seed only; no independence claim",
+        "prior_compatibility_liability_usd": prior_liability,
         "max_attempts_per_observation": 3, "max_total_attempts_per_model": 45000,
         "request_timeout_seconds": 45, "workers": 24, "initial_requests_per_second": 10,
         "primary_coverage": "all_planned_observations_valid_in_both_arms_for_every_variant",
@@ -129,13 +165,13 @@ def prepare(run, backup, corpus_path, csv_path, azure_base):
         "interrupted_dispatch_policy": "terminal_unknown; reservation remains charged",
         "cost_semantics": "conservative accounting rates, not an invoice; unknown use charged at reservation",
         "backends": {
-            "gemini": {"model": "gemini-3.1-flash-lite", "cap_usd": "8",
+            "gemini": {"model": "gemini-3.1-flash-lite", "cap_usd": str(Decimal("8") - Decimal(prior_liability["gemini"])),
                        "accounting_input_per_million": "0.50", "accounting_output_per_million": "3.00",
                        "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent",
-                       "thinking": "MINIMAL"},
-            "azure": {"model": "gpt-4.1", "cap_usd": "32",
+                       "thinking": "MINIMAL", "requests_per_minute": 600},
+            "azure": {"model": "gpt-4.1", "cap_usd": str(Decimal("32") - Decimal(prior_liability["azure"])),
                       "accounting_input_per_million": "4.00", "accounting_output_per_million": "16.00",
-                      "endpoint": azure_endpoint(azure_base), "thinking": None}},
+                      "endpoint": azure_endpoint(azure_base), "thinking": None, "requests_per_minute": 150}},
         "backup_directory": str(backup),
         "scope": "new observations on a historically selected population; not recovery of historical generations",
     }
@@ -147,6 +183,8 @@ def prepare(run, backup, corpus_path, csv_path, azure_base):
             (directory / "inputs" / name).write_bytes(content)
         exclusive_json(directory / "plan.json", plan)
         exclusive_json(directory / "tasks.json", tasks)
+        for backend, rows in requests.items():
+            exclusive_json(directory / f"requests-{backend}.json", rows)
     return plan
 
 
@@ -211,10 +249,11 @@ def request_body(plan, backend, task):
     return {"model": plan["backends"][backend]["model"],
             "messages": [{"role": "user", "content": task["prompt"]}],
             "temperature": plan["temperature"], "seed": task["seed"],
-            "max_tokens": plan["max_output_tokens"], "response_format": {"type": "json_object"}}
+            "max_tokens": plan["max_output_tokens"], "n": len(task["observations"]),
+            "response_format": {"type": "json_object"}}
 
 
-def interpret(backend, raw):
+def interpret(backend, raw, expected_choices=1):
     """Derive scores and accounting from the retained response, not stored summaries."""
     try:
         data = json.loads(raw)
@@ -223,24 +262,34 @@ def interpret(backend, raw):
             parts = candidate.get("content", {}).get("parts", [])
             text = "".join(p.get("text", "") for p in parts if not p.get("thought"))
             finished = candidate.get("finishReason") == "STOP"
+            texts, finished_flags, indices_valid = [text], [finished], expected_choices == 1
             usage = data.get("usageMetadata", {})
             inp, total = usage.get("promptTokenCount"), usage.get("totalTokenCount")
             out = total - inp if type(inp) is int and type(total) is int else None
             version, response_id = data.get("modelVersion"), data.get("responseId")
         else:
-            choice = data.get("choices", [{}])[0]
-            text = choice.get("message", {}).get("content") or ""
-            finished = choice.get("finish_reason") == "stop"
+            choices = data.get("choices", [])
+            indices = [c.get("index") for c in choices]
+            indices_valid = (all(type(i) is int for i in indices) and
+                             sorted(indices) == list(range(expected_choices)))
+            choices = sorted(choices, key=lambda c: c.get("index", -1)) if indices_valid else []
+            texts = [c.get("message", {}).get("content") or "" for c in choices]
+            finished_flags = [c.get("finish_reason") == "stop" for c in choices]
+            text = texts[0] if expected_choices == 1 and texts else None
             usage = data.get("usage", {})
             inp, out = usage.get("prompt_tokens"), usage.get("completion_tokens")
             version, response_id = data.get("model"), data.get("id")
-        score = parse_click_intent(text) if finished else None
+        scores = ([parse_click_intent(t) if f else None for t, f in zip(texts, finished_flags)]
+                  if indices_valid else [None] * expected_choices)
+        score = scores[0] if expected_choices == 1 else None
         token_counts = [inp, out] if all(type(x) is int and x >= 0 for x in [inp, out]) else None
-        return {"score": score, "status": "valid" if score is not None else "invalid_content",
-                "text": text, "token_counts": token_counts, "model_version": version,
+        return {"score": score, "scores": scores, "status": "valid" if all(s is not None for s in scores) else "invalid_content",
+                "text": text, "texts": texts, "choice_indices_valid": indices_valid,
+                "token_counts": token_counts, "model_version": version,
                 "response_id": response_id}
     except (ValueError, TypeError, IndexError, AttributeError):
-        return {"score": None, "status": "invalid_content", "text": None,
+        return {"score": None, "scores": [None] * expected_choices, "status": "invalid_content", "text": None,
+                "texts": [], "choice_indices_valid": False,
                 "token_counts": None, "model_version": None, "response_id": None}
 
 
@@ -253,7 +302,7 @@ class Collection:
     def __init__(self, run, backend, credentials, transport=None):
         self.run = Path(run)
         self.plan = json.loads((self.run / "plan.json").read_text())
-        self.tasks = json.loads((self.run / "tasks.json").read_text())
+        self.tasks = json.loads((self.run / f"requests-{backend}.json").read_text())
         self.backend = backend
         self.settings = self.plan["backends"][backend]
         self.backup = Path(self.plan["backup_directory"])
@@ -269,11 +318,13 @@ class Collection:
                 credentials["AZURE_OPENAI_DEPLOYMENT"] != self.settings["model"]
             ):
                 raise ValueError("Azure configuration differs from the plan")
-        for name in ["plan.json", "tasks.json"]:
+        for name in ["plan.json", "tasks.json", f"requests-{backend}.json"]:
             if (self.run / name).read_bytes() != (self.backup / name).read_bytes():
                 raise ValueError("changed configuration mirror")
-        if digest(encoded(self.tasks)) != self.plan["task_plan_sha256"]:
+        if digest(encoded(self.tasks)) != self.plan["request_plan_sha256"][backend]:
             raise ValueError("changed task plan")
+        if digest(encoded(json.loads((self.run / "tasks.json").read_text()))) != self.plan["task_plan_sha256"]:
+            raise ValueError("changed observation plan")
         for name, expected in self.plan["code_sha256"].items():
             if digest((ROOT / name).read_bytes()) != expected:
                 raise ValueError("changed collector dependency: " + name)
@@ -288,8 +339,11 @@ class Collection:
         self.attempts = 0
         self.next_attempt = {}
         self.stop = threading.Event()
+        self.halt_reason = None
         self.next_dispatch = 0.
-        self.interval = 1 / self.plan["initial_requests_per_second"]
+        self.interval = max(1 / self.plan["initial_requests_per_second"],
+                            60 / (.9 * self.settings["requests_per_minute"]))
+        self.token_limit = None
         self.plan_sha256 = digest((self.run / "plan.json").read_bytes())
         for row in self.journal.rows():
             if row["event"] == "manifest":
@@ -302,6 +356,15 @@ class Collection:
             elif row["event"] == "result":
                 reserved = self.pending.pop(row["attempt_id"])
                 self.spent += Decimal(row["accounted_usd"]) if row["accounted_usd"] is not None else reserved
+                reason = row.get("halt_reason")
+                if row.get("http_status") in [400, 401, 403, 404]:
+                    reason = reason or "permanent_http_error"
+                if row["accounted_usd"] is not None and Decimal(row["accounted_usd"]) > reserved:
+                    reason = reason or "reservation_underestimated"
+                if reason:
+                    self.halt_reason = reason
+                    self.stop.set()
+                self.limit_headers(row.get("response_headers", {}), row.get("http_status"), 0)
                 if row["terminal"]:
                     self.done.add(row["task_id"])
         # An interrupted dispatch may already have been billed: do not repeat it silently.
@@ -319,6 +382,45 @@ class Collection:
         except Exception:
             self.stop.set()
             raise
+
+    def limit_headers(self, headers, status, request_tokens):
+        """Called under the scheduling lock, or before workers exist on resume."""
+        headers = {k.lower(): v for k, v in headers.items()}
+        for key, scale in [("x-ratelimit-limit-requests", 1),
+                           ("x-ratelimit-limit-tokens", request_tokens)]:
+            try:
+                limit = float(headers[key])
+                if key == "x-ratelimit-limit-tokens" and limit > 0:
+                    self.token_limit = min(self.token_limit or limit, limit)
+                if limit > 0 and scale > 0:
+                    self.interval = max(self.interval, 60 * scale / (.9 * limit))
+            except (KeyError, ValueError, TypeError):
+                pass
+        if status == 429:
+            delays = [2.]
+            for key, multiplier in [("retry-after-ms", .001), ("x-ms-retry-after-ms", .001), ("retry-after", 1)]:
+                if key not in headers:
+                    continue
+                try:
+                    delays.append(max(0., float(headers[key]) * multiplier))
+                except (ValueError, TypeError):
+                    if key == "retry-after":
+                        try:
+                            delays.append(max(0., parsedate_to_datetime(headers[key]).timestamp() - time.time()))
+                        except (ValueError, TypeError, OverflowError):
+                            pass
+            self.interval = max(self.interval, 1.)
+            self.next_dispatch = max(self.next_dispatch, time.monotonic() + max(delays))
+
+    def wait_dispatch(self):
+        while not self.stop.is_set():
+            with self.lock:
+                delay = self.next_dispatch - time.monotonic()
+                if delay <= 0:
+                    self.next_dispatch = time.monotonic() + self.interval
+                    return True
+            time.sleep(min(delay, .25))
+        return False
 
     def http(self, body):
         if self.backend == "gemini":
@@ -339,9 +441,14 @@ class Collection:
 
     def observe(self, task):
         body = request_body(self.plan, self.backend, task)
-        reservation = cost([len(task["prompt"].encode()) + 256, self.plan["max_output_tokens"]], self.settings)
+        counts = [len(task["prompt"].encode()) + 256,
+                  self.plan["max_output_tokens"] * len(task["observations"])]
+        reservation = cost(counts, self.settings)
+        with self.lock:
+            if self.token_limit:
+                self.interval = max(self.interval, 60 * sum(counts) / (.9 * self.token_limit))
         for attempt in range(self.next_attempt.get(task["task_id"], 0), self.plan["max_attempts_per_observation"]):
-            if self.stop.is_set():
+            if not self.wait_dispatch():
                 return
             with self.lock:
                 if self.attempts >= self.plan["max_total_attempts_per_model"] or self.spent + sum(self.pending.values(), Decimal(0)) + reservation > Decimal(self.settings["cap_usd"]):
@@ -350,9 +457,6 @@ class Collection:
                 attempt_id = f"{task['task_id']}:{attempt}"
                 self.pending[attempt_id] = reservation
                 self.attempts += 1
-                pause = max(0., self.next_dispatch - time.monotonic())
-                self.next_dispatch = max(time.monotonic(), self.next_dispatch) + self.interval
-            time.sleep(pause)
             if self.stop.is_set():
                 with self.lock:
                     self.pending.pop(attempt_id)
@@ -370,31 +474,37 @@ class Collection:
                 secret = self.credentials.get(key)
                 if secret:
                     raw = raw.replace(secret.encode(), b"[REDACTED]")
-            parsed = interpret(self.backend, raw) if status == 200 else {
+            parsed = interpret(self.backend, raw, len(task["observations"])) if status == 200 else {
                 "score": None, "status": "transport_error" if status is None else "http_error",
+                "scores": [None] * len(task["observations"]),
                 "token_counts": None, "text": None, "model_version": None, "response_id": None}
             retry = (status is None or status in [429, 500, 502, 503, 504]) and attempt + 1 < self.plan["max_attempts_per_observation"]
             charge = cost(parsed["token_counts"], self.settings) if parsed["token_counts"] else None
             allowed_headers = {k.lower(): v for k, v in headers.items()
                                if k.lower() in {"request-id", "x-request-id", "apim-request-id",
                                                 "retry-after", "x-ms-region", "x-ratelimit-remaining-requests",
-                                                "x-ratelimit-limit-requests"}}
+                                                "x-ratelimit-limit-requests", "x-ratelimit-limit-tokens",
+                                                "x-ratelimit-remaining-tokens", "retry-after-ms",
+                                                "x-ms-retry-after-ms", "x-ratelimit-reset-requests",
+                                                "x-ratelimit-reset-tokens"}}
+            halt_reason = ("permanent_http_error" if status in [400, 401, 403, 404] else
+                           "reservation_underestimated" if charge is not None and charge > reservation else None)
             self.record({"event": "result", "attempt_id": attempt_id, "task_id": task["task_id"],
                                  "terminal": not retry, "http_status": status, "error_type": error_type,
                                  "response_body_base64": base64.b64encode(raw).decode(),
                                  "response_sha256": digest(raw), "response_headers": allowed_headers,
                                  "seconds": time.monotonic() - started, "parsed": parsed,
+                                 "halt_reason": halt_reason,
                                  "accounted_usd": str(charge) if charge is not None else None})
             with self.lock:
                 self.pending.pop(attempt_id)
                 self.spent += charge if charge is not None else reservation
                 if not retry:
                     self.done.add(task["task_id"])
-                if status in [400, 401, 403, 404] or (charge is not None and charge > reservation):
+                if halt_reason:
+                    self.halt_reason = halt_reason
                     self.stop.set()
-                if status == 429:
-                    self.interval = min(2., self.interval * 2)
-                    self.next_dispatch = max(self.next_dispatch, time.monotonic() + 5)
+                self.limit_headers(allowed_headers, status, sum(counts))
             if not retry:
                 return
             time.sleep(min(30, 2 ** (attempt + 1)))
@@ -413,12 +523,13 @@ class Collection:
                 for future in as_completed(futures):
                     future.result()
                 if offset % (width * 10) == 0:
-                    print(json.dumps({"backend": self.backend, "terminal_observations": len(self.done),
-                                      "planned": len(self.tasks), "attempts": self.attempts,
+                    print(json.dumps({"backend": self.backend, "terminal_requests": len(self.done),
+                                      "planned_requests": len(self.tasks), "attempts": self.attempts,
                                       "accounted_usd": str(self.spent)}), flush=True)
-        result = {"backend": self.backend, "terminal_observations": len(self.done),
-                  "planned": len(self.tasks), "attempts": self.attempts, "accounted_usd": str(self.spent),
+        result = {"backend": self.backend, "terminal_requests": len(self.done),
+                  "planned_requests": len(self.tasks), "attempts": self.attempts, "accounted_usd": str(self.spent),
                   "complete": len(self.done) == len(self.tasks), "stopped": self.stop.is_set(),
+                  "halt_reason": self.halt_reason,
                   "journal_sha256": digest(self.journal.path.read_bytes())}
         self.journal.close()
         return result

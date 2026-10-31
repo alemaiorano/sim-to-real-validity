@@ -22,15 +22,33 @@ def replay(run, backend):
     for name, expected in plan["input_sha256"].items():
         if digest((run / "inputs" / name).read_bytes()) != expected:
             raise ValueError("changed input: " + name)
-    lookup = {t["task_id"]: t for t in tasks}
+    requests = json.loads((run / f"requests-{backend}.json").read_text())
+    if digest(encoded(requests)) != plan["request_plan_sha256"][backend]:
+        raise ValueError("changed request plan")
+    lookup = {t["task_id"]: t for t in requests}
     dispatches, outcomes, responded = {}, {}, set()
     previous = "0" * 64
     statuses, versions = Counter(), Counter()
     tokens = [0, 0]
     accounted = Decimal(0)
     rows = 0
-    with (run / f"{backend}.events.jsonl").open() as stream:
-        for sequence, line in enumerate(stream):
+    journal_bytes = (run / f"{backend}.events.jsonl").read_bytes()
+    if journal_bytes and not journal_bytes.endswith(b"\n"):
+        raise ValueError("incomplete journal record; analyze a completed snapshot")
+    snapshots = run / "snapshots"
+    snapshots.mkdir(exist_ok=True)
+    snapshot_path = snapshots / f"{backend}-{digest(journal_bytes)}.jsonl"
+    try:
+        with snapshot_path.open("xb") as stream:
+            stream.write(journal_bytes)
+            stream.flush()
+            import os
+            os.fsync(stream.fileno())
+    except FileExistsError:
+        if snapshot_path.read_bytes() != journal_bytes:
+            raise ValueError("conflicting preserved journal snapshot")
+    if journal_bytes:
+        for sequence, line in enumerate(journal_bytes.splitlines()):
             row = json.loads(line)
             body = {k: v for k, v in row.items() if k != "sha256"}
             if row["sequence"] != sequence or row["previous"] != previous or digest(encoded(body)) != row["sha256"]:
@@ -56,7 +74,8 @@ def replay(run, backend):
                 raw = base64.b64decode(row["response_body_base64"], validate=True)
                 if digest(raw) != row["response_sha256"]:
                     raise ValueError("changed provider bytes")
-                parsed = interpret(backend, raw) if row["http_status"] == 200 else None
+                request = lookup[row["task_id"]]
+                parsed = interpret(backend, raw, len(request["observations"])) if row["http_status"] == 200 else None
                 if parsed is not None and parsed != row["parsed"]:
                     raise ValueError("stored parsing differs from raw response")
                 counts = parsed["token_counts"] if parsed else None
@@ -68,17 +87,20 @@ def replay(run, backend):
                     tokens = [a + b for a, b in zip(tokens, counts)]
                 statuses[row["parsed"]["status"]] += 1
                 if row["terminal"]:
-                    if row["task_id"] in outcomes:
-                        raise ValueError("multiple terminal outcomes for one observation")
-                    outcomes[row["task_id"]] = parsed["score"] if parsed else None
-                    versions[str(parsed["model_version"]) if parsed else "unknown"] += 1
+                    scores = parsed["scores"] if parsed else [None] * len(request["observations"])
+                    for observation, score in zip(request["observations"], scores):
+                        if observation["task_id"] in outcomes:
+                            raise ValueError("multiple terminal outcomes for one observation")
+                        outcomes[observation["task_id"]] = score
+                    versions[str(parsed["model_version"]) if parsed else "unknown"] += len(scores)
             else:
                 raise ValueError("unknown journal event")
     interrupted = set(dispatches) - responded
     for key in interrupted:
         task_id = dispatches[key]["task_id"]
         accounted += Decimal(dispatches[key]["reserved_usd"])
-        outcomes.setdefault(task_id, None)
+        for observation in lookup[task_id]["observations"]:
+            outcomes.setdefault(observation["task_id"], None)
     corpus = json.loads((run / "inputs/corpus.json").read_text())
     selected = {p["package_id"]: p for p in corpus if p["package_id"] in plan["selected_package_ids"]}
     values = defaultdict(list)
@@ -108,7 +130,8 @@ def replay(run, backend):
     primary["paired_gap"] = cv.paired_analysis(complete["panel"], complete["baseline"])
     return {"protocol": PROTOCOL, "backend": backend, "model_requested": plan["backends"][backend]["model"],
             "plan_sha256": digest((run / "plan.json").read_bytes()),
-            "journal_sha256": digest((run / f"{backend}.events.jsonl").read_bytes()),
+            "journal_sha256": digest(journal_bytes),
+            "journal_snapshot": str(snapshot_path.relative_to(run)), "journal_snapshot_bytes": len(journal_bytes),
             "n_eligible_packages": len(selected), "planned_observations": len(tasks),
             "terminal_observations": len(outcomes), "unresolved_observations": len(tasks) - len(outcomes),
             "interrupted_attempts": len(interrupted), "attempt_status_counts": dict(statuses),

@@ -41,15 +41,21 @@ class RecollectionTests(unittest.TestCase):
                      "temperature": .8, "max_output_tokens": 64,
                      "workers": 1, "initial_requests_per_second": 100000,
                      "max_attempts_per_observation": 3, "max_total_attempts_per_model": 1000,
-                     "backends": {"gemini": {"model": "fixture", "cap_usd": "1",
-                     "accounting_input_per_million": ".50", "accounting_output_per_million": "3"}}}
+                     "backends": {backend: {"model": "fixture", "cap_usd": "1",
+                     "requests_per_minute": 1000000000,
+                     "accounting_input_per_million": ".50", "accounting_output_per_million": "3"}
+                     for backend in ["gemini", "azure"]}}
         self.write_plan()
 
     def write_plan(self):
+        requests = {b: rc.make_requests(self.tasks, b) for b in self.plan["backends"]}
+        self.plan["request_plan_sha256"] = {b: rc.digest(rc.encoded(rows)) for b, rows in requests.items()}
         for directory in [self.run, self.backup]:
             (directory / "plan.json").write_bytes(rc.encoded(self.plan) + b"\n")
             (directory / "tasks.json").write_bytes(rc.encoded(self.tasks) + b"\n")
             (directory / "inputs/corpus.json").write_bytes(rc.encoded(self.corpus))
+            for backend, rows in requests.items():
+                (directory / f"requests-{backend}.json").write_bytes(rc.encoded(rows) + b"\n")
 
     def tearDown(self):
         self.temp.cleanup()
@@ -109,7 +115,7 @@ class RecollectionTests(unittest.TestCase):
 
     def test_unknown_interrupted_attempt_retains_liability_and_is_not_reissued(self):
         collection = rc.Collection(self.run, "gemini", {}, lambda _: self.fail("unexpected transport"))
-        task = self.tasks[0]
+        task = collection.tasks[0]
         collection.journal.append({"event": "dispatch", "task_id": task["task_id"],
             "attempt_id": task["task_id"] + ":0", "reserved_usd": ".1",
             "observation": {k: v for k, v in task.items() if k != "prompt"},
@@ -159,6 +165,89 @@ class RecollectionTests(unittest.TestCase):
         body = json.loads(response())
         body["candidates"][0]["finishReason"] = "MAX_TOKENS"
         self.assertIsNone(rc.interpret("gemini", json.dumps(body).encode())["score"])
+
+    def test_azure_three_choices_keep_balanced_observations_and_usage_once(self):
+        calls = []
+        raw = json.dumps({"choices": [
+            {"index": i, "finish_reason": "stop", "message": {"content": '{"click_intent":0.7}'}}
+            for i in range(3)], "usage": {"prompt_tokens": 20, "completion_tokens": 30},
+            "model": "fixture-gpt", "id": "fixture-response"}).encode()
+        def transport(body):
+            calls.append(body)
+            self.assertEqual(body["n"], 3)
+            return 200, raw, {}
+        collection = rc.Collection(self.run, "azure", {}, transport)
+        self.assertEqual(len(collection.tasks), 40)
+        for first, second in zip(collection.tasks[::2], collection.tasks[1::2]):
+            self.assertEqual(first["variant_id"], second["variant_id"])
+            self.assertEqual(sum(t["persona_id"] == "baseline" for t in [first, second]), 1)
+        collection.execute()
+        self.assertEqual(len(calls), 40)
+        report = replay(self.run, "azure")
+        self.assertEqual(report["terminal_observations"], 120)
+        self.assertEqual(report["token_counts"], [800, 1200])
+        self.assertEqual(report["n_primary_packages"], 1)
+
+    def test_missing_or_duplicate_choice_indices_are_terminal_invalid(self):
+        for indices in [[0, 1], [0, 0, 2], [0, 1, 4]]:
+            raw = json.dumps({"choices": [{"index": i, "finish_reason": "stop",
+                "message": {"content": '{"click_intent":0.8}'}} for i in indices]}).encode()
+            result = rc.interpret("azure", raw, 3)
+            self.assertEqual(result["scores"], [None, None, None])
+            self.assertFalse(result["choice_indices_valid"])
+
+    def test_quota_headers_and_retry_after_ms_control_future_dispatch(self):
+        collection = rc.Collection(self.run, "azure", {}, lambda _: self.fail("no call expected"))
+        import time
+        start = time.monotonic()
+        collection.limit_headers({"x-ratelimit-limit-requests": "150",
+                                  "x-ratelimit-limit-tokens": "150000",
+                                  "retry-after-ms": "6000"}, 429, 800)
+        self.assertGreaterEqual(collection.interval, 60 / (.9 * 150))
+        self.assertGreaterEqual(collection.next_dispatch, start + 6)
+        collection.journal.close()
+
+    def test_azure_reserves_all_three_choice_outputs_before_dispatch(self):
+        request = rc.make_requests(self.tasks, "azure")[0]
+        counts = [len(request["prompt"].encode()) + 256, self.plan["max_output_tokens"]]
+        self.plan["backends"]["azure"]["cap_usd"] = str(rc.cost(counts, self.plan["backends"]["azure"]))
+        self.write_plan()
+        collection = rc.Collection(self.run, "azure", {}, lambda _: self.fail("three choices exceeded reservation"))
+        self.assertTrue(collection.execute(limit=1)["stopped"])
+
+    def test_permanent_failure_stays_halted_after_resume(self):
+        first = rc.Collection(self.run, "gemini", {}, lambda _: (400, b'{"error":"fixture"}', {}))
+        self.assertTrue(first.execute(limit=1)["stopped"])
+        resumed = rc.Collection(self.run, "gemini", {}, lambda _: self.fail("persisted stop was bypassed"))
+        self.assertTrue(resumed.execute(limit=1)["stopped"])
+
+    def test_underestimated_reservation_stays_halted_after_resume(self):
+        body = json.loads(response())
+        body["usageMetadata"]["totalTokenCount"] = 5000
+        first = rc.Collection(self.run, "gemini", {}, lambda _: (200, json.dumps(body).encode(), {}))
+        self.assertTrue(first.execute(limit=1)["stopped"])
+        resumed = rc.Collection(self.run, "gemini", {}, lambda _: self.fail("cost barrier was bypassed"))
+        self.assertEqual(resumed.halt_reason, "reservation_underestimated")
+        self.assertTrue(resumed.execute(limit=1)["stopped"])
+
+    def test_replay_hash_identifies_snapshot_even_if_live_journal_grows(self):
+        first = rc.Collection(self.run, "gemini", {}, lambda _: (200, response(), {}))
+        first.execute(limit=1)
+        before = (self.run / "gemini.events.jsonl").read_bytes()
+        import compute_validity as cv
+        analyze = cv.analyze
+        invoked = []
+        def grow_then_analyze(*args, **kwargs):
+            if not invoked:
+                invoked.append(True)
+                rc.Collection(self.run, "gemini", {}, lambda _: (200, response(), {})).execute(limit=1)
+            return analyze(*args, **kwargs)
+        with patch.object(cv, "analyze", side_effect=grow_then_analyze):
+            report = replay(self.run, "gemini")
+        self.assertEqual(report["terminal_observations"], 1)
+        self.assertEqual(report["journal_sha256"], rc.digest(before))
+        self.assertEqual((self.run / report["journal_snapshot"]).read_bytes(), before)
+        self.assertNotEqual(report["journal_sha256"], rc.digest((self.run / "gemini.events.jsonl").read_bytes()))
 
 
 if __name__ == "__main__":
