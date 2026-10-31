@@ -26,5 +26,5 @@
   "native_potential_hallucinations": 0,
   "raw_review": "docs/audit/automated-review-review.md",
   "adjudication": "docs/audit/automated-review-adjudication.md",
-  "semantics": "Automated advisory, not journal acceptance or an independent human gate. Raw failed guard and unsupported summary paraphrase preserved and adjudicated. Current manuscript PDF is unchanged from reviewed source; later changes are public evidence/documentation only. SDK-object journals remain in separate retained companion."
+  "semantics": "Automated advisory for the exact source/PDF pins above, not journal acceptance or an independent human gate. Raw failed guard and unsupported paraphrase retained. Subsequent manuscript text/disclosure/specification revisions are outside its exact PDF; scientific numerical inputs and estimators are unchanged. The current blind Astra review and implementation disposition are recorded separately."
 }

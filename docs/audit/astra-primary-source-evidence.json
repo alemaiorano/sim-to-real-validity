@@ -1,0 +1,18 @@
+{
+  "source": "Matias et al. (2021), The Upworthy Research Archive",
+  "doi": "10.1038/s41597-021-00934-7",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8329003/",
+  "verified_sections": [
+    "Methods, editorial decisions to conclude experiments",
+    "Technical Validation, follow-up tests and shared content"
+  ],
+  "supported_facts": [
+    "Editors monitored accumulated outcomes before deciding when to stop tests.",
+    "Follow-up tests could be recorded under different test IDs while sharing content."
+  ],
+  "methodological_implications": [
+    "Ordinary fixed-horizon p-values are not proven calibrated under that monitoring; multiplicity adjustment alone cannot supply missing validity.",
+    "Resampling IDs independently does not account for dependence among related tests. Actual impact is unquantified; neither an inflated interval nor a sign reversal is asserted."
+  ],
+  "scope": "Primary facts verified directly. Earlier allocation-risk exclusion does not address either issue."
+}

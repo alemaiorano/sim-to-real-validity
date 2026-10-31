@@ -76,17 +76,25 @@ Nonsignificant packages need not be unpredictable.}
 \end{figure}
 
 \paragraph{Signal strength (RQ2).}
-The association between the supplementary screening statistic and top-1 is Spearman
-\hThreeTopOne{} (CI [\hThreeTopOneCILow{}, \hThreeTopOneCIHigh{}]) over \hThreeN{} packages.
-The available aggregate does not support recomputing this association under simultaneous
-screening and expected tie credit. The primary selected-cohort experiment does not estimate
-this all-package association.
+The pinned supplementary producer defines its separation index as $1-p$, where $p$ is the
+one-sided observed-best-versus-runner-up value, and correlates it with the panel's first-index
+top-1 hit. The stored Spearman association is \hThreeTopOne{} (CI
+[\hThreeTopOneCILow{}, \hThreeTopOneCIHigh{}]) over \hThreeN{} packages, using $5{,}000$
+bootstrap resamples. Its code requires every variant to have a score and within-package
+Spearman to be defined, even for this top-1 analysis. The report alone cannot identify which
+excluded packages lacked scores or had undefined ranks. This index mixes outcome separation
+with exposure, and top-1 difficulty also varies with the number of variants; the association
+is unadjusted for those factors. It is not evidence of an intrinsic predictability effect.
+Missing supplementary predictions prevent recomputing the analysis under simultaneous screening
+and expected tie credit; the primary selected-cohort experiment does not estimate this
+all-package association.
 
 \paragraph{Dataset comparisons (RQ3).}
 Table~\ref{tab:replication} shows higher baseline gamma on the three Upworthy splits and a smaller
 difference on MIND, where packages compare articles. On Reddit, the panel has higher top-1
 (\redditPanelTop{} versus \redditBaseTop{}) and lift (\redditPanelLift{} versus \redditBaseLift{}).
-The direction of the contrast therefore depends on dataset and metric. Reddit gamma
+The available summaries show different directions, but unreconciled collection and subset
+differences prevent attributing this variation to the dataset alone. Reddit gamma
 CIs include zero; this establishes neither equivalence nor absence of a title-related signal.
 Posting time and visibility were not tested as explanations. Subset-selection and coverage
 limitations further restrict interpretation. The aggregate summary does not record draw
