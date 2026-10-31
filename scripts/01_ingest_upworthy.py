@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a locked, held-out subset of the Upworthy Research Archive
+"""Build a locked exploratory subset of the Upworthy Research Archive
 ~\\cite{matiasUpworthy} as the sim-to-real ground-truth corpus.
 
 Source: Upworthy Research Archive, Matias et al., Scientific Data 8, 195 (2021).
@@ -7,11 +7,13 @@ Source: Upworthy Research Archive, Matias et al., Scientific Data 8, 195 (2021).
   OSF:  https://osf.io/jd64p/   (download the exploratory packages CSV from there)
 
 We do NOT re-host the Upworthy data. This script reads a locally-downloaded CSV,
-records its sha256, deterministically samples a held-out subset, and writes a
+records its sha256, deterministically constructs an exploratory subset, and writes a
 locked corpus JSON whose every variant carries the REAL click-through rate.
 
-The subset is HELD-OUT: it is never shown to the persona-authoring step, so any
-this avoids deliberate reuse in persona authoring but cannot exclude model training contamination.
+The archival exploratory split and a deterministic construction do not establish that this
+revision is held out, that thresholds were preregistered, or that model contamination is absent.
+The preserved source lacks the archive's 2024 randomization-risk flags; the paper reports that
+limitation and a separate period-exclusion sensitivity, not a silent change to historical locks.
 
 Output: datasets/upworthy-subset-<LOCK_DATE>.json   (corpus)
         sibling .manifest.json                               (sha256 + sampling params)
@@ -119,7 +121,7 @@ def build_packages(rows: list[dict]) -> dict[str, list[dict]]:
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Ingest Upworthy archive into a locked held-out corpus.")
+    ap = argparse.ArgumentParser(description="Ingest Upworthy archive into a locked exploratory corpus.")
     ap.add_argument("--input", required=True, type=Path, help="path to an Upworthy packages CSV")
     ap.add_argument("--name", default="upworthy-subset",
                     help="output corpus base name (use a distinct name per split to avoid clobber)")

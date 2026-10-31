@@ -24,6 +24,16 @@ The original exploratory source SHA256 is
 The original derived corpus SHA256 is
 `523034f1fd86d4a432a57b29eb25230418dba119c3367ec04622815114cc9f85`.
 
+The [2024 author correction](https://doi.org/10.1038/s41597-024-03600-w) and
+[archive documentation](https://upworthy.natematias.com/about-the-archive.html) identify a
+randomization-risk window, 25 June 2013 through 10 January 2014 inclusive. The retained CSV lacks
+risk flags. Calendar-date overlap includes 318/1,695 corpus packages and 42/190 newly selected
+packages. These identify window membership, not proven defects of every individual experiment.
+The primary reports remain unchanged; a separate post-hoc sensitivity excludes these dates from
+complete primary packages, using no new provider calls. It retains 148 Gemini and 147 GPT-4.1
+packages. Outside-window dates are not a guarantee of valid randomization. The data and adjusted
+screen do not alone establish causal headline effects.
+
 For exact historical restoration, use the producer at pinned commit
 `7c1ab46b5d881529b79769fb870ed1f2fb98619c` in a separate checkout, then verify the
 original manifest. The revised builder intentionally produces a **different schema/hash**:

@@ -143,7 +143,27 @@ allocation; a new journal marker records its application. Other permanent errors
 stops. Content-dependent exclusions and the pause are disclosed; no comparative performance
 was used to choose this amendment.
 
-## 5. Future paid collection
+## 5. Post-hoc randomization-window sensitivity
+
+The frozen primary experiment predates this audit finding. Its inputs and results stay unchanged.
+The archive's 2024 author correction identifies a risk period, not an LLM-generation failure.
+Use the saved complete primary variant means with their raw/report/plan hash lineage:
+
+```bash
+python scripts/analyze_randomization_window.py --run-dir "$ARTIFACT_ROOT/matched-v2" \
+  --derived-dir "$ARTIFACT_ROOT/derived" --output /new/path/window_sensitivity.json
+cmp /new/path/window_sensitivity.json recollection/2026-10-31/window_sensitivity.json
+python scripts/generate_window_sensitivity_assets.py
+```
+
+The rule excludes an entire experiment if any source row's original calendar date is between
+2013-06-25 and 2014-01-10 inclusive. The archive timezone is undocumented; no timezone is invented.
+Missing date mappings, duplicate variant/arm rows, changed primary masks, missing primary draws,
+and incompatible input/report hashes are rejected. All six paired metrics are reported, with
+valid IDs and counts. The sensitivity was chosen after a literature correction was identified;
+it is explicitly post hoc and supplies no independent replication or causal guarantee.
+
+## 6. Future paid collection
 
 Future generations create a new experiment and require a new plan/run directory. Provider aliases,
 best-effort seeds, quota and infrastructure can change. The current `recollect.py prepare` freezes

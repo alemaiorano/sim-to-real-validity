@@ -6,6 +6,23 @@ Packages require at least two headlines and $3{,}000$ impressions per headline; 
 matters in online experiments~\citep{kohavi2009controlled}. The locked exploratory corpus has
 \sensNVariants{} variants in \sensNPackages{} packages. Original manifests remain unchanged.
 
+\paragraph{Archive correction and sensitivity.}
+The archive authors' 2024 correction identifies a randomization-risk window from 25 June 2013
+through 10 January 2014 inclusive~\citep{matias2024correction}. The preserved CSV contains creation dates but neither the documented problem flag nor a
+risk indicator. Calendar-date overlap identifies \riskCorpusN{} corpus packages, \riskLegacyN{}
+historically selected packages and \riskSelectedN{} packages in the new selected cohort.
+These counts mark window membership, not individually proven defects. Bonferroni screening
+cannot repair historical allocation problems.
+
+After the full-text audit identified this omission, we added a clearly post-hoc offline
+sensitivity. It excludes an entire experiment if any row for that experiment in the preserved CSV has a
+creation date that falls
+in that inclusive window, using the original date string without inventing a timezone. Each
+model otherwise retains its complete primary-package policy and the same recorded generations,
+metrics and bootstrap procedure. Primary reports are preserved unchanged. Dates outside the
+window are not a certification of correct randomization; this sensitivity is not confirmatory
+or an independent replication.
+
 \paragraph{Historical winner screen.}
 The original procedure chose the observed best variant and compared it with the observed runner-up
 using a one-sided pooled two-proportion $z$ test at $p<0.05$, selecting \legacySelectedN{} packages.
@@ -34,7 +51,7 @@ was selected from previously examined outcomes; it is not a new held-out populat
 recovery of historical generations. No new MIND, Reddit, other Upworthy split, prompt-robustness,
 or multi-seed experiment is claimed.
 
-Each variant receives three observations for each of ten fixed personas and thirty generic-reader
+Each variant is allocated three observations for each of ten fixed personas and thirty generic-reader
 observations. Package and variant order is shuffled with a recorded seed; baseline/persona
 requests are interleaved with randomized order within pairs. Temperature is $0.8$, JSON output
 is requested, and output is limited to 64 tokens per choice. Gemini uses single-choice requests

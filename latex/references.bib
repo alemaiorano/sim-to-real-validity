@@ -17,7 +17,7 @@
 }
 
 % VERIFIED 2026-06-03 via Crossref 10.1017/pan.2023.2 (6 authors, order confirmed).
-% Justifies the core premise: LLM-conditioned personas reproduce human response patterns.
+% Context: demographic conditioning can approximate some sampled human-response distributions.
 @article{argyleSiliconSampling,
   title   = {Out of One, Many: Using Language Models to Simulate Human Samples},
   author  = {Argyle, Lisa P. and Busby, Ethan C. and Fulda, Nancy and Gubler, Joshua R. and Rytting, Christopher and Wingate, David},
@@ -47,7 +47,8 @@
   title         = {{LLM Generated Persona is a Promise with a Catch}},
   author        = {Li, Ang and Chen, Haozhe and Namkoong, Hongseok and Peng, Tianyi},
   year          = {2025},
-  eprint        = {2503.16527},
+  eprint        = {2503.16527v1},
+  url           = {https://arxiv.org/abs/2503.16527v1},
   archivePrefix = {arXiv},
   primaryClass  = {cs.CL}
 }
@@ -89,7 +90,7 @@
 }
 
 % VERIFIED 2026-06-03 via Crossref 10.1007/s10618-008-0114-1 (4 authors, order confirmed).
-% Justifies the minimum-impressions threshold for trustworthy observed CTR.
+% Context: sampling uncertainty in online experiments; not evidence for a universal3000 threshold.
 @article{kohavi2009controlled,
   title   = {Controlled experiments on the web: survey and practical guide},
   author  = {Kohavi, Ron and Longbotham, Roger and Sommerfield, Dan and Henne, Randal M.},
@@ -141,7 +142,7 @@
 }
 
 % VERIFIED 2026-06-03 via Crossref 10.4324/9780203771587 (Routledge; canonical 2nd ed. 1988).
-% Source of the a-priori effect-size thresholds (small rho>=0.1, medium>=0.3) and power analysis.
+% Historical power context; does not calibrate gamma or a mean of package coefficients.
 @book{cohen1988power,
   title     = {Statistical Power Analysis for the Behavioral Sciences},
   author    = {Cohen, Jacob},
@@ -152,13 +153,14 @@
 }
 
 % VERIFIED 2026-06-03 via arXiv API/abs 2406.02611 (authors Ye, Yoganarasimhan, Zheng).
-% Concurrent Upworthy study: pure-LLM headline prediction barely beats random — task-difficulty context.
+% Concurrent LLM-assisted content experimentation; no direct numerical comparison is asserted.
 @article{ye2024lola,
   title         = {{LOLA}: {LLM}-Assisted Online Learning Algorithm for Content Experiments},
   author        = {Ye, Zikun and Yoganarasimhan, Hema and Zheng, Yufeng},
   journal       = {arXiv preprint arXiv:2406.02611},
   year          = {2024},
-  eprint        = {2406.02611},
+  eprint        = {2406.02611v3},
+  url           = {https://arxiv.org/abs/2406.02611v3},
   archivePrefix = {arXiv},
   primaryClass  = {cs.LG}
 }
@@ -174,7 +176,7 @@
 }
 
 % VERIFIED 2026-06-04 via Crossref 10.18653/v1/2024.findings-emnlp.888 (5 authors, order confirmed).
-% Corroborates: personas in prompts do not improve LLM performance.
+% Persona effects on objective tasks are heterogeneous; does not imply universal degradation.
 @inproceedings{zheng2024helpful,
   title     = {When ``A Helpful Assistant'' Is Not Really Helpful: Personas in System Prompts Do Not Improve Performances of Large Language Models},
   author    = {Zheng, Mingqian and Pei, Jiaxin and Logeswaran, Lajanugen and Lee, Moontae and Jurgens, David},
@@ -186,7 +188,7 @@
 
 % VERIFIED 2026-06-04 via Crossref 10.18653/v1/2024.acl-long.554 (2 authors, order confirmed).
 % Nuance: persona variables explain <10% of variance; persona effect is small and conditional on
-% the persona-outcome correlation (explains the domain-dependent gap).
+% the persona-outcome correlation; not a causal explanation of this study's gap.
 @inproceedings{hu2024persona,
   title     = {Quantifying the Persona Effect in {LLM} Simulations},
   author    = {Hu, Tiancheng and Collier, Nigel},
@@ -214,13 +216,14 @@
   author        = {Gupta, Shashank and Shrivastava, Vaishnavi and Deshpande, Ameet and Kalyan, Ashwin and Clark, Peter and Sabharwal, Ashish and Khot, Tushar},
   booktitle     = {International Conference on Learning Representations (ICLR)},
   year          = {2024},
-  eprint        = {2311.04892},
+  eprint        = {2311.04892v2},
+  url           = {https://arxiv.org/abs/2311.04892v2},
   archivePrefix = {arXiv}
 }
 
 % VERIFIED 2026-06-03 against the Pew report page (no DOI; report cited by URL + access date).
 % Bylines confirmed: Holcomb, Gottfried, Mitchell. Survey n=5,173 US adults, Aug 21-Sep 2 2013.
-% Grounds the persona-panel demographics in the real Upworthy-era audience.
+% Demographic inspiration only; not a validated population-weighted panel construction.
 @techreport{holcomb2013newsuse,
   title       = {News Use Across Social Media Platforms},
   author      = {Holcomb, Jesse and Gottfried, Jeffrey and Mitchell, Amy},
@@ -274,4 +277,15 @@
   title = {e-Handbook of Statistical Methods: Bonferroni's Method},
   howpublished = {\url{https://www.itl.nist.gov/div898/handbook/prc/section4/prc473.htm}},
   note = {Accessed 2026-10-31; used for the multiplicity principle, not the binomial approximation}
+}
+
+% Ordered authors/date verified afresh via Crossref on2026-10-31; raw metadata retained with audit.
+@article{matias2024correction,
+  title = {Author Correction: The Upworthy Research Archive, a time series of 32,487 experiments in {U.S.} media},
+  author = {Matias, J. Nathan and Munger, Kevin and Le Quere, Marianne Aubin and Ebersole, Charles},
+  journal = {Scientific Data},
+  volume = {11},
+  pages = {765},
+  year = {2024},
+  doi = {10.1038/s41597-024-03600-w}
 }
