@@ -44,6 +44,27 @@
   },
   "editorial_policy": "Remove own audit/erratum/error-correction narrative from manuscript; preserve statistical false-positive terminology, external published Author Correction title, incident/missing-data/posthoc/conditional limitations. Audit and version provenance remain outside paper.",
   "historical_and_primary_numerical_reports_unchanged": true,
-  "automated-review": "Runs on immutable compiled PDF after source freeze, with external preserved reports and mirrored SDK request/response journal. Review-prompt versionv3 differs from manuscript versionv2.",
+  "automated-review": {
+    "reviewed_source_commit": "58051e9c1553e5712c8606f260e8ddbb9a9e7582",
+    "pdf_sha256": "bb46041c0f214ab0a83af3d85ae9bc5b4bc3f0d33ad7989fceabc882b1d9251a",
+    "tool_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
+    "exit_code": 0,
+    "meta_decision": "Weak Accept",
+    "overall_score": 6,
+    "confidence": 4,
+    "calls": 13,
+    "guard_passed": true,
+    "references_automatically_resolved": 23,
+    "references_total": 25,
+    "references_manual_primary_resolution": 2,
+    "claims_checker_counts": {
+      "supported": 3,
+      "unsupported": 0,
+      "uncertain": 1
+    },
+    "advisory_limits": "Review contains false positives and overbroad paraphrases; source/numeric evidence adjudication retained separately. No blanket scientific-acceptance claim.",
+    "artifacts": "v2-audit/automated-review-e2e and v2-audit/automated-review_ADJUDICATION.md",
+    "new_scientific_generations": 0
+  },
   "retention": "New complete version in OneDrive and protected local vaults; previous versions never overwritten."
 }

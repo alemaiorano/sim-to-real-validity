@@ -57,3 +57,19 @@ After execution create a NEW complete source/raw/PDF/review archive, protect loc
 confirm OneDrive IN_SYNC; do not overwrite prior archives. External final receipts bind the frozen
 source, PDF and archive hashes without self-reference. Current source is frozen before review;
 post-review findings return to implementation and invalidate only affected review scope.
+
+## Observed completion
+
+automated-review e2e on source58051e9c1553e5712c8606f260e8ddbb9a9e7582/PDFbb46041c…: exit0,
+guard clean,WeakAccept(overall6,confidence4),13successful SDKcalls and matching28row mirrored
+journals. Tool resolved23/25refs; direct primaryPew/NIST pages resolve the other2; no author
+mismatches. Claim checker3supported/0unsupported/1uncertain is only4paraphrases, not whole-paper
+proof. Original review/evidence preserved; technical adjudication rejects false missing-URL/
+temperature/seed assertions and unsupported universal/cost interpretations. New experiments
+were not run. Conservative whole-run accounting≈USD0.7994 is not the package review-onlyUSD0.2092
+or an invoice. Clean source-bundle clone regenerated all10exporters/PDFbyteidentically.
+
+After review, only REPLICATION's v2clonebranch/request-default explanation and these audit
+records change. The manuscript/PDF, raw inputs, all scientific reports and statistical source
+remain byte-identical to the reviewed target. Current-source hash binding and final archive/
+retention receipts are external; prior full versions remain intact.
