@@ -1,0 +1,308 @@
+{
+  "date": "2026-10-31",
+  "reviewer": "fresh gpt-6-astra high consultative context, plus lead primary-source read of the new correction",
+  "method": "all18existingDOI ordered author lists resolved afresh via Crossref;4arXiv authors resolved via API/versions;2nonDOI sources by primary page. New25th correction metadata fetched and retained raw by lead. No previous validation JSON treated as proof.",
+  "source_reading_limit": "claims checked against primary abstracts and results where needed, not every page of all cited works; Kendall original fulltext limited and Efron scanned PDF extraction limited; institutional definitions used for formula checks.",
+  "entries": [
+    {
+      "key": "matiasUpworthy",
+      "ordered_surnames": [
+        "Matias",
+        "Munger",
+        "Le Quere",
+        "Ebersole"
+      ],
+      "primary_url": "https://doi.org/10.1038/s41597-021-00934-7",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "argyleSiliconSampling",
+      "ordered_surnames": [
+        "Argyle",
+        "Busby",
+        "Fulda",
+        "Gubler",
+        "Rytting",
+        "Wingate"
+      ],
+      "primary_url": "https://doi.org/10.1017/pan.2023.2",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "park2024agents",
+      "ordered_surnames": [
+        "Park",
+        "Zou",
+        "Shaw",
+        "Hill",
+        "Cai",
+        "Morris",
+        "Willer",
+        "Liang",
+        "Bernstein"
+      ],
+      "primary_url": "https://arxiv.org/abs/2411.10109v1",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "li2025personacatch",
+      "ordered_surnames": [
+        "Li",
+        "Chen",
+        "Namkoong",
+        "Peng"
+      ],
+      "primary_url": "https://arxiv.org/abs/2503.16527v1",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "kendall1938",
+      "ordered_surnames": [
+        "Kendall"
+      ],
+      "primary_url": "https://doi.org/10.1093/biomet/30.1-2.81",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "spearman1904",
+      "ordered_surnames": [
+        "Spearman"
+      ],
+      "primary_url": "https://www.jstor.org/stable/1412159",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "efron1979bootstrap",
+      "ordered_surnames": [
+        "Efron"
+      ],
+      "primary_url": "https://doi.org/10.1214/aos/1176344552",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "kohavi2009controlled",
+      "ordered_surnames": [
+        "Kohavi",
+        "Longbotham",
+        "Sommerfield",
+        "Henne"
+      ],
+      "primary_url": "https://doi.org/10.1007/s10618-008-0114-1",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "cronbach1955construct",
+      "ordered_surnames": [
+        "Cronbach",
+        "Meehl"
+      ],
+      "primary_url": "https://doi.org/10.1037/h0040957",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "ziems2024css",
+      "ordered_surnames": [
+        "Ziems",
+        "Held",
+        "Shaikh",
+        "Chen",
+        "Zhang",
+        "Yang"
+      ],
+      "primary_url": "https://aclanthology.org/2024.cl-1.8/",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "robertson2023negativity",
+      "ordered_surnames": [
+        "Robertson",
+        "Pröllochs",
+        "Schwarzenegger",
+        "Pärnamets",
+        "Van Bavel",
+        "Feuerriegel"
+      ],
+      "primary_url": "https://doi.org/10.1038/s41562-023-01538-4",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "cohen1988power",
+      "ordered_surnames": [
+        "Cohen"
+      ],
+      "primary_url": "https://doi.org/10.4324/9780203771587",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "ye2024lola",
+      "ordered_surnames": [
+        "Ye",
+        "Yoganarasimhan",
+        "Zheng"
+      ],
+      "primary_url": "https://arxiv.org/abs/2406.02611v3",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "cheng2023compost",
+      "ordered_surnames": [
+        "Cheng",
+        "Piccardi",
+        "Yang"
+      ],
+      "primary_url": "https://aclanthology.org/2023.emnlp-main.669/",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "zheng2024helpful",
+      "ordered_surnames": [
+        "Zheng",
+        "Pei",
+        "Logeswaran",
+        "Lee",
+        "Jurgens"
+      ],
+      "primary_url": "https://aclanthology.org/2024.findings-emnlp.888/",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "hu2024persona",
+      "ordered_surnames": [
+        "Hu",
+        "Collier"
+      ],
+      "primary_url": "https://aclanthology.org/2024.acl-long.554/",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "dominguezolmedo2024questioning",
+      "ordered_surnames": [
+        "Dominguez-Olmedo",
+        "Hardt",
+        "Mendler-Dünner"
+      ],
+      "primary_url": "https://doi.org/10.52202/079017-1458",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "gupta2024bias",
+      "ordered_surnames": [
+        "Gupta",
+        "Shrivastava",
+        "Deshpande",
+        "Kalyan",
+        "Clark",
+        "Sabharwal",
+        "Khot"
+      ],
+      "primary_url": "https://arxiv.org/abs/2311.04892v2",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "holcomb2013newsuse",
+      "ordered_surnames": [
+        "Holcomb",
+        "Gottfried",
+        "Mitchell"
+      ],
+      "primary_url": "https://www.pewresearch.org/journalism/2013/11/14/news-use-across-social-media-platforms/",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "goodman1954",
+      "ordered_surnames": [
+        "Goodman",
+        "Kruskal"
+      ],
+      "primary_url": "https://doi.org/10.1080/01621459.1954.10501231",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "kendall1945ties",
+      "ordered_surnames": [
+        "Kendall"
+      ],
+      "primary_url": "https://doi.org/10.1093/biomet/33.3.239",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "wu2020mind",
+      "ordered_surnames": [
+        "Wu",
+        "Qiao",
+        "Chen",
+        "Wu",
+        "Qi",
+        "Lian",
+        "Liu",
+        "Xie",
+        "Gao",
+        "Wu",
+        "Zhou"
+      ],
+      "primary_url": "https://aclanthology.org/2020.acl-main.331/",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "lakkaraju2013name",
+      "ordered_surnames": [
+        "Lakkaraju",
+        "McAuley",
+        "Leskovec"
+      ],
+      "primary_url": "https://doi.org/10.1609/icwsm.v7i1.14408",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "nistBonferroni",
+      "ordered_surnames": [
+        "NIST/SEMATECH"
+      ],
+      "primary_url": "https://www.itl.nist.gov/div898/handbook/prc/section4/prc473.htm",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    },
+    {
+      "key": "matias2024correction",
+      "ordered_surnames": [
+        "Matias",
+        "Munger",
+        "Le Quere",
+        "Ebersole"
+      ],
+      "primary_url": "https://doi.org/10.1038/s41597-024-03600-w",
+      "author_order_checked": true,
+      "claim_checked": "attribution supported within manuscript scope; no claim that literature establishes this study mechanism"
+    }
+  ],
+  "specific_checks": {
+    "park": "85percent of own test-retest consistency in v1, not85percent unrestricted accuracy",
+    "hu": "limited persona effects coexist with modest significant gains",
+    "cohen": "1988secondedition not misdated by2013digital metadata; no gamma threshold/power guarantee",
+    "upworthy": "2024randomization correction incorporated; no unconditional randomized claim",
+    "lakkaraju": "2013proceedings;2021portal date is not publicationyear"
+  }
+}

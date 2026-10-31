@@ -1,14 +1,17 @@
 \section{Conclusion}
 This fixed demographic persona panel should be compared with a generic-reader LLM baseline.
-The new raw-retained experiment favors the baseline on valid rank comparisons, expected top-1
-and captured lift in both tested configurations. For expected top-1, baseline-minus-panel gaps
+The primary new raw-retained comparison favors the baseline on valid rank comparisons, expected
+top-1 and captured lift in both tested configurations. In the post-hoc sensitivity excluding the
+archive's documented randomization-risk period, top-1 and lift gaps retain positive pointwise
+intervals, but Gemini tau-b and Spearman intervals include zero. The rank advantage is therefore
+not uniformly supported across these cohorts and estimators. For expected top-1, baseline-minus-panel gaps
 are \newGeminiGapTopOne{} percentage points for Gemini and \newGptGapTopOne{} for GPT-4.1.
 Bottom-1 intervals include zero; a blanket advantage across metrics is not established.
 Historical Reddit top-1 and lift favor the panel.
 
 The original coefficient was gamma, not Kendall tau. Selection and undefined denominators also
-required correction. We now release distinct metrics, expected tie credit, explicit valid and
-paired counts, an adjusted winner screen, and an offline raw-replay artifact for the new
-collection. Rank estimates condition on valid coefficients, and all intervals condition on
+required correction. We provide distinct metrics, expected tie credit, explicit valid and paired counts,
+an adjusted winner screen, and an offline raw-replay artifact in the accompanying local
+replication bundle, prepared for deposition. Rank estimates condition on valid coefficients, and all intervals condition on
 selected packages and recorded generations. The new data do not restore lost historical
 Gemini observations, establish a general causal mechanism, or show universal persona harm.

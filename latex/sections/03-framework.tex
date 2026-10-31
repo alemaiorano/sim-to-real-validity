@@ -1,8 +1,10 @@
 \section{Sim-to-Real Validity Framework}
 \label{sec:framework}
 A package contains variants with observed outcome rates and predicted scores
-(Figure~\ref{fig:protocol}). Upworthy uses randomized traffic, although grouping distinct headlines
-can combine image variants. MIND compares different articles within a subcategory. Reddit groups
+(Figure~\ref{fig:protocol}). Upworthy was designed for randomized traffic, but the archive authors document randomization
+problems during part of 2013--2014~\citep{matias2024correction}. We report observed rate rankings;
+they are not automatically causal headline effects. Grouping distinct headlines can also combine
+image variants. MIND compares different articles within a subcategory. Reddit groups
 reposts of the same image in the same subreddit; timing and exposure remain uncontrolled.
 \input{figures/protocol}
 Within-package ranking does not establish absolute CTR calibration or a causal copy effect

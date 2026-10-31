@@ -16,7 +16,9 @@ As this exact person, how likely are you to click this headline? Respond ONLY wi
 \end{quote}
 The exact templates, including quotation marks and the first-person, third-person, and baseline
 variants, are authoritative in the versioned collector. A prompt implementation alone does not
-establish a completed experiment.
+establish a completed experiment. The new collection also uses fixed 2014 framing for all
+headlines, including those created outside that year; it is not a date-specific audience
+reconstruction.
 
 \paragraph{Coverage and checkpoints.}
 Historical and new evidence use different policies. The historical diagnostic requires at least
@@ -38,13 +40,15 @@ requires no provider account and does not assert that future generations will ma
 
 \paragraph{Historical pilot and model comparison.}
 Tables~\ref{tab:model_comparison} and \ref{tab:cross_model_gap} retain the pilot and cross-tier
-gap. Overlap of pilot CIs does not establish equivalence; the cheapest model was selected.
+gap; shared package IDs are not retained in those summaries. Overlap of pilot CIs does not establish equivalence. The historical primary uses Gemini
+3.1 Flash-Lite; the pilot report contains no cost measurements and does not reproduce a
+cheapest-model justification.
 This numerical pilot supersedes untraceable statements about a different preliminary pilot.
 \input{tables/model_comparison}
 \input{tables/cross_model_gap}
 
 \paragraph{Illustrative errors and panel.}
-Table~\ref{tab:error_examples} shows selected cases where the baseline found the observed winner
+Table~\ref{tab:error_examples} shows historically reported cases where the baseline found the observed winner
 and the panel did not; they are not representative causal evidence.
 Table~\ref{tab:persona_panel} presents the fixed panel descriptions. Full fields and grounding
 notes remain in \texttt{data/persona\_panel.json}.

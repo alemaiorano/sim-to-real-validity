@@ -8,6 +8,7 @@ This is a correction draft of the original research release at
 | Historical verification | Reexport original report values with correct gamma labels | Does not independently validate raw observations or historical valid denominators |
 | Corrected offline GPT diagnostic | Recompute metrics from the recovered scalar checkpoint included in the separate bundle | Original response texts absent; historical unequal budgets remain |
 | Corrected software | New winner screen, gamma/tau-b, expected tie credit, strict parser, per-metric counts | Does not retroactively change historical generations |
+| Post-hoc period sensitivity | Recompute all six metrics outside the documented 2013--2014 risk window from saved scores | Not preregistered or independent; remaining dates are not certified defect-free; Gemini tau-b/Spearman remain uncertain |
 | New matched-budget experiment | Raw-backed comparison of Gemini 3.1 Flash-Lite and GPT-4.1 on the corrected exploratory cohort | New generations; historical selection; request protocols differ across models; no broad five-dataset rerun |
 
 Included: LaTeX sources/PDF, generated assets, original aggregate reports and manifests,
@@ -28,5 +29,8 @@ See REPLICATION and DATA_SOURCES for the distinction between historical restorat
 
 New Gemini generations address the reproducibility of the new experiment; they do not restore
 missing historical observations. The revision does not certify all historical datasets under
-corrected methods or establish general persona harm. Publication and remote artifact deposition
+corrected methods or establish general persona harm. Public scientific deposition and submission
 remain separate author actions.
+
+A separate retention runbook distinguishes protected local versions, exercised restore paths and
+any independently verified offsite copy. Writable duplicates on one SSD are not offsite protection.

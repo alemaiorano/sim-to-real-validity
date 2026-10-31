@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate latex/tables/replication.tex from reports/replication.json: per-dataset persona vs
-no-persona baseline (Goodman-Kruskal gamma, gap, lift captured), showing the finding replicates across
-independent Upworthy splits and a different domain (MIND). No hand-edited tables."""
+no-persona baseline (Goodman-Kruskal gamma, gap, lift captured). Historic reported conditions
+are not independently reconstructed from raw predictions here. No hand-edited tables."""
 from __future__ import annotations
 
 import json
@@ -44,8 +44,10 @@ def main() -> None:
         "(unavailable). Lift is the fraction of the observed outcome-rate range captured by "
         "the selected variant (panel/baseline). The panel exceeds the baseline on Reddit lift "
         "and top-1 (discussed in text); near-zero gamma does not establish equivalence or "
-        "unpredictability. Upworthy rows use one draw per persona; "
-        "Table~\\ref{tab:validity} uses multiple draws.}\n",
+        "unpredictability. Gap is the difference of reported marginal gamma means, not a new paired "
+        "contrast. The summary does not retain draw counts or evaluated package IDs; the "
+        "exploratory row differs from Table~\\ref{tab:validity}, and protocol equivalence "
+        "cannot be verified from the aggregates alone.}\n",
         "  \\label{tab:replication}\n",
         "  \\small\n",
         "  \\begin{tabular}{lccccc}\n    \\toprule\n",

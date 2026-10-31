@@ -1,5 +1,5 @@
 claim,paper_location,supporting_artifact
-Historical exploratory panel gamma and top-1; not corrected Kendall,Abstract; historical results; Table validity,reports/correlation.json; reports/baseline_comparison.json; reports/legacy-provenance.json
+Historical exploratory panel gamma and top-1; not corrected Kendall,Historical results; Table validity,reports/correlation.json; reports/baseline_comparison.json; reports/legacy-provenance.json
 Historical baseline gamma/top-1 higher on Upworthy; unequal coverage and unknown valid rank counts,Historical results; Table validity,reports/baseline_comparison.json
 Corrected screen selects 190 of 1695; subset of original 399,Setup; GPT diagnostic,reanalysis/2026-10-31/filter_comparison.json; scripts/winner_filter.py
 Historical signal/top-1 association; legacy screen retained,Results RQ2,reports/h003.json
@@ -17,3 +17,6 @@ New Gemini metrics and paired gaps from retained response bytes,Abstract; Result
 New GPT-4.1 metrics and paired gaps from retained response bytes,Abstract; Results; Table new_azure,recollection/2026-10-31/azure.json; scripts/analyze_recollection.py; raw journal snapshot pinned by report
 Complete-package coverage; exclusions; per-metric denominators; available-observation sensitivity,Setup; Results; both new tables,recollection/2026-10-31/gemini.json; recollection/2026-10-31/azure.json
 Observed score and metric lineage to raw responses,Availability; Appendix,replication bundle derived/*-reviewer CSVs; scripts/export_recollection_observations.py
+Randomization-risk window and documented overlap,Setup archive correction; Discussion,recollection/2026-10-31/window_sensitivity.json; DOI10.1038/s41597-024-03600-w; source.csv dates
+Post-hoc exclusion preserves top1/lift but Gemini tau-b and Spearman CIs include zero,Abstract; Results sensitivity; Conclusion,recollection/2026-10-31/window_sensitivity.json; scripts/analyze_randomization_window.py
+Pilot does not establish cheapest-model selection or equivalence,Appendix; pilot caption,reports/pilot_model_comparison.json

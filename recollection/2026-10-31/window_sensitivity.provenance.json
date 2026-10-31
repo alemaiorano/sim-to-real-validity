@@ -1,0 +1,8 @@
+{
+  "report_sha256": "9916c55e8088b913f1de6fe3b3173b128b8505a489e68ed589a935b37b5de0bc",
+  "analysis_source_before_results": "3b688e586712cf042f763b1f0b223c9d78a8d696",
+  "primary_source_commit": "1d99c5a8d6964f9b7ddb191cf6523bb91b584330",
+  "primary_reports_unchanged": true,
+  "status": "post-hoc offline sensitivity, fixed external date rule; not preregistered or new generations",
+  "correction_doi": "10.1038/s41597-024-03600-w"
+}

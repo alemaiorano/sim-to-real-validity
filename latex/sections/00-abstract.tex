@@ -7,13 +7,16 @@ the reports. We preserve historical results with corrected labels, provide a ret
 scalar-checkpoint diagnostic, and collect new Gemini 3.1 Flash-Lite and GPT-4.1 observations on the
 same \newSelectedN{}-package corrected exploratory cohort. The new experiment matches thirty scores
 per arm and variant within model, retains exact raw responses, and discloses metric-specific valid
-and paired counts. Its baseline-minus-panel Kendall $\tau_b$ gap is \newGeminiGapTau{}
+and paired counts. Primary complete-package coverage is \newGeminiN{} for Gemini and \newGptN{} for GPT-4.1. Its baseline-minus-panel Kendall $\tau_b$ gap is \newGeminiGapTau{}
 (CI [\newGeminiGapTauLow{}, \newGeminiGapTauHigh{}]) for Gemini and \newGptGapTau{}
 (CI [\newGptGapTauLow{}, \newGptGapTauHigh{}]) for GPT-4.1, on respectively
 \newGeminiPairedTauN{} and \newGptPairedTauN{} valid rank pairs. Expected top-1 is
 \newGeminiPanelTopOne{} versus \newGeminiBaselineTopOne{} for Gemini and \newGptPanelTopOne{}
 versus \newGptBaselineTopOne{} for GPT-4.1 (panel versus baseline). These intervals condition on the
-selected cohort and recorded generations. Historical Reddit top-1 and captured lift favor the
+selected cohort and recorded generations. A newly incorporated archive correction documents a
+randomization-risk period. Excluding that period in a post-hoc sensitivity retains positive
+expected top-1 and lift gaps in both configurations, while Gemini tau-b and Spearman intervals
+include zero. Historical Reddit top-1 and captured lift favor the
 panel, contradicting a prior blanket baseline-superiority claim. The new collection supplies a
 raw-replay artifact, not recovered historical Gemini scores, a new held-out population, or evidence
 of universal persona harm. Provider request protocols differ across models, and no causal mechanism

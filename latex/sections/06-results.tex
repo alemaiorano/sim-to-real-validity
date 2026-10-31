@@ -30,6 +30,25 @@ These conditional package-bootstrap intervals omit repeated-generation uncertain
 compare model families causally. The historical GPT diagnostic is a separate experiment.
 \input{tables/recollection}
 
+\paragraph{Post-hoc randomization-window sensitivity.}
+Table~\ref{tab:window_sensitivity} excludes \windowGeminiExcludedN{} Gemini and
+\windowGptExcludedN{} GPT-4.1 complete primary packages in the documented risk window,
+leaving respectively \windowGeminiN{} and \windowGptN{} packages. Expected top-1 gaps remain
+\windowGeminiGapTopOne{} percentage points (CI [\windowGeminiGapTopOneLow{},
+\windowGeminiGapTopOneHigh{}]) and \windowGptGapTopOne{} points
+(CI [\windowGptGapTopOneLow{}, \windowGptGapTopOneHigh{}]). Captured-lift gaps also remain positive
+with pointwise CIs excluding zero.
+
+Gemini's Kendall $\tau_b$ gap becomes \windowGeminiGapTau{}
+(CI [\windowGeminiGapTauLow{}, \windowGeminiGapTauHigh{}]) on
+\windowGeminiPairedTauN{} valid pairs; its tau-b and Spearman intervals include zero.
+GPT-4.1's tau-b gap is \windowGptGapTau{} (CI [\windowGptGapTauLow{},
+\windowGptGapTauHigh{}]) on \windowGptPairedTauN{} pairs. Thus the primary Gemini rank contrast
+is not robust across this cohort restriction and all rank estimators. Gamma remains a distinct
+conditional measure; it is not substituted for the uncertain tau-b result. Bottom-1 intervals
+include zero for both models. These are post-hoc, pointwise intervals, not an equivalence test.
+\input{tables/window_sensitivity}
+
 \paragraph{Historical Upworthy comparison (RQ1).}
 Table~\ref{tab:validity} and Figure~\ref{fig:comparison} retain original estimates.
 The generic baseline has higher gamma (\baseGamma{} versus \goodmanGamma{}) and top-1
@@ -70,14 +89,17 @@ difference on MIND, where packages compare articles. On Reddit, the panel has hi
 The original baseline-superiority claim for every dataset and metric was false. Reddit gamma
 CIs include zero; this establishes neither equivalence nor absence of a title-related signal.
 Posting time and visibility were not tested as explanations. Subset-selection and coverage
-limitations further restrict interpretation.
+limitations further restrict interpretation. The historical summary does not record draw
+counts or evaluated package IDs, so cross-dataset protocol equivalence is not independently
+verified by those aggregates.
 \input{tables/replication}
 
 \paragraph{Seed, model, ties, and aggregation.}
 The archived three-seed SDs (\stabGammaSD{} for gamma; \stabTopOneSD{} for top-1) use the
 population convention over those seeds, not sample SDs or precise general-variability estimates.
 The baseline has higher gamma on three tested Gemini tiers (Table~\ref{tab:cross_model_gap},
-Appendix~\ref{sec:appendix}); this cannot establish universal model or prompt robustness.
+Appendix~\ref{sec:appendix}); evaluated IDs are not retained to verify a shared subset.
+This cannot establish universal model or prompt robustness.
 
 The tie report rounds scores before counting constant packages; the rank code uses exact
 equality. That count cannot recover excluded gamma values. Undefined coefficients cannot be
