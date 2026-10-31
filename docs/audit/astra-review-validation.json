@@ -107,8 +107,8 @@
   "references": 25,
   "PDF": {
     "pages": 14,
-    "sha256": "91d1bb3ce02bde618e053ffde1ed3bc847576bbf04006b6bd6cb74ed89c87565",
-    "bytes": 379797,
+    "sha256": "1adea53075dbe2a8b263c03105073a7526ed678fe4b076bb1d9a6e9c90e27b8a",
+    "bytes": 379859,
     "build_no_undefined_overfull_missing_glyphs": true,
     "literal_JSON_placeholder_verified": true
   },
