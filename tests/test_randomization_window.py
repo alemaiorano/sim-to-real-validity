@@ -17,6 +17,10 @@ class WindowTests(unittest.TestCase):
         self.assertEqual({k for k,v in out.items() if v['in_risk_window']},{'first','last','cross'})
         with self.assertRaises(ValueError):risk_dates(rows,{'missing'})
 
+    def test_source_date_mapping_has_canonical_serialization_order(self):
+        rows = [{'clickability_test_id':pid,'created_at':'2014-01-11'} for pid in ['z','a','m']]
+        self.assertEqual(list(risk_dates(rows,{'z','a','m'})),['a','m','z'])
+
     def test_primary_reconstruction_checks_mask_and_missingness(self):
         corpus=[{'package_id':'p','variants':[{'variant_id':'a','real_ctr':.1},{'variant_id':'b','real_ctr':.2}]}]
         scores={'p':[(.1,.2),(.2,.8)]}

@@ -52,3 +52,14 @@ external retention and synchronization receipts, keeping the prior archive immut
 No GCS bucket, paid model generation, public push, email or submission was performed.
 Independent focal review follows on the frozen correction commit; final receipts live beside
 the archive to avoid self-referential archive hashes.
+
+## Focal source review and portable serialization repair
+
+Astra high approved immutable20bbf2576f8efa76ac04eec07820d5af76264389 for the requested
+scientific/text/retention-source scope. Its final-version archive/sync receipts remain separate.
+The subsequent clean-bundle replay found identical JSON fields but noncanonical dictionary
+key order from a set, preventing byte cmp. Sort only source-date mapping keys; retain the
+pre-amendment report and record the serialization amendment in provenance. All scientific
+values, IDs, rules and primary reports remain unchanged. Added a canonical-order regression
+check; all46tests pass. Clarified that conclusion top-1 gaps15.7/19.7pp refer to the primary
+comparison. The exact new source delta receives a focal follow-up review before packaging.

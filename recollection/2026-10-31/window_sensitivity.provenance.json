@@ -1,8 +1,13 @@
 {
-  "report_sha256": "9916c55e8088b913f1de6fe3b3173b128b8505a489e68ed589a935b37b5de0bc",
+  "report_sha256": "e8c7ced60e4636ebf697e7d63b4033f4909bf765fdbb8a1d5930050bae4375a6",
   "analysis_source_before_results": "3b688e586712cf042f763b1f0b223c9d78a8d696",
   "primary_source_commit": "1d99c5a8d6964f9b7ddb191cf6523bb91b584330",
   "primary_reports_unchanged": true,
   "status": "post-hoc offline sensitivity, fixed external date rule; not preregistered or new generations",
-  "correction_doi": "10.1038/s41597-024-03600-w"
+  "correction_doi": "10.1038/s41597-024-03600-w",
+  "serialization_amendment": {
+    "base_reviewed_commit": "20bbf2576f8efa76ac04eec07820d5af76264389",
+    "change": "Sort source-date mapping keys for byte-identical output across Python hash seeds; all scientific fields equal to pre-amendment report. Producer hash changes.",
+    "statistical_rule_and_primary_results_unchanged": true
+  }
 }

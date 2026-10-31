@@ -14,8 +14,8 @@
   },
   "checks": {
     "tests": {
-      "passed": 45,
-      "log": "audit-full-text/tests-final.log"
+      "passed": 46,
+      "log": "audit-full-text/tests-serialization-final.log"
     },
     "primary_raw_restore_replay": {
       "both_reports_byte_identical": true,
@@ -48,8 +48,8 @@
     "historical_files_unchanged": "audit-full-text/preserved-science.json",
     "pdf": {
       "pages": 13,
-      "bytes": 367500,
-      "sha256": "db8e060f2a038edd5581831bf59293bdaabd556135fe3a5e6cce7787eade7c2f",
+      "bytes": 367507,
+      "sha256": "67add401d8581ff255e5a5448b036e701a77f728070e368e2b79bed952a09463",
       "undefined_citations_or_refs": false,
       "overfull_boxes": false,
       "underfull_layout_messages": true,
@@ -79,5 +79,9 @@
     "Complete preregistration chronology not established",
     "No new prompt/multiseed/other-dataset experiments",
     "Remaining outside-window tests not individually certified randomized"
-  ]
+  ],
+  "serialization_amendment": {
+    "base_reviewed_commit": "20bbf2576f8efa76ac04eec07820d5af76264389",
+    "reason": "Different source-date dictionary order across interpreter hash seeds prevented byte cmp, though every scientific field already matched. Canonical key order repairs exact serialization; no scientific rule/results changed."
+  }
 }
