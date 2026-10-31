@@ -1,6 +1,6 @@
 {
-  "base_commit": "9c6cfe78d3a50d80c7143c736a28dfecda3c7a33",
-  "scope": "Source-backed response to one fresh Astra/high manuscript-only review and disclosure alignment; no new scientific observations or empirical estimates.",
+  "base_commit": "c1b031eac61f740242cff3c9fdaca1f474930d8b",
+  "scope": "Publication-only identity removal and private/public evidence separation; one disclosure sentence changed, scientific manuscript otherwise identical.",
   "coverage": {
     "paragraphs": 60,
     "tables": 11,
@@ -9,19 +9,17 @@
   },
   "PDF": {
     "pages": 14,
-    "sha256": "1adea53075dbe2a8b263c03105073a7526ed678fe4b076bb1d9a6e9c90e27b8a",
-    "bytes": 379859,
-    "build_no_undefined_overfull_missing_glyphs": true,
-    "literal_JSON_placeholder_verified": true
+    "bytes": 379863,
+    "sha256": "bac4161aa6a13dbd4e1a93c5d8cbf0ca87b040f0141bf8e8ced0538d828f979e",
+    "no_build_ref_overfull_glyph_errors": true
   },
-  "current_verification": "docs/audit/astra-review-validation.json",
+  "current_verification": "docs/audit/publication-disclosure-validation.json",
   "blind_review": "docs/audit/astra-blind-review-2026-10-31.md",
   "finding_disposition": "docs/audit/astra-review-disposition.json",
   "prior_verification": "docs/audit/history/pre-astra-9c6cfe7-full-text-validation.json",
   "reuse_boundary": "Prior47 offline tests apply only to unchanged estimator/collector/test payloads; no broad suite/provider rerun for documentation and prompt-field table export.",
   "bibliography_primary_source_checks_reused_for_identical_bib": true,
-  "prior_native_automated-review_review": "docs/audit/automated-review.json",
-  "native_review_boundary": "Earlier native review targets its source/PDF pins. It has not been rerun or relabeled as an exact review of this changed manuscript.",
+  "native_review_boundary": "Earlier private automated-review records retain their exact source/PDF targets and are not distributed in this public package.",
   "scientific_provider_generations": 0,
   "remaining_limits": [
     "Public raw bundle deposition pending",
