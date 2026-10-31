@@ -8,17 +8,33 @@ not an estimated population sample.
 \paragraph{First-person template.}
 \begin{quote}\small
 You are simulating a specific person reacting to a news headline on social media in 2014.\\
-Person: \{persona description\} (age \{band\}, \{gender\}, mainly on \{platform\}, news
-engagement: \{level\}).\\
-Headline: \{headline\}.\\
+Person: \verb|{description}| (age \verb|{age_group}|, \verb|{gender}|, mainly on \verb|{platform}|,
+news engagement: \verb|{news_engagement}|.)\\
+Headline: \verb|"{headline}"|\\
 As this exact person, how likely are you to click this headline? Respond ONLY with JSON:
 \verb|{"click_intent":| \verb|<number between 0 and 1>}|.
 \end{quote}
-The exact templates, including quotation marks and the first-person, third-person, and baseline
-variants, are authoritative in the versioned collector. A prompt implementation alone does not
+The primary panel condition uses this first-person template; the generic-reader condition uses
+the baseline template below. Each is sent as a single user message, without a system message.
+The exact templates, including spacing, quotation marks and implemented alternative framings,
+are authoritative in the versioned collector. A prompt implementation alone does not
 establish a completed experiment. The primary collection uses fixed 2014 framing for all
 headlines, including those created outside that year; it is not a date-specific audience
 reconstruction.
+
+\paragraph{Generic-reader baseline template.}
+\begin{quote}\small
+You are a typical U.S. social-media news reader in 2014.\\
+Headline: \verb|"{headline}"|\\
+How likely are you to click this headline? Respond ONLY with JSON:
+\verb|{"click_intent":| \verb|<number between 0 and 1>}|.
+\end{quote}
+Both templates retain the U.S./2014 framing. The baseline specifies a generic reader role;
+its distinction from the panel is the absence of the fixed demographic profiles, not the
+absence of all role conditioning. Literal spacing, persona fields, and request prompts are
+retained in the collector and raw request plans. The interpolated persona fields are description,
+age group, gender, platform, and news engagement, all shown in Table~\ref{tab:persona_panel}.
+Political lean is stored metadata and is not separately interpolated.
 
 \paragraph{Coverage and checkpoints.}
 Coverage policies differ by analysis. The GPT scalar-checkpoint analysis requires at least
@@ -37,6 +53,17 @@ and journal chain, then reparses the same immutable snapshot whose hash identifi
 The replication bundle contains that snapshot, all inputs, request plans, aggregate reports,
 source history, and the retained GPT scalar checkpoint. Replaying saved bytes
 requires no provider account and does not assert that future generations will match.
+
+\paragraph{Supplementary outcome construction.}
+MIND aggregates the supplied news and behavior logs by article ID, counting appearances in
+recommendation lists and click labels across users. Articles need at least 200 appearances;
+within each subcategory, at most ten are retained by appearance count, with at least two per
+package. Reddit aggregates identical titles within image/subreddit pairs, requires at least
+300 total votes per title, and retains at most ten titles by vote count. Upvotes are the
+numerator and total upvotes plus downvotes the denominator, regardless of the schema's
+\texttt{clicks}/\texttt{impressions} names. These inputs cover the supplied logs, not a matched
+exposure window or common audience. Original manifests and the pinned corpus builders specify
+the transformations; missing evaluated IDs prevent fully reconciling the supplementary samples.
 
 \paragraph{Supplementary pilot and model comparison.}
 Tables~\ref{tab:model_comparison} and \ref{tab:cross_model_gap} retain the pilot and cross-tier

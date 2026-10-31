@@ -1,0 +1,33 @@
+{
+  "sources": [
+    {
+      "path": "research/papers/llm-bas-coverage/main.tex",
+      "repo_HEAD": "86182c491129296461ce9fea8d10af368accdc2e",
+      "file_sha256": "a1d9e4e2e5d00b252a11403cfb824accd79835180479a5371452c45c6a5863bc",
+      "excerpt": "\\section*{AI Tools Disclosure}\n\nThis research leveraged AI-assisted development tools to support\nmanuscript preparation and code development, while maintaining full\nhuman oversight and accountability. The following tools were used:\n\\begin{itemize}\n    \\item \\textbf{Language models:} GPT-5 family (OpenAI via Codex)\n    and Claude Opus 4.7 (Anthropic Claude Code) were used to generate\n    and review code implementations, and to refine manuscript text.\n    Google Gemini 2.5 Flash is also a \\emph{measurement subject} in\n    this paper: it is the backend model behind the $L_4$-real target\n    (temperature${=}0.7$, Section~\\ref{sec:methodology}) and it is\n    the paraphrase generator that produced the $N{=}300$ brittleness\n    variants from the $60$-template corpus\n    (Section~\\ref{sec:paraphrase-method}); these uses are part of\n    the system being measured and are not authoring uses.\n\n    \\item \\textbf{Web search:} MCP Tavily integration was used to\n    support literature review and fact-checking during manuscript\n    preparation.\n\\end{itemize}\nAll scientific arguments, empirical methodology, statistical\nanalysis, research questions, and conclusions were independently\nconceived, developed, and validated by the author.\n\n",
+      "repository": "doesitdefend"
+    },
+    {
+      "path": "research/papers/detection-as-code/main.tex",
+      "repo_HEAD": "86182c491129296461ce9fea8d10af368accdc2e",
+      "file_sha256": "80c6058e9563054b0538d55544bfc726eb0facaec986cd3045e94fa1e9e9d6f9",
+      "excerpt": "\\section*{AI Tools Disclosure}\n\nThis research leveraged AI-assisted development tools to support\nmanuscript preparation and code development, while maintaining full\nhuman oversight and accountability. The following tools were used:\n\\begin{itemize}\n    \\item \\textbf{Language models:} GPT-5 family (OpenAI via Codex)\n    and Claude Opus 4.7 (Anthropic Claude Code) were used to generate\n    and review code implementations, and to refine manuscript text.\n    Google Gemini 2.5 Flash is also a \\emph{measurement subject} in\n    this paper: it is the LLM backend of the target application that\n    the probes are fired against (Section~\\ref{sec:methodology}); that\n    usage is part of the system being measured and is not an authoring\n    use. The rule synthesis itself is deterministic and uses no model.\n\n    \\item \\textbf{Web search:} MCP Tavily integration was used to\n    support literature review and fact-checking during manuscript\n    preparation.\n\\end{itemize}\nAll scientific arguments, empirical methodology, statistical\nanalysis, research questions, and conclusions were independently\nconceived, developed, and validated by the author.\n\n",
+      "repository": "doesitdefend"
+    },
+    {
+      "path": "research/papers/sim-to-real-validity/latex/main.tex",
+      "repo_HEAD": "f57cc0acd02c22283378aacc7dde609fb298276e",
+      "file_sha256": "7539c16a09f4c0772b912dd505d80edb696071acdc091225ca79fe73dfea7674",
+      "excerpt": "\\section*{AI Tools Disclosure}\n\\begin{itemize}[leftmargin=*]\n  \\item \\textbf{Language models:} Claude Opus 4.8 (Anthropic, via Claude Code) and the GPT-5\n  family (OpenAI, via Codex) were used to generate and review code implementations and to refine\n  manuscript text. The method under test is driven by Google Gemini models\n  (\\texttt{gemini-3.1-flash-lite} as the primary evaluation workhorse, with\n  \\texttt{gemini-2.5-flash} and \\texttt{gemini-3.5-flash} as cross-tier robustness comparators)\n  and by OpenAI \\texttt{gpt-4.1} as the independent cross-family replication model.\n\n  \\item \\textbf{Web search:} MCP Tavily integration was used to support literature review and\n  fact-checking during manuscript preparation.\n\\end{itemize}\nAll work was carried out under full human oversight and accountability; all experimental results\nderive from executed code over the public benchmark, and all citations were verified against\nCrossref/arXiv.\n\n",
+      "repository": "marketing-simulator"
+    },
+    {
+      "path": "research/papers/persona-validity-boundary/latex/main.tex",
+      "repo_HEAD": "f57cc0acd02c22283378aacc7dde609fb298276e",
+      "file_sha256": "602078a0fbf23b5fbb220b127513d1e162b5aa081a755ba423b41d6e4e7ada43",
+      "excerpt": "\\section*{Use of AI Tools}\nWe disclose all AI assistance used in preparing this manuscript and its reproduction pipeline.\n\\begin{itemize}[leftmargin=1.4em, itemsep=2pt]\n  \\item \\textbf{Authoring assistance.} The GPT-5 family (OpenAI, via Codex) and Claude Opus~4.8\n        (Anthropic, via Claude Code) were used to generate and review the analysis and figure code\n        and to refine manuscript text. All AI-assisted text and code were reviewed and verified by\n        the author, who takes full responsibility for the content.\n  \\item \\textbf{Source-study backends.} The empirical results synthesised here were produced by the\n        cited source studies, not re-run for this paper. Those studies used Google Gemini models\n        (\\texttt{gemini-3.1-flash-lite} and \\texttt{gemini-3.5-flash}) for the persona simulation and\n        evaluation workloads, and Azure OpenAI \\texttt{gpt-4.1} for the independent cross-model\n        replication (Section~\\ref{sec:evidence}; full configurations in\n        Appendix~\\ref{sec:supp-repro}).\n  \\item \\textbf{Web search.} The MCP Tavily integration supported literature review and\n        fact-checking during manuscript preparation.\n\\end{itemize}\n\n",
+      "repository": "marketing-simulator"
+    }
+  ],
+  "application": "Reuse heading, itemized language-model/web-search structure, distinction between authoring tools and empirical subjects, and human responsibility. Do not import unrelated model versions, claims of human-only methodological conception or unsupported validation guarantees."
+}

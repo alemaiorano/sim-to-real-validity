@@ -66,7 +66,7 @@ exporters, supplementary aggregate reports, the fixed panel, and original corpus
 Reexporting these reports reproduces their displayed numbers, not their generation from raw
 observations. Original reports are hash-pinned and unchanged. GPT-4.1 checkpoint analyses,
 input hashes, and offline replay verification are in \texttt{reanalysis/2026-10-31/}.
-A separate replication bundle retains the retained GPT scalar checkpoint, exact
+A separate replication bundle retains the GPT scalar checkpoint, exact
 exploratory inputs, and the primary matched-budget experiment: all raw response bytes, request and
 observation plans, immutable journal snapshots, coverage, package metrics, and source history.
 Committed primary aggregate reports and hash provenance are in \texttt{recollection/2026-10-31/}.
@@ -83,12 +83,23 @@ available artifacts and the accompanying local bundle support scrutiny; an unver
 as a safeguard.
 
 \section*{AI Tools Disclosure}
-AI assistants, including Claude, GPT-family tools, Codex, and an Astra high reviewer, were used
-for code, analysis, literature checks, manuscript preparation, and methodological review. These tools do not supply
-independent empirical validation; the author remains responsible for the work.
-The evaluated models include Gemini 3.1 Flash-Lite and Azure GPT-4.1 in the primary comparison
-and the configurations identified in the supplementary analyses. Returned model metadata are
-retained with each primary response; provider aliases do not imply immutable future model behavior.
+This research used AI-assisted development tools for manuscript preparation and code development
+under human oversight and accountability.
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Language models:} Claude (Anthropic, via Claude Code) and GPT-family models
+  (OpenAI, via Codex) supported code implementation, analysis, literature checks, and manuscript
+  preparation and review. DoesItStand also supplied automated manuscript feedback. The Google
+  Gemini and Azure GPT-4.1 configurations evaluated in the study are experimental components,
+  as described in the methods and supplementary analyses; their outputs are study observations.
+
+  \item \textbf{Web search:} MCP Tavily and web search tools supported literature review and
+  fact-checking during manuscript preparation.
+\end{itemize}
+
+The author retains full responsibility for the scientific arguments, methodology, analysis,
+citations, and conclusions. Numerical and literature claims are checked against retained
+artifacts and primary sources; AI-generated suggestions and automated reviews do not constitute
+independent empirical validation.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

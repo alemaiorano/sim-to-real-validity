@@ -1,7 +1,7 @@
 {
-  "base_commit": "b808b66486c2d5427f57768da4a7416d8e4d9841",
-  "method": "Current source blocks were read and reassociated with explicit paragraph adjudications after editorial reframing; all table bodies/macros, numerical inputs, estimators, test sources and bibliography checks are reused only where their bytes are unchanged from the base. Current exporters and PDF were regenerated. Earlier raw replay, mathematical oracle, primary-reference and restore checks remain tied to their original targets. This ledger is coverage/evidence, not a proof of universal scientific truth.",
-  "paragraphs": 56,
+  "base_commit": "9c6cfe78d3a50d80c7143c736a28dfecda3c7a33",
+  "method": "Current source blocks were read and reassociated with explicit paragraph adjudications after a blind scientific review and source-backed corrections to method interpretation/specification; all table bodies/macros, numerical inputs, estimators, test sources and bibliography checks are reused only where their bytes are unchanged from the base. Current exporters and PDF were regenerated. Earlier raw replay, mathematical oracle, primary-reference and restore checks remain tied to their original targets. This ledger is coverage/evidence, not a proof of universal scientific truth.",
+  "paragraphs": 60,
   "table_files": 10,
   "tables": 11,
   "figures": 3,
@@ -11,9 +11,9 @@
       "id": "main:P1",
       "file": "latex/main.tex",
       "line": 63,
-      "text": "\\section*{Data and Code Availability}\nThe package at \\url{https://github.com/alemaiorano/sim-to-real-validity} includes sources,\nexporters, supplementary aggregate reports, the fixed panel, and original corpus manifests.\nReexporting these reports reproduces their displayed numbers, not their generation from raw\nobservations. Original reports are hash-pinned and unchanged. GPT-4.1 checkpoint analyses,\ninput hashes, and offline replay verification are in \\texttt{reanalysis/2026-10-31/}.\nA separate replication bundle retains the retained GPT scalar checkpoint, exact\nexploratory inputs, and the primary matched-budget experiment: all raw response bytes, request and\nobservation plans, immutable journal snapshots, coverage, package metrics, and source history.\nCommitted primary aggregate reports and hash provenance are in \\texttt{recollection/2026-10-31/}.\nOffline raw replay needs no provider account. Supplementary Gemini observations remain missing; primary\ngenerations do not restore them. \\texttt{REPLICATION.md} distinguishes these evidence tiers.\nThe accompanying replication bundle is prepared locally for deposition; it is not yet\navailable at the public repository URL.",
+      "text": "\\section*{Data and Code Availability}\nThe package at \\url{https://github.com/alemaiorano/sim-to-real-validity} includes sources,\nexporters, supplementary aggregate reports, the fixed panel, and original corpus manifests.\nReexporting these reports reproduces their displayed numbers, not their generation from raw\nobservations. Original reports are hash-pinned and unchanged. GPT-4.1 checkpoint analyses,\ninput hashes, and offline replay verification are in \\texttt{reanalysis/2026-10-31/}.\nA separate replication bundle retains the GPT scalar checkpoint, exact\nexploratory inputs, and the primary matched-budget experiment: all raw response bytes, request and\nobservation plans, immutable journal snapshots, coverage, package metrics, and source history.\nCommitted primary aggregate reports and hash provenance are in \\texttt{recollection/2026-10-31/}.\nOffline raw replay needs no provider account. Supplementary Gemini observations remain missing; primary\ngenerations do not restore them. \\texttt{REPLICATION.md} distinguishes these evidence tiers.\nThe accompanying replication bundle is prepared locally for deposition; it is not yet\navailable at the public repository URL.",
       "expanded_numeric_macros": {},
-      "expanded_text": "\\section*{Data and Code Availability}\nThe package at \\url{https://github.com/alemaiorano/sim-to-real-validity} includes sources,\nexporters, supplementary aggregate reports, the fixed panel, and original corpus manifests.\nReexporting these reports reproduces their displayed numbers, not their generation from raw\nobservations. Original reports are hash-pinned and unchanged. GPT-4.1 checkpoint analyses,\ninput hashes, and offline replay verification are in \\texttt{reanalysis/2026-10-31/}.\nA separate replication bundle retains the retained GPT scalar checkpoint, exact\nexploratory inputs, and the primary matched-budget experiment: all raw response bytes, request and\nobservation plans, immutable journal snapshots, coverage, package metrics, and source history.\nCommitted primary aggregate reports and hash provenance are in \\texttt{recollection/2026-10-31/}.\nOffline raw replay needs no provider account. Supplementary Gemini observations remain missing; primary\ngenerations do not restore them. \\texttt{REPLICATION.md} distinguishes these evidence tiers.\nThe accompanying replication bundle is prepared locally for deposition; it is not yet\navailable at the public repository URL.",
+      "expanded_text": "\\section*{Data and Code Availability}\nThe package at \\url{https://github.com/alemaiorano/sim-to-real-validity} includes sources,\nexporters, supplementary aggregate reports, the fixed panel, and original corpus manifests.\nReexporting these reports reproduces their displayed numbers, not their generation from raw\nobservations. Original reports are hash-pinned and unchanged. GPT-4.1 checkpoint analyses,\ninput hashes, and offline replay verification are in \\texttt{reanalysis/2026-10-31/}.\nA separate replication bundle retains the GPT scalar checkpoint, exact\nexploratory inputs, and the primary matched-budget experiment: all raw response bytes, request and\nobservation plans, immutable journal snapshots, coverage, package metrics, and source history.\nCommitted primary aggregate reports and hash provenance are in \\texttt{recollection/2026-10-31/}.\nOffline raw replay needs no provider account. Supplementary Gemini observations remain missing; primary\ngenerations do not restore them. \\texttt{REPLICATION.md} distinguishes these evidence tiers.\nThe accompanying replication bundle is prepared locally for deposition; it is not yet\navailable at the public repository URL.",
       "status": "qualified",
       "adjudication": "Public aggregate reexport and separate raw replay have explicit boundaries. Primary and supplementary analyses belong to one paper; absent supplementary raw responses remain absent and the companion is not claimed publicly deposited.",
       "evidence": [
@@ -42,17 +42,49 @@
       "id": "main:P3",
       "file": "latex/main.tex",
       "line": 85,
-      "text": "\\section*{AI Tools Disclosure}\nAI assistants, including Claude, GPT-family tools, Codex, and an Astra high reviewer, were used\nfor code, analysis, literature checks, manuscript preparation, and methodological review. These tools do not supply\nindependent empirical validation; the author remains responsible for the work.\nThe evaluated models include Gemini 3.1 Flash-Lite and Azure GPT-4.1 in the primary comparison\nand the configurations identified in the supplementary analyses. Returned model metadata are\nretained with each primary response; provider aliases do not imply immutable future model behavior.",
+      "text": "\\section*{AI Tools Disclosure}\nThis research used AI-assisted development tools for manuscript preparation and code development\nunder human oversight and accountability.\n\\begin{itemize}[leftmargin=*]\n  \\item \\textbf{Language models:} Claude (Anthropic, via Claude Code) and GPT-family models\n  (OpenAI, via Codex) supported code implementation, analysis, literature checks, and manuscript\n  preparation and review. DoesItStand also supplied automated manuscript feedback. The Google\n  Gemini and Azure GPT-4.1 configurations evaluated in the study are experimental components,\n  as described in the methods and supplementary analyses; their outputs are study observations.",
       "expanded_numeric_macros": {},
-      "expanded_text": "\\section*{AI Tools Disclosure}\nAI assistants, including Claude, GPT-family tools, Codex, and an Astra high reviewer, were used\nfor code, analysis, literature checks, manuscript preparation, and methodological review. These tools do not supply\nindependent empirical validation; the author remains responsible for the work.\nThe evaluated models include Gemini 3.1 Flash-Lite and Azure GPT-4.1 in the primary comparison\nand the configurations identified in the supplementary analyses. Returned model metadata are\nretained with each primary response; provider aliases do not imply immutable future model behavior.",
+      "expanded_text": "\\section*{AI Tools Disclosure}\nThis research used AI-assisted development tools for manuscript preparation and code development\nunder human oversight and accountability.\n\\begin{itemize}[leftmargin=*]\n  \\item \\textbf{Language models:} Claude (Anthropic, via Claude Code) and GPT-family models\n  (OpenAI, via Codex) supported code implementation, analysis, literature checks, and manuscript\n  preparation and review. DoesItStand also supplied automated manuscript feedback. The Google\n  Gemini and Azure GPT-4.1 configurations evaluated in the study are experimental components,\n  as described in the methods and supplementary analyses; their outputs are study observations.",
       "status": "author_attestation",
-      "adjudication": "Named Claude/GPT/Codex/Astra assistance is an author/process disclosure; model aliases and returned metadata do not imply immutable weights.",
+      "adjudication": "Language-model assistance and empirical-model roles follow the shared template structure, without internal effort labels or a claim of human-only methodological conception.",
       "evidence": [
         "data/persona_panel.json",
-        "docs/audit/original-findings.json",
-        "reanalysis/2026-10-31/gpt41.json",
-        "reanalysis/2026-10-31/legacy_gpt_verification.json",
-        "reports/legacy-provenance.json",
+        "scripts/recollect.py",
+        "scripts/run_predictions.py",
+        "tests/test_recollection.py"
+      ]
+    },
+    {
+      "id": "main:P4",
+      "file": "latex/main.tex",
+      "line": 95,
+      "text": "\\item \\textbf{Web search:} MCP Tavily and web search tools supported literature review and\n  fact-checking during manuscript preparation.\n\\end{itemize}",
+      "expanded_numeric_macros": {},
+      "expanded_text": "\\item \\textbf{Web search:} MCP Tavily and web search tools supported literature review and\n  fact-checking during manuscript preparation.\n\\end{itemize}",
+      "status": "author_attestation",
+      "adjudication": "Web-search assistance is disclosed; actual template/source comparison is recorded in the evidence files.",
+      "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
+        "docs/audit/full-text-bibliography.json",
+        "latex/references.bib"
+      ]
+    },
+    {
+      "id": "main:P5",
+      "file": "latex/main.tex",
+      "line": 99,
+      "text": "The author retains full responsibility for the scientific arguments, methodology, analysis,\ncitations, and conclusions. Numerical and literature claims are checked against retained\nartifacts and primary sources; AI-generated suggestions and automated reviews do not constitute\nindependent empirical validation.",
+      "expanded_numeric_macros": {},
+      "expanded_text": "The author retains full responsibility for the scientific arguments, methodology, analysis,\ncitations, and conclusions. Numerical and literature claims are checked against retained\nartifacts and primary sources; AI-generated suggestions and automated reviews do not constitute\nindependent empirical validation.",
+      "status": "author_attestation",
+      "adjudication": "Author responsibility and artifact/source verification are disclosed without treating automated feedback as independent empirical proof.",
+      "evidence": [
+        "data/persona_panel.json",
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
+        "docs/audit/full-text-bibliography.json",
+        "latex/references.bib",
         "scripts/recollect.py",
         "scripts/run_predictions.py",
         "tests/test_recollection.py"
@@ -62,7 +94,7 @@
       "id": "00-abstract:P1",
       "file": "latex/sections/00-abstract.tex",
       "line": 1,
-      "text": "\\begin{abstract}\nDo demographic personas improve an LLM's prediction of audience engagement? We compare a fixed\nten-persona panel with a generic-reader baseline on Upworthy headlines, with supplementary\nnews and Reddit comparisons. The primary experiment collects Gemini 3.1 Flash-Lite and GPT-4.1\nobservations on the same \\newSelectedN{}-package exploratory cohort, selected with simultaneous\nwinner screening. It allocates thirty scores per arm and variant within model, retains exact raw\nresponses, and reports metric-specific valid and paired counts. Complete-package coverage is\n\\newGeminiN{} for Gemini and \\newGptN{} for GPT-4.1. The baseline-minus-panel Kendall $\\tau_b$ gap is\n\\newGeminiGapTau{} (CI [\\newGeminiGapTauLow{}, \\newGeminiGapTauHigh{}]) for Gemini and\n\\newGptGapTau{} (CI [\\newGptGapTauLow{}, \\newGptGapTauHigh{}]) for GPT-4.1, on respectively\n\\newGeminiPairedTauN{} and \\newGptPairedTauN{} valid rank pairs. Expected top-1 is\n\\newGeminiPanelTopOne{} versus \\newGeminiBaselineTopOne{} for Gemini and \\newGptPanelTopOne{}\nversus \\newGptBaselineTopOne{} for GPT-4.1 (panel versus baseline). These intervals condition on\nthe selected cohort and recorded generations. The Upworthy archive documents a randomization-risk\nperiod. Excluding that period in a post-hoc sensitivity retains positive expected top-1 and lift\ngaps in both configurations, while Gemini tau-b and Spearman intervals include zero. Supplementary\nReddit top-1 and captured lift favor the panel, so the direction of the comparison depends on\ndataset and metric. A raw-replay artifact supports offline reproduction of the primary experiment.\nThe results concern this panel, cohort, and protocol; they are not a held-out evaluation or\nevidence of universal persona harm. Provider request protocols differ across models, and no\ncausal mechanism is isolated.\n\\end{abstract}",
+      "text": "\\begin{abstract}\nDo demographic personas improve an LLM's prediction of audience engagement? We compare a fixed\nten-persona panel with a generic-reader baseline on Upworthy headlines, with supplementary\nnews and Reddit comparisons. The primary experiment collects Gemini 3.1 Flash-Lite and GPT-4.1\nobservations on the same \\newSelectedN{}-package exploratory cohort, selected with simultaneous\nwinner screening. It allocates thirty scores per arm and variant within model, retains exact raw\nresponses, and reports metric-specific valid and paired counts. Complete-package coverage is\n\\newGeminiN{} for Gemini and \\newGptN{} for GPT-4.1. The baseline-minus-panel Kendall $\\tau_b$ gap is\n\\newGeminiGapTau{} (CI [\\newGeminiGapTauLow{}, \\newGeminiGapTauHigh{}]) for Gemini and\n\\newGptGapTau{} (CI [\\newGptGapTauLow{}, \\newGptGapTauHigh{}]) for GPT-4.1, on respectively\n\\newGeminiPairedTauN{} and \\newGptPairedTauN{} valid rank pairs. Expected top-1 is\n\\newGeminiPanelTopOne{} versus \\newGeminiBaselineTopOne{} for Gemini and \\newGptPanelTopOne{}\nversus \\newGptBaselineTopOne{} for GPT-4.1 (panel versus baseline). These intervals condition on\nthe selected cohort and recorded generations and do not adjust for dependence between related experiments. The Upworthy archive documents a randomization-risk\nperiod. Excluding that period in a post-hoc sensitivity retains positive expected top-1 and lift\ngaps in both configurations, while Gemini tau-b and Spearman intervals include zero. Supplementary\nReddit top-1 and captured lift favor the panel; these aggregate comparisons use unreconciled\ncollection protocols and do not isolate dataset effects. A raw-replay artifact supports offline reproduction of the primary experiment.\nThe results concern this panel, cohort, and protocol; they are not a held-out evaluation or\nevidence of universal persona harm. Provider request protocols differ across models, and no\ncausal mechanism is isolated.\n\\end{abstract}",
       "expanded_numeric_macros": {
         "newGeminiBaselineTopOne": "54.8\\%",
         "newGeminiGapTau": "+0.222",
@@ -80,10 +112,13 @@
         "newGptPanelTopOne": "42.0\\%",
         "newSelectedN": "190"
       },
-      "expanded_text": "\\begin{abstract}\nDo demographic personas improve an LLM's prediction of audience engagement? We compare a fixed\nten-persona panel with a generic-reader baseline on Upworthy headlines, with supplementary\nnews and Reddit comparisons. The primary experiment collects Gemini 3.1 Flash-Lite and GPT-4.1\nobservations on the same 190-package exploratory cohort, selected with simultaneous\nwinner screening. It allocates thirty scores per arm and variant within model, retains exact raw\nresponses, and reports metric-specific valid and paired counts. Complete-package coverage is\n188 for Gemini and 188 for GPT-4.1. The baseline-minus-panel Kendall $\\tau_b$ gap is\n+0.222 (CI [+0.061, +0.385]) for Gemini and\n+0.257 (CI [+0.119, +0.391]) for GPT-4.1, on respectively\n136 and 188 valid rank pairs. Expected top-1 is\n39.1\\% versus 54.8\\% for Gemini and 42.0\\%\nversus 61.7\\% for GPT-4.1 (panel versus baseline). These intervals condition on\nthe selected cohort and recorded generations. The Upworthy archive documents a randomization-risk\nperiod. Excluding that period in a post-hoc sensitivity retains positive expected top-1 and lift\ngaps in both configurations, while Gemini tau-b and Spearman intervals include zero. Supplementary\nReddit top-1 and captured lift favor the panel, so the direction of the comparison depends on\ndataset and metric. A raw-replay artifact supports offline reproduction of the primary experiment.\nThe results concern this panel, cohort, and protocol; they are not a held-out evaluation or\nevidence of universal persona harm. Provider request protocols differ across models, and no\ncausal mechanism is isolated.\n\\end{abstract}",
+      "expanded_text": "\\begin{abstract}\nDo demographic personas improve an LLM's prediction of audience engagement? We compare a fixed\nten-persona panel with a generic-reader baseline on Upworthy headlines, with supplementary\nnews and Reddit comparisons. The primary experiment collects Gemini 3.1 Flash-Lite and GPT-4.1\nobservations on the same 190-package exploratory cohort, selected with simultaneous\nwinner screening. It allocates thirty scores per arm and variant within model, retains exact raw\nresponses, and reports metric-specific valid and paired counts. Complete-package coverage is\n188 for Gemini and 188 for GPT-4.1. The baseline-minus-panel Kendall $\\tau_b$ gap is\n+0.222 (CI [+0.061, +0.385]) for Gemini and\n+0.257 (CI [+0.119, +0.391]) for GPT-4.1, on respectively\n136 and 188 valid rank pairs. Expected top-1 is\n39.1\\% versus 54.8\\% for Gemini and 42.0\\%\nversus 61.7\\% for GPT-4.1 (panel versus baseline). These intervals condition on\nthe selected cohort and recorded generations and do not adjust for dependence between related experiments. The Upworthy archive documents a randomization-risk\nperiod. Excluding that period in a post-hoc sensitivity retains positive expected top-1 and lift\ngaps in both configurations, while Gemini tau-b and Spearman intervals include zero. Supplementary\nReddit top-1 and captured lift favor the panel; these aggregate comparisons use unreconciled\ncollection protocols and do not isolate dataset effects. A raw-replay artifact supports offline reproduction of the primary experiment.\nThe results concern this panel, cohort, and protocol; they are not a held-out evaluation or\nevidence of universal persona harm. Provider request protocols differ across models, and no\ncausal mechanism is isolated.\n\\end{abstract}",
       "status": "qualified",
       "adjudication": "Every displayed estimate expands from hash-backed macros. Cohorts, valid rank pairs, conditional intervals, period-exclusion rank uncertainty, Reddit exception and no universal/causal recovery claim are explicit.",
       "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/full-text-bibliography.json",
         "docs/audit/original-findings.json",
         "latex/references.bib",
@@ -94,6 +129,7 @@
         "recollection/2026-10-31/provenance.json",
         "recollection/2026-10-31/window_sensitivity.json",
         "recollection/2026-10-31/window_sensitivity.provenance.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/analyze_randomization_window.py"
       ]
@@ -108,6 +144,8 @@
       "status": "supported",
       "adjudication": "Background describes a possible use, not unmeasured cost superiority. Argyle supports approximation of some survey distributions, not click validity.",
       "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib"
       ]
@@ -150,12 +188,14 @@
       "adjudication": "Supplementary archived aggregates/scalar diagnostic retain different screens, budgets and tie rules; they cannot validate absent raw response texts. Primary observations define their own protocol.",
       "evidence": [
         "data/persona_panel.json",
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "recollection/2026-10-31/azure.json",
         "recollection/2026-10-31/gemini.json",
         "recollection/2026-10-31/provenance.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/recollect.py",
         "scripts/run_predictions.py",
@@ -172,12 +212,14 @@
       "status": "study_scope",
       "adjudication": "RQ1/2/3 name the questions addressed by displayed artifacts; no empirical outcome or representative-audience assumption is introduced.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "recollection/2026-10-31/azure.json",
         "recollection/2026-10-31/gemini.json",
         "recollection/2026-10-31/provenance.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
@@ -191,6 +233,8 @@
       "status": "supported",
       "adjudication": "Argyle/CSS context and Park85percent are supported by exact primary sources; Park is pinned to2411.10109v1 and normalized to participant retest consistency.",
       "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib"
       ]
@@ -205,6 +249,8 @@
       "status": "qualified",
       "adjudication": "Order/persona/objective-task/caricature/bias claims are heterogeneous results; Hu includes modest significant gains. None identifies this experiment mechanism.",
       "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib"
       ]
@@ -219,6 +265,8 @@
       "status": "qualified",
       "adjudication": "Upworthy negativity/LOLA context, observational MIND/Reddit and construct/rank definitions match cited primary works. No inappropriate direct numerical comparison.",
       "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib"
       ]
@@ -227,30 +275,43 @@
       "id": "03-framework:P1",
       "file": "latex/sections/03-framework.tex",
       "line": 1,
-      "text": "\\section{Sim-to-Real Validity Framework}\nA package contains variants with observed outcome rates and predicted scores\n(Figure~\\ref{fig:protocol}). Upworthy was designed for randomized traffic, but the archive authors document randomization\nproblems during part of 2013--2014~\\citep{matias2024correction}. We report observed rate rankings;\nthey are not automatically causal headline effects. Grouping distinct headlines can also combine\nimage variants. MIND compares different articles within a subcategory. Reddit groups\nreposts of the same image in the same subreddit; timing and exposure remain uncontrolled.\n\\input{figures/protocol}\nWithin-package ranking does not establish absolute CTR calibration or a causal copy effect\nin observational data.",
+      "text": "\\section{Sim-to-Real Validity Framework}\nA package contains variants with observed outcome rates and predicted scores\n(Figure~\\ref{fig:protocol}). Upworthy was designed for randomized traffic, but the archive authors document randomization\nproblems during part of 2013--2014~\\citep{matias2024correction}. We report observed rate rankings;\nthey are not automatically causal headline effects. Grouping distinct headlines can also combine\nimage variants. MIND ranks different articles within a subcategory by clicks divided by logged\narticle appearances, pooling user-level recommendation logs. Reddit groups reposts by image and\nsubreddit, pools votes for identical titles, and uses upvotes divided by total upvotes plus\ndownvotes. This is a vote-approval ratio, not CTR; vote totals are not exposure counts. Timing,\nrecommendation, and exposure remain uncontrolled in these observational comparisons.\n\\input{figures/protocol}\nWithin-package ranking does not establish absolute CTR calibration or a causal copy effect\nin observational data.",
       "expanded_numeric_macros": {},
-      "expanded_text": "\\section{Sim-to-Real Validity Framework}\nA package contains variants with observed outcome rates and predicted scores\n(Figure~\\ref{fig:protocol}). Upworthy was designed for randomized traffic, but the archive authors document randomization\nproblems during part of 2013--2014~\\citep{matias2024correction}. We report observed rate rankings;\nthey are not automatically causal headline effects. Grouping distinct headlines can also combine\nimage variants. MIND compares different articles within a subcategory. Reddit groups\nreposts of the same image in the same subreddit; timing and exposure remain uncontrolled.\n\\input{figures/protocol}\nWithin-package ranking does not establish absolute CTR calibration or a causal copy effect\nin observational data.",
+      "expanded_text": "\\section{Sim-to-Real Validity Framework}\nA package contains variants with observed outcome rates and predicted scores\n(Figure~\\ref{fig:protocol}). Upworthy was designed for randomized traffic, but the archive authors document randomization\nproblems during part of 2013--2014~\\citep{matias2024correction}. We report observed rate rankings;\nthey are not automatically causal headline effects. Grouping distinct headlines can also combine\nimage variants. MIND ranks different articles within a subcategory by clicks divided by logged\narticle appearances, pooling user-level recommendation logs. Reddit groups reposts by image and\nsubreddit, pools votes for identical titles, and uses upvotes divided by total upvotes plus\ndownvotes. This is a vote-approval ratio, not CTR; vote totals are not exposure counts. Timing,\nrecommendation, and exposure remain uncontrolled in these observational comparisons.\n\\input{figures/protocol}\nWithin-package ranking does not establish absolute CTR calibration or a causal copy effect\nin observational data.",
       "status": "qualified",
-      "adjudication": "Archive was designed for random allocation but2024 correction is explicit. Image aggregation, uncontrolled MIND/Reddit and observed-rate rather than causal interpretation are qualified.",
+      "adjudication": "MIND numerator/denominator and subcategory grouping match the pinned original builder; Reddit pools identical titles within image/subreddit and uses up/(up+down), not CTR or exposure-normalized click data. Randomization/image and observational limits remain explicit.",
       "evidence": [
-        "data/persona_panel.json",
+        "datasets/mind-subset-2026-06-03.manifest.json",
+        "datasets/reddit-subset-2026-06-04.manifest.json",
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
+        "docs/audit/v2-formula-and-editorial.json",
         "latex/references.bib",
-        "scripts/recollect.py",
-        "scripts/run_predictions.py",
-        "tests/test_recollection.py"
+        "reanalysis/2026-10-31/corpus_rebuild_verification.json",
+        "reanalysis/2026-10-31/filter_comparison.json",
+        "scripts/01_ingest_upworthy.py",
+        "scripts/build_mind_corpus.py",
+        "scripts/build_reddit_corpus.py",
+        "scripts/compute_validity.py",
+        "scripts/winner_filter.py",
+        "tests/test_corrections.py",
+        "tests/test_randomization_window.py",
+        "tests/test_replication.py"
       ]
     },
     {
       "id": "03-framework:P2",
       "file": "latex/sections/03-framework.tex",
-      "line": 12,
+      "line": 15,
       "text": "\\paragraph{Metric identity.}\nFor concordant and discordant pair counts $C,D$, Goodman--Kruskal gamma is\n\\[\n\\gamma=(C-D)/(C+D),\n\\]\ndiscarding pairs tied in either variable~\\citep{goodman1954}. It is undefined when $C+D=0$ and\ndiffers from Kendall $\\tau_b$, which accounts for ties:\n\\[\n\\tau_b=\\frac{C-D}{\\sqrt{(C+D+T_x)(C+D+T_y)}},\n\\]\nwhere $T_x,T_y$ count pairs tied only in the respective variable~\\citep{kendall1945ties}.\nSpearman uses average ranks~\\citep{spearman1904}. Constant rank inputs yield undefined values.",
       "expanded_numeric_macros": {},
       "expanded_text": "\\paragraph{Metric identity.}\nFor concordant and discordant pair counts $C,D$, Goodman--Kruskal gamma is\n\\[\n\\gamma=(C-D)/(C+D),\n\\]\ndiscarding pairs tied in either variable~\\citep{goodman1954}. It is undefined when $C+D=0$ and\ndiffers from Kendall $\\tau_b$, which accounts for ties:\n\\[\n\\tau_b=\\frac{C-D}{\\sqrt{(C+D+T_x)(C+D+T_y)}},\n\\]\nwhere $T_x,T_y$ count pairs tied only in the respective variable~\\citep{kendall1945ties}.\nSpearman uses average ranks~\\citep{spearman1904}. Constant rank inputs yield undefined values.",
       "status": "supported",
       "adjudication": "Gamma=(C-D)/(C+D) and actual tau-b tie normalization match owner formulas and independent SciPy oracle; rank undefined cases stay undefined.",
       "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib",
         "scripts/compute_validity.py",
@@ -263,7 +324,7 @@
     {
       "id": "03-framework:P3",
       "file": "latex/sections/03-framework.tex",
-      "line": 25,
+      "line": 28,
       "text": "The primary experiment uses uniform expected top-1 and bottom-1 credit:\n$|S_{\\mathrm{pred}}\\cap S_{\\mathrm{real}}|/|S_{\\mathrm{pred}}|$ for the corresponding extreme\nsets. Captured lift averages observed rates across tied predicted maxima, then scales distance\nfrom the observed minimum by the observed range. Constant outcomes make lift undefined.\nSupplementary aggregate-report top-1 results use the first maximum and therefore depend on variant order.",
       "expanded_numeric_macros": {},
       "expanded_text": "The primary experiment uses uniform expected top-1 and bottom-1 credit:\n$|S_{\\mathrm{pred}}\\cap S_{\\mathrm{real}}|/|S_{\\mathrm{pred}}|$ for the corresponding extreme\nsets. Captured lift averages observed rates across tied predicted maxima, then scales distance\nfrom the observed minimum by the observed range. Constant outcomes make lift undefined.\nSupplementary aggregate-report top-1 results use the first maximum and therefore depend on variant order.",
@@ -288,6 +349,8 @@
       "adjudication": "Ten fixed JSON personas, demographic inspiration only, no deterministic representative construction or product-level evaluation.",
       "evidence": [
         "data/persona_panel.json",
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib",
         "scripts/recollect.py",
@@ -327,9 +390,11 @@
       "adjudication": "Supplementary Gemini30/30 and GPT30/10 are distinguished from new within-model30/30; seeds are sent at request level and do not imply deterministic replay.",
       "evidence": [
         "data/persona_panel.json",
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/recollect.py",
         "scripts/run_predictions.py",
@@ -347,9 +412,11 @@
       "adjudication": "Legacy parser salvage/clamp/bool/retry behavior read from7c1; strict exact-key finite nonboolean parser and explicit terminal missing are tested. No supplementary incidence is inferred.",
       "evidence": [
         "data/persona_panel.json",
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/recollect.py",
         "scripts/run_predictions.py",
@@ -369,10 +436,14 @@
       "status": "supported",
       "adjudication": "Locked1695packages/6978variants retain exact inputs. Independent newline-aware CSV proves every count/rate; one headline has a removed embedded newline outside both selected cohorts. Current CSV reader preserves it for new derivatives; frozen generations/inputs are not changed.3000threshold is not a universal reliability guarantee.",
       "evidence": [
+        "datasets/mind-subset-2026-06-03.manifest.json",
+        "datasets/reddit-subset-2026-06-04.manifest.json",
         "docs/audit/v2-formula-and-editorial.json",
         "reanalysis/2026-10-31/corpus_rebuild_verification.json",
         "reanalysis/2026-10-31/filter_comparison.json",
-        "scripts/01_ingest_upworthy.py"
+        "scripts/01_ingest_upworthy.py",
+        "scripts/build_mind_corpus.py",
+        "scripts/build_reddit_corpus.py"
       ]
     },
     {
@@ -389,6 +460,8 @@
       "status": "qualified",
       "adjudication": "2024 correction dates and lack of flags verified from actual CSV. Counts318/1695,83/399,42/190 are date membership, not individually proved defective tests.",
       "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib",
         "recollection/2026-10-31/window_sensitivity.json",
@@ -415,18 +488,26 @@
       "id": "05-setup:P4",
       "file": "latex/sections/05-setup.tex",
       "line": 27,
-      "text": "\\paragraph{Simultaneous winner screen.}\nThe primary experiment requires a unique observed maximum and compares it with every opponent using\ntwo-sided pooled $z$ tests. For $k$ variants the comparison family contains $m=k(k-1)/2$ unordered\npairs. All winner--opponent comparisons must pass $\\alpha/m$, with $\\alpha=0.05$.\nThe screening statistic is $\\min(1,m\\max_{j\\ne w}p_{wj})$. Bonferroni's inequality motivates the\nadjustment~\\citep{nistBonferroni}. The nominal bound is approximate and per package, conditional on\nindependent binomial observations and adequate normal approximation. It is not an across-package\nfalse-discovery guarantee or proof of a population winner. Repeated exposures and Reddit voting\nfurther limit these assumptions. In the locked corpus \\newSelectedN{} packages pass, all within\nthe supplementary selected set described below. A stricter screen does not demonstrate that removed packages had\nfalse winners.",
+      "text": "\\paragraph{Simultaneous winner screen.}\nThe primary experiment requires a unique observed maximum and compares it with every opponent using\ntwo-sided pooled $z$ tests. For $k$ variants the comparison family contains $m=k(k-1)/2$ unordered\npairs. All winner--opponent comparisons must pass $\\alpha/m$, with $\\alpha=0.05$.\nThe screening statistic is $\\min(1,m\\max_{j\\ne w}p_{wj})$. Bonferroni's inequality motivates the\nadjustment~\\citep{nistBonferroni}. The nominal bound is approximate and per package, conditional on\nindependent binomial observations, fixed sampling horizons, and adequate normal approximation. It is not an across-package\nfalse-discovery guarantee or proof of a population winner. Repeated exposures and Reddit voting\nfurther limit these assumptions. In the locked corpus \\newSelectedN{} packages pass, all within\nthe supplementary selected set described below. A stricter screen does not demonstrate that removed packages had\nfalse winners. The archive documents editorial stopping based on accumulating results~\\citep{matiasUpworthy}.\nFixed-horizon $p$-values need not remain calibrated under that stopping policy; Bonferroni does\nnot repair invalid input $p$-values. The screen defines a reproducible cohort, without a verified\nfive-percent winner-error guarantee for these archived tests.",
       "expanded_numeric_macros": {
         "newSelectedN": "190"
       },
-      "expanded_text": "\\paragraph{Simultaneous winner screen.}\nThe primary experiment requires a unique observed maximum and compares it with every opponent using\ntwo-sided pooled $z$ tests. For $k$ variants the comparison family contains $m=k(k-1)/2$ unordered\npairs. All winner--opponent comparisons must pass $\\alpha/m$, with $\\alpha=0.05$.\nThe screening statistic is $\\min(1,m\\max_{j\\ne w}p_{wj})$. Bonferroni's inequality motivates the\nadjustment~\\citep{nistBonferroni}. The nominal bound is approximate and per package, conditional on\nindependent binomial observations and adequate normal approximation. It is not an across-package\nfalse-discovery guarantee or proof of a population winner. Repeated exposures and Reddit voting\nfurther limit these assumptions. In the locked corpus 190 packages pass, all within\nthe supplementary selected set described below. A stricter screen does not demonstrate that removed packages had\nfalse winners.",
+      "expanded_text": "\\paragraph{Simultaneous winner screen.}\nThe primary experiment requires a unique observed maximum and compares it with every opponent using\ntwo-sided pooled $z$ tests. For $k$ variants the comparison family contains $m=k(k-1)/2$ unordered\npairs. All winner--opponent comparisons must pass $\\alpha/m$, with $\\alpha=0.05$.\nThe screening statistic is $\\min(1,m\\max_{j\\ne w}p_{wj})$. Bonferroni's inequality motivates the\nadjustment~\\citep{nistBonferroni}. The nominal bound is approximate and per package, conditional on\nindependent binomial observations, fixed sampling horizons, and adequate normal approximation. It is not an across-package\nfalse-discovery guarantee or proof of a population winner. Repeated exposures and Reddit voting\nfurther limit these assumptions. In the locked corpus 190 packages pass, all within\nthe supplementary selected set described below. A stricter screen does not demonstrate that removed packages had\nfalse winners. The archive documents editorial stopping based on accumulating results~\\citep{matiasUpworthy}.\nFixed-horizon $p$-values need not remain calibrated under that stopping policy; Bonferroni does\nnot repair invalid input $p$-values. The screen defines a reproducible cohort, without a verified\nfive-percent winner-error guarantee for these archived tests.",
       "status": "qualified",
-      "adjudication": "Unique maximum must beat every opponent using two-sided pooled z and all-pair Bonferroni. Approximate per-package assumptions, no FDR/causal/true-winner guarantee. Primary190IDs subset399 verified.",
+      "adjudication": "Screen formula/190IDs unchanged. Fixed-horizon validity is an additional assumption; Matias documents result-monitored editorial stopping, so no verified five-percent archive winner-error guarantee is claimed.",
       "evidence": [
+        "datasets/mind-subset-2026-06-03.manifest.json",
+        "datasets/reddit-subset-2026-06-04.manifest.json",
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
+        "docs/audit/full-text-bibliography.json",
         "docs/audit/v2-formula-and-editorial.json",
+        "latex/references.bib",
         "reanalysis/2026-10-31/corpus_rebuild_verification.json",
         "reanalysis/2026-10-31/filter_comparison.json",
         "scripts/01_ingest_upworthy.py",
+        "scripts/build_mind_corpus.py",
+        "scripts/build_reddit_corpus.py",
         "scripts/compute_validity.py",
         "scripts/winner_filter.py",
         "tests/test_corrections.py",
@@ -437,7 +518,7 @@
     {
       "id": "05-setup:P5",
       "file": "latex/sections/05-setup.tex",
-      "line": 39,
+      "line": 42,
       "text": "\\paragraph{Supplementary winner screen.}\nThe supplementary aggregate comparisons use the observed best variant and runner-up,\ncomparing them using a one-sided pooled two-proportion $z$ test at $p<0.05$, selecting \\legacySelectedN{} packages.\nThe direction was chosen from the data: even a two-arm null comparison can pass in either\ndirection, so the nominal one-sided threshold does not imply a five-percent false-positive rate.\nComparing only the runner-up need not separate a winner from every opponent. Outcome selection\nchanges the evaluation population. Packages failing a screen are not thereby unpredictable.",
       "expanded_numeric_macros": {
         "legacySelectedN": "399"
@@ -446,16 +527,18 @@
       "status": "supported",
       "adjudication": "Old chosen-winner versus runner-up one-sided test is exact7c1 code; direction-selection null probe shows nominal one-sided interpretation is invalid.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
     {
       "id": "05-setup:P6",
       "file": "latex/sections/05-setup.tex",
-      "line": 47,
+      "line": 50,
       "text": "\\paragraph{Matched-budget collection.}\nWe froze the protocol and its source before collection. Both Gemini 3.1 Flash-Lite and Azure GPT-4.1 score\nevery variant of the same \\newSelectedN{}-package simultaneously screened exploratory cohort. This cohort\nwas selected from previously examined outcomes and is not a held-out population. The\nmatched-budget protocol is evaluated on this Upworthy cohort only; MIND, Reddit, other Upworthy\nsplits, model tiers, seeds and aggregation rules are covered by the supplementary analyses,\nwhich do not establish prompt robustness.",
       "expanded_numeric_macros": {
         "newSelectedN": "190"
@@ -473,7 +556,7 @@
     {
       "id": "05-setup:P7",
       "file": "latex/sections/05-setup.tex",
-      "line": 55,
+      "line": 58,
       "text": "Each variant is allocated three observations for each of ten fixed personas and thirty generic-reader\nobservations. Package and variant order is shuffled with a recorded seed; baseline/persona\nrequests are interleaved with randomized order within pairs. Temperature is $0.8$, JSON output\nis requested, and output is limited to 64 tokens per choice. Gemini uses single-choice requests\nwith MINIMAL thinking. Azure uses three indexed choices per request in both arms: ten requests\nper arm and variant. We match the number of retained scores within each model, not an identical\ntransport or inference protocol across providers. Token use and monetary cost are not equalized.\nChoices in one request are not assumed\nindependent. Request seeds, exact prompts, responses, returned model identities, usage, and\nfailures are preserved. Provider aliases and best-effort seeds do not establish future replay\nof generations.",
       "expanded_numeric_macros": {},
       "expanded_text": "Each variant is allocated three observations for each of ten fixed personas and thirty generic-reader\nobservations. Package and variant order is shuffled with a recorded seed; baseline/persona\nrequests are interleaved with randomized order within pairs. Temperature is $0.8$, JSON output\nis requested, and output is limited to 64 tokens per choice. Gemini uses single-choice requests\nwith MINIMAL thinking. Azure uses three indexed choices per request in both arms: ten requests\nper arm and variant. We match the number of retained scores within each model, not an identical\ntransport or inference protocol across providers. Token use and monetary cost are not equalized.\nChoices in one request are not assumed\nindependent. Request seeds, exact prompts, responses, returned model identities, usage, and\nfailures are preserved. Provider aliases and best-effort seeds do not establish future replay\nof generations.",
@@ -489,12 +572,12 @@
     {
       "id": "05-setup:P8",
       "file": "latex/sections/05-setup.tex",
-      "line": 67,
-      "text": "The primary analysis retains a package only when every planned observation is valid in both\narms for all its variants. This also makes equal-persona and observation-weighted panel means\nidentical. Failures are never replaced with additional semantic draws; bounded retries address\ntransient transport failures only. Available-observation arm summaries are reported separately as sensitivity\nanalyses, with their own coverage. The primary policy is stricter than the scalar-checkpoint analysis\nrequirement of at least one valid score per variant. Operational compatibility probes are retained\nseparately and excluded. An Azure prompt refusal initially triggered a global HTTP400 stop. Before comparative analysis,\na documented technical amendment classified only the confirmed content-filter refusal type as\nterminal missing while allowing unrelated planned requests to continue. The blocked request is\nnot retried or rewritten; filtering remains active. Original journal bytes, the pause, source\nversions and the amendment marker are preserved. Other permanent failures and budget stops remain\nblocking. This is a response to an observed technical incident, not a preregistered amendment.\nThe fixed cohort closes before inspecting comparative performance;\nthere is no outcome-dependent stopping or choice of model after observing results.",
+      "line": 70,
+      "text": "The primary analysis retains a package only when every planned observation is valid in both\narms for all its variants. This also makes equal-persona and observation-weighted panel means\nidentical. Failures are never replaced with additional semantic draws; bounded retries address\ntransient transport failures only. Available-observation arm summaries are reported separately as sensitivity\nanalyses, with their own coverage, in the \\texttt{available\\_observation\\_sensitivity} field of\nthe committed Gemini and Azure reports in \\texttt{recollection/2026-10-31/}. The primary policy is stricter than the scalar-checkpoint analysis\nrequirement of at least one valid score per variant. Operational compatibility probes are retained\nseparately and excluded. An Azure prompt refusal initially triggered a global HTTP400 stop. Before comparative analysis,\na documented technical amendment classified only the confirmed content-filter refusal type as\nterminal missing while allowing unrelated planned requests to continue. The blocked request is\nnot retried or rewritten; filtering remains active. Original journal bytes, the pause, source\nversions and the amendment marker are preserved. Other permanent failures and budget stops remain\nblocking. This is a response to an observed technical incident, not a preregistered amendment.\nThe fixed cohort closes before inspecting comparative performance;\nthere is no outcome-dependent stopping or choice of model after observing results.",
       "expanded_numeric_macros": {},
-      "expanded_text": "The primary analysis retains a package only when every planned observation is valid in both\narms for all its variants. This also makes equal-persona and observation-weighted panel means\nidentical. Failures are never replaced with additional semantic draws; bounded retries address\ntransient transport failures only. Available-observation arm summaries are reported separately as sensitivity\nanalyses, with their own coverage. The primary policy is stricter than the scalar-checkpoint analysis\nrequirement of at least one valid score per variant. Operational compatibility probes are retained\nseparately and excluded. An Azure prompt refusal initially triggered a global HTTP400 stop. Before comparative analysis,\na documented technical amendment classified only the confirmed content-filter refusal type as\nterminal missing while allowing unrelated planned requests to continue. The blocked request is\nnot retried or rewritten; filtering remains active. Original journal bytes, the pause, source\nversions and the amendment marker are preserved. Other permanent failures and budget stops remain\nblocking. This is a response to an observed technical incident, not a preregistered amendment.\nThe fixed cohort closes before inspecting comparative performance;\nthere is no outcome-dependent stopping or choice of model after observing results.",
+      "expanded_text": "The primary analysis retains a package only when every planned observation is valid in both\narms for all its variants. This also makes equal-persona and observation-weighted panel means\nidentical. Failures are never replaced with additional semantic draws; bounded retries address\ntransient transport failures only. Available-observation arm summaries are reported separately as sensitivity\nanalyses, with their own coverage, in the \\texttt{available\\_observation\\_sensitivity} field of\nthe committed Gemini and Azure reports in \\texttt{recollection/2026-10-31/}. The primary policy is stricter than the scalar-checkpoint analysis\nrequirement of at least one valid score per variant. Operational compatibility probes are retained\nseparately and excluded. An Azure prompt refusal initially triggered a global HTTP400 stop. Before comparative analysis,\na documented technical amendment classified only the confirmed content-filter refusal type as\nterminal missing while allowing unrelated planned requests to continue. The blocked request is\nnot retried or rewritten; filtering remains active. Original journal bytes, the pause, source\nversions and the amendment marker are preserved. Other permanent failures and budget stops remain\nblocking. This is a response to an observed technical incident, not a preregistered amendment.\nThe fixed cohort closes before inspecting comparative performance;\nthere is no outcome-dependent stopping or choice of model after observing results.",
       "status": "qualified",
-      "adjudication": "Complete30/arm/variant policy and separate available-case sensitivity match producer. Refusals remain missing with pinned amendment; no rewritten/replaced draw. Sequence/UTC metadata prove operational freeze/pause; not preregistration.",
+      "adjudication": "Primary coverage, retained failure/pause policy and allocation unchanged. Available-observation arm summaries are explicitly located in both public reports; no newly paired sensitivity contrast is invented.",
       "evidence": [
         "data/persona_panel.json",
         "scripts/recollect.py",
@@ -505,51 +588,65 @@
     {
       "id": "05-setup:P9",
       "file": "latex/sections/05-setup.tex",
-      "line": 82,
-      "text": "\\paragraph{Estimation and denominators.}\nPackage metrics are averaged without size weighting. Raw-backed reports include\n$n_{\\mathrm{total}},n_{\\mathrm{valid}},n_{\\mathrm{undefined}}$ and metric-specific package IDs.\nEach paired gap uses packages valid in both arms for that metric. Empty estimates are undefined,\nnot zero. Percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$\n\\citep{efron1979bootstrap}. They condition on selection and recorded scores and omit generation,\nselection, and outcome-measurement uncertainty. These are pointwise estimation intervals, not\nsimultaneous guarantees across metrics or models. Supplementary aggregate coefficient-specific valid counts\nare not fully recorded; coverage totals are not those denominators.",
+      "line": 86,
+      "text": "\\paragraph{Estimation and denominators.}\nPackage metrics are averaged without size weighting. The displayed means describe the recorded\npackages. Bootstrap intervals summarize between-package resampling variability conditional on\nthe selection rule and recorded scores; interpreting them for a population of similarly selected\nexperiments additionally assumes that these packages are exchangeable independent units. Raw-backed reports include\n$n_{\\mathrm{total}},n_{\\mathrm{valid}},n_{\\mathrm{undefined}}$ and metric-specific package IDs.\nEach paired gap uses packages valid in both arms for that metric. Empty estimates are undefined,\nnot zero. Percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$\n\\citep{efron1979bootstrap}. They condition on selection and recorded scores and omit generation,\nselection, and outcome-measurement uncertainty. These are pointwise estimation intervals, not\nsimultaneous guarantees across metrics or models. Resampling treats experiment IDs as independent\nunits. The archive also records follow-up tests with shared content~\\citep{matiasUpworthy};\nrelated IDs may therefore be dependent. The intervals do not adjust for such dependence, and\ntheir coverage as population confidence intervals is not established. Supplementary aggregate coefficient-specific valid counts\nare not fully recorded; coverage totals are not those denominators.",
       "expanded_numeric_macros": {},
-      "expanded_text": "\\paragraph{Estimation and denominators.}\nPackage metrics are averaged without size weighting. Raw-backed reports include\n$n_{\\mathrm{total}},n_{\\mathrm{valid}},n_{\\mathrm{undefined}}$ and metric-specific package IDs.\nEach paired gap uses packages valid in both arms for that metric. Empty estimates are undefined,\nnot zero. Percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$\n\\citep{efron1979bootstrap}. They condition on selection and recorded scores and omit generation,\nselection, and outcome-measurement uncertainty. These are pointwise estimation intervals, not\nsimultaneous guarantees across metrics or models. Supplementary aggregate coefficient-specific valid counts\nare not fully recorded; coverage totals are not those denominators.",
+      "expanded_text": "\\paragraph{Estimation and denominators.}\nPackage metrics are averaged without size weighting. The displayed means describe the recorded\npackages. Bootstrap intervals summarize between-package resampling variability conditional on\nthe selection rule and recorded scores; interpreting them for a population of similarly selected\nexperiments additionally assumes that these packages are exchangeable independent units. Raw-backed reports include\n$n_{\\mathrm{total}},n_{\\mathrm{valid}},n_{\\mathrm{undefined}}$ and metric-specific package IDs.\nEach paired gap uses packages valid in both arms for that metric. Empty estimates are undefined,\nnot zero. Percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$\n\\citep{efron1979bootstrap}. They condition on selection and recorded scores and omit generation,\nselection, and outcome-measurement uncertainty. These are pointwise estimation intervals, not\nsimultaneous guarantees across metrics or models. Resampling treats experiment IDs as independent\nunits. The archive also records follow-up tests with shared content~\\citep{matiasUpworthy};\nrelated IDs may therefore be dependent. The intervals do not adjust for such dependence, and\ntheir coverage as population confidence intervals is not established. Supplementary aggregate coefficient-specific valid counts\nare not fully recorded; coverage totals are not those denominators.",
       "status": "qualified",
-      "adjudication": "Unweighted package means and per-metric intersections/counts,10000seed42 percentile resamples match code. Pointwise, conditional intervals exclude generation/selection/outcome uncertainty; supplementary denominators remain unknown.",
+      "adjudication": "Recorded finite means are distinguished from conditional between-package bootstrap variability and population interpretation requiring independent exchangeable packages. Related-ID dependence remains unquantified and unadjusted; nominal population coverage is not asserted.",
       "evidence": [
+        "data/persona_panel.json",
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
+        "docs/audit/full-text-bibliography.json",
+        "latex/references.bib",
         "scripts/compute_validity.py",
+        "scripts/recollect.py",
+        "scripts/run_predictions.py",
         "scripts/winner_filter.py",
         "tests/test_corrections.py",
         "tests/test_randomization_window.py",
+        "tests/test_recollection.py",
         "tests/test_replication.py"
       ]
     },
     {
       "id": "05-setup:P10",
       "file": "latex/sections/05-setup.tex",
-      "line": 92,
+      "line": 102,
       "text": "\\paragraph{Planning and robustness scope.}\nWe report coefficient estimates and intervals without assigning standardized effect-size\ncategories~\\citep{cohen1988power}. The analysis does not establish prospective power for\naverages of within-package coefficients or equivalence. Time-stamped preregistration of all thresholds is not established.",
       "expanded_numeric_macros": {},
       "expanded_text": "\\paragraph{Planning and robustness scope.}\nWe report coefficient estimates and intervals without assigning standardized effect-size\ncategories~\\citep{cohen1988power}. The analysis does not establish prospective power for\naverages of within-package coefficients or equivalence. Time-stamped preregistration of all thresholds is not established.",
       "status": "qualified",
       "adjudication": "No standardized effect-size bands, prospective package-mean power or equivalence is asserted. Earlier planning artifact stays outside the paper empirical claims; preregistration chronology remains unestablished.",
       "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/full-text-bibliography.json",
         "docs/audit/original-findings.json",
         "latex/references.bib",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
     {
       "id": "05-setup:P11",
       "file": "latex/sections/05-setup.tex",
-      "line": 97,
+      "line": 107,
       "text": "Supplementary reports cover three Upworthy splits, MIND~\\citep{wu2020mind},\nReddit~\\citep{lakkaraju2013name}, three Gemini models, seed runs, and aggregation. Prompt robustness is not evaluated by these artifacts. Reddit's manifest records many\nmore selected packages than the evaluated subset; its subset-selection procedure is undocumented.",
       "expanded_numeric_macros": {},
       "expanded_text": "Supplementary reports cover three Upworthy splits, MIND~\\citep{wu2020mind},\nReddit~\\citep{lakkaraju2013name}, three Gemini models, seed runs, and aggregation. Prompt robustness is not evaluated by these artifacts. Reddit's manifest records many\nmore selected packages than the evaluated subset; its subset-selection procedure is undocumented.",
       "status": "qualified",
       "adjudication": "Existing report inventory shows exactly those robustness comparisons; missing prompt results/Reddit subset history are disclosed, not invented.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
@@ -694,9 +791,11 @@
       "status": "qualified",
       "adjudication": "Supplementary primary gamma/top1 are report reexports only under old screen/tie rule. Marginal intervals are not used as a paired test or Cohen effect band.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
@@ -715,62 +814,77 @@
       "status": "qualified",
       "adjudication": "Supplementary p statistic/histogram is not calibrated winner probability; original399/1695 selection and all-package gamma verify against unchanged inputs/reports.",
       "evidence": [
+        "datasets/mind-subset-2026-06-03.manifest.json",
+        "datasets/reddit-subset-2026-06-04.manifest.json",
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "docs/audit/v2-formula-and-editorial.json",
         "reanalysis/2026-10-31/corpus_rebuild_verification.json",
         "reanalysis/2026-10-31/filter_comparison.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
-        "scripts/01_ingest_upworthy.py"
+        "scripts/01_ingest_upworthy.py",
+        "scripts/build_mind_corpus.py",
+        "scripts/build_reddit_corpus.py"
       ]
     },
     {
       "id": "06-results:P8",
       "file": "latex/sections/06-results.tex",
       "line": 78,
-      "text": "\\paragraph{Signal strength (RQ2).}\nThe association between the supplementary screening statistic and top-1 is Spearman\n\\hThreeTopOne{} (CI [\\hThreeTopOneCILow{}, \\hThreeTopOneCIHigh{}]) over \\hThreeN{} packages.\nThe available aggregate does not support recomputing this association under simultaneous\nscreening and expected tie credit. The primary selected-cohort experiment does not estimate\nthis all-package association.",
+      "text": "\\paragraph{Signal strength (RQ2).}\nThe pinned supplementary producer defines its separation index as $1-p$, where $p$ is the\none-sided observed-best-versus-runner-up value, and correlates it with the panel's first-index\ntop-1 hit. The stored Spearman association is \\hThreeTopOne{} (CI\n[\\hThreeTopOneCILow{}, \\hThreeTopOneCIHigh{}]) over \\hThreeN{} packages, using $5{,}000$\nbootstrap resamples. Its code requires every variant to have a score and within-package\nSpearman to be defined, even for this top-1 analysis. The report alone cannot identify which\nexcluded packages lacked scores or had undefined ranks. This index mixes outcome separation\nwith exposure, and top-1 difficulty also varies with the number of variants; the association\nis unadjusted for those factors. It is not evidence of an intrinsic predictability effect.\nMissing supplementary predictions prevent recomputing the analysis under simultaneous screening\nand expected tie credit; the primary selected-cohort experiment does not estimate this\nall-package association.",
       "expanded_numeric_macros": {
         "hThreeN": "1678",
         "hThreeTopOne": "0.059",
         "hThreeTopOneCIHigh": "0.107",
         "hThreeTopOneCILow": "0.011"
       },
-      "expanded_text": "\\paragraph{Signal strength (RQ2).}\nThe association between the supplementary screening statistic and top-1 is Spearman\n0.059 (CI [0.011, 0.107]) over 1678 packages.\nThe available aggregate does not support recomputing this association under simultaneous\nscreening and expected tie credit. The primary selected-cohort experiment does not estimate\nthis all-package association.",
+      "expanded_text": "\\paragraph{Signal strength (RQ2).}\nThe pinned supplementary producer defines its separation index as $1-p$, where $p$ is the\none-sided observed-best-versus-runner-up value, and correlates it with the panel's first-index\ntop-1 hit. The stored Spearman association is 0.059 (CI\n[0.011, 0.107]) over 1678 packages, using $5{,}000$\nbootstrap resamples. Its code requires every variant to have a score and within-package\nSpearman to be defined, even for this top-1 analysis. The report alone cannot identify which\nexcluded packages lacked scores or had undefined ranks. This index mixes outcome separation\nwith exposure, and top-1 difficulty also varies with the number of variants; the association\nis unadjusted for those factors. It is not evidence of an intrinsic predictability effect.\nMissing supplementary predictions prevent recomputing the analysis under simultaneous screening\nand expected tie credit; the primary selected-cohort experiment does not estimate this\nall-package association.",
       "status": "qualified",
-      "adjudication": "H003 Spearman.058668 andCI over1678 match report, distinct from1695corpus. Primary190selected does not recreate missing all-package supplementary predictions.",
+      "adjudication": "Original pinned7c1 H003 producer uses1-p_one_sided, complete score coverage and defined within-package Spearman before including even top1, with5000 planned resamples. Stored1678/.058668/CI unchanged; actual omitted IDs/reasons cannot be recovered without missing predictions. Exposure and variant-count confounding disclosed; no intrinsic predictability conclusion.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
-        "reports/legacy-provenance.json"
+        "reports/h003.json",
+        "reports/legacy-provenance.json",
+        "scripts/compute_validity.py",
+        "scripts/winner_filter.py",
+        "tests/test_corrections.py",
+        "tests/test_randomization_window.py",
+        "tests/test_replication.py"
       ]
     },
     {
       "id": "06-results:P9",
       "file": "latex/sections/06-results.tex",
-      "line": 85,
-      "text": "\\paragraph{Dataset comparisons (RQ3).}\nTable~\\ref{tab:replication} shows higher baseline gamma on the three Upworthy splits and a smaller\ndifference on MIND, where packages compare articles. On Reddit, the panel has higher top-1\n(\\redditPanelTop{} versus \\redditBaseTop{}) and lift (\\redditPanelLift{} versus \\redditBaseLift{}).\nThe direction of the contrast therefore depends on dataset and metric. Reddit gamma\nCIs include zero; this establishes neither equivalence nor absence of a title-related signal.\nPosting time and visibility were not tested as explanations. Subset-selection and coverage\nlimitations further restrict interpretation. The aggregate summary does not record draw\ncounts or evaluated package IDs, so cross-dataset protocol equivalence is not independently\nverified by those aggregates.\n\\input{tables/replication}",
+      "line": 92,
+      "text": "\\paragraph{Dataset comparisons (RQ3).}\nTable~\\ref{tab:replication} shows higher baseline gamma on the three Upworthy splits and a smaller\ndifference on MIND, where packages compare articles. On Reddit, the panel has higher top-1\n(\\redditPanelTop{} versus \\redditBaseTop{}) and lift (\\redditPanelLift{} versus \\redditBaseLift{}).\nThe available summaries show different directions, but unreconciled collection and subset\ndifferences prevent attributing this variation to the dataset alone. Reddit gamma\nCIs include zero; this establishes neither equivalence nor absence of a title-related signal.\nPosting time and visibility were not tested as explanations. Subset-selection and coverage\nlimitations further restrict interpretation. The aggregate summary does not record draw\ncounts or evaluated package IDs, so cross-dataset protocol equivalence is not independently\nverified by those aggregates.\n\\input{tables/replication}",
       "expanded_numeric_macros": {
         "redditBaseLift": "0.333",
         "redditBaseTop": "30.2\\%",
         "redditPanelLift": "0.452",
         "redditPanelTop": "40.3\\%"
       },
-      "expanded_text": "\\paragraph{Dataset comparisons (RQ3).}\nTable~\\ref{tab:replication} shows higher baseline gamma on the three Upworthy splits and a smaller\ndifference on MIND, where packages compare articles. On Reddit, the panel has higher top-1\n(40.3\\% versus 30.2\\%) and lift (0.452 versus 0.333).\nThe direction of the contrast therefore depends on dataset and metric. Reddit gamma\nCIs include zero; this establishes neither equivalence nor absence of a title-related signal.\nPosting time and visibility were not tested as explanations. Subset-selection and coverage\nlimitations further restrict interpretation. The aggregate summary does not record draw\ncounts or evaluated package IDs, so cross-dataset protocol equivalence is not independently\nverified by those aggregates.\n\\input{tables/replication}",
+      "expanded_text": "\\paragraph{Dataset comparisons (RQ3).}\nTable~\\ref{tab:replication} shows higher baseline gamma on the three Upworthy splits and a smaller\ndifference on MIND, where packages compare articles. On Reddit, the panel has higher top-1\n(40.3\\% versus 30.2\\%) and lift (0.452 versus 0.333).\nThe available summaries show different directions, but unreconciled collection and subset\ndifferences prevent attributing this variation to the dataset alone. Reddit gamma\nCIs include zero; this establishes neither equivalence nor absence of a title-related signal.\nPosting time and visibility were not tested as explanations. Subset-selection and coverage\nlimitations further restrict interpretation. The aggregate summary does not record draw\ncounts or evaluated package IDs, so cross-dataset protocol equivalence is not independently\nverified by those aggregates.\n\\input{tables/replication}",
       "status": "qualified",
-      "adjudication": "Upworthy/MIND supplementary gamma contrasts and Reddit paneltop1/lift verified; Reddit gamma point also favorspanel, CIsincludezero. Unknown draw counts/shared IDs/subset and no timing mechanism are explicit.",
+      "adjudication": "Available Upworthy/MIND/Reddit aggregate directions are described without identifying a dataset effect across unreconciled protocols. Original intervals/metrics unchanged; subset/draw/ID gaps remain explicit.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
     {
       "id": "06-results:P10",
       "file": "latex/sections/06-results.tex",
-      "line": 97,
+      "line": 105,
       "text": "\\paragraph{Seed, model, ties, and aggregation.}\nThe supplementary three-seed SDs (\\stabGammaSD{} for gamma; \\stabTopOneSD{} for top-1) use the\npopulation convention over those seeds, not sample SDs or precise general-variability estimates.\nThe baseline has higher gamma on three tested Gemini tiers (Table~\\ref{tab:cross_model_gap},\nAppendix~\\ref{sec:appendix}); evaluated IDs are not retained to verify a shared subset.\nThis cannot establish universal model or prompt robustness.",
       "expanded_numeric_macros": {
         "stabGammaSD": "0.025",
@@ -780,25 +894,29 @@
       "status": "qualified",
       "adjudication": "Three-seed populationSD recomputed; no general-variability estimate. Three tier point contrasts exist but commonIDs/validcounts are unavailable; no universal robustness.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
     {
       "id": "06-results:P11",
       "file": "latex/sections/06-results.tex",
-      "line": 104,
+      "line": 112,
       "text": "The tie report rounds scores before counting constant packages; the rank code uses exact\nequality. That count cannot recover excluded gamma values. Undefined coefficients cannot be\nsilently assigned zero, and the reports do not justify a conservative-lower-bound claim for the gap.",
       "expanded_numeric_macros": {},
       "expanded_text": "The tie report rounds scores before counting constant packages; the rank code uses exact\nequality. That count cannot recover excluded gamma values. Undefined coefficients cannot be\nsilently assigned zero, and the reports do not justify a conservative-lower-bound claim for the gap.",
       "status": "qualified",
       "adjudication": "Rounded tie report is not exact rank denominator; no zero imputation or conservative-bound gap is adopted.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/compute_validity.py",
         "scripts/winner_filter.py",
@@ -810,16 +928,18 @@
     {
       "id": "06-results:P12",
       "file": "latex/sections/06-results.tex",
-      "line": 108,
+      "line": 116,
       "text": "Table~\\ref{tab:h5agg} preserves six supplementary aggregation rules, all with lower reported gamma\nthan the baseline. Equal-persona and observation-weighted means can differ with missing draws.\nThe reports do not establish why their top-1 results differ, or whether bias, sampling noise,\nscale, or another factor explains relative performance.\n\\input{tables/h5_aggregation}",
       "expanded_numeric_macros": {},
       "expanded_text": "Table~\\ref{tab:h5agg} preserves six supplementary aggregation rules, all with lower reported gamma\nthan the baseline. Equal-persona and observation-weighted means can differ with missing draws.\nThe reports do not establish why their top-1 results differ, or whether bias, sampling noise,\nscale, or another factor explains relative performance.\n\\input{tables/h5_aggregation}",
       "status": "qualified",
       "adjudication": "All six H5reportedgamma means below baseline. Weighting difference is real in code, but cause of historic discrepancy and bias/noise mechanism remain unestablished.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/compute_validity.py",
         "scripts/winner_filter.py",
@@ -831,7 +951,7 @@
     {
       "id": "06-results:P13",
       "file": "latex/sections/06-results.tex",
-      "line": 114,
+      "line": 122,
       "text": "\\paragraph{GPT-4.1 scalar-checkpoint analysis.}\nThe recovered checkpoint contains scalars, not original responses. Offline replay of the pinned\nproducer reproduces all published cross-family report fields within numerical tolerance.\nCollection coverage is \\xfN{} panel and \\xfPairedN{} baseline/paired packages.\nThirty panel observations versus ten baseline draws and no generation seed make it\nan unequal-budget comparison.",
       "expanded_numeric_macros": {
         "xfN": "399",
@@ -841,16 +961,18 @@
       "status": "qualified",
       "adjudication": "Recovered59474scalar checkpoint replay matches archived crossfamily fields;399/395coverage,30/10samples and absence of sent seed are read from producer. Not raw response validation.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
     {
       "id": "06-results:P14",
       "file": "latex/sections/06-results.tex",
-      "line": 121,
+      "line": 129,
       "text": "Table~\\ref{tab:corrected_gpt} applies simultaneous screening and tie-aware estimators to those scores.\nCoverage becomes \\correctedPanelN{} panel, \\correctedBaseN{} baseline, and \\correctedPairedN{}\npaired packages. Baseline Kendall $\\tau_b$ is \\correctedBaseTau{} versus \\correctedPanelTau{}.\nPaired CIs for the displayed gaps exclude zero, supporting a positive baseline gap in this\ncheckpoint analysis. It is not an independent replication or a budget-matched estimate, and does not validate\nraw parsing. Gamma and tau-b remain separate. The supplementary Gemini observations are unavailable for applying these estimators; the\nprimary Gemini comparison uses its own retained generations and configuration.\n\\input{tables/corrected_gpt}",
       "expanded_numeric_macros": {
         "correctedBaseN": "189",
@@ -863,9 +985,11 @@
       "status": "qualified",
       "adjudication": "Corrected old GPT190/189/189and shown positive pairedCIs verified; still post-parser/unequal budgets. No corrected supplementary Gemini estimate is invented.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
@@ -879,6 +1003,7 @@
       "status": "qualified",
       "adjudication": "Recommendation to include generic baseline follows observed comparisons; primary result and weakened Gemini period-restricted rank contrast both stated. Supplementary Reddit differs.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
@@ -887,6 +1012,7 @@
         "recollection/2026-10-31/provenance.json",
         "recollection/2026-10-31/window_sensitivity.json",
         "recollection/2026-10-31/window_sensitivity.provenance.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/analyze_randomization_window.py"
       ]
@@ -902,6 +1028,8 @@
       "adjudication": "Bias/noise/role-play are hypotheses, not identified causes. Social-media2014prompt versus website headline-image clicks is an explicit construct mismatch.",
       "evidence": [
         "data/persona_panel.json",
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib",
         "scripts/recollect.py",
@@ -913,12 +1041,14 @@
       "id": "07-discussion:P3",
       "file": "latex/sections/07-discussion.tex",
       "line": 23,
-      "text": "\\paragraph{Ground truth and generalization.}\nThe Upworthy archive documents a period of potentially invalid randomization\n\\citep{matias2024correction}; our selected cohort includes affected-window tests. Our predictions\nrank recorded outcome rates, and neither an adjusted screen nor model responses establishes\ncausal headline effects. The post-hoc exclusion sensitivity addresses one known risk window,\nnot every possible allocation or image confound. Simultaneous screening addresses selection under approximate binomial tests; it does not make\noutcome measurements certain. Exclusion changes the target population and relative task difficulty.\nFailure to reject equality does not imply no predictor can recover an ordering.\nMIND and Reddit are observational; correlated exposures, time, image, audience mix, and topic\nmay matter. Training contamination and generalization to current audiences or other formats\nare not excluded by the archive corpus.",
+      "text": "\\paragraph{Ground truth and generalization.}\nThe Upworthy archive documents a period of potentially invalid randomization\n\\citep{matias2024correction}; our selected cohort includes affected-window tests. Our predictions\nrank recorded outcome rates, and neither an adjusted screen nor model responses establishes\ncausal headline effects. The post-hoc exclusion sensitivity addresses one known risk window,\nnot every possible allocation or image confound. Editorial stopping and shared content across\nfollow-up experiments~\\citep{matiasUpworthy} add distinct risks: the screen does not correct\nsequential monitoring, and the package bootstrap does not cluster related experiment IDs.\nThe preserved aggregate outcomes do not reconstruct the stopping trajectories, and dependence\nhas not been quantified by an article-level cluster analysis. Nominal intervals may understate\nuncertainty. Simultaneous screening does not make outcome measurements certain. Exclusion changes the target population and relative task difficulty.\nFailure to reject equality does not imply no predictor can recover an ordering.\nMIND and Reddit are observational; correlated exposures, time, image, audience mix, and topic\nmay matter. Training contamination and generalization to current audiences or other formats\nare not excluded by the archive corpus.",
       "expanded_numeric_macros": {},
-      "expanded_text": "\\paragraph{Ground truth and generalization.}\nThe Upworthy archive documents a period of potentially invalid randomization\n\\citep{matias2024correction}; our selected cohort includes affected-window tests. Our predictions\nrank recorded outcome rates, and neither an adjusted screen nor model responses establishes\ncausal headline effects. The post-hoc exclusion sensitivity addresses one known risk window,\nnot every possible allocation or image confound. Simultaneous screening addresses selection under approximate binomial tests; it does not make\noutcome measurements certain. Exclusion changes the target population and relative task difficulty.\nFailure to reject equality does not imply no predictor can recover an ordering.\nMIND and Reddit are observational; correlated exposures, time, image, audience mix, and topic\nmay matter. Training contamination and generalization to current audiences or other formats\nare not excluded by the archive corpus.",
+      "expanded_text": "\\paragraph{Ground truth and generalization.}\nThe Upworthy archive documents a period of potentially invalid randomization\n\\citep{matias2024correction}; our selected cohort includes affected-window tests. Our predictions\nrank recorded outcome rates, and neither an adjusted screen nor model responses establishes\ncausal headline effects. The post-hoc exclusion sensitivity addresses one known risk window,\nnot every possible allocation or image confound. Editorial stopping and shared content across\nfollow-up experiments~\\citep{matiasUpworthy} add distinct risks: the screen does not correct\nsequential monitoring, and the package bootstrap does not cluster related experiment IDs.\nThe preserved aggregate outcomes do not reconstruct the stopping trajectories, and dependence\nhas not been quantified by an article-level cluster analysis. Nominal intervals may understate\nuncertainty. Simultaneous screening does not make outcome measurements certain. Exclusion changes the target population and relative task difficulty.\nFailure to reject equality does not imply no predictor can recover an ordering.\nMIND and Reddit are observational; correlated exposures, time, image, audience mix, and topic\nmay matter. Training contamination and generalization to current audiences or other formats\nare not excluded by the archive corpus.",
       "status": "qualified",
-      "adjudication": "Allocation-risk/image confounding and conditional sample selection remain; screen/raw retention do not establish causal headline effects. No nonsignificant-implies-unpredictable claim.",
+      "adjudication": "Allocation/image risks plus result-monitored stopping and related experiment IDs are disclosed; package bootstrap does not solve clustering and effect on nominal uncertainty is unquantified. No causal or calibrated winner guarantee is asserted.",
       "evidence": [
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib",
         "recollection/2026-10-31/window_sensitivity.json",
@@ -934,7 +1064,7 @@
     {
       "id": "07-discussion:P4",
       "file": "latex/sections/07-discussion.tex",
-      "line": 35,
+      "line": 39,
       "text": "\\paragraph{Reproduction limits.}\nAggregate reports allow reexport, not complete verification of their generating process.\nSupplementary Gemini observations and some aggregate-report producers were not recovered. The GPT checkpoint\nsupports replay and partial reanalysis, but range-checking stored scalars cannot retroactively\nvalidate the permissive parser. The primary strict-parser observations have complete raw lineage and matched within-model score\nbudgets; they are not mixed with supplementary scores. Azure multi-choice and Gemini single-choice\nrequests differ operationally. Returned aliases are not immutable model snapshots, and request\nseeds do not guarantee determinism. A single collection session does not estimate provider drift\nor generation variability. Content filtering can cause exclusions associated with content or arm;\nthe Azure technical pause also divides its collection in time. The outcome-selected cohort limits generalization.\nPrompt robustness, deterministic demographic-to-panel construction, full Reddit subset lineage,\nand preregistration chronology remain evidence gaps.",
       "expanded_numeric_macros": {},
       "expanded_text": "\\paragraph{Reproduction limits.}\nAggregate reports allow reexport, not complete verification of their generating process.\nSupplementary Gemini observations and some aggregate-report producers were not recovered. The GPT checkpoint\nsupports replay and partial reanalysis, but range-checking stored scalars cannot retroactively\nvalidate the permissive parser. The primary strict-parser observations have complete raw lineage and matched within-model score\nbudgets; they are not mixed with supplementary scores. Azure multi-choice and Gemini single-choice\nrequests differ operationally. Returned aliases are not immutable model snapshots, and request\nseeds do not guarantee determinism. A single collection session does not estimate provider drift\nor generation variability. Content filtering can cause exclusions associated with content or arm;\nthe Azure technical pause also divides its collection in time. The outcome-selected cohort limits generalization.\nPrompt robustness, deterministic demographic-to-panel construction, full Reddit subset lineage,\nand preregistration chronology remain evidence gaps.",
@@ -942,11 +1072,13 @@
       "adjudication": "Missing old responses/producers, unequal request protocols, aliases/seeds, temporal pause, filtering, selected cohort and absent prompt/prereg/subset evidence are explicit limitations.",
       "evidence": [
         "data/persona_panel.json",
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "recollection/2026-10-31/window_sensitivity.json",
         "recollection/2026-10-31/window_sensitivity.provenance.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/analyze_randomization_window.py",
         "scripts/recollect.py",
@@ -957,19 +1089,21 @@
     {
       "id": "07-discussion:P5",
       "file": "latex/sections/07-discussion.tex",
-      "line": 48,
+      "line": 52,
       "text": "The artifact package distinguishes aggregate reexport, scalar-checkpoint analysis and raw-response\nreplay, so each reported comparison can be assessed within its available evidence.",
       "expanded_numeric_macros": {},
       "expanded_text": "The artifact package distinguishes aggregate reexport, scalar-checkpoint analysis and raw-response\nreplay, so each reported comparison can be assessed within its available evidence.",
       "status": "interpretation",
       "adjudication": "Aggregate reexport, checkpoint analysis and raw replay are distinct evidential operations in one study; no new statistical conclusion or publication-version narrative is introduced.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "recollection/2026-10-31/azure.json",
         "recollection/2026-10-31/gemini.json",
         "recollection/2026-10-31/provenance.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
@@ -986,6 +1120,7 @@
       "status": "qualified",
       "adjudication": "Top1 point gaps15.7/19.7pp are primary, sensitivity also disclosed with Gemini tau/rho uncertain. Bottom1 not established and Reddit exception remains; no uniform rank/metric dominance.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
@@ -994,6 +1129,7 @@
         "recollection/2026-10-31/provenance.json",
         "recollection/2026-10-31/window_sensitivity.json",
         "recollection/2026-10-31/window_sensitivity.provenance.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/analyze_randomization_window.py"
       ]
@@ -1002,11 +1138,11 @@
       "id": "08-conclusion:P2",
       "file": "latex/sections/08-conclusion.tex",
       "line": 12,
-      "text": "The comparison uses distinct rank metrics, expected tie credit, and explicit valid and paired counts.\nWe provide a simultaneous winner screen and an offline raw-replay artifact in the accompanying local\nreplication bundle, prepared for deposition. Rank estimates condition on valid coefficients, and all intervals condition on\nselected packages and recorded generations. Supplementary Gemini observations remain unavailable. This study neither establishes\na general causal mechanism nor shows universal persona harm.",
+      "text": "The comparison uses distinct rank metrics, expected tie credit, and explicit valid and paired counts.\nWe provide a simultaneous winner screen and an offline raw-replay artifact in the accompanying local\nreplication bundle, prepared for deposition. Rank estimates condition on valid coefficients, and all intervals condition on\nselected packages and recorded generations. Related-test dependence and editorial stopping\nremain unadjusted, limiting interval calibration and winner-screen interpretation. Supplementary Gemini observations remain unavailable. This study neither establishes\na general causal mechanism nor shows universal persona harm.",
       "expanded_numeric_macros": {},
-      "expanded_text": "The comparison uses distinct rank metrics, expected tie credit, and explicit valid and paired counts.\nWe provide a simultaneous winner screen and an offline raw-replay artifact in the accompanying local\nreplication bundle, prepared for deposition. Rank estimates condition on valid coefficients, and all intervals condition on\nselected packages and recorded generations. Supplementary Gemini observations remain unavailable. This study neither establishes\na general causal mechanism nor shows universal persona harm.",
+      "expanded_text": "The comparison uses distinct rank metrics, expected tie credit, and explicit valid and paired counts.\nWe provide a simultaneous winner screen and an offline raw-replay artifact in the accompanying local\nreplication bundle, prepared for deposition. Rank estimates condition on valid coefficients, and all intervals condition on\nselected packages and recorded generations. Related-test dependence and editorial stopping\nremain unadjusted, limiting interval calibration and winner-screen interpretation. Supplementary Gemini observations remain unavailable. This study neither establishes\na general causal mechanism nor shows universal persona harm.",
       "status": "qualified",
-      "adjudication": "Distinct estimators, simultaneous selection, explicit denominators and accompanying local bundle are methods, without own erratum narrative. Conditions/validsets/missinghistory/causal limits remain explicit; bundle is not yet claimed deposited.",
+      "adjudication": "Methods/raw-replay availability retain precise scope; related-test dependence and editorial stopping limit calibration. Missing supplementary observations and pending public raw deposition are not silently resolved.",
       "evidence": [
         "recollection/2026-10-31/azure.json",
         "recollection/2026-10-31/gemini.json",
@@ -1032,6 +1168,8 @@
       "adjudication": "Fixed10personaJSON is input; demographics do not define deterministic population behavior or an estimated representative sample.",
       "evidence": [
         "data/persona_panel.json",
+        "docs/audit/ai-disclosure-template-sources.json",
+        "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/full-text-bibliography.json",
         "latex/references.bib",
         "scripts/recollect.py",
@@ -1043,11 +1181,11 @@
       "id": "09-appendix:P2",
       "file": "latex/sections/09-appendix.tex",
       "line": 8,
-      "text": "\\paragraph{First-person template.}\n\\begin{quote}\\small\nYou are simulating a specific person reacting to a news headline on social media in 2014.\\\\\nPerson: \\{persona description\\} (age \\{band\\}, \\{gender\\}, mainly on \\{platform\\}, news\nengagement: \\{level\\}).\\\\\nHeadline: \\{headline\\}.\\\\\nAs this exact person, how likely are you to click this headline? Respond ONLY with JSON:\n\\verb|{\"click_intent\":| \\verb|<number between 0 and 1>}|.\n\\end{quote}\nThe exact templates, including quotation marks and the first-person, third-person, and baseline\nvariants, are authoritative in the versioned collector. A prompt implementation alone does not\nestablish a completed experiment. The primary collection uses fixed 2014 framing for all\nheadlines, including those created outside that year; it is not a date-specific audience\nreconstruction.",
+      "text": "\\paragraph{First-person template.}\n\\begin{quote}\\small\nYou are simulating a specific person reacting to a news headline on social media in 2014.\\\\\nPerson: \\verb|{description}| (age \\verb|{age_group}|, \\verb|{gender}|, mainly on \\verb|{platform}|,\nnews engagement: \\verb|{news_engagement}|.)\\\\\nHeadline: \\verb|\"{headline}\"|\\\\\nAs this exact person, how likely are you to click this headline? Respond ONLY with JSON:\n\\verb|{\"click_intent\":| \\verb|<number between 0 and 1>}|.\n\\end{quote}\nThe primary panel condition uses this first-person template; the generic-reader condition uses\nthe baseline template below. Each is sent as a single user message, without a system message.\nThe exact templates, including spacing, quotation marks and implemented alternative framings,\nare authoritative in the versioned collector. A prompt implementation alone does not\nestablish a completed experiment. The primary collection uses fixed 2014 framing for all\nheadlines, including those created outside that year; it is not a date-specific audience\nreconstruction.",
       "expanded_numeric_macros": {},
-      "expanded_text": "\\paragraph{First-person template.}\n\\begin{quote}\\small\nYou are simulating a specific person reacting to a news headline on social media in 2014.\\\\\nPerson: \\{persona description\\} (age \\{band\\}, \\{gender\\}, mainly on \\{platform\\}, news\nengagement: \\{level\\}).\\\\\nHeadline: \\{headline\\}.\\\\\nAs this exact person, how likely are you to click this headline? Respond ONLY with JSON:\n\\verb|{\"click_intent\":| \\verb|<number between 0 and 1>}|.\n\\end{quote}\nThe exact templates, including quotation marks and the first-person, third-person, and baseline\nvariants, are authoritative in the versioned collector. A prompt implementation alone does not\nestablish a completed experiment. The primary collection uses fixed 2014 framing for all\nheadlines, including those created outside that year; it is not a date-specific audience\nreconstruction.",
+      "expanded_text": "\\paragraph{First-person template.}\n\\begin{quote}\\small\nYou are simulating a specific person reacting to a news headline on social media in 2014.\\\\\nPerson: \\verb|{description}| (age \\verb|{age_group}|, \\verb|{gender}|, mainly on \\verb|{platform}|,\nnews engagement: \\verb|{news_engagement}|.)\\\\\nHeadline: \\verb|\"{headline}\"|\\\\\nAs this exact person, how likely are you to click this headline? Respond ONLY with JSON:\n\\verb|{\"click_intent\":| \\verb|<number between 0 and 1>}|.\n\\end{quote}\nThe primary panel condition uses this first-person template; the generic-reader condition uses\nthe baseline template below. Each is sent as a single user message, without a system message.\nThe exact templates, including spacing, quotation marks and implemented alternative framings,\nare authoritative in the versioned collector. A prompt implementation alone does not\nestablish a completed experiment. The primary collection uses fixed 2014 framing for all\nheadlines, including those created outside that year; it is not a date-specific audience\nreconstruction.",
       "status": "qualified",
-      "adjudication": "Supplementary example is labeled non-byte-exact; versioned producer/raw prompts are authoritative. Fixed2014framing for all2013-15headlines is disclosed, not date-specific reconstruction.",
+      "adjudication": "Primary first-person persona template and user-message/no-sent-system roles checked against build_prompt/request_body. Literal collector/source/raws remain authoritative; 2014framing applies outside that year.",
       "evidence": [
         "data/persona_panel.json",
         "scripts/recollect.py",
@@ -1058,18 +1196,14 @@
     {
       "id": "09-appendix:P3",
       "file": "latex/sections/09-appendix.tex",
-      "line": 23,
-      "text": "\\paragraph{Coverage and checkpoints.}\nCoverage policies differ by analysis. The GPT scalar-checkpoint analysis requires at least\none recorded score for every variant, with means over available observations. The primary\nmatched-budget experiment requires all planned scores in both arms for a retained package. Terminal failures,\nrequest/choice indices, and exclusions are preserved. Configuration and source hashes prevent\nmixing protocols. Each Azure request has one seed shared by its three returned choices; there\nis no invented per-choice seed. GPT scalar-checkpoint collection requests did not send a seed.",
+      "line": 25,
+      "text": "\\paragraph{Generic-reader baseline template.}\n\\begin{quote}\\small\nYou are a typical U.S. social-media news reader in 2014.\\\\\nHeadline: \\verb|\"{headline}\"|\\\\\nHow likely are you to click this headline? Respond ONLY with JSON:\n\\verb|{\"click_intent\":| \\verb|<number between 0 and 1>}|.\n\\end{quote}\nBoth templates retain the U.S./2014 framing. The baseline specifies a generic reader role;\nits distinction from the panel is the absence of the fixed demographic profiles, not the\nabsence of all role conditioning. Literal spacing, persona fields, and request prompts are\nretained in the collector and raw request plans. The interpolated persona fields are description,\nage group, gender, platform, and news engagement, all shown in Table~\\ref{tab:persona_panel}.\nPolitical lean is stored metadata and is not separately interpolated.",
       "expanded_numeric_macros": {},
-      "expanded_text": "\\paragraph{Coverage and checkpoints.}\nCoverage policies differ by analysis. The GPT scalar-checkpoint analysis requires at least\none recorded score for every variant, with means over available observations. The primary\nmatched-budget experiment requires all planned scores in both arms for a retained package. Terminal failures,\nrequest/choice indices, and exclusions are preserved. Configuration and source hashes prevent\nmixing protocols. Each Azure request has one seed shared by its three returned choices; there\nis no invented per-choice seed. GPT scalar-checkpoint collection requests did not send a seed.",
+      "expanded_text": "\\paragraph{Generic-reader baseline template.}\n\\begin{quote}\\small\nYou are a typical U.S. social-media news reader in 2014.\\\\\nHeadline: \\verb|\"{headline}\"|\\\\\nHow likely are you to click this headline? Respond ONLY with JSON:\n\\verb|{\"click_intent\":| \\verb|<number between 0 and 1>}|.\n\\end{quote}\nBoth templates retain the U.S./2014 framing. The baseline specifies a generic reader role;\nits distinction from the panel is the absence of the fixed demographic profiles, not the\nabsence of all role conditioning. Literal spacing, persona fields, and request prompts are\nretained in the collector and raw request plans. The interpolated persona fields are description,\nage group, gender, platform, and news engagement, all shown in Table~\\ref{tab:persona_panel}.\nPolitical lean is stored metadata and is not separately interpolated.",
       "status": "supported",
-      "adjudication": "Old available-scalar versus primary all-planned coverage; source/config hashes, Azure shared request seed and no invented per-choice seed all match code/raw.",
+      "adjudication": "Generic-reader template matches the actual default baseline with quoted headline/JSON tail. Both arms use fixedU.S./2014framing. Fields interpolated are description/age_group/gender/platform/news_engagement; political_lean metadata is not separately sent.",
       "evidence": [
         "data/persona_panel.json",
-        "docs/audit/original-findings.json",
-        "reanalysis/2026-10-31/gpt41.json",
-        "reanalysis/2026-10-31/legacy_gpt_verification.json",
-        "reports/legacy-provenance.json",
         "scripts/recollect.py",
         "scripts/run_predictions.py",
         "tests/test_recollection.py"
@@ -1078,7 +1212,29 @@
     {
       "id": "09-appendix:P4",
       "file": "latex/sections/09-appendix.tex",
-      "line": 31,
+      "line": 39,
+      "text": "\\paragraph{Coverage and checkpoints.}\nCoverage policies differ by analysis. The GPT scalar-checkpoint analysis requires at least\none recorded score for every variant, with means over available observations. The primary\nmatched-budget experiment requires all planned scores in both arms for a retained package. Terminal failures,\nrequest/choice indices, and exclusions are preserved. Configuration and source hashes prevent\nmixing protocols. Each Azure request has one seed shared by its three returned choices; there\nis no invented per-choice seed. GPT scalar-checkpoint collection requests did not send a seed.",
+      "expanded_numeric_macros": {},
+      "expanded_text": "\\paragraph{Coverage and checkpoints.}\nCoverage policies differ by analysis. The GPT scalar-checkpoint analysis requires at least\none recorded score for every variant, with means over available observations. The primary\nmatched-budget experiment requires all planned scores in both arms for a retained package. Terminal failures,\nrequest/choice indices, and exclusions are preserved. Configuration and source hashes prevent\nmixing protocols. Each Azure request has one seed shared by its three returned choices; there\nis no invented per-choice seed. GPT scalar-checkpoint collection requests did not send a seed.",
+      "status": "supported",
+      "adjudication": "Old available-scalar versus primary all-planned coverage; source/config hashes, Azure shared request seed and no invented per-choice seed all match code/raw.",
+      "evidence": [
+        "data/persona_panel.json",
+        "docs/audit/astra-review-disposition.json",
+        "docs/audit/original-findings.json",
+        "reanalysis/2026-10-31/gpt41.json",
+        "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
+        "reports/legacy-provenance.json",
+        "scripts/recollect.py",
+        "scripts/run_predictions.py",
+        "tests/test_recollection.py"
+      ]
+    },
+    {
+      "id": "09-appendix:P5",
+      "file": "latex/sections/09-appendix.tex",
+      "line": 47,
       "text": "\\paragraph{Raw artifact and replay.}\nThe primary collector appends and fsyncs a request record before dispatch and retains the exact\nresponse bytes, status, usage, version, and parsing outcome afterward. Hash-chained journals\nare synchronously mirrored. Unknown outcomes after interruption remain unknown and are not\nsilently regenerated. Offline analysis validates the request plan, input hashes, response hashes,\nand journal chain, then reparses the same immutable snapshot whose hash identifies the report.\nThe replication bundle contains that snapshot, all inputs, request plans, aggregate reports,\nsource history, and the retained GPT scalar checkpoint. Replaying saved bytes\nrequires no provider account and does not assert that future generations will match.",
       "expanded_numeric_macros": {},
       "expanded_text": "\\paragraph{Raw artifact and replay.}\nThe primary collector appends and fsyncs a request record before dispatch and retains the exact\nresponse bytes, status, usage, version, and parsing outcome afterward. Hash-chained journals\nare synchronously mirrored. Unknown outcomes after interruption remain unknown and are not\nsilently regenerated. Offline analysis validates the request plan, input hashes, response hashes,\nand journal chain, then reparses the same immutable snapshot whose hash identifies the report.\nThe replication bundle contains that snapshot, all inputs, request plans, aggregate reports,\nsource history, and the retained GPT scalar checkpoint. Replaying saved bytes\nrequires no provider account and does not assert that future generations will match.",
@@ -1092,25 +1248,53 @@
       ]
     },
     {
-      "id": "09-appendix:P5",
+      "id": "09-appendix:P6",
       "file": "latex/sections/09-appendix.tex",
-      "line": 41,
+      "line": 57,
+      "text": "\\paragraph{Supplementary outcome construction.}\nMIND aggregates the supplied news and behavior logs by article ID, counting appearances in\nrecommendation lists and click labels across users. Articles need at least 200 appearances;\nwithin each subcategory, at most ten are retained by appearance count, with at least two per\npackage. Reddit aggregates identical titles within image/subreddit pairs, requires at least\n300 total votes per title, and retains at most ten titles by vote count. Upvotes are the\nnumerator and total upvotes plus downvotes the denominator, regardless of the schema's\n\\texttt{clicks}/\\texttt{impressions} names. These inputs cover the supplied logs, not a matched\nexposure window or common audience. Original manifests and the pinned corpus builders specify\nthe transformations; missing evaluated IDs prevent fully reconciling the supplementary samples.",
+      "expanded_numeric_macros": {},
+      "expanded_text": "\\paragraph{Supplementary outcome construction.}\nMIND aggregates the supplied news and behavior logs by article ID, counting appearances in\nrecommendation lists and click labels across users. Articles need at least 200 appearances;\nwithin each subcategory, at most ten are retained by appearance count, with at least two per\npackage. Reddit aggregates identical titles within image/subreddit pairs, requires at least\n300 total votes per title, and retains at most ten titles by vote count. Upvotes are the\nnumerator and total upvotes plus downvotes the denominator, regardless of the schema's\n\\texttt{clicks}/\\texttt{impressions} names. These inputs cover the supplied logs, not a matched\nexposure window or common audience. Original manifests and the pinned corpus builders specify\nthe transformations; missing evaluated IDs prevent fully reconciling the supplementary samples.",
+      "status": "qualified",
+      "adjudication": "MIND appearances/click labels/subcategory grouping200minimum10cap and Reddit pooled titlevotes300minimum10cap match original and current pinned builders/manifests. Supplied logs are not a common exposure window/audience; evaluated subset lineage remains incomplete.",
+      "evidence": [
+        "datasets/mind-subset-2026-06-03.manifest.json",
+        "datasets/reddit-subset-2026-06-04.manifest.json",
+        "docs/audit/astra-review-disposition.json",
+        "docs/audit/original-findings.json",
+        "docs/audit/v2-formula-and-editorial.json",
+        "reanalysis/2026-10-31/corpus_rebuild_verification.json",
+        "reanalysis/2026-10-31/filter_comparison.json",
+        "reanalysis/2026-10-31/gpt41.json",
+        "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
+        "reports/legacy-provenance.json",
+        "scripts/01_ingest_upworthy.py",
+        "scripts/build_mind_corpus.py",
+        "scripts/build_reddit_corpus.py"
+      ]
+    },
+    {
+      "id": "09-appendix:P7",
+      "file": "latex/sections/09-appendix.tex",
+      "line": 68,
       "text": "\\paragraph{Supplementary pilot and model comparison.}\nTables~\\ref{tab:model_comparison} and \\ref{tab:cross_model_gap} retain the pilot and cross-tier\ngap; shared package IDs are not retained in those summaries. Overlap of pilot CIs does not establish equivalence. The supplementary Upworthy comparison uses Gemini\n3.1 Flash-Lite. No cost comparison is available from the pilot report.\n\\input{tables/model_comparison}\n\\input{tables/cross_model_gap}",
       "expanded_numeric_macros": {},
       "expanded_text": "\\paragraph{Supplementary pilot and model comparison.}\nTables~\\ref{tab:model_comparison} and \\ref{tab:cross_model_gap} retain the pilot and cross-tier\ngap; shared package IDs are not retained in those summaries. Overlap of pilot CIs does not establish equivalence. The supplementary Upworthy comparison uses Gemini\n3.1 Flash-Lite. No cost comparison is available from the pilot report.\n\\input{tables/model_comparison}\n\\input{tables/cross_model_gap}",
       "status": "qualified",
       "adjudication": "Pilot/cross-tier artifacts retained; no verified sharedIDs/cost data, no CI-overlap equivalence or cheapest-model assertion, and untraceable preliminary pilot is removed.",
       "evidence": [
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json"
       ]
     },
     {
-      "id": "09-appendix:P6",
+      "id": "09-appendix:P8",
       "file": "latex/sections/09-appendix.tex",
-      "line": 48,
+      "line": 75,
       "text": "\\paragraph{Headline-ranking examples and panel.}\nTable~\\ref{tab:error_examples} shows supplementary reported cases where the baseline found the observed winner\nand the panel did not; they are not representative causal evidence.\nTable~\\ref{tab:persona_panel} presents the fixed panel descriptions. Full fields and grounding\nnotes remain in \\texttt{data/persona\\_panel.json}.\n\\input{tables/error_examples}\n\\input{tables/persona_panel}",
       "expanded_numeric_macros": {},
       "expanded_text": "\\paragraph{Headline-ranking examples and panel.}\nTable~\\ref{tab:error_examples} shows supplementary reported cases where the baseline found the observed winner\nand the panel did not; they are not representative causal evidence.\nTable~\\ref{tab:persona_panel} presents the fixed panel descriptions. Full fields and grounding\nnotes remain in \\texttt{data/persona\\_panel.json}.\n\\input{tables/error_examples}\n\\input{tables/persona_panel}",
@@ -1118,9 +1302,11 @@
       "adjudication": "Selected supplementary cases and fixed persona descriptions traced to report/JSON; headline prefixes/CTR/nvariants independently match corpus. Original modelranking remains supplementary report evidence, not new reconstructed predictions.",
       "evidence": [
         "data/persona_panel.json",
+        "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
+        "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/recollect.py",
         "scripts/run_predictions.py",
@@ -1133,7 +1319,7 @@
       "line": 1,
       "status": "source_reexport_verified",
       "text": "% AUTO-GENERATED by scripts/generate_validity_table.py — DO NOT EDIT BY HAND.\n\\begin{table*}[t]\n  \\centering\n  \\caption{Supplementary Upworthy exploratory estimates under the top-versus-runner-up screen. Panel $n_{total}=399$; baseline $n_{total}=398$; correlation-specific valid counts are unavailable. The stored rank coefficient is Goodman--Kruskal gamma, not Kendall tau. Top-1 uses first-index tie breaking. Random top-1 reference 30.4\\%. Marginal 95\\% bootstrap CIs; the reported screen and decision tie rule are retained.}\n  \\label{tab:validity}\n  \\small\n  \\begin{tabular}{lccc}\n    \\toprule\n    Method & Top-1 [95\\% CI] & Goodman--Kruskal $\\gamma$ [95\\% CI] & Spearman $\\rho$ [95\\% CI] \\\\\n    \\midrule\n    No-persona baseline & 49.2\\% [44.2, 54.3] & 0.361 [0.289, 0.430] & 0.350 [0.281, 0.417] \\\\\n    Persona panel & 34.6\\% [29.8, 39.1] & 0.084 [0.020, 0.147] & 0.104 [0.035, 0.172] \\\\\n    \\bottomrule\n  \\end{tabular}\n\\end{table*}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_validity_table.py",
         "reports/baseline_comparison.json",
@@ -1146,7 +1332,7 @@
       "line": 1,
       "status": "source_reexport_verified",
       "text": "% AUTO-GENERATED by scripts/generate_replication_table.py — DO NOT EDIT BY HAND.\n\\begin{table*}[t]\n  \\centering\n  \\caption{Supplementary estimates under the top-versus-runner-up screen and first-index tie breaking. $n_{total}$ is panel/baseline coverage, not the correlation-specific valid count (unavailable). Lift is the fraction of the observed outcome-rate range captured by the selected variant (panel/baseline). The panel exceeds the baseline on Reddit lift and top-1 (discussed in text); near-zero gamma does not establish equivalence or unpredictability. Gap is the difference of reported marginal gamma means, not a paired contrast. The summary does not retain draw counts or evaluated package IDs; the exploratory row differs from Table~\\ref{tab:validity}, and protocol equivalence cannot be verified from the aggregates alone.}\n  \\label{tab:replication}\n  \\small\n  \\begin{tabular}{lccccc}\n    \\toprule\n    Dataset & $n_{total}$ p/b & Persona $\\gamma$ & Baseline $\\gamma$ & Gap & Lift p/b \\\\\n    \\midrule\n    Upworthy exploratory (2013--15) & 399/398 & 0.079 & 0.361 & $+0.282$ & 0.45/0.58 \\\\\n    Upworthy holdout (2013--15) & 402/401 & 0.100 & 0.398 & $+0.298$ & 0.48/0.56 \\\\\n    Upworthy confirmatory (2013--15) & 1866/1864 & 0.070 & 0.393 & $+0.323$ & 0.44/0.55 \\\\\n    MIND news (2019) & 74/74 & 0.177 & 0.214 & $+0.038$ & 0.47/0.51 \\\\\n    Reddit titles (2008--12) & 600/599 & -0.009 & -0.026 & $-0.017$ & 0.45/0.33 \\\\\n    \\bottomrule\n  \\end{tabular}\n\\end{table*}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_replication_table.py",
         "reports/replication.json"
@@ -1158,7 +1344,7 @@
       "line": 1,
       "status": "source_reexport_verified",
       "text": "% AUTO-GENERATED by scripts/generate_h5_table.py — DO NOT EDIT BY HAND.\n\\begin{table}[t]\n  \\centering\n  \\caption{Supplementary aggregation comparison ($n_{total}=399$ for panel rules). The baseline has 398 covered packages; correlation-specific valid counts are unavailable. The mean row weights draw-collapsed personas equally, whereas the primary collector weights recorded observations equally. These estimands can differ when draws are missing; the stored reports do not identify the cause of their top-1 discrepancy. No tested rule reaches the baseline's reported gamma. This descriptive comparison does not identify a failure mechanism. Top-versus-runner-up screen, first-index tie breaking, 95\\% marginal bootstrap CIs.}\n  \\label{tab:h5agg}\n  \\small\n  \\resizebox{\\columnwidth}{!}{%\n  \\begin{tabular}{lcc}\n    \\toprule\n    Aggregation & Goodman--Kruskal $\\gamma$ [95\\% CI] & Top-1 [95\\% CI] \\\\\n    \\midrule\n    No-persona baseline & 0.361 [0.289, 0.430] & 49.2\\% [44.2, 54.3] \\\\\n    \\midrule\n    Equal-persona mean & 0.084 [0.020, 0.147] & 34.8\\% [30.1, 39.3] \\\\\n    Panel median & 0.141 [0.076, 0.205] & 39.3\\% [34.6, 44.1] \\\\\n    Trimmed mean (20\\%) & 0.081 [0.017, 0.144] & 34.3\\% [29.6, 38.8] \\\\\n    Per-persona $z$-mean & 0.064 [0.001, 0.128] & 33.6\\% [29.1, 38.3] \\\\\n    Borda (rank fusion) & 0.081 [0.018, 0.146] & 35.3\\% [30.8, 40.1] \\\\\n    Condorcet (pairwise) & 0.079 [0.014, 0.146] & 35.8\\% [31.3, 40.6] \\\\\n    \\bottomrule\n  \\end{tabular}}\n\\end{table}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_h5_table.py",
         "reports/h5_aggregation.csv",
@@ -1171,7 +1357,7 @@
       "line": 1,
       "status": "source_reexport_verified",
       "text": "% AUTO-GENERATED by scripts/generate_crossmodel_table.py — DO NOT EDIT BY HAND.\n\\begin{table*}[t]\n  \\centering\n  \\caption{Supplementary cross-model comparison with reported coverage ($n_{total}=100$ per condition). The baseline has higher reported gamma on these three tested Gemini models. This does not establish a model-independent effect. Evaluated IDs and correlation-specific valid counts are unavailable; a common subset cannot be verified from this summary. Gap is the difference of reported marginal gamma means, not a paired contrast.}\n  \\label{tab:cross_model_gap}\n  \\small\n  \\begin{tabular}{lccc}\n    \\toprule\n    Model & Persona $\\gamma$ & Baseline $\\gamma$ & Gap \\\\\n    \\midrule\n    \\texttt{gemini-3.1-flash-lite} & 0.035 & 0.401 & $+0.367$ \\\\\n    \\texttt{gemini-2.5-flash} & 0.116 & 0.219 & $+0.103$ \\\\\n    \\texttt{gemini-3.5-flash} & 0.122 & 0.404 & $+0.282$ \\\\\n    \\bottomrule\n  \\end{tabular}\n\\end{table*}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_crossmodel_table.py",
         "reports/cross_model_gap.json"
@@ -1183,7 +1369,7 @@
       "line": 1,
       "status": "source_reexport_verified",
       "text": "% AUTO-GENERATED by scripts/generate_pilot_table.py — DO NOT EDIT BY HAND.\n\\begin{table*}[t]\n  \\centering\n  \\caption{Supplementary pilot with reported coverage $n_{total}=100$ packages per model. Evaluated IDs and coefficient-specific valid counts are unavailable; a shared subset cannot be verified. The intervals overlap; this is not an equivalence test. The stored pilot contains no cost measurements and does not establish cost-effectiveness. 95\\% bootstrap CIs.}\n  \\label{tab:model_comparison}\n  \\small\n  \\begin{tabular}{lccc}\n    \\toprule\n    Model & Top-1 & Goodman--Kruskal $\\gamma$ & Spearman $\\rho$ \\\\\n    \\midrule\n    \\texttt{gemini-2.5-flash} & 0.390 [0.29, 0.49] & 0.116 [-0.01, 0.24] & 0.133 [-0.01, 0.27] \\\\\n    \\texttt{gemini-3.1-flash-lite} & 0.330 [0.24, 0.42] & 0.035 [-0.10, 0.17] & 0.051 [-0.09, 0.19] \\\\\n    \\texttt{gemini-3.5-flash} & 0.390 [0.29, 0.49] & 0.122 [-0.01, 0.25] & 0.139 [-0.00, 0.28] \\\\\n    \\bottomrule\n  \\end{tabular}\n\\end{table*}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_pilot_table.py",
         "reports/pilot_model_comparison.json"
@@ -1195,7 +1381,7 @@
       "line": 1,
       "status": "source_reexport_verified",
       "text": "% AUTO-GENERATED by scripts/generate_reanalysis_assets.py\n\\begin{table*}[t]\n\\centering\n\\caption{GPT-4.1 scalar-checkpoint analysis on recorded post-parser values. Simultaneous winner\nscreen and uniform expected tie credit; marginal percentile bootstrap CIs. Gap is baseline\nminus panel on paired packages; top-1 gap is in percentage points. Counts are per-metric valid\npanel/baseline/paired. Original responses are unavailable, so this does not validate the\ncollection parser. Sampling remains 30 panel observations versus 10 baseline draws per variant.}\n\\label{tab:corrected_gpt}\n\\small\n\\resizebox{\\textwidth}{!}{\\begin{tabular}{lcccc}\n\\toprule\nMetric & Panel [95\\% CI] & Baseline [95\\% CI] & Paired gap [95\\% CI] & $n_{valid}$ p/b/pair \\\\\n\\midrule\n    Goodman--Kruskal $\\gamma$ & 0.049 [-0.061, 0.159] & 0.325 [0.223, 0.429] & 0.270 [0.132, 0.407] & 190/189/189 \\\\\n    Kendall $\\tau_b$ & 0.049 [-0.061, 0.159] & 0.325 [0.222, 0.429] & 0.270 [0.132, 0.407] & 190/189/189 \\\\\n    Expected top-1 & 39.5\\% [32.6, 46.3] & 60.6\\% [53.7, 67.7] & 20.9 pp [11.1, 30.4] & 190/189/189 \\\\\n\\bottomrule\n\\end{tabular}}\n\\end{table*}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_reanalysis_assets.py",
         "reanalysis/2026-10-31/gpt41.json"
@@ -1207,7 +1393,7 @@
       "line": 1,
       "status": "raw_linked_recomputation_verified",
       "text": "% AUTO-GENERATED by scripts/generate_recollection_assets.py\n\\begin{table*}[t]\n\\centering\n\\caption{Primary Gemini 3.1 Flash-Lite comparison on 188 complete packages from the 190-package selected cohort. Every retained variant has all planned observations in both arms. Counts are metric-specific valid panel/baseline/paired packages. Gap is baseline minus panel; decision gaps use percentage points. Percentile bootstrap CIs condition on this cohort and these recorded generations. Undefined coefficients are omitted with their denominators disclosed.}\n\\label{tab:new_gemini}\n\\small\n\\resizebox{\\textwidth}{!}{\\begin{tabular}{lcccc}\n\\toprule\nMetric & Panel [95\\% CI] & Baseline [95\\% CI] & Paired gap [95\\% CI] & $n_{valid}$ p/b/pair \\\\\n\\midrule\n    Goodman--Kruskal $\\gamma$ & 0.082 [-0.031, 0.192] & 0.381 [0.253, 0.501] & 0.268 [0.101, 0.434] & 185/137/136 \\\\\n    Kendall $\\tau_b$ & 0.082 [-0.030, 0.191] & 0.336 [0.214, 0.450] & 0.222 [0.061, 0.385] & 185/137/136 \\\\\n    Spearman $\\rho$ & 0.100 [-0.016, 0.214] & 0.371 [0.248, 0.488] & 0.236 [0.069, 0.405] & 185/137/136 \\\\\n    Expected top-1 & 39.1\\% [32.2, 46.3] & 54.8\\% [49.4, 60.2] & 15.7 pp [7.1, 24.0] & 188/188/188 \\\\\n    Expected bottom-1 & 43.4\\% [36.4, 50.3] & 47.5\\% [41.4, 53.6] & 4.2 pp [-4.1, 12.3] & 188/188/188 \\\\\n    Captured lift & 0.458 [0.394, 0.522] & 0.591 [0.541, 0.641] & 0.133 [0.054, 0.210] & 188/188/188 \\\\\n\\bottomrule\n\\end{tabular}}\n\\end{table*}\n\\begin{table*}[t]\n\\centering\n\\caption{Primary GPT-4.1 comparison on 188 complete packages from the 190-package selected cohort. Every retained variant has all planned observations in both arms. Counts are metric-specific valid panel/baseline/paired packages. Gap is baseline minus panel; decision gaps use percentage points. Percentile bootstrap CIs condition on this cohort and these recorded generations. Undefined coefficients are omitted with their denominators disclosed. Azure requested three indexed choices per call; choices are not assumed independent.}\n\\label{tab:new_azure}\n\\small\n\\resizebox{\\textwidth}{!}{\\begin{tabular}{lcccc}\n\\toprule\nMetric & Panel [95\\% CI] & Baseline [95\\% CI] & Paired gap [95\\% CI] & $n_{valid}$ p/b/pair \\\\\n\\midrule\n    Goodman--Kruskal $\\gamma$ & 0.088 [-0.026, 0.200] & 0.345 [0.242, 0.445] & 0.257 [0.119, 0.391] & 188/188/188 \\\\\n    Kendall $\\tau_b$ & 0.088 [-0.026, 0.200] & 0.345 [0.242, 0.445] & 0.257 [0.119, 0.391] & 188/188/188 \\\\\n    Spearman $\\rho$ & 0.107 [-0.010, 0.222] & 0.373 [0.265, 0.475] & 0.266 [0.124, 0.404] & 188/188/188 \\\\\n    Expected top-1 & 42.0\\% [35.1, 48.9] & 61.7\\% [54.8, 68.6] & 19.7 pp [10.6, 28.7] & 188/188/188 \\\\\n    Expected bottom-1 & 43.1\\% [36.2, 50.0] & 52.1\\% [44.7, 59.0] & 9.0 pp [0.0, 17.6] & 188/188/188 \\\\\n    Captured lift & 0.467 [0.400, 0.534] & 0.654 [0.590, 0.719] & 0.187 [0.103, 0.271] & 188/188/188 \\\\\n\\bottomrule\n\\end{tabular}}\n\\end{table*}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_recollection_assets.py",
         "recollection/2026-10-31/gemini.json",
@@ -1220,7 +1406,7 @@
       "line": 1,
       "status": "raw_linked_recomputation_verified",
       "text": "% AUTO-GENERATED by scripts/generate_window_sensitivity_assets.py\n\\begin{table*}[t]\n\\centering\n\\caption{Post-hoc sensitivity excluding the archive's documented randomization-risk window\n(25 June 2013--10 January 2014 inclusive) from each model's complete primary cohort.\nPrimary reports and recorded generations remain unchanged. All six metrics are shown;\ngaps are baseline minus panel, decision gaps are percentage points, and counts are metric-specific\nvalid pairs. Pointwise percentile bootstrap CIs condition on retained packages and generations;\nremaining tests are not certified defect-free.}\n\\label{tab:window_sensitivity}\n\\small\n\\begin{tabular}{llcc}\n\\toprule\nModel (complete packages) & Metric & Paired gap [95\\% CI] & $n_{paired}$ \\\\\n\\midrule\nGemini (148) & Goodman--Kruskal $\\gamma$ & 0.201 [0.010, 0.396] & 109 \\\\\nGemini (148) & Kendall $\\tau_b$ & 0.157 [-0.030, 0.346] & 109 \\\\\nGemini (148) & Spearman $\\rho$ & 0.170 [-0.022, 0.367] & 109 \\\\\nGemini (148) & Expected top-1 & 11.4 pp [1.7, 21.0] & 148 \\\\\nGemini (148) & Expected bottom-1 & 3.1 pp [-6.4, 12.6] & 148 \\\\\nGemini (148) & Captured lift & 0.091 [0.001, 0.181] & 148 \\\\\n\\midrule\nGPT-4.1 (147) & Goodman--Kruskal $\\gamma$ & 0.272 [0.118, 0.425] & 147 \\\\\nGPT-4.1 (147) & Kendall $\\tau_b$ & 0.272 [0.118, 0.425] & 147 \\\\\nGPT-4.1 (147) & Spearman $\\rho$ & 0.292 [0.133, 0.450] & 147 \\\\\nGPT-4.1 (147) & Expected top-1 & 22.4 pp [12.2, 32.7] & 147 \\\\\nGPT-4.1 (147) & Expected bottom-1 & 8.8 pp [-0.7, 18.4] & 147 \\\\\nGPT-4.1 (147) & Captured lift & 0.213 [0.117, 0.307] & 147 \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table*}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_window_sensitivity_assets.py",
         "recollection/2026-10-31/window_sensitivity.json"
@@ -1232,7 +1418,7 @@
       "line": 1,
       "status": "source_reexport_verified",
       "text": "% AUTO-GENERATED by scripts/generate_supplementary_tables.py — DO NOT EDIT BY HAND.\n\\begin{table}[t]\n  \\centering\n  \\caption{Supplementary reported examples of observed winning headlines that the no-persona baseline ranked first but the persona panel did not (of \\nBaseRightPersonaWrong{} such cases). These are selected illustrations, not evidence of a systematic causal mechanism.}\n  \\label{tab:error_examples}\n  \\small\n  \\begin{tabular}{p{5.1cm}cc}\n    \\toprule\n    Real winning headline & CTR & \\#var \\\\\n    \\midrule\n    Bookmark This For When You’re Sad And Instantly Be 100 Times Happier & 1.38\\% & 4 \\\\\n    10 Amazing International Photos That Will Give You Some Perspective & 1.92\\% & 4 \\\\\n    If You Saw Someone Bullying A Kid For Being Gay Would You Speak Out... & 1.11\\% & 2 \\\\\n    If You Watch Hilary Swank Annoy A Whiny Senator, \\$1 Will Go To Pun... & 1.67\\% & 3 \\\\\n    Seven Wonderful People Share Secrets That Are Killing Them.  This C... & 1.99\\% & 4 \\\\\n    A 9-Year-Old Asks McDonald’s CEO A Simple Question. She’s Not Lovin... & 3.23\\% & 4 \\\\\n    Did These Words Really Come Out Of Conan's Mouth? & 4.45\\% & 3 \\\\\n    We Use This Word So Often We Probably Don't Realize We're Saying It... & 1.68\\% & 4 \\\\\n    Did You Know You Can Go For A Swim In Google Earth? & 0.88\\% & 3 \\\\\n    Cookie Monster Is In Jail? I'm Actually Really Happy About The Reas... & 2.30\\% & 4 \\\\\n    \\bottomrule\n  \\end{tabular}\n\\end{table}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_supplementary_tables.py",
         "reports/error_analysis.json"
@@ -1243,8 +1429,8 @@
       "file": "latex/tables/persona_panel.tex",
       "line": 1,
       "status": "source_reexport_verified",
-      "text": "% AUTO-GENERATED by scripts/generate_supplementary_tables.py — DO NOT EDIT BY HAND.\n\\begin{table*}[t]\n  \\centering\n  \\caption{The full fixed persona panel ($P{=}10$), inspired by Upworthy-era audience U.S. social-media demographics~\\citep{holcomb2013newsuse}, with the verbatim behavioural descriptions used in the prompt (for replicability). News engagement and political lean are in the replication package (\\texttt{data/persona\\_panel.json}).}\n  \\label{tab:persona_panel}\n  \\small\n  \\begin{tabular}{lp{2.6cm}p{10.5cm}}\n    \\toprule\n    ID & Demographics & Behavioural description (verbatim) \\\\\n    \\midrule\n    p01 & 18-29, F, Facebook & 29-year-old woman, scrolls Facebook on her phone during breaks; clicks human-interest and feel-good stories shared by friends; rarely seeks news directly. \\\\\n    p02 & 18-29, M, Twitter & 24-year-old man, heavy Twitter user, follows journalists and culture accounts; clicks surprising or contrarian takes; low tolerance for clickbait he's seen before. \\\\\n    p03 & 30-49, F, Facebook & 38-year-old working mother, checks Facebook in the evening; drawn to headlines about family, health, and local impact; shares uplifting or outrage-inducing stories. \\\\\n    p04 & 30-49, M, Reddit & 41-year-old man, browses Reddit and Facebook; skeptical of sensational headlines, clicks when a headline promises concrete information or a strong narrative payoff. \\\\\n    p05 & 50-64, F, Facebook & 57-year-old woman, mostly on Facebook; clicks emotionally resonant stories and anything about social causes she follows; less drawn to internet-slang headlines. \\\\\n    p06 & 50-64, M, Facebook & 60-year-old man, reads news on Facebook and cable; clicks political and economic headlines, distrusts overtly hyped 'you won't believe' framing. \\\\\n    p07 & 18-29, F, YouTube & 22-year-old college student, video-first, on YouTube and Instagram; clicks visually evocative or identity-relevant headlines; very sensitive to authenticity. \\\\\n    p08 & 30-49, M, Facebook & 45-year-old man, casual Facebook user; clicks curiosity-gap headlines that promise a quick interesting fact, especially maps, lists, and 'what happened next' stories. \\\\\n    p09 & 65+, F, Facebook & 68-year-old retiree, active on Facebook with family; clicks heartwarming, nostalgic, or cause-driven stories; avoids headlines that feel like tricks. \\\\\n    p10 & 30-49, F, Twitter & 34-year-old professional, follows news and advocacy on Twitter; clicks data-driven or justice-oriented angles; fatigued by repetitive viral formats. \\\\\n    \\bottomrule\n  \\end{tabular}\n\\end{table*}\n",
-      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Historical results do not imply recovered raw evidence, shared IDs or known draw counts. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
+      "text": "% AUTO-GENERATED by scripts/generate_supplementary_tables.py — DO NOT EDIT BY HAND.\n\\begin{table*}[t]\n  \\centering\n  \\caption{Prompt fields of the fixed persona panel ($P{=}10$), inspired by Upworthy-era audience U.S. social-media demographics~\\citep{holcomb2013newsuse}, with the verbatim behavioural descriptions used in the prompt. F/M denotes female/male. Political lean is retained as metadata in the replication package (\\texttt{data/persona\\_panel.json}) and is not separately interpolated.}\n  \\label{tab:persona_panel}\n  \\small\n  \\begin{tabular}{lp{2.3cm}p{1.6cm}p{8.9cm}}\n    \\toprule\n    ID & Demographics & News engagement & Behavioural description (verbatim) \\\\\n    \\midrule\n    p01 & 18-29, F, Facebook & incidental & 29-year-old woman, scrolls Facebook on her phone during breaks; clicks human-interest and feel-good stories shared by friends; rarely seeks news directly. \\\\\n    p02 & 18-29, M, Twitter & active & 24-year-old man, heavy Twitter user, follows journalists and culture accounts; clicks surprising or contrarian takes; low tolerance for clickbait he's seen before. \\\\\n    p03 & 30-49, F, Facebook & incidental & 38-year-old working mother, checks Facebook in the evening; drawn to headlines about family, health, and local impact; shares uplifting or outrage-inducing stories. \\\\\n    p04 & 30-49, M, Reddit & active & 41-year-old man, browses Reddit and Facebook; skeptical of sensational headlines, clicks when a headline promises concrete information or a strong narrative payoff. \\\\\n    p05 & 50-64, F, Facebook & incidental & 57-year-old woman, mostly on Facebook; clicks emotionally resonant stories and anything about social causes she follows; less drawn to internet-slang headlines. \\\\\n    p06 & 50-64, M, Facebook & moderate & 60-year-old man, reads news on Facebook and cable; clicks political and economic headlines, distrusts overtly hyped 'you won't believe' framing. \\\\\n    p07 & 18-29, F, YouTube & incidental & 22-year-old college student, video-first, on YouTube and Instagram; clicks visually evocative or identity-relevant headlines; very sensitive to authenticity. \\\\\n    p08 & 30-49, M, Facebook & incidental & 45-year-old man, casual Facebook user; clicks curiosity-gap headlines that promise a quick interesting fact, especially maps, lists, and 'what happened next' stories. \\\\\n    p09 & 65+, F, Facebook & moderate & 68-year-old retiree, active on Facebook with family; clicks heartwarming, nostalgic, or cause-driven stories; avoids headlines that feel like tricks. \\\\\n    p10 & 30-49, F, Twitter & active & 34-year-old professional, follows news and advocacy on Twitter; clicks data-driven or justice-oriented angles; fatigued by repetitive viral formats. \\\\\n    \\bottomrule\n  \\end{tabular}\n\\end{table*}\n",
+      "adjudication": "All cells and caption are read; values regenerate from the named artifacts. Supplementary results do not imply recovered raw evidence, shared IDs or known draw counts. Persona table now shows all actual prompt fields, with news engagement from canonical JSON. Primary versus post-hoc scopes and marginal versus paired differences are explicit.",
       "evidence": [
         "scripts/generate_supplementary_tables.py",
         "data/persona_panel.json"
@@ -1289,30 +1475,35 @@
     "REPLICATION.md": "aa2b02d7e6df3c4a7b4163672583e6039992d54710d55c5c78c958b0178c8d03",
     "SCOPE.md": "a773f103a7bc314b77302fea860848ec176579420eee13b2d670b20fcfa8430b",
     "data/persona_panel.json": "3ff13e5eb82486ed0de24ccfad7e6a0844de053c29f5f056fb636432b329aaac",
+    "datasets/mind-subset-2026-06-03.manifest.json": "adfb96a0c2a272e0b9f9aa7f8025b3b6fa6e788fd177dba1ce49ca9dacaef921",
+    "datasets/reddit-subset-2026-06-04.manifest.json": "3c42813ce2851342b3e0a0a95f257cb1769b5974dcbce9996d825f2abeefb1b5",
+    "docs/audit/ai-disclosure-template-sources.json": "430ac55b8d15abcd4f9ef84cc5a924ec3c790276609fa51f810f27783b9eef2c",
+    "docs/audit/astra-primary-source-evidence.json": "17612fa022a9049cc1db1308c78329f05a5ba59d43392ae8df7f3126a3765fec",
+    "docs/audit/astra-review-disposition.json": "eee1ce7df4c9a9fce624bef2d8065be3ae35898cd57269184660b2d4e6814352",
     "docs/audit/full-text-bibliography.json": "0539f74f0bed8a1d77085499fe0629585f780a8d0bb47f7fe73da11cfdf30d0e",
     "docs/audit/original-findings.json": "c556184cbbfe8a2145bde9ea86624afc48cd6c657dea2ee52700eeb11d01c19e",
     "docs/audit/v2-formula-and-editorial.json": "19720955a4ba1c543a853d302a782af79fa00df8769179fbc51cef860e93c6cc",
     "latex/figures/comparison.pdf": "1286648a35d927a37be761cd7325bbea17711271c44c063eb0c00e88e9804fbd",
     "latex/figures/protocol.tex": "4b77805d129c5dcd1710aacac33454c4148b30be2ace8058cd31f60ffca202eb",
     "latex/figures/reliability.pdf": "66df7e238d28ab7c1265d13018ed80248e7993bc8276b8b88a36993004b5c1ea",
-    "latex/main.tex": "b84b0bbed84b93a0847f8b40dc21b43e071210330acf0e80224869bd12b6b85c",
+    "latex/main.tex": "47678467905f13d835c0bfc8ca872049b3adecafcb069ff0d891fa89089561b5",
     "latex/references.bib": "01982b412e52cd62dad82c4e8d92eb1d92e180fbf032b1b6a74541cca78e7fd8",
-    "latex/sections/00-abstract.tex": "7ebe54a5019b17d6b14d47f750b985e593d0a6eb303e947b3b69a1fe9bb80b3f",
+    "latex/sections/00-abstract.tex": "4a5c355d5a78a5bfe77185cf87d6d1d39f51631dee22fb9e8e79f61aad154833",
     "latex/sections/01-introduction.tex": "10b3862d0c8d0d1cce5c34962280c357273b972f12aa7bf27470832b6ed019db",
     "latex/sections/02-related-work.tex": "5357baf174208d46d7886bcb214b730000d5e0770a4b947c454e21a6fc7c11b5",
-    "latex/sections/03-framework.tex": "102dbdf9336582635c6ea4db512248649e772df2a4a8f67b1dbcb4076945f5c4",
+    "latex/sections/03-framework.tex": "e9f2f33555ea5ff1f142d37f2664f5285d91b4914875d2571e4a4f94262f6552",
     "latex/sections/04-system.tex": "22a8e76bca1c201ab16a104aac24d10d04f55c6e02671bdce8c1a7e8025669a0",
-    "latex/sections/05-setup.tex": "8651f89f85ed994583260496ebe1a4094f93bedb4e1b311ce504e27948391221",
-    "latex/sections/06-results.tex": "fd3460ab04a8ccc0afb16a4f83ad1e3b1261e5bc756f5ed2ff9d8be6d13d81ac",
-    "latex/sections/07-discussion.tex": "34aafcd3ed63fa4fca3ff161f18c77e82ec43435cc402a4901ea98d0f1ad6ace",
-    "latex/sections/08-conclusion.tex": "d3ad9bf48860f312722899788f1d4f09d0622b484aba1823bda4501ecd30bb33",
-    "latex/sections/09-appendix.tex": "ce9ac26d67a80bbf77b5b3a2a84a9a6babeeeac0b556879b1056c777ee4bd0d7",
+    "latex/sections/05-setup.tex": "fd424efc925c2ea49059b581490be17fa0850031f701da25a8c186dcf8c26a33",
+    "latex/sections/06-results.tex": "85d5f907ac06dab132ff5e80ac6db5b0d1b47478ba56e732d68dbfe6b3ebdeb8",
+    "latex/sections/07-discussion.tex": "37de4567d45f119ee42c7db110553ad500e9fa2991607101580059bc96eee760",
+    "latex/sections/08-conclusion.tex": "7ccbb4f8934e7809db0cb88c735dc55f6fb537e3f9af505f0ba9983357812214",
+    "latex/sections/09-appendix.tex": "d04b1cc7f7b0e918b6e72eb5f7a88f423479e0737cd15debd70537bf45d9e9f2",
     "latex/tables/corrected_gpt.tex": "66a3e6cc93d947c23aa3d5efa70aa2c4df94a9f64d449cab6e3a3cbf98a6bee8",
     "latex/tables/cross_model_gap.tex": "0b7010372f95cd34d4abaf534e1067e53b8e3aa50e5765052ca37d812aa88b18",
     "latex/tables/error_examples.tex": "5014f4d7eb75fdb2cd2f463b909fc9975692c2574722f3294da053576d95e7c7",
     "latex/tables/h5_aggregation.tex": "4ef29bcf174219e18052e96f4bd30151b077ba517d3b1d02e32fed7b2c0a4f22",
     "latex/tables/model_comparison.tex": "a75dbaf87ede44defe86cd9d161bdce81cac702cbf3905da66c1cd5c208fc72c",
-    "latex/tables/persona_panel.tex": "fda9ca8f5e7c65649c2b305f958d091ad743e9997902a331f6f3119099201723",
+    "latex/tables/persona_panel.tex": "5102c5c7e8577c23542db15ae0ad054ecb38b392d9705e8ae5def239cb7345eb",
     "latex/tables/recollection.tex": "a5e34b0cfa34cd4ef39f65e77ce3ff1f1362a2410b389487ec9f5c8aa1fcc275",
     "latex/tables/replication.tex": "a47e38a1dfa8e77627243d0df2cbfefad945b6332512571f9fa52df3c4c5f920",
     "latex/tables/validity.tex": "ae9fd45d5ca73596fe25793e6e5991ba68478950d3d62cbcbe183b590f1f832e",
@@ -1330,12 +1521,15 @@
     "reports/correlation.json": "0182594bbb1f1565152981398d463cd755796dc6b8ea4bfb0652754e109bfaf1",
     "reports/cross_model_gap.json": "76bb2c7e757de2d6fbc548cab74c81747b17a7ea9ddeca808b75a22f644af370",
     "reports/error_analysis.json": "8857cb519119550cc3405270d58d47491082ee0a20385fac4914a4d56b9e1410",
+    "reports/h003.json": "af4044f776dc6e10bf235ed91961ae43c664a1af6ed399ae04ec34b7d03d5a2a",
     "reports/h5_aggregation.csv": "30e2eea3192171671a7264b45822b90319f0277a4ffc82eee8b878f09353cd85",
     "reports/legacy-provenance.json": "4962f708ae100d5c95e76909593bd0b0b3e4a5c3eeaa51c6290564a652b6ef2e",
     "reports/pilot_model_comparison.json": "d5932d14bf8a9765eb8491601add34d4c94004a9698c608b28f9605ba0e1c9a6",
     "reports/replication.json": "0c00409ccd8a216f1a1920578c104a1d7212050085c3b979f126632c72666e5e",
     "scripts/01_ingest_upworthy.py": "95672387b8c516cc8810fde256b266cb2ff7c3995786902c6eee1f360e5cb3f5",
     "scripts/analyze_randomization_window.py": "f6ebcb3383fde53adae0265b65b77433b75a2b1ca218cc2f09da408e4970ecb4",
+    "scripts/build_mind_corpus.py": "42366baa220ec15f6d32301726b90746a2afbd9b48be0110a66b4e2a0d30eaef",
+    "scripts/build_reddit_corpus.py": "2b2c1d896b517761bd671b0fecd0444fda8054c6bbf067c356578d117d9b4556",
     "scripts/compute_validity.py": "aaccfc01dc6672b6f6eddbb418685d0cd55630d55f33dda9d1635640ac9309c7",
     "scripts/generate_crossmodel_table.py": "d18d75800d15fb829488be6b87f355167c31c7eeb8bdebe2306c59f3879980ce",
     "scripts/generate_figures.py": "a569de862b7c0ae7375903197f685e70aee28511a7b0edff6b3e56649070a199",
@@ -1344,7 +1538,7 @@
     "scripts/generate_reanalysis_assets.py": "a22595cffeec350c167c5d59dad0de406cb5f80a0e4becafe54e1d2e668b2bb2",
     "scripts/generate_recollection_assets.py": "89dadcef9a40f71c64e1dc2da714c5e2497bdafab5d06757d27f1afd8d9faaa0",
     "scripts/generate_replication_table.py": "0cd44ed5c89a13e570d1c6c0e49f4e176df7b6117f02ccb7cbd17f661a66e97b",
-    "scripts/generate_supplementary_tables.py": "791dc9d379f84cae9d31dec03dc8989ed11b69b4043bd1144f9fe8ea512ffa28",
+    "scripts/generate_supplementary_tables.py": "c2a18ff95d60d7ad7d6bf6984b74b206c53e23581f4ab2ea1a22c70a548db2d2",
     "scripts/generate_validity_table.py": "91ed46b865b458f42bceeba17a87b361c7eafe5e39666d855e7d3314d6714930",
     "scripts/generate_window_sensitivity_assets.py": "08918550fb29697e6da8738a116bdb4632fd41d4a9d3b22dd60797a1b4428946",
     "scripts/recollect.py": "49dd1464434113c7ad0113f7a7f6013311822b46e464c64def4ca3ac46d66d69",

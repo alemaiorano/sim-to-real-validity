@@ -1,0 +1,64 @@
+{
+  "reviewed_source_commit": "9c6cfe78d3a50d80c7143c736a28dfecda3c7a33",
+  "reviewed_PDF_sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
+  "review_model_requested": "gpt-6-astra",
+  "reasoning_requested": "high",
+  "fork_turns": "none",
+  "scope": "Blind manuscript-only review. No prior conversation, decisions, email, audits or correction plans supplied. The reviewer could read the manuscript PDF/TeX/tables/bibliography and primary public sources; it was not given the raw companion or statistical source.",
+  "raw_review": "docs/audit/astra-blind-review-2026-10-31.md",
+  "raw_review_sha256": "5ba5f6abf6c4afa651ef0372f99b26ed15cf65cf4a947f977ca933a80113dc86",
+  "review_recommendation": "Substantial methodological revision; no demonstrated primary arithmetic contradiction.",
+  "dispositions": [
+    {
+      "id": 1,
+      "finding": "Editorial stopping not covered by fixed-horizon z/Bonferroni screening",
+      "status": "Interpretation corrected; stopping paths unavailable",
+      "evidence": "docs/audit/astra-primary-source-evidence.json",
+      "change": "Section5 states fixed-horizon assumption and no verified 5% archive winner-error bound; discussion/conclusion retain the limitation. No sequential p-value or raw trajectory invented."
+    },
+    {
+      "id": 2,
+      "finding": "Bootstrap independence and estimand unspecified",
+      "status": "Estimand and unverified independence explicitly disclosed; dependence impact remains unquantified",
+      "change": "Section5 distinguishes observed finite means from between-package resampling variability and population interpretation requiring independent exchangeable packages. Abstract/discussion/conclusion disclose unadjusted related-ID dependence. No clustering relation or robust CI is invented."
+    },
+    {
+      "id": 3,
+      "finding": "Control prompt and panel prompt fields absent from manuscript",
+      "status": "Documentation completed",
+      "change": "Appendix gives both primary templates, user-message roles, no sent system message, exact interpolated fields and canonical source/raw ownership. Persona table now includes news_engagement; political_lean is metadata, not separately interpolated. Original prompt/request/panel bytes unchanged."
+    },
+    {
+      "id": 4,
+      "finding": "Raw replay could not be verified in supplied manuscript-only material",
+      "status": "Reviewer scope limit confirmed; public deposition remains pending",
+      "change": "Exact report fields point to available_observation_sensitivity in both public JSONs. Data availability continues to distinguish public Git exports from the private companion. Prior full raw replay/restore checks remain pinned evidence; this blind reviewer did not run them. No public raw deposit or independent raw verification is claimed."
+    },
+    {
+      "id": 5,
+      "finding": "Supplementary outcomes and dataset attribution unclear",
+      "status": "Outcome construction specified and inference narrowed; missing lineage remains",
+      "change": "Framework and appendix define numerator/denominator, grouping, exposure meaning, thresholds/caps and supplied-log aggregation. Abstract/results do not attribute unreconciled summary differences to dataset effects. Unknown evaluated IDs/draw counts remain unknown."
+    },
+    {
+      "id": 6,
+      "finding": "RQ2 variable and 1678 denominator ambiguous",
+      "status": "Pinned producer resolves definition/policy; identities of omitted packages unavailable",
+      "producer_commit": "7c1ab46b5d881529b79769fb870ed1f2fb98619c",
+      "producer_path": "scripts/analyze_h003.py",
+      "producer_sha256": "a348786ef40e8fe134d8417134a218fdc4aa128981b241ad765350589a5705fc",
+      "reproduce_source_command": "git show 7c1ab46b5d881529b79769fb870ed1f2fb98619c:scripts/analyze_h003.py",
+      "change": "Results state 1-p, panel first-index top1, complete-variant and defined within-package Spearman requirements, 5000 planned resamples, and unavailable omission identities. Unadjusted exposure/variant-count confounding disclosed; no intrinsic predictability inference."
+    }
+  ],
+  "secondary_suggestions": "Chance references, richer cohort descriptives, cluster sensitivity and layout refinements are optional extensions. Current changes do not add scientific generations or new empirical estimates.",
+  "AI_disclosure": "Matched itemized language-model/web-search structure from local peer papers, with author responsibility and distinct empirical-model roles. Did not import unrelated versions or claim human-only methodological conception. Internal reviewer effort labels removed from manuscript; automated review assistance stays disclosed.",
+  "earlier_native_review_boundary": "DoesItStand covers PDF5a7653 at source d0af68f. Its raw results remain unchanged; current manuscript has scientific-interpretation/specification changes and is not represented as the exact PDF it reviewed. No automatic native rerun for documentation changes.",
+  "scientific_provider_generations": 0,
+  "open_limits": [
+    "Public raw-companion deposition pending",
+    "Independent raw verification was outside this blind review input",
+    "Cross-experiment dependence and sequential-stopping impact not quantified",
+    "Supplementary evaluated IDs/draw metadata and missing original responses unavailable"
+  ]
+}
