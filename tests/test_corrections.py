@@ -151,6 +151,29 @@ class ParserAndAggregationTests(unittest.TestCase):
         tier2.checkpoint_packages(corpus, rows, legacy_scores=True)
 
 
+class IngestionTests(unittest.TestCase):
+    def test_quoted_multiline_headline_survives_csv_reader_and_grouping(self):
+        import csv
+        spec = importlib.util.spec_from_file_location("ingest", ROOT / "scripts/01_ingest_upworthy.py")
+        ingest = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(ingest)
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "source.csv"
+            headline = "Headline with a\nline break, and a comma"
+            with source.open("w", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=["clickability_test_id", "headline", "impressions", "clicks"])
+                writer.writeheader()
+                writer.writerows([{"clickability_test_id":"p", "headline":h, "impressions":4000, "clicks":c}
+                                  for h,c in [(headline,100),("Other headline",200)]])
+            rows, digest = ingest.load_rows(source)
+            self.assertEqual(rows[0]["headline"], headline)
+            packages = ingest.build_packages(rows)
+            by_headline = {v["headline"]:v for v in packages["p"]}
+            self.assertEqual(set(by_headline), {headline,"Other headline"})
+            self.assertEqual(by_headline[headline]["real_ctr"],100/4000)
+            self.assertEqual(digest,hashlib.sha256(source.read_bytes()).hexdigest())
+
+
 class ArtifactTests(unittest.TestCase):
     def test_pinned_historical_artifacts_and_adapter(self):
         manifest = json.loads((ROOT / "reports/legacy-provenance.json").read_text())

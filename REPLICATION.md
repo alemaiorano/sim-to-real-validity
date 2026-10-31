@@ -28,6 +28,21 @@ exploratory corpus and run:
 python scripts/generate_figures.py --historical-corpus /path/to/upworthy-subset-2026-06-03.json
 ```
 
+### CSV ingestion and exact locked inputs
+
+Saved experiments use the exact `matched-v2/inputs/corpus.json` with the documented hash.
+Do not replace it by rerunning an ingester when replaying existing generations. The source at
+`1326962cd6e3b4bb41f889737ffcbc8516655171` reconstructs the locked text preprocessing:
+it removed embedded linebreaks before parsing CSV. One of 6,978 retained headlines is affected
+(package `5429d6e75f7828ebff000066`, variant `#3`); it is outside both selected cohorts.
+Every click/impression/rate and both selected-ID sets match the newline-aware source CSV.
+
+The current `01_ingest_upworthy.py` preserves quoted multiline CSV fields. Fresh ingestion
+therefore yields a newline in that one headline; it is a new derivative, not the exact input
+for existing scores. Use a new output directory and future collection plan for any new input.
+The preserved source history, original corpus and response journals remain authoritative for
+existing results. No scientific result is silently regenerated from changed headline text.
+
 ## 2. Offline historical GPT replay and corrected diagnostic
 
 The recovered checkpoint is included in the separate replication bundle at

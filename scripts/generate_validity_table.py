@@ -46,7 +46,7 @@ def main() -> None:
                    "correlation-specific valid counts are unavailable. The stored rank coefficient "
                    "is Goodman--Kruskal gamma, not Kendall tau. Top-1 uses first-index tie breaking. "
                    f"Random top-1 reference {rand*100:.1f}\\%. Marginal 95\\% bootstrap CIs; "
-                   "this table is not a corrected reanalysis.")
+                   "the reported screen and decision tie rule are retained.")
     else:
         t1, tau, rho = corr["top1_accuracy"], corr["goodman_kruskal_gamma"], corr["spearman_rho"]
         rows = [f"    Persona panel & {cell(t1, pct=True)} & {cell(tau)} & {cell(rho)} \\\\\n"]

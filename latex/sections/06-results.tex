@@ -1,5 +1,4 @@
 \section{Results}
-\label{sec:results}
 \paragraph{New raw-backed comparison (RQ1).}
 Tables~\ref{tab:new_gemini} and \ref{tab:new_azure} give the matched-budget experiment,
 separating it from all historical values below. The complete-package policy retains
@@ -60,7 +59,7 @@ medium-effect interpretation.
 \centering
 \includegraphics[width=\linewidth]{figures/comparison.pdf}
 \caption{Historical comparison under the legacy screen. Coefficient-specific valid counts are
-unavailable. The rank coefficient is gamma, not a corrected Kendall estimate.}
+unavailable. The displayed rank coefficient is gamma.}
 \label{fig:comparison}
 \end{figure}
 
@@ -71,7 +70,7 @@ probabilities. The archived all-package panel gamma is \sensGamma{} (CI
 \centering
 \includegraphics[width=\linewidth]{figures/reliability.pdf}
 \caption{Historical one-sided top-versus-runner-up screen selecting \legacySelectedN{} packages.
-Selection of direction from observed rates invalidates a literal one-sided error interpretation.
+Selection of direction from observed rates invalidates a literal one-sided false-positive-rate interpretation.
 Nonsignificant packages need not be unpredictable.}
 \label{fig:reliability}
 \end{figure}
@@ -79,14 +78,14 @@ Nonsignificant packages need not be unpredictable.}
 \paragraph{Signal strength (RQ2).}
 The historical association between the legacy signal statistic and top-1 is Spearman
 \hThreeTopOne{} (CI [\hThreeTopOneCILow{}, \hThreeTopOneCIHigh{}]) over \hThreeN{} packages.
-It has not been recomputed for historical Gemini under corrected screening and tie handling.
+It has not been recomputed for historical Gemini under simultaneous screening and expected tie credit.
 The new selected-cohort experiment does not reconstruct this all-package historical analysis.
 
 \paragraph{Dataset comparisons (RQ3).}
 Table~\ref{tab:replication} shows higher baseline gamma on the three Upworthy splits and a smaller
 difference on MIND, where packages compare articles. On Reddit, the panel has higher top-1
 (\redditPanelTop{} versus \redditBaseTop{}) and lift (\redditPanelLift{} versus \redditBaseLift{}).
-The original baseline-superiority claim for every dataset and metric was false. Reddit gamma
+The direction of the contrast therefore depends on dataset and metric. Reddit gamma
 CIs include zero; this establishes neither equivalence nor absence of a title-related signal.
 Posting time and visibility were not tested as explanations. Subset-selection and coverage
 limitations further restrict interpretation. The historical summary does not record draw
@@ -111,18 +110,18 @@ The reports do not establish why their top-1 results differ, or whether bias, sa
 scale, or another factor explains relative performance.
 \input{tables/h5_aggregation}
 
-\paragraph{GPT-4.1 historical replay and corrected diagnostic.}
+\paragraph{Retrospective GPT-4.1 diagnostic.}
 The recovered checkpoint contains scalars, not original responses. Offline replay of the pinned
 producer reproduces all published cross-family report fields within numerical tolerance.
 Historical coverage is \xfN{} panel and \xfPairedN{} baseline/paired packages.
 Thirty panel observations versus ten baseline draws and no generation seed make it
 an unequal-budget comparison.
 
-Table~\ref{tab:corrected_gpt} applies the corrected screen and estimators to those scores.
+Table~\ref{tab:corrected_gpt} applies simultaneous screening and tie-aware estimators to those scores.
 Coverage becomes \correctedPanelN{} panel, \correctedBaseN{} baseline, and \correctedPairedN{}
 paired packages. Baseline Kendall $\tau_b$ is \correctedBaseTau{} versus \correctedPanelTau{}.
 Paired CIs for the displayed gaps exclude zero, supporting a positive baseline gap in this
-retrospective diagnostic. It is not independent replication, repaired raw parsing, or a
-budget-matched estimate. Gamma and tau-b remain separate. Corrected historical Gemini estimates
-remain unavailable; the new Gemini table describes different generations and a different configuration.
+retrospective diagnostic. It is not an independent replication or a budget-matched estimate, and does not validate
+raw parsing. Gamma and tau-b remain separate. A historical Gemini reanalysis with these
+estimators is unavailable; the new Gemini table describes different generations and a different configuration.
 \input{tables/corrected_gpt}

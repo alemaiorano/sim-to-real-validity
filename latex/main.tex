@@ -35,8 +35,7 @@
 \input{window_sensitivity_variables}
 
 \title{Do Synthetic Personas Predict Real Audience Response?\\
-A Headline-Ranking Study with a Generic-Reader Baseline\\
-Corrected Methods and a Matched-Budget Recollection}
+A Headline-Ranking Study with a Generic-Reader Baseline}
 
 \author{Alexandre Cristov\~ao Maiorano\\
 \texttt{alexandre@lumytics.com}}
@@ -65,7 +64,7 @@ Corrected Methods and a Matched-Budget Recollection}
 The package at \url{https://github.com/alemaiorano/sim-to-real-validity} includes sources,
 exporters, aggregate historical reports, the fixed panel, and original corpus manifests.
 Reexporting these reports reproduces their displayed numbers, not their generation from raw
-observations. Original reports are hash-pinned and unchanged. Separate corrected GPT derivatives,
+observations. Original reports are hash-pinned and unchanged. Retrospective GPT-4.1 analyses,
 input hashes, and offline replay verification are in \texttt{reanalysis/2026-10-31/}.
 A separate replication bundle retains the recovered historical GPT scalar checkpoint, exact
 exploratory inputs, and the new matched-budget experiment: all raw response bytes, request and
@@ -73,8 +72,8 @@ observation plans, immutable journal snapshots, coverage, package metrics, and s
 Committed new aggregate reports and hash provenance are in \texttt{recollection/2026-10-31/}.
 Offline raw replay needs no provider account. Historical Gemini observations remain missing; new
 generations do not restore them. \texttt{REPLICATION.md} distinguishes these evidence tiers.
-This is a local revision and artifact prepared for deposition, not a claim that this bundle is
-already available at the public repository URL.
+The accompanying replication bundle is prepared locally for deposition; it is not yet
+available at the public repository URL.
 
 \section*{Ethics and Conflict of Interest}
 The study uses public archive data and synthetic personas; no new human subjects were recruited.
@@ -84,9 +83,8 @@ available historical artifacts and the accompanying local bundle support scrutin
 as a safeguard.
 
 \section*{AI Tools Disclosure}
-AI coding assistants were used for code, analysis, literature checks, and manuscript revision.
-The historical manuscript disclosed Claude and GPT-family assistance. This correction also used
-Codex and an Astra high subagent to challenge the correction plan. These tools do not supply
+AI assistants, including Claude, GPT-family tools, Codex, and an Astra high reviewer, were used
+for code, analysis, literature checks, manuscript preparation, and methodological review. These tools do not supply
 independent empirical validation; the author remains responsible for the work.
 The evaluated models include the historical configurations and the new Gemini 3.1 Flash-Lite
 and Azure GPT-4.1 collection. Returned model metadata are retained with each response; the new

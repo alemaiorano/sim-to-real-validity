@@ -1,38 +1,26 @@
 # Do Synthetic Personas Predict Real Audience Response?
 
-Local correction draft of arXiv:2609.25010, based on public release
-`7c1ab46b5d881529b79769fb870ed1f2fb98619c`.
+Version 2 working manuscript for arXiv:2609.25010. The study compares a fixed ten-persona
+panel with a generic-reader baseline in a matched-budget Gemini/GPT-4.1 experiment. Exact raw
+responses, plans, coverage, metric-specific paired IDs and offline replay are retained.
+This local version has not been submitted or publicly deposited.
 
-The original tables match their stored reports. The audit found errors in metric naming,
-winner selection, denominator reporting, and interpretation. This revision preserves the
-historical reports, supplies corrected analysis code and a separate historical GPT-4.1 diagnostic,
-and adds a matched-budget Gemini/GPT-4.1 collection with retained raw responses.
-It has not been submitted as a new arXiv version.
+The primary comparison favors the baseline on valid ranks, expected top-1 and captured lift.
+A post-hoc exclusion of Upworthy's documented randomization-risk period retains positive
+top-1/lift contrasts, while Gemini tau-b and Spearman intervals include zero. Bottom-1
+intervals include zero in both models. Archived Reddit decision metrics favor the panel.
+Results concern the specified panel/cohort/protocol and do not identify a causal mechanism.
 
-- Historical Upworthy estimates favor the generic baseline; the reported rank coefficient
-  is Goodman–Kruskal gamma, **not Kendall tau**.
-- Reddit panel top-1 and lift exceed the baseline. Claims of dominance everywhere were wrong.
-- Corrected GPT-4.1 analysis retains a positive paired baseline gap, conditional on stored
-  post-parser scores and unequal budgets. It is retrospective, not independent replication.
-- The primary new comparison favors the baseline in valid rank comparisons, expected top-1
-  and lift. A post-hoc sensitivity excludes the archive's documented randomization-risk period:
-  top-1/lift gaps remain positive, but Gemini tau-b and Spearman intervals include zero.
-  Bottom-1 intervals include zero in both models. Counts and paired
-  intervals are in the new tables, with all exclusions disclosed.
-- Historical Gemini observations remain unavailable. Their corrected estimates are **not established**.
+Supplementary archived aggregates and the retrospective GPT-4.1 scalar diagnostic retain
+their own budgets, screen and tie semantics. Historical Gemini observations and original
+GPT response texts remain unavailable. New generations are a separate experiment.
 
-New generations are a separate experiment on the corrected exploratory cohort, with thirty
-observations per arm and variant within each model. The separate replication bundle retains
-requests, response bytes, exact inputs, coverage, per-package metrics, source history and the
-recovered original GPT checkpoint. Historical Gemini generations remain unrecovered.
-
-The [full-text audit](docs/audit/full-text-claim-ledger.json) traces every paragraph and caption
-to evidence and distinguishes historical limits from implemented corrections.
-
-The revised [PDF](latex/main.pdf) explains the evidence tiers and limitations at first reading.
-[Correction record](docs/archive/changes/2026-10-31-paper-corrections.md) maps the audit findings
-to changes and remaining gaps. [Accepted plan](docs/audit/plan-v3.txt) and
-[Astra consensus](docs/audit/astra-consensus.txt) document the proposal review.
+The [PDF](latex/main.pdf) presents the methods and their limitations as a standalone study.
+The [source-driven evidence ledger](docs/audit/full-text-claim-ledger.json) traces its text
+and captions. Earlier [method/provenance records](docs/archive/changes/2026-10-31-paper-corrections.md),
+[accepted plan](docs/audit/plan-v3.txt) and [Astra consensus](docs/audit/astra-consensus.txt)
+remain preserved outside the paper. Formula checks and the DoesItStand execution are recorded
+in the [v2 changeset](docs/archive/changes/2026-10-31-paper-v2-formula-review.md).
 
 ## Reproduction
 

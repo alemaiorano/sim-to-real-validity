@@ -1,0 +1,49 @@
+{
+  "base_commit": "1326962cd6e3b4bb41f889737ffcbc8516655171",
+  "objective": "Standalone v2 and independent formula/code checks; not a new scientific experiment",
+  "formula_oracle": {
+    "all_passed": true,
+    "counts": {
+      "vector_pairs": 7371,
+      "winner_packages": 1000,
+      "bootstrap_cases": 6,
+      "paired_metrics": 6
+    },
+    "methods": "SciPy tau-b/Spearman, contingency quadrants gamma, explicit uniform-extreme decisions, independent Pearson chi-square pooled-z equivalence, NumPy resample-order-statistic intervals and paired validity IDs",
+    "source_sha256": {
+      "scripts/compute_validity.py": "aaccfc01dc6672b6f6eddbb418685d0cd55630d55f33dda9d1635640ac9309c7",
+      "scripts/winner_filter.py": "6dea65e32a5b7c43eec6c43826fa77b9f24f1ed027f2a2e9b2667bf48ab7bceb",
+      "scripts/analyze_recollection.py": "38aff73849e22d379937889f46322920a4dae151a7dfeda680f39e773be2de2c",
+      "scripts/analyze_randomization_window.py": "f6ebcb3383fde53adae0265b65b77433b75a2b1ca218cc2f09da408e4970ecb4",
+      "scripts/tier2_crossmodel.py": "1fbd935a3f8b299e2b982197075c28fc91f93d8350a798bbb4f6003677dc1db9",
+      "scripts/analyze_h5_aggregation.py": "2fcce673e324df824c9da24c4d1bbb7520537e7cd1800146884d3bc5065cad64",
+      "scripts/03_build_joined.py": "83742c85cb001b6bc3f932d4a6bace2c174ff98a0cc6a34a307c9e2ada0e8f57"
+    },
+    "provider_calls": 0
+  },
+  "csv_reader_finding": {
+    "all_recorded_variant_counts_rates_equal_to_independent_csv_aggregation": true,
+    "source_rows": 22666,
+    "source_invalid_counts": 0,
+    "variant_records": 6978,
+    "headline_text_differences": [
+      {
+        "package_id": "5429d6e75f7828ebff000066",
+        "variant_id": "5429d6e75f7828ebff000066#3",
+        "locked_headline": "They Needed To Feel Her Pain, So She Locked Them In ARoom And Told Her Story",
+        "newline_preserving_headline": "They Needed To Feel Her Pain, So She Locked Them In A\nRoom And Told Her Story"
+      }
+    ],
+    "affected_package_in_legacy399": false,
+    "affected_package_in_new190": false,
+    "same_new190_ids": true,
+    "current_ingester_preserves_multiline_fields": true,
+    "existing_input_corpus_and_primary_reports_never_modified": true,
+    "new_csv_derivative_used_for_saved_scores": false,
+    "provider_calls": 0
+  },
+  "editorial_policy": "Remove own audit/erratum/error-correction narrative from manuscript; preserve statistical false-positive terminology, external published Author Correction title, incident/missing-data/posthoc/conditional limitations. Audit and version provenance remain outside paper.",
+  "historical_and_primary_numerical_reports_unchanged": true,
+  "doesitstand": "Runs on immutable compiled PDF after source freeze, with external preserved reports and mirrored SDK request/response journal. Review-prompt versionv3 differs from manuscript versionv2.",
+  "retention": "New complete version in OneDrive and protected local vaults; previous versions never overwritten."
+}
