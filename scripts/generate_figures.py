@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate paper figures from artifacts (no hand-drawn data):
-  fig:comparison    — baseline vs persona panel on top-1/tau/rho with 95% CIs (the headline result)
-  fig:reliability   — distribution of ground-truth winner p-values with the p<0.05 cutoff
+  fig:comparison    — baseline vs persona panel on top-1/gamma/rho with 95% CIs (supplementary comparison)
+  fig:reliability   — distribution of top-versus-runner-up screening p-values with the p<0.05 cutoff
 Outputs latex/figures/*.pdf. Reads reports/baseline_comparison.json and the locked corpus.
 """
 from __future__ import annotations
@@ -40,7 +40,7 @@ def fig_comparison() -> None:
     ax.set_ylabel("validity (estimate, 95% CI)")
     ax.axhline(0, color="k", lw=0.6)
     ax.legend(frameon=False, fontsize=8)
-    ax.set_title("Historical comparison (legacy winner screen)")
+    ax.set_title("Supplementary Upworthy comparison")
     fig.tight_layout(); fig.savefig(FIG / "comparison.pdf", metadata={"CreationDate": None, "ModDate": None}); plt.close(fig)
     print("wrote figures/comparison.pdf")
 
@@ -54,7 +54,7 @@ def fig_reliability(corpus_path: Path) -> None:
     ax.axvline(0.05, color="#de2d26", ls="--", lw=1.2, label="$p=0.05$ cutoff")
     ax.set_xlabel("one-sided $p$-value of the top-vs-runner-up CTR difference")
     ax.set_ylabel("number of A/B tests")
-    ax.set_title(f"Legacy screen: {sig}/{len(pvals)} packages selected")
+    ax.set_title(f"Top-vs-runner-up screen: {sig}/{len(pvals)} packages selected")
     ax.legend(frameon=False, fontsize=8)
     fig.tight_layout(); fig.savefig(FIG / "reliability.pdf", metadata={"CreationDate": None, "ModDate": None}); plt.close(fig)
     print("wrote figures/reliability.pdf")

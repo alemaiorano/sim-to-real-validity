@@ -5,7 +5,7 @@ The ten-persona JSON is the reproducible input. Demographic inspiration~\citep{h
 is not a deterministic recipe for recreating behavioral descriptions. The unweighted panel is
 not an estimated population sample.
 
-\paragraph{Historical first-person template.}
+\paragraph{First-person template.}
 \begin{quote}\small
 You are simulating a specific person reacting to a news headline on social media in 2014.\\
 Person: \{persona description\} (age \{band\}, \{gender\}, mainly on \{platform\}, news
@@ -16,37 +16,37 @@ As this exact person, how likely are you to click this headline? Respond ONLY wi
 \end{quote}
 The exact templates, including quotation marks and the first-person, third-person, and baseline
 variants, are authoritative in the versioned collector. A prompt implementation alone does not
-establish a completed experiment. The new collection also uses fixed 2014 framing for all
+establish a completed experiment. The primary collection uses fixed 2014 framing for all
 headlines, including those created outside that year; it is not a date-specific audience
 reconstruction.
 
 \paragraph{Coverage and checkpoints.}
-Historical and new evidence use different policies. The historical diagnostic requires at least
-one recorded score for every variant, with means over available observations. The new matched
-experiment requires all planned scores in both arms for a primary package. Terminal failures,
+Coverage policies differ by analysis. The GPT scalar-checkpoint analysis requires at least
+one recorded score for every variant, with means over available observations. The primary
+matched-budget experiment requires all planned scores in both arms for a retained package. Terminal failures,
 request/choice indices, and exclusions are preserved. Configuration and source hashes prevent
 mixing protocols. Each Azure request has one seed shared by its three returned choices; there
-is no invented per-choice seed. Historical GPT requests did not send a seed.
+is no invented per-choice seed. GPT scalar-checkpoint collection requests did not send a seed.
 
 \paragraph{Raw artifact and replay.}
-The new collector appends and fsyncs a request record before dispatch and retains the exact
+The primary collector appends and fsyncs a request record before dispatch and retains the exact
 response bytes, status, usage, version, and parsing outcome afterward. Hash-chained journals
 are synchronously mirrored. Unknown outcomes after interruption remain unknown and are not
 silently regenerated. Offline analysis validates the request plan, input hashes, response hashes,
 and journal chain, then reparses the same immutable snapshot whose hash identifies the report.
 The replication bundle contains that snapshot, all inputs, request plans, aggregate reports,
-source history, and the recovered historical GPT scalar checkpoint. Replaying saved bytes
+source history, and the retained GPT scalar checkpoint. Replaying saved bytes
 requires no provider account and does not assert that future generations will match.
 
-\paragraph{Historical pilot and model comparison.}
+\paragraph{Supplementary pilot and model comparison.}
 Tables~\ref{tab:model_comparison} and \ref{tab:cross_model_gap} retain the pilot and cross-tier
-gap; shared package IDs are not retained in those summaries. Overlap of pilot CIs does not establish equivalence. The archived Upworthy comparison uses Gemini
+gap; shared package IDs are not retained in those summaries. Overlap of pilot CIs does not establish equivalence. The supplementary Upworthy comparison uses Gemini
 3.1 Flash-Lite. No cost comparison is available from the pilot report.
 \input{tables/model_comparison}
 \input{tables/cross_model_gap}
 
 \paragraph{Headline-ranking examples and panel.}
-Table~\ref{tab:error_examples} shows historically reported cases where the baseline found the observed winner
+Table~\ref{tab:error_examples} shows supplementary reported cases where the baseline found the observed winner
 and the panel did not; they are not representative causal evidence.
 Table~\ref{tab:persona_panel} presents the fixed panel descriptions. Full fields and grounding
 notes remain in \texttt{data/persona\_panel.json}.

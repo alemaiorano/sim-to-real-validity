@@ -1,19 +1,19 @@
 \section{Discussion and Limitations}
 The comparisons make a generic-reader baseline necessary for this task. A persona panel adds
 assumptions about audience composition and behavior that require predictive validation.
-The new matched-score comparisons favor the baseline in valid rank comparisons, expected top-1
+The primary matched-score comparisons favor the baseline in valid rank comparisons, expected top-1
 and captured lift, but do not establish a bottom-1 advantage. Gemini rank means exclude constant
 outputs with explicit arm-specific counts; top-1 retains those packages through expected tie
-credit. Historical Upworthy reports and the scalar GPT diagnostic also favor the baseline;
-historical Reddit decision metrics favor the panel. Excluding the documented randomization-risk
-period preserves the new top-1 and lift contrasts but leaves Gemini tau-b and Spearman uncertain.
+credit. Supplementary Upworthy reports and the GPT checkpoint analysis also favor the baseline;
+supplementary Reddit decision metrics favor the panel. Excluding the documented randomization-risk
+period preserves the primary top-1 and lift contrasts but leaves Gemini tau-b and Spearman uncertain.
 The ranking conclusion therefore depends on cohort and estimator, not just model configuration.
 
 \paragraph{Mechanism remains open.}
 The baseline may use general headline knowledge, while role-play may add unhelpful conditioning.
 Neither explanation was isolated experimentally. Similar score spreads, selected ranking examples,
 and rank-only aggregation failures cannot distinguish bias from noise or identify a mechanism.
-The new balanced, interleaved collection tests the panel/baseline comparison with retained raw
+The balanced, interleaved primary collection tests the panel/baseline comparison with retained raw
 responses, but does not separately manipulate demographic content, role-play, or response noise.
 It therefore does not by itself identify those mechanisms.
 The archive measures clicks on Upworthy's website, while the prompt frames a social-media
@@ -23,27 +23,27 @@ of the test audience. Intent versus engagement remains a construct-validity limi
 \paragraph{Ground truth and generalization.}
 The Upworthy archive documents a period of potentially invalid randomization
 \citep{matias2024correction}; our selected cohort includes affected-window tests. Our predictions
-rank recorded outcome rates, and neither an adjusted screen nor new model responses establishes
+rank recorded outcome rates, and neither an adjusted screen nor model responses establishes
 causal headline effects. The post-hoc exclusion sensitivity addresses one known risk window,
 not every possible allocation or image confound. Simultaneous screening addresses selection under approximate binomial tests; it does not make
 outcome measurements certain. Exclusion changes the target population and relative task difficulty.
 Failure to reject equality does not imply no predictor can recover an ordering.
 MIND and Reddit are observational; correlated exposures, time, image, audience mix, and topic
 may matter. Training contamination and generalization to current audiences or other formats
-are not excluded by a historical corpus.
+are not excluded by the archive corpus.
 
 \paragraph{Reproduction limits.}
 Aggregate reports allow reexport, not complete verification of their generating process.
-Historical Gemini observations and some historical report producers were not recovered. The GPT checkpoint
+Supplementary Gemini observations and some aggregate-report producers were not recovered. The GPT checkpoint
 supports replay and partial reanalysis, but range-checking stored scalars cannot retroactively
-validate the permissive parser. The new strict-parser observations have complete raw lineage and matched within-model score
-budgets; they are not mixed with legacy scores. Azure multi-choice and Gemini single-choice
+validate the permissive parser. The primary strict-parser observations have complete raw lineage and matched within-model score
+budgets; they are not mixed with supplementary scores. Azure multi-choice and Gemini single-choice
 requests differ operationally. Returned aliases are not immutable model snapshots, and request
 seeds do not guarantee determinism. A single collection session does not estimate provider drift
 or generation variability. Content filtering can cause exclusions associated with content or arm;
-the Azure technical pause also divides its collection in time. The historically selected cohort limits generalization.
+the Azure technical pause also divides its collection in time. The outcome-selected cohort limits generalization.
 Prompt robustness, deterministic demographic-to-panel construction, full Reddit subset lineage,
 and preregistration chronology remain evidence gaps.
 
-Preserving historical artifacts and separating retrospective analyses prevents numerical
-verification from being mistaken for empirical revalidation.
+The artifact package distinguishes aggregate reexport, scalar-checkpoint analysis and raw-response
+replay, so each reported comparison can be assessed within its available evidence.

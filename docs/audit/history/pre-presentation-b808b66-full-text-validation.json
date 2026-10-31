@@ -1,0 +1,80 @@
+{
+  "base_commit": "1326962cd6e3b4bb41f889737ffcbc8516655171",
+  "scope": "Standalone v2 source and new mathematical/CSV verification. Earlier raw replay/source review reused only for unchanged pinned components; their targets remain explicit.",
+  "tests_passed": 47,
+  "tests_log": "v2-audit/tests-csv-final.log",
+  "coverage": {
+    "paragraphs": 56,
+    "tables": 11,
+    "figures": 3,
+    "cited_references": 25
+  },
+  "formula_oracle": "v2-audit/formula-oracle-result.json",
+  "independent_csv": "v2-audit/ingestion-independent-result.json",
+  "numerical_assets_preserved": 16,
+  "pdf": {
+    "pages": 13,
+    "bytes": 368987,
+    "sha256": "03d0a905d62521fd32a70d796556562df91790f6a4bd2ec2e70bb468c8127c02",
+    "overfull": false,
+    "undefined_refs_or_cites": false,
+    "underfull_layout_messages": true,
+    "JSON_placeholder_literal_glyphs_verified": true
+  },
+  "own_erratum_audit_narrative_removed": true,
+  "external_Upworthy_Author_Correction_bibliography_title_preserved": true,
+  "automated-review": {
+    "initial_run": {
+      "reviewed_source_commit": "58051e9c1553e5712c8606f260e8ddbb9a9e7582",
+      "pdf_sha256": "bb46041c0f214ab0a83af3d85ae9bc5b4bc3f0d33ad7989fceabc882b1d9251a",
+      "tool_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
+      "exit_code": 0,
+      "meta_decision": "Weak Accept",
+      "overall_score": 6,
+      "confidence": 4,
+      "calls": 13,
+      "guard_passed": true,
+      "references_automatically_resolved": 23,
+      "references_total": 25,
+      "references_manual_primary_resolution": 2,
+      "claims_checker_counts": {
+        "supported": 3,
+        "unsupported": 0,
+        "uncertain": 1
+      },
+      "advisory_limits": "Review contains false positives and overbroad paraphrases; source/numeric evidence adjudication retained separately. No blanket scientific-acceptance claim.",
+      "artifacts": "v2-audit/automated-review-e2e and v2-audit/automated-review_ADJUDICATION.md",
+      "new_scientific_generations": 0
+    },
+    "final_run": {
+      "source_commit": "25a8b2c47f0090852abbc9ad23412e91ea3bffaf",
+      "pdf_sha256": "03d0a905d62521fd32a70d796556562df91790f6a4bd2ec2e70bb468c8127c02",
+      "final_native_exit": 0,
+      "final_meta_decision": "Weak Accept",
+      "overall_score": 6,
+      "confidence": 4,
+      "final_calls": 13,
+      "final_guard_raw_passed": false,
+      "final_guard_encoding_TikZ_false_positives": 6,
+      "native_claim_counts": {
+        "supported": 3,
+        "unsupported": 1,
+        "uncertain": 0
+      },
+      "native_reference_counts": {
+        "resolved": 23,
+        "total": 25,
+        "author_mismatches": 0
+      },
+      "manual_reference_primary_resolution": 2,
+      "tool_source_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
+      "review_prompt_version": "v3",
+      "manuscript_version": "v2",
+      "raw_review": "docs/audit/automated-review-v2-review.md",
+      "adjudication": "docs/audit/automated-review-v2-adjudication.md",
+      "semantics": "Native advisory review, not human editorial acceptance. Raw failed encoding/claim signals are preserved and adjudicated; no blanket PASS is asserted. Full SDK journals stay in the separate retained companion."
+    }
+  },
+  "replication": "Frozen exact inputs retained; new newline-aware ingester is not used to mutate saved-generation inputs.",
+  "clean_bundle_byte_replay": "v2-audit/v2-bundle-replay.json"
+}
