@@ -62,8 +62,12 @@ from the pinned release; those line numbers do not describe the revised source.
 
 See [validation record](../../audit/validation.json), [reanalysis provenance](../../../reanalysis/2026-10-31/provenance.json)
 and [replication commands](../../../REPLICATION.md).
-The frozen implementation will receive a fresh read-only diff review. Self-checks and the earlier
-plan consensus are not independent implementation QA.
+A fresh Astra high PR Review approved implementation target
+`a04f6582ee9ff72023618db108f6a63ccb3a073d` with no P0/P1. Its single P2 editorial note
+was to label the pilot's n as total coverage and disclose unknown coefficient-specific valid
+counts directly in that caption; this follow-up makes that change. The final commit receives
+a bounded review of the amended caption/build and unchanged evidence boundaries.
+Self-checks and the earlier plan consensus are not independent implementation QA.
 
 No push, merge, arXiv submission, outbound email, endorsement, deployment, or paid generation
 was performed. Missing Gemini raw is an explicit scientific limitation, not a reason to invent
