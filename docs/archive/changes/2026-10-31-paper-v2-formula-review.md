@@ -73,3 +73,13 @@ After review, only REPLICATION's v2clonebranch/request-default explanation and t
 records change. The manuscript/PDF, raw inputs, all scientific reports and statistical source
 remain byte-identical to the reviewed target. Current-source hash binding and final archive/
 retention receipts are external; prior full versions remain intact.
+
+## Final rendered JSON amendment
+
+PDFtext inspection caught OT1 roman angle placeholders rendered as inverted punctuation in
+the appendix JSON example. Typeset that single example using two short verbatim spans; now
+literal quotes, underscore and angle brackets extract correctly, without overfull boxes.
+Scientific tables, raws, estimators and actual prompts remain unchanged. Preserve initial native
+review, then run one final e2e on the new PDF/immutable source so the final review covers its
+rendering. The same task envelope20USD/35SDKattempts is shared with the earlier13calls/≈0.7994USD;
+no rerun is authorized merely to seek a more favorable decision. Final receipts stay external.
