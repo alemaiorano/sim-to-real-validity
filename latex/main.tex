@@ -31,10 +31,11 @@
 % Numbers come ONLY from variables.tex (auto-generated). Never hand-type a number.
 \input{variables}
 \input{reanalysis_variables}
+\input{recollection_variables}
 
 \title{Do Synthetic Personas Predict Real Audience Response?\\
 A Headline-Ranking Study with a Generic-Reader Baseline\\
-Historical Results and a Partial Corrected Reanalysis}
+Corrected Methods and a Matched-Budget Recollection}
 
 \author{Alexandre Cristov\~ao Maiorano\\
 \texttt{alexandre@lumytics.com}}
@@ -65,10 +66,14 @@ exporters, aggregate historical reports, the fixed panel, and original corpus ma
 Reexporting these reports reproduces their displayed numbers, not their generation from raw
 observations. Original reports are hash-pinned and unchanged. Separate corrected GPT derivatives,
 input hashes, and offline replay verification are in \texttt{reanalysis/2026-10-31/}.
-The recovered checkpoint is not redistributed. Independent recomputation requires the exact
-checkpoint and corpus, and historical Gemini observations remain missing. New generations are
-new experiments, not substitutes for those observations. \texttt{REPLICATION.md} distinguishes
-these tiers and limitations.
+A separate replication bundle retains the recovered historical GPT scalar checkpoint, exact
+exploratory inputs, and the new matched-budget experiment: all raw response bytes, request and
+observation plans, immutable journal snapshots, coverage, package metrics, and source history.
+Committed new aggregate reports and hash provenance are in \texttt{recollection/2026-10-31/}.
+Offline raw replay needs no provider account. Historical Gemini observations remain missing; new
+generations do not restore them. \texttt{REPLICATION.md} distinguishes these evidence tiers.
+This is a local revision and artifact prepared for deposition, not a claim that this bundle is
+already available at the public repository URL.
 
 \section*{Ethics and Conflict of Interest}
 The study uses public archive data and synthetic personas; no new human subjects were recruited.
@@ -82,8 +87,9 @@ AI coding assistants were used for code, analysis, literature checks, and manusc
 The historical manuscript disclosed Claude and GPT-family assistance. This correction also used
 Codex and an Astra high subagent to challenge the correction plan. These tools do not supply
 independent empirical validation; the author remains responsible for the work.
-The evaluated models are the historical Gemini configurations and GPT-4.1 recorded in the reports.
-No paid model experiments were run for the correction.
+The evaluated models include the historical configurations and the new Gemini 3.1 Flash-Lite
+and Azure GPT-4.1 collection. Returned model metadata are retained with each response; the new
+run uses provider aliases rather than claiming immutable future model behavior.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

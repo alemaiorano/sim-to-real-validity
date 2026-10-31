@@ -7,7 +7,7 @@ do not specify a deterministic behavioral-profile generator or establish represe
 
 \paragraph{Elicitation and aggregation.}
 The prompt requests JSON with a \texttt{click\_intent} number in $[0,1]$
-(Appendix~\ref{sec:appendix}). The primary collector averages recorded observations:
+(Appendix~\ref{sec:appendix}). Scores are averaged across recorded observations:
 \[
 \widehat{s}(v)=\frac{1}{|O_v|}\sum_{(i,d)\in O_v}y_{i,d}(v).
 \]
@@ -16,9 +16,10 @@ differ from the historical H5 mean, which weights draw-collapsed personas equall
 evaluated alternative aggregations; they were not wholly left to future work.
 
 \paragraph{Sampling and parsing.}
-The main Gemini configuration uses temperature $0.8$, three draws per persona and thirty generic
-baseline draws per variant. GPT-4.1 instead uses three draws per persona versus ten baseline draws.
-Gemini forwards generation seeds; the GPT runner sends none. Seeds alone cannot guarantee identical
+The historical Gemini configuration used temperature $0.8$, three draws per persona and thirty
+generic baseline draws per variant. The historical GPT-4.1 run instead used three draws per persona
+versus ten baseline draws and sent no generation seed. The new experiment below matches the score
+budget and records request seeds for both providers. Seeds alone do not guarantee identical
 provider responses over time.
 
 The legacy parser could extract a first number, clamp values, and accept booleans. Invalid parsing

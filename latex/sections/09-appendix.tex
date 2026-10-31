@@ -19,10 +19,22 @@ variants, are authoritative in the versioned collector. A prompt implementation 
 establish a completed experiment.
 
 \paragraph{Coverage and checkpoints.}
-Each arm requires a score for every variant, not successful completion of every planned draw.
-The primary mean averages remaining observations. New collectors record terminal invalid/missing
-outputs and bind checkpoints to protocol and configuration hashes. Transport errors have bounded
-retries; invalid parsing is not retried. Gemini forwards draw-specific seeds; GPT has no seed parameter.
+Historical and new evidence use different policies. The historical diagnostic requires at least
+one recorded score for every variant, with means over available observations. The new matched
+experiment requires all planned scores in both arms for a primary package. Terminal failures,
+request/choice indices, and exclusions are preserved. Configuration and source hashes prevent
+mixing protocols. Each Azure request has one seed shared by its three returned choices; there
+is no invented per-choice seed. Historical GPT requests did not send a seed.
+
+\paragraph{Raw artifact and replay.}
+The new collector appends and fsyncs a request record before dispatch and retains the exact
+response bytes, status, usage, version, and parsing outcome afterward. Hash-chained journals
+are synchronously mirrored. Unknown outcomes after interruption remain unknown and are not
+silently regenerated. Offline analysis validates the request plan, input hashes, response hashes,
+and journal chain, then reparses the same immutable snapshot whose hash identifies the report.
+The replication bundle contains that snapshot, all inputs, request plans, aggregate reports,
+source history, and the recovered historical GPT scalar checkpoint. Replaying saved bytes
+requires no provider account and does not assert that future generations will match.
 
 \paragraph{Historical pilot and model comparison.}
 Tables~\ref{tab:model_comparison} and \ref{tab:cross_model_gap} retain the pilot and cross-tier

@@ -26,13 +26,49 @@ further limit these assumptions. In the restored corpus \newSelectedN{} packages
 the historical selected set. A stricter screen does not demonstrate that removed packages had
 false winners.
 
+\paragraph{New matched-budget collection.}
+After recovery attempts failed to locate the historical Gemini observations, we froze a new
+protocol and its source before collection. Both Gemini 3.1 Flash-Lite and Azure GPT-4.1 score
+every variant of the same \newSelectedN{}-package corrected exploratory cohort. This cohort
+was selected from previously examined outcomes; it is not a new held-out population, nor a
+recovery of historical generations. No new MIND, Reddit, other Upworthy split, prompt-robustness,
+or multi-seed experiment is claimed.
+
+Each variant receives three observations for each of ten fixed personas and thirty generic-reader
+observations. Package and variant order is shuffled with a recorded seed; baseline/persona
+requests are interleaved with randomized order within pairs. Temperature is $0.8$, JSON output
+is requested, and output is limited to 64 tokens per choice. Gemini uses single-choice requests
+with MINIMAL thinking. Azure uses three indexed choices per request in both arms: ten requests
+per arm and variant. We match the number of retained scores within each model, not an identical
+transport or inference protocol across providers. Token use and monetary cost are not equalized.
+Choices in one request are not assumed
+independent. Request seeds, exact prompts, responses, returned model identities, usage, and
+failures are preserved. Provider aliases and best-effort seeds do not establish future replay
+of generations.
+
+The primary analysis retains a package only when every planned observation is valid in both
+arms for all its variants. This also makes equal-persona and observation-weighted panel means
+identical. Failures are never replaced with additional semantic draws; bounded retries address
+transport errors only. Available-observation arm summaries are reported separately as sensitivity
+analyses, with their own coverage. The new primary policy is stricter than the historical
+requirement of at least one valid score per variant. Operational compatibility probes are retained
+separately and excluded. An Azure prompt refusal initially triggered a global HTTP400 stop. Before comparative analysis,
+a documented technical amendment classified only the confirmed content-filter error type as
+terminal missing while allowing unrelated planned requests to continue. The blocked request is
+not retried or rewritten; filtering remains active. Original journal bytes, the pause, source
+versions and the amendment marker are preserved. Other permanent errors and budget stops remain
+blocking. This is a response to an observed technical incident, not a preregistered amendment.
+The fixed cohort closes before inspecting comparative performance;
+there is no outcome-dependent stopping or choice of model after observing results.
+
 \paragraph{Estimation and denominators.}
 Package metrics are averaged without size weighting. Corrected reports include
 $n_{\mathrm{total}},n_{\mathrm{valid}},n_{\mathrm{undefined}}$ and metric-specific package IDs.
 Each paired gap uses packages valid in both arms for that metric. Empty estimates are undefined,
 not zero. Percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$
 \citep{efron1979bootstrap}. They condition on selection and recorded scores and omit generation,
-selection, and outcome-measurement uncertainty. Historical coefficient-specific valid counts
+selection, and outcome-measurement uncertainty. These are pointwise estimation intervals, not
+simultaneous guarantees across metrics or models. Historical coefficient-specific valid counts
 are not fully recorded; coverage totals are not those denominators.
 
 \paragraph{Planning and robustness scope.}

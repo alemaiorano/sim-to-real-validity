@@ -1,6 +1,7 @@
 # Data sources and versioned ingestion
 
-Corpora are public third-party sources and are not redistributed. Original manifests under
+Corpora are public third-party sources. Full corpora are not committed as Git blobs; the separate
+replication bundle retains the exact exploratory inputs used for the new experiment. Original manifests under
 `datasets/` remain evidence of the original locks; changing analysis code does not rewrite them.
 Reexporting aggregated reports is distinct from regenerating corpora or recomputing statistics.
 
@@ -71,7 +72,8 @@ The released artifacts do not document that subset-selection procedure.
 ## Preservation and availability
 
 New builders require an absent destination directory and preserve historical locks.
-Only manifests, not full corpora, are committed. The GPT scalar checkpoint needed for the
-offline diagnostic is not a third-party public corpus and is not distributed here.
+Only manifests, not full corpora, are committed. The separate replication bundle includes the
+exact exploratory CSV and derived corpus, panel, and recovered historical GPT scalar checkpoint.
+The historical GPT file contains post-parser scores, not original provider response texts.
 Exact input hashes and commands are in REPLICATION. New generation cannot recover missing
 historical observations exactly.

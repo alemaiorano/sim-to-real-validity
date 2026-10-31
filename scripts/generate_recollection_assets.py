@@ -56,7 +56,7 @@ def main():
             "Percentile bootstrap CIs condition on this cohort and these recorded generations. "
             "Undefined coefficients are omitted with their denominators disclosed.")
         if backend == "azure":
-            caption += " Each Azure request returned three indexed choices; choices are not assumed independent."
+            caption += " Azure requested three indexed choices per call; choices are not assumed independent."
         rows = []
         for key in cv.METRICS:
             panel, base = primary["panel"][key], primary["baseline"][key]
@@ -80,6 +80,8 @@ def main():
         variables += [
             macro(prefix + "N", report["n_primary_packages"]),
             macro(prefix + "ExcludedN", len(report["excluded_primary_package_ids"])),
+            macro(prefix + "PanelRankUndefinedN", report["primary"]["panel"]["kendall_tau_b"]["n_undefined"]),
+            macro(prefix + "BaselineRankUndefinedN", report["primary"]["baseline"]["kendall_tau_b"]["n_undefined"]),
         ]
         for arm, suffix in [("panel", "Panel"), ("baseline", "Baseline")]:
             values = report["primary"][arm]

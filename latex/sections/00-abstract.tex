@@ -1,17 +1,21 @@
 \begin{abstract}
 Do demographic personas improve an LLM's prediction of audience engagement? We compare a fixed
-ten-persona panel with a generic-reader baseline on Upworthy headlines, with additional news and
-Reddit comparisons. This revision corrects metric identity, selection, ties, and claims in the
-original release. Historical Upworthy estimates favor the baseline: Goodman--Kruskal
-$\gamma=\baseGamma{}$ versus $\goodmanGamma{}$, and top-1 \baseTopOne{} versus \topOneAcc{}.
-These used a post-selection one-sided winner screen and first-index tie breaking; they remain
-historical results, not corrected Kendall estimates. The baseline does not dominate every dataset:
-Reddit top-1 and captured lift favor the panel. A retrospective GPT-4.1 diagnostic uses a two-sided,
-multiplicity-adjusted winner screen, explicit metric denominators, and expected credit for tied
-choices. On \correctedPairedN{} paired packages, its baseline advantage persists. This diagnostic
-reuses recorded post-parser values, retains unequal sampling budgets, and cannot validate original
-responses. Historical Gemini observations were unavailable for equivalent reanalysis. The evidence
-supports a baseline comparison for the tested configurations, not a general causal claim about
-persona harm. Public reports support numerical verification; complete historical reproduction
-from raw observations remains incomplete.
+ten-persona panel with a generic-reader baseline on Upworthy headlines, with historical news and
+Reddit comparisons. An artifact audit found that the original ``Kendall tau'' was Goodman--Kruskal
+gamma, winner screening selected its direction from observed outcomes, and some conclusions exceeded
+the reports. We preserve historical results with corrected labels, provide a retrospective GPT-4.1
+scalar-checkpoint diagnostic, and collect new Gemini 3.1 Flash-Lite and GPT-4.1 observations on the
+same \newSelectedN{}-package corrected exploratory cohort. The new experiment matches thirty scores
+per arm and variant within model, retains exact raw responses, and discloses metric-specific valid
+and paired counts. Its baseline-minus-panel Kendall $\tau_b$ gap is \newGeminiGapTau{}
+(CI [\newGeminiGapTauLow{}, \newGeminiGapTauHigh{}]) for Gemini and \newGptGapTau{}
+(CI [\newGptGapTauLow{}, \newGptGapTauHigh{}]) for GPT-4.1, on respectively
+\newGeminiPairedTauN{} and \newGptPairedTauN{} valid rank pairs. Expected top-1 is
+\newGeminiPanelTopOne{} versus \newGeminiBaselineTopOne{} for Gemini and \newGptPanelTopOne{}
+versus \newGptBaselineTopOne{} for GPT-4.1 (panel versus baseline). These intervals condition on the
+selected cohort and recorded generations. Historical Reddit top-1 and captured lift favor the
+panel, contradicting a prior blanket baseline-superiority claim. The new collection supplies a
+raw-replay artifact, not recovered historical Gemini scores, a new held-out population, or evidence
+of universal persona harm. Provider request protocols differ across models, and no causal mechanism
+is isolated.
 \end{abstract}

@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-31",
+  "protocol": "paired-raw-retained-v2",
+  "plan_sha256": "83d3dd440a5609e5412f7d8a1ce21f572f2314643ea6ae6e1e45b0c92742788b",
+  "report_sha256": {
+    "gemini": "2b5038153ff4a4f7cfb0a016728b747ef5f60d4fb38e8d5ba1b6dc01461d24a1",
+    "azure": "c9ec473919e78133a8ca0633dc53c6a40611d47d62ed4182fe84b161ab1460ad"
+  },
+  "journal_sha256": {
+    "gemini": "9c9477ed413f8867a22e98dd729eebba21b35b349233ea30529431e2faef06da",
+    "azure": "587853ce1d7e3340e1410facc9d75deed8430d5d070d8520cdd97498d0440355"
+  },
+  "input_sha256": {
+    "corpus.json": "523034f1fd86d4a432a57b29eb25230418dba119c3367ec04622815114cc9f85",
+    "panel.json": "3ff13e5eb82486ed0de24ccfad7e6a0844de053c29f5f056fb636432b329aaac",
+    "source.csv": "8368313b060f4015a0c6fb34e6d788163cee29554144aba9390b14922eb9d8ce"
+  },
+  "collector_original_source": "cba15e9cd676ba9c871f873e1b6ad3bc7b094996",
+  "azure_technical_amendment_source": "b1836a5de5ae727e7650b82a4f1bc38039ee6556",
+  "analysis_and_initial_export_source": "3e1e32baa2e5fb85cd843a6ea8ad27379f055db6",
+  "azure_amendment_sha256": "39daee344555394bd9834533a1da7bc8f11802f7ab574b6e102ca05ce488d836",
+  "python_exact_reproduction": "CPython3.12.3 Linux/WSL",
+  "n_eligible_packages": 190,
+  "n_variants": 601,
+  "planned_observations_per_model": 36060,
+  "primary_policy": "all_planned_observations_valid_in_both_arms_for_every_variant",
+  "raw_artifact": "separate replication bundle; not a Git blob",
+  "scope": "new generations on historically selected exploratory cohort; not historical-data recovery; no model-family causal inference"
+}
