@@ -5,7 +5,21 @@ For exact new-report reproduction use CPython 3.12.3 on Linux/WSL
 `pip install -r requirements.txt`; PDF compilation also needs
 `pdflatex` and `bibtex`. Run commands from the repository root.
 
-## 1. Reexport reports and build the revised PDF
+## 1. Reexport reports and build the PDF
+
+The public Git package supports this section without a private checkpoint or raw corpus:
+
+```bash
+make verify
+make reproduce
+make verify
+make test
+```
+
+`REPLICATION_SHA256SUMS` covers the listed versioned payload; Git records the checksum file.
+The Makefile delegates to the existing exporter scripts and does not add another metric engine.
+For the raw replay commands in sections 2 and 4–5, restore the separate companion first; it is
+not included as Git blobs or provided by a public download URL in this package.
 
 Run the exporters listed in README. They verify hashes before reading historical reports.
 `generate_reanalysis_assets.py` separately reads the committed historical GPT derivative and selection
@@ -150,7 +164,7 @@ The report intervals resample packages and condition on selection and recorded g
 Available-observation sensitivity has different coverage and must not replace the primary result.
 
 Exact request bodies are authoritative for generation parameters. Both backends explicitly
-send temperature0.8 and a request seed. Neither backend explicitly sets top-p or frequency /
+send temperature 0.8 and a request seed. Neither backend explicitly sets top-p or frequency /
 presence penalties; no fixed numerical provider default is asserted. Gemini's thinking level
 is MINIMAL. Azure sends three choices per request symmetrically in both arms. The complete
 first-person, third-person and baseline prompt strings are in the versioned collector and
