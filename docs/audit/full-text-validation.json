@@ -1,87 +1,27 @@
 {
-  "base_commit": "1d99c5a8d6964f9b7ddb191cf6523bb91b584330",
-  "sensitivity_code_frozen_before_results_commit": "3b688e586712cf042f763b1f0b223c9d78a8d696",
-  "profile": "Vibe Coding implementation verification; independent focal review follows on frozen target",
-  "scope": "All current manuscript source paragraphs, tables/captions/figures, numerical interpretations, citations and original criticism/plan; historical missing observations remain missing.",
-  "provider_calls": 0,
+  "base_commit": "1326962cd6e3b4bb41f889737ffcbc8516655171",
+  "scope": "Standalone v2 source and new mathematical/CSV verification. Earlier raw replay/source review reused only for unchanged pinned components; their targets remain explicit.",
+  "tests_passed": 47,
+  "tests_log": "v2-audit/tests-csv-final.log",
   "coverage": {
     "paragraphs": 56,
-    "table_files": 10,
     "tables": 11,
     "figures": 3,
-    "cited_references": 25,
-    "ordered_author_lists_checked": 25
+    "cited_references": 25
   },
-  "checks": {
-    "tests": {
-      "passed": 46,
-      "log": "audit-full-text/tests-serialization-final.log"
-    },
-    "primary_raw_restore_replay": {
-      "both_reports_byte_identical": true,
-      "restored_archive_files_verified": 132,
-      "record": "audit-full-text/restore-drill-result.json"
-    },
-    "original_gpt_scalar_replay": {
-      "observations": 59474,
-      "differences": 0,
-      "original_response_texts_available": false,
-      "record": "audit-full-text/legacy-gpt-fresh-verification.json"
-    },
-    "corpus_rebuild": {
-      "packages": 1695,
-      "variants": 6978,
-      "same_variant_records": true,
-      "same_selected190_ids": true,
-      "record": "audit-full-text/corpus-fresh-verification.json"
-    },
-    "sensitivity_independent_oracle": {
-      "means_counts_ids_all_36_pointwise_intervals_match": true,
-      "record": "audit-full-text/window-independent-oracle.json"
-    },
-    "asset_reexport": {
-      "outputs": 16,
-      "byte_identical": true,
-      "record": "audit-full-text/all-exporters-final-verification.json"
-    },
-    "numeric_interpretations": "audit-full-text/numeric-claim-checks.json",
-    "historical_files_unchanged": "audit-full-text/preserved-science.json",
-    "pdf": {
-      "pages": 13,
-      "bytes": 367507,
-      "sha256": "67add401d8581ff255e5a5448b036e701a77f728070e368e2b79bed952a09463",
-      "undefined_citations_or_refs": false,
-      "overfull_boxes": false,
-      "underfull_layout_messages": true,
-      "visual_contact_sheet_reviewed": true
-    },
-    "citations": {
-      "undefined": 0,
-      "orphan_floats": 0,
-      "unused_section_labels": 6,
-      "not_a_scientific_failure": true
-    }
+  "formula_oracle": "v2-audit/formula-oracle-result.json",
+  "independent_csv": "v2-audit/ingestion-independent-result.json",
+  "numerical_assets_preserved": 16,
+  "pdf": {
+    "pages": 13,
+    "bytes": 367337,
+    "sha256": "bb46041c0f214ab0a83af3d85ae9bc5b4bc3f0d33ad7989fceabc882b1d9251a",
+    "overfull": false,
+    "undefined_refs_or_cites": false,
+    "underfull_layout_messages": true
   },
-  "retention": {
-    "user_selected_offsite": "Windows OneDrive personal",
-    "prior_version_client_in_sync": true,
-    "record": "audit-full-text/onedrive-v1-sync.json",
-    "linux_sealed_modes": "0555 directories,0444 files",
-    "windows_new_vault_delete_write_denials_tested": true,
-    "disposable_copy_deleted_and_restored": true,
-    "limitation": "Owner/admin can unseal. Local Linux/Windows share SSD; OneDrive IN_SYNC is provider-client evidence, not independent server download. Final archive will receive separate external hash/sync/retention receipts."
-  },
-  "unresolved_historical_limits": [
-    "Historical Gemini observations missing",
-    "Original GPT response texts missing",
-    "Some historical producers/draw metadata/subsetIDs missing",
-    "Reddit subset selection unknown",
-    "Complete preregistration chronology not established",
-    "No new prompt/multiseed/other-dataset experiments",
-    "Remaining outside-window tests not individually certified randomized"
-  ],
-  "serialization_amendment": {
-    "base_reviewed_commit": "20bbf2576f8efa76ac04eec07820d5af76264389",
-    "reason": "Different source-date dictionary order across interpreter hash seeds prevented byte cmp, though every scientific field already matched. Canonical key order repairs exact serialization; no scientific rule/results changed."
-  }
+  "own_erratum_audit_narrative_removed": true,
+  "external_Upworthy_Author_Correction_bibliography_title_preserved": true,
+  "automated-review": "Pending final-source review run; generated outputs and runtime pins retained in separate v2-audit bundle",
+  "replication": "Frozen exact inputs retained; new newline-aware ingester is not used to mutate saved-generation inputs."
 }

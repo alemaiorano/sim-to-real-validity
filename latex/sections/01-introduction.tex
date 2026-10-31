@@ -1,25 +1,23 @@
 \section{Introduction}
-\label{sec:correction}
 LLM-based audience simulation offers a way to compare messages before live testing.
 Demographic conditioning can approximate aspects of survey samples~\citep{argyleSiliconSampling},
 but a copy-ranking system must predict measured engagement. We study this narrower question with
 Upworthy headline experiments~\citep{matiasUpworthy}.
 
-\paragraph{Revision and evidence status.}
-An external artifact review prompted a full consistency audit of release \texttt{7c1ab46}.
-The tables reproduce stored reports, but that agreement does not validate the estimators.
-The original rank implementation computed Goodman--Kruskal gamma while the paper called it
-Kendall tau. The winner screen selected the observed best arm before a one-sided test.
-Undefined coefficients were excluded without effective denominators. Claims about baseline
-superiority everywhere, prompt robustness, and a causal explanation also exceeded the artifacts.
+We compare a fixed ten-persona panel with a generic-reader baseline using a matched-budget
+experiment on a simultaneously screened Upworthy cohort. Both model configurations allocate the
+same number of scores to each arm and variant, preserve raw responses, and report distinct rank
+and decision metrics with explicit denominators. The primary analysis uses uniform expected
+credit for tied decisions and per-metric paired contrasts; a post-hoc period-exclusion sensitivity
+examines the archive's documented randomization risk. The cohort contains previously examined
+outcomes, so this is an exploratory evaluation rather than a new held-out test.
 
-This revision distinguishes historical tables, retaining original numbers with corrected labels,
-from an offline historical GPT-4.1 diagnostic and a new matched-budget experiment. The diagnostic
-reuses recovered checkpoint scores after replay of the pinned original producer reproduces the
-published report; it cannot undo historical response parsing or unequal budgets. The new experiment
-collects both model families on the same corrected Upworthy cohort, with raw responses preserved
-and matched score counts within each model. It addresses those collection limitations for new
-observations, without retroactively validating historical generations or other datasets.
+Supplementary evidence includes archived aggregate comparisons and a retrospective GPT-4.1
+scalar-checkpoint diagnostic. These use different collection budgets, winner screens, and tie
+rules and are reported separately. Reexporting an aggregate does not reconstruct its raw
+observations; replaying historical scalars cannot validate absent response texts. The new
+experiment supplies raw-backed evidence for its own protocol without retroactively validating
+those archived generations or the other datasets.
 
 We ask (RQ1) how this panel and generic baseline compare within tested packages, (RQ2) how
 agreement varies with the observed outcome signal, and (RQ3) what the dataset, aggregation,

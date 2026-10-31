@@ -1,5 +1,4 @@
 \section{Sim-to-Real Validity Framework}
-\label{sec:framework}
 A package contains variants with observed outcome rates and predicted scores
 (Figure~\ref{fig:protocol}). Upworthy was designed for randomized traffic, but the archive authors document randomization
 problems during part of 2013--2014~\citep{matias2024correction}. We report observed rate rankings;
@@ -11,20 +10,20 @@ Within-package ranking does not establish absolute CTR calibration or a causal c
 in observational data.
 
 \paragraph{Metric identity.}
-For concordant and discordant pair counts $C,D$, the historical implementation used
+For concordant and discordant pair counts $C,D$, Goodman--Kruskal gamma is
 \[
 \gamma=(C-D)/(C+D),
 \]
 discarding pairs tied in either variable~\citep{goodman1954}. It is undefined when $C+D=0$ and
-is not Kendall $\tau_b$. The corrected code separately computes
+differs from Kendall $\tau_b$, which accounts for ties:
 \[
 \tau_b=\frac{C-D}{\sqrt{(C+D+T_x)(C+D+T_y)}},
 \]
 where $T_x,T_y$ count pairs tied only in the respective variable~\citep{kendall1945ties}.
 Spearman uses average ranks~\citep{spearman1904}. Constant rank inputs yield undefined values.
 
-Corrected top-1 and bottom-1 use uniform expected credit:
+The primary experiment uses uniform expected top-1 and bottom-1 credit:
 $|S_{\mathrm{pred}}\cap S_{\mathrm{real}}|/|S_{\mathrm{pred}}|$ for the corresponding extreme
 sets. Captured lift averages observed rates across tied predicted maxima, then scales distance
 from the observed minimum by the observed range. Constant outcomes make lift undefined.
-Historical top-1 selected the first maximum and remains ordering-dependent.
+Archived top-1 results use the first maximum and therefore depend on variant order.

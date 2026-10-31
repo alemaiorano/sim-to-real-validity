@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import io
 import json
 import math
 import random
@@ -74,7 +75,7 @@ def load_rows(csv_path: Path) -> tuple[list[dict], str]:
         )
     raw = csv_path.read_bytes()
     src_sha256 = hashlib.sha256(raw).hexdigest()
-    reader = csv.DictReader(raw.decode("utf-8").splitlines())
+    reader = csv.DictReader(io.StringIO(raw.decode("utf-8"), newline=""))
     missing = [c for c in (COL_PACKAGE, COL_HEADLINE, COL_IMPRESSIONS, COL_CLICKS)
                if c not in (reader.fieldnames or [])]
     if missing:

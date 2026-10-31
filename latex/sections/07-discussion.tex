@@ -1,5 +1,4 @@
 \section{Discussion and Limitations}
-\label{sec:discussion}
 The comparisons make a generic-reader baseline necessary for this task. A persona panel adds
 assumptions about audience composition and behavior that require predictive validation.
 The new matched-score comparisons favor the baseline in valid rank comparisons, expected top-1
@@ -12,7 +11,7 @@ The ranking conclusion therefore depends on cohort and estimator, not just model
 
 \paragraph{Mechanism remains open.}
 The baseline may use general headline knowledge, while role-play may add unhelpful conditioning.
-Neither explanation was isolated experimentally. Similar score spreads, selected error examples,
+Neither explanation was isolated experimentally. Similar score spreads, selected ranking examples,
 and rank-only aggregation failures cannot distinguish bias from noise or identify a mechanism.
 The new balanced, interleaved collection tests the panel/baseline comparison with retained raw
 responses, but does not separately manipulate demographic content, role-play, or response noise.
@@ -22,12 +21,12 @@ reader in 2014 and omits the image. This platform/time framing is not an exact r
 of the test audience. Intent versus engagement remains a construct-validity limitation~\citep{cronbach1955construct}.
 
 \paragraph{Ground truth and generalization.}
-The Upworthy correction documents a period of potentially invalid randomization
+The Upworthy archive documents a period of potentially invalid randomization
 \citep{matias2024correction}; our selected cohort includes affected-window tests. Our predictions
 rank recorded outcome rates, and neither an adjusted screen nor new model responses establishes
 causal headline effects. The post-hoc exclusion sensitivity addresses one known risk window,
-not every possible allocation or image confound. The corrected screen addresses selection under approximate binomial tests; it does not make
-outcomes error-free. Exclusion changes the target population and relative task difficulty.
+not every possible allocation or image confound. Simultaneous screening addresses selection under approximate binomial tests; it does not make
+outcome measurements certain. Exclusion changes the target population and relative task difficulty.
 Failure to reject equality does not imply no predictor can recover an ordering.
 MIND and Reddit are observational; correlated exposures, time, image, audience mix, and topic
 may matter. Training contamination and generalization to current audiences or other formats
@@ -46,5 +45,5 @@ the Azure technical pause also divides its collection in time. The historically 
 Prompt robustness, deterministic demographic-to-panel construction, full Reddit subset lineage,
 and preregistration chronology remain evidence gaps.
 
-Preserving historical artifacts and separating corrected derivatives prevents numerical
+Preserving historical artifacts and separating retrospective analyses prevents numerical
 verification from being mistaken for empirical revalidation.

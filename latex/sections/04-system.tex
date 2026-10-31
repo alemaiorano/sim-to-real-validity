@@ -1,5 +1,4 @@
 \section{Method Under Test}
-\label{sec:system}
 The study harness scores each headline with either a demographic persona or a generic reader.
 It operates independently of any commercial product. The fixed ten-persona JSON takes inspiration
 from Upworthy-era U.S.\ social-media demographics~\citep{holcomb2013newsuse}. These descriptors
@@ -12,8 +11,7 @@ The prompt requests JSON with a \texttt{click\_intent} number in $[0,1]$
 \widehat{s}(v)=\frac{1}{|O_v|}\sum_{(i,d)\in O_v}y_{i,d}(v).
 \]
 With complete draws this equals the mean over personas and draws. With missing draws it can
-differ from the historical H5 mean, which weights draw-collapsed personas equally. H5 already
-evaluated alternative aggregations; they were not wholly left to future work.
+differ from the historical H5 mean, which weights draw-collapsed personas equally. The supplementary aggregation comparison evaluates these alternative rules.
 
 \paragraph{Sampling and parsing.}
 The historical Gemini configuration used temperature $0.8$, three draws per persona and thirty
@@ -22,8 +20,8 @@ versus ten baseline draws and sent no generation seed. The new experiment below 
 budget and records request seeds for both providers. Seeds alone do not guarantee identical
 provider responses over time.
 
-The legacy parser could extract a first number, clamp values, and accept booleans. Invalid parsing
-could terminate without retry. Historical event frequencies are unknown. The revised collector
+Archived scalars were produced by a permissive parser that could extract a first number,
+clamp values, and accept booleans; event frequencies are unknown. The matched-budget collector
 accepts only a finite, non-boolean JSON number in range under the exact requested key. Invalid
 parses are recorded as terminal missing observations. Configuration hashes and a new protocol
 namespace prevent mixing new checkpoints with legacy scores.
