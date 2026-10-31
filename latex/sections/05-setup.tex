@@ -84,13 +84,13 @@ The fixed cohort closes before inspecting comparative performance;
 there is no outcome-dependent stopping or choice of model after observing results.
 
 \paragraph{Estimation and denominators.}
-Package metrics are averaged without size weighting. The displayed means describe the recorded
+Primary package metrics are averaged without size weighting. The displayed means describe the recorded
 packages. Bootstrap intervals summarize between-package resampling variability conditional on
 the selection rule and recorded scores; interpreting them for a population of similarly selected
 experiments additionally assumes that these packages are exchangeable independent units. Raw-backed reports include
 $n_{\mathrm{total}},n_{\mathrm{valid}},n_{\mathrm{undefined}}$ and metric-specific package IDs.
 Each paired gap uses packages valid in both arms for that metric. Empty estimates are undefined,
-not zero. Percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$
+not zero. Primary and period-exclusion percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$
 \citep{efron1979bootstrap}. They condition on selection and recorded scores and omit generation,
 selection, and outcome-measurement uncertainty. These are pointwise estimation intervals, not
 simultaneous guarantees across metrics or models. Resampling treats experiment IDs as independent
