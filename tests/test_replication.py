@@ -15,6 +15,7 @@ from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class ReplicationTests(unittest.TestCase):
@@ -30,8 +31,8 @@ class ReplicationTests(unittest.TestCase):
         self.corpus.write_text(json.dumps([
             {"package_id": "synthetic-package", "winner_significant": True,
              "variants": [
-                 {"variant_id": "a", "headline": "Headline A", "real_ctr": 0.1},
-                 {"variant_id": "b", "headline": "Headline B", "real_ctr": 0.2},
+                 {"variant_id": "a", "headline": "Headline A", "real_ctr": 0.1, "clicks": 1000, "impressions": 10000},
+                 {"variant_id": "b", "headline": "Headline B", "real_ctr": 0.2, "clicks": 2000, "impressions": 10000},
              ]}
         ]))
 
@@ -58,18 +59,17 @@ class ReplicationTests(unittest.TestCase):
                                   0.8 if '"Headline B"' in prompt else 0.2), \
                 contextlib.redirect_stdout(io.StringIO()):
             runner.main()
-        return runner.OUT_DIR / ("gemini-3_1-flash-lite-baseline.jsonl" if baseline
-                                 else "gemini-3_1-flash-lite-sig3.jsonl")
+        return next(p for p in runner.OUT_DIR.glob("*strict-json-v2*.jsonl") if not p.name.startswith("."))
 
     def test_real_producer_reaches_default_validator_and_join(self):
         predictions = self.produce()
-        validate = self.run_cli("02_run_personas.py", "--validate-only")
+        validate = self.run_cli("02_run_personas.py", "--validate-only", "--predictions", str(predictions))
         self.assertEqual(validate.returncode, 0, validate.stderr)
-        joined = self.run_cli("03_build_joined.py")
+        joined = self.run_cli("03_build_joined.py", "--predictions", str(predictions), "--corpus", str(self.corpus))
         self.assertEqual(joined.returncode, 0, joined.stderr)
         expected = {r["variant_id"]: r["pred_score"]
                     for r in map(json.loads, predictions.read_text().splitlines())}
-        with (self.root / "data/joined.csv").open() as fh:
+        with (self.root / "data/joined-corrected.csv").open() as fh:
             rows = list(csv.DictReader(fh))
         self.assertEqual(len(rows), 2)
         self.assertEqual({r["variant_id"]: float(r["pred_score"]) for r in rows}, expected)
@@ -86,17 +86,17 @@ class ReplicationTests(unittest.TestCase):
     def test_partial_package_cannot_be_joined(self):
         predictions = self.produce()
         predictions.write_text(predictions.read_text().splitlines()[0] + "\n")
-        joined = self.run_cli("03_build_joined.py")
+        joined = self.run_cli("03_build_joined.py", "--predictions", str(predictions), "--corpus", str(self.corpus))
         self.assertNotEqual(joined.returncode, 0)
         self.assertIn("partially predicted", joined.stderr)
-        self.assertFalse((self.root / "data/joined.csv").exists())
+        self.assertFalse((self.root / "data/joined-corrected.csv").exists())
 
     def test_out_of_range_prediction_is_rejected(self):
         predictions = self.produce()
         rows = list(map(json.loads, predictions.read_text().splitlines()))
         rows[0]["pred_score"] = 1.1
         predictions.write_text("\n".join(map(json.dumps, rows)) + "\n")
-        validate = self.run_cli("02_run_personas.py", "--validate-only")
+        validate = self.run_cli("02_run_personas.py", "--validate-only", "--predictions", str(predictions))
         self.assertNotEqual(validate.returncode, 0)
         self.assertIn("out of [0,1]", validate.stderr)
 
@@ -132,11 +132,11 @@ class ReplicationTests(unittest.TestCase):
                 mock.patch.object(runner, "call_azure", side_effect=response), \
                 contextlib.redirect_stdout(output):
             runner.main()
-        report = json.loads((runner.OUT_DIR / "upworthy_gpt-4_1.json").read_text())
-        self.assertEqual(report["paired_gap"]["n_paired"], 1)
-        self.assertEqual(report["paired_gap"]["gap_tau"]["mean"], 2.0)
-        self.assertEqual(report["paired_gap"]["gap_top1"]["mean"], 1.0)
-        self.assertTrue((runner.OUT_DIR / ".ckpt-upworthy-gpt-4_1.jsonl").exists())
+        report = json.loads(next(runner.OUT_DIR.glob("upworthy_*strict-json-v2*.json")).read_text())
+        self.assertEqual(report["paired_gap"]["metrics"]["kendall_tau_b"]["n_paired"], 1)
+        self.assertEqual(report["paired_gap"]["metrics"]["kendall_tau_b"]["mean"], 2.0)
+        self.assertEqual(report["paired_gap"]["metrics"]["top1_accuracy"]["mean"], 1.0)
+        self.assertEqual(len(list(runner.OUT_DIR.glob(".ckpt-*strict-json-v2*.jsonl"))), 1)
         self.assertEqual(published.read_text(), "published-artifact-sentinel")
         self.assertNotIn("synthetic-private-key", output.getvalue())
         self.assertNotIn("example.invalid", output.getvalue())

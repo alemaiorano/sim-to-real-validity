@@ -1,25 +1,28 @@
 \section{Sim-to-Real Validity Framework}
 \label{sec:framework}
+A package contains variants with observed outcome rates and predicted scores
+(Figure~\ref{fig:protocol}). Upworthy uses randomized traffic, although grouping distinct headlines
+can combine image variants. MIND compares different articles within a subcategory. Reddit groups
+reposts of the same image in the same subreddit; timing and exposure remain uncontrolled.
+\input{figures/protocol}
+Within-package ranking does not establish absolute CTR calibration or a causal copy effect
+in observational data.
 
-\paragraph{Setup.}
-Figure~\ref{fig:protocol} summarises the protocol. A \emph{package} is an A/B test containing two
-or more copy \emph{variants} shown to the same real audience; each variant $v$ has an observed
-click-through rate $\mathrm{CTR}(v)$ and a simulator-predicted score $\texttt{pred\_score}(v)$
-(Section~\ref{sec:system}).
-\input{figures/protocol} Because variants
-within a package share an audience, the package defines a controlled comparison.
+\paragraph{Metric identity.}
+For concordant and discordant pair counts $C,D$, the historical implementation used
+\[
+\gamma=(C-D)/(C+D),
+\]
+discarding pairs tied in either variable~\citep{goodman1954}. It is undefined when $C+D=0$ and
+is not Kendall $\tau_b$. The corrected code separately computes
+\[
+\tau_b=\frac{C-D}{\sqrt{(C+D+T_x)(C+D+T_y)}},
+\]
+where $T_x,T_y$ count pairs tied only in the respective variable~\citep{kendall1945ties}.
+Spearman uses average ranks~\citep{spearman1904}. Constant rank inputs yield undefined values.
 
-\paragraph{Why ranking, not absolute CTR.}
-We evaluate \emph{within-package ranking} rather than absolute CTR for two reasons. First, CTR
-levels vary across packages for reasons unrelated to copy (topic, timing, audience), so only the
-within-package contrast is attributable to the copy. Second, the simulator's score and the
-benchmark outcome are different constructs (intent vs.\ engagement; Section~\ref{sec:discussion}),
-so a ranking criterion is robust to scale and calibration differences. Concretely, a useful
-copy simulator need not predict the CTR number---it needs to order candidate variants the way
-the real audience does.
-
-\paragraph{Metrics.}
-For each package we compare the CTR ordering and the \texttt{pred\_score} ordering with: top-1
-winner accuracy (did the predicted best variant match the real best), Kendall's
-$\tau$~\citep{kendall1938}, and Spearman's $\rho$~\citep{spearman1904}. Package-level values are
-aggregated across packages with bootstrap confidence intervals (Section~\ref{sec:setup}).
+Corrected top-1 and bottom-1 use uniform expected credit:
+$|S_{\mathrm{pred}}\cap S_{\mathrm{real}}|/|S_{\mathrm{pred}}|$ for the corresponding extreme
+sets. Captured lift averages observed rates across tied predicted maxima, then scales distance
+from the observed minimum by the observed range. Constant outcomes make lift undefined.
+Historical top-1 selected the first maximum and remains ordering-dependent.

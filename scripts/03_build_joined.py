@@ -1,94 +1,64 @@
 #!/usr/bin/env python3
-"""Join the locked Upworthy corpus with persona predictions → data/joined.csv.
-
-joined.csv is the single base artifact for every downstream statistic. One row
-per (package_id, variant_id) carrying both the real CTR and the predicted score.
-
-Fails loudly if either upstream artifact is missing or if the prediction set does
-not cover the corpus (partial coverage would silently bias the ranking metrics).
-"""
-from __future__ import annotations
-
+"""Join complete predictions to counts-derived winner policy in a new CSV."""
 import argparse
 import csv
 import json
-import sys
+import math
 from pathlib import Path
+from analysis_io import new_output
+from winner_filter import evaluate_winner, POLICY
 
 PAPER_DIR = Path(__file__).resolve().parents[1]
-DATASETS_DIR = PAPER_DIR / "datasets"
-PREDICTIONS = PAPER_DIR / "data" / "predictions" / "gemini-3_1-flash-lite-sig3.jsonl"
-OUT = PAPER_DIR / "data" / "joined.csv"
+OUT = PAPER_DIR / "data/joined-corrected.csv"
 
 
-def fail(msg: str) -> None:
-    print(f"[join][FATAL] {msg}", file=sys.stderr)
-    sys.exit(1)
-
-
-def latest_corpus() -> Path:
-    candidates = sorted(DATASETS_DIR.glob("upworthy-subset-*.json"))
-    candidates = [c for c in candidates if not c.name.endswith(".manifest.json")]
-    if not candidates:
-        fail(f"no corpus found in {DATASETS_DIR}; run 01_ingest_upworthy.py first")
-    return candidates[-1]
-
-
-def load_predictions(predictions: Path = PREDICTIONS) -> dict[tuple[str, str], float]:
-    if not predictions.exists():
-        fail(f"predictions missing: {predictions}; run run_predictions.py + 02_run_personas.py")
-    preds: dict[tuple[str, str], float] = {}
-    with predictions.open() as fh:
-        for line in fh:
-            line = line.strip()
-            if not line:
-                continue
-            rec = json.loads(line)
-            preds[(rec["package_id"], rec["variant_id"])] = float(rec["pred_score"])
-    return preds
-
-
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--predictions", type=Path, default=PREDICTIONS,
-                    help="prediction JSONL (default: primary persona panel)")
-    ap.add_argument("--corpus", type=Path, help="locked corpus JSON (default: Upworthy exploratory)")
-    args = ap.parse_args()
-    corpus = json.loads((args.corpus or latest_corpus()).read_text())
-    preds = load_predictions(args.predictions)
-
-    rows = []
-    included = skipped = 0
-    for pkg in corpus:
-        pid = pkg["package_id"]
-        keys = [(pid, v["variant_id"]) for v in pkg["variants"]]
-        have = [k in preds for k in keys]
-        if not any(have):
-            skipped += 1            # package was not run (e.g. non-significant subset)
+def load_predictions(path):
+    predictions = {}
+    for line in Path(path).read_text().splitlines():
+        if not line.strip():
             continue
-        if not all(have):
-            # a partially-predicted package would bias within-package ranking
-            fail(f"package {pid} is partially predicted ({sum(have)}/{len(have)}); "
-                 f"rerun predictions for the whole package")
-        for v in pkg["variants"]:
-            rows.append({
-                "package_id": pid,
-                "variant_id": v["variant_id"],
-                "real_ctr": v["real_ctr"],
-                "pred_score": preds[(pid, v["variant_id"])],
-                "winner_significant": int(bool(pkg.get("winner_significant"))),
-            })
-        included += 1
-    if not rows:
-        fail("no joined rows produced")
+        row = json.loads(line)
+        key = (row["package_id"], row["variant_id"])
+        if key in predictions:
+            raise ValueError("duplicate prediction: " + str(key))
+        value = row["pred_score"]
+        if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= 1:
+            raise ValueError("invalid predicted score")
+        predictions[key] = value
+    return predictions
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    with OUT.open("w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=["package_id", "variant_id", "real_ctr",
-                                           "pred_score", "winner_significant"])
-        w.writeheader()
-        w.writerows(rows)
-    print(f"[join] wrote {OUT} ({len(rows)} rows, {included} packages; {skipped} not predicted)")
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--predictions", type=Path, required=True)
+    parser.add_argument("--corpus", type=Path, required=True)
+    parser.add_argument("--output", type=Path, default=OUT)
+    args = parser.parse_args()
+    destination = new_output(args.output)
+    corpus = json.loads(args.corpus.read_text())
+    predictions = load_predictions(args.predictions)
+    rows = []
+    for package in corpus:
+        keys = [(package["package_id"], v["variant_id"]) for v in package["variants"]]
+        covered = [key in predictions for key in keys]
+        if not any(covered):
+            continue
+        if not all(covered):
+            raise ValueError("partially predicted package: " + package["package_id"])
+        decision = evaluate_winner(package["variants"])
+        for variant in package["variants"]:
+            rows.append({"package_id": package["package_id"], "variant_id": variant["variant_id"],
+                         "real_ctr": variant["real_ctr"],
+                         "pred_score": predictions[(package["package_id"], variant["variant_id"])],
+                         "winner_selected": int(decision["selected"]),
+                         "winner_adjusted_p": decision["adjusted_p"], "winner_filter_policy": POLICY})
+    if not rows:
+        raise ValueError("no joined rows produced")
+    with destination.open("x", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"wrote {destination}: {len(rows)} variants")
 
 
 if __name__ == "__main__":

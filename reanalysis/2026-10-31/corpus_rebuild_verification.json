@@ -1,0 +1,9 @@
+{
+  "source_sha256": "8368313b060f4015a0c6fb34e6d788163cee29554144aba9390b14922eb9d8ce",
+  "original_corpus_sha256": "523034f1fd86d4a432a57b29eb25230418dba119c3367ec04622815114cc9f85",
+  "corrected_corpus_sha256": "544aadb2aa38aead3d4c300d02dd107b308a4e45c6191f4dc258cfd6ad1a5143",
+  "n_packages": 1695,
+  "n_variants": 6978,
+  "variant_records_equal": true,
+  "corrected_selected": 190
+}

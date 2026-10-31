@@ -1,139 +1,110 @@
-# Research Replication Guide
+# Replication and verification
 
-Replication package for [the arXiv preprint](https://arxiv.org/abs/2609.25010),
-DOI [10.48550/arXiv.2609.25010](https://doi.org/10.48550/arXiv.2609.25010).
-Run all commands from the repository root, preferably in a disposable clone
-when recomputing results. Python 3.11+ and `pip install -r requirements.txt`
-provide the analysis dependencies. PDF builds also need `pdflatex` and `bibtex`.
+Use Python 3.11+, `pip install -r requirements.txt`; PDF compilation also needs
+`pdflatex` and `bibtex`. Run commands from the repository root.
 
-## Tier 1 — Verify tables and rebuild the PDF
+## 1. Reexport reports and build the revised PDF
 
-This path needs no API keys or raw-data downloads. It reexports the committed
-result artifacts and uses the included figures to rebuild the manuscript.
-It does not independently recompute the statistics from raw observations.
-
-```bash
-python scripts/generate_paper_variables.py
-python scripts/generate_validity_table.py
-python scripts/generate_replication_table.py
-python scripts/generate_crossmodel_table.py
-python scripts/generate_pilot_table.py
-python scripts/generate_h5_table.py
-python scripts/generate_supplementary_tables.py
-
-cd latex
-pdflatex -interaction=nonstopmode main && bibtex main \
-  && pdflatex -interaction=nonstopmode main && pdflatex -interaction=nonstopmode main
-```
-
-The output is `latex/main.pdf`. To regenerate only the comparison figure from
-`reports/baseline_comparison.json`, without downloading a corpus:
+Run the exporters listed in README. They verify hashes before reading historical reports.
+`generate_reanalysis_assets.py` separately reads the committed GPT derivative and selection
+diagnostic. This verifies displayed numbers, not all original raw observations.
 
 ```bash
 python scripts/generate_figures.py --comparison-only
+cd latex
+SOURCE_DATE_EPOCH=1793404800 pdflatex -halt-on-error -interaction=nonstopmode main
+bibtex main
+SOURCE_DATE_EPOCH=1793404800 pdflatex -halt-on-error -interaction=nonstopmode main
+SOURCE_DATE_EPOCH=1793404800 pdflatex -halt-on-error -interaction=nonstopmode main
 ```
 
-The reliability histogram needs the restored Upworthy exploratory corpus:
-`datasets/upworthy-subset-2026-06-03.json`. After following `DATA_SOURCES.md`,
-`python scripts/generate_figures.py` regenerates both numerical figures.
-The protocol diagram is the included `latex/figures/protocol.tex`.
-
-## Tier 2 — Recompute statistics from corpus and predictions
-
-Restore and hash-check the corpus as described in `DATA_SOURCES.md`. Restore
-historical predictions if you have them, or collect new predictions via Tier 3.
-The primary persona file is `data/predictions/gemini-3_1-flash-lite-sig3.jsonl`.
-The runner, validator, join and error analysis use this same file by default.
+The historical screen histogram is included. To regenerate it, restore the exact original
+exploratory corpus and run:
 
 ```bash
-python scripts/02_run_personas.py --validate-only
-python scripts/03_build_joined.py
-python scripts/compute_validity.py
-python scripts/analyze_h003.py
-python scripts/error_analysis.py
-python scripts/analyze_baseline_ties.py
-python scripts/analyze_h5_aggregation.py
+python scripts/generate_figures.py --historical-corpus /path/to/upworthy-subset-2026-06-03.json
 ```
 
-To analyze another model or split, select its file explicitly:
+## 2. Offline historical GPT replay and corrected diagnostic
+
+The exact recovered checkpoint is **not included**. Required SHA256 values:
+
+| Input | SHA256 |
+|---|---|
+| Original exploratory corpus | `523034f1fd86d4a432a57b29eb25230418dba119c3367ec04622815114cc9f85` |
+| GPT-4.1 scalar checkpoint, 59,474 rows | `da6128db7ec7ead14aecd2269d25969e750f54bc1996e64c1cff78fd32614529` |
+
+First replay the original producer, which is extracted from the pinned Git commit.
+The script blocks network calls and stubs missing observations as missing; it does not
+create new values. A full Git clone containing the pinned commit is required.
 
 ```bash
-python scripts/02_run_personas.py --validate-only --predictions <prediction-file.jsonl>
-python scripts/03_build_joined.py --predictions <prediction-file.jsonl> --corpus <corpus.json>
+python scripts/replay_historical_gpt.py \
+  --corpus /path/to/original-corpus.json --checkpoint /path/to/original-gpt-checkpoint.jsonl \
+  --expected-corpus-sha256 523034f1fd86d4a432a57b29eb25230418dba119c3367ec04622815114cc9f85 \
+  --expected-checkpoint-sha256 da6128db7ec7ead14aecd2269d25969e750f54bc1996e64c1cff78fd32614529 \
+  --output /new/path/legacy-verification.json
+python scripts/reanalyze_checkpoint.py \
+  --corpus /path/to/original-corpus.json --checkpoint /path/to/original-gpt-checkpoint.jsonl \
+  --expected-corpus-sha256 523034f1fd86d4a432a57b29eb25230418dba119c3367ec04622815114cc9f85 \
+  --expected-checkpoint-sha256 da6128db7ec7ead14aecd2269d25969e750f54bc1996e64c1cff78fd32614529 \
+  --output /new/path/gpt41.json
+python scripts/compare_winner_filters.py --corpus /path/to/original-corpus.json \
+  --output /new/path/filter-comparison.json
 ```
 
-`compute_validity.py` analyzes only the joined predictions supplied. Joining
-only the significant subset cannot reproduce the published all-package
-sensitivity analysis. The latter requires the corresponding historical
-all-package predictions. Raw historical predictions are not included here.
+Committed derivatives are in `reanalysis/2026-10-31/`. Original response texts are absent:
+stored scalar validity cannot establish whether the permissive historical parser accepted
+invalid responses. The new parser cannot repair those scores retrospectively.
+The analysis retains the historical 30-panel/10-baseline sampling budget.
 
-For replication, restore all five corpora and the corresponding persona and
-baseline files before `python scripts/analyze_replication.py`. Exact filenames
-are listed in its `DSETS` mapping; missing datasets are explicitly skipped.
-Do not replace the committed five-dataset report with a partial run.
-
-The historical summaries `baseline_comparison.json`, `cross_model_gap.json`
-and `stability.json` have no dedicated recomputation script in this package.
-They remain inputs to the verification exporters. Likewise, `power_analysis.py`
-is an earlier planning calculation (its recorded primary n is 124), not a
-runner that updates the final sample size. These limits also exist in the
-original research tree; the package does not claim a complete raw-to-report
-rebuild of every historical artifact.
-
-## Tier 3 — Collect new Gemini predictions
-
-This tier calls paid provider APIs. Supply your own key through
-`GEMINI_API_KEY` or a local, gitignored `.env`. Corpus files must already exist.
-Use the recorded experimental configuration when comparing with the paper;
-provider availability and model changes can prevent exact historical replay.
-A fixed seed does not guarantee identical generations across provider updates.
+## 3. Analyze supplied predictions with corrected estimators
 
 ```bash
-export GEMINI_API_KEY="<your-key>"
-
-# Primary panel: all significant-winner packages, 3 draws per persona.
-python scripts/run_predictions.py --models gemini-3.1-flash-lite --significant-only --packages 0 --draws 3 --seed 42 --out-suffix=-sig3
-# Primary no-persona baseline: 30 draws per variant.
-python scripts/run_predictions.py --baseline --models gemini-3.1-flash-lite --significant-only --packages 0 --draws 30 --seed 42 --out-suffix=-baseline
-# All-package, single-draw run used by the exploratory replication condition.
-python scripts/run_predictions.py --models gemini-3.1-flash-lite --packages 0 --draws 1 --seed 42 --out-suffix=-full
-
-python scripts/02_run_personas.py --validate-only
+python scripts/02_run_personas.py --validate-only --predictions /path/to/panel.jsonl
+python scripts/03_build_joined.py --corpus /path/to/corpus.json \
+  --predictions /path/to/panel.jsonl --output /new/path/joined.csv
+python scripts/compute_validity.py --joined /new/path/joined.csv --output /new/path/validity.json
+python scripts/analyze_replication.py --corpus /path/to/corpus.json \
+  --panel /path/to/panel.jsonl --baseline /path/to/baseline.jsonl --output /new/path/comparison.json
+python scripts/analyze_h5_aggregation.py --joined /new/path/joined.csv \
+  --checkpoint /path/to/panel-checkpoint.jsonl --baseline /path/to/baseline.jsonl \
+  --output /new/path/aggregation.json
 ```
 
-Cross-tier runs use the paper's other recorded Gemini models. Other datasets
-use `--corpus` and the output suffixes expected by `analyze_replication.py`.
-Checkpoint reuse is valid only for the same model, corpus, prompt variant,
-seed, temperature and draw configuration; use distinct suffixes for new runs.
+Predictions must cover all variants of each analyzed package. Corrected joined files name the
+winner policy. H5's `mean` gives equal weight to collapsed personas; `mean_observation` gives
+equal weight to recorded draws. New summaries carry metric-specific valid and paired counts;
+gamma, tau-b, and undefined values have distinct semantics.
 
-## Cross-family replication — Azure OpenAI
+These commands do not reconstruct missing historical Gemini observations. Some historical
+summaries lack a dedicated original raw-to-report producer. Original implementations remain
+accessible at the pinned Git commit, not as silent legacy branches in the corrected estimators.
 
-`scripts/tier2_crossmodel.py` is the original GPT-4.1 study runner adapted to
-standalone paths. It reuses the Gemini harness's prompt builder/parser and the
-same ranking metrics, keeping the experimental comparison unchanged.
-Credentials and endpoint are supplied only through environment variables;
-no external credential files or product services are read.
+## 4. New provider experiments (optional, paid)
+
+No provider run is needed for verification above. A future run is a new experiment.
+Set `GEMINI_API_KEY` or Azure OpenAI environment variables yourself; do not commit credentials.
+Select an explicit corpus and approved/available provider model for your own environment.
 
 ```bash
-export AZURE_OPENAI_API_KEY="<your-key>"
-export AZURE_OPENAI_BASE_URL="<your-resource-base-url>"
-export AZURE_OPENAI_DEPLOYMENT="<your-gpt-4.1-deployment>"
-python scripts/tier2_crossmodel.py --draws 3 --baseline-draws 10 --temperature 0.8
+python scripts/run_predictions.py --models MODEL_ID --corpus /path/to/corpus.json \
+  --significant-only --packages 0 --draws 3 --seed 42 --out-suffix=-panel
+python scripts/run_predictions.py --models MODEL_ID --corpus /path/to/corpus.json \
+  --baseline --significant-only --packages 0 --draws 30 --seed 42 --out-suffix=-baseline
+python scripts/tier2_crossmodel.py --corpus /path/to/corpus.json \
+  --draws 3 --baseline-draws 10 --output-dir /new/path/crossfamily
 ```
 
-The default outputs are checkpoints and an `upworthy_<deployment>.json`
-summary under the gitignored `data/predictions/crossfamily/`. `--output-dir`
-can select another local directory. The summary includes persona/baseline
-metrics and paired per-package gaps, matching the structure of
-`reports/crossfamily_gpt41.json`. The runner does not overwrite that published
-artifact. A new provider run is a new experiment, not proof that the archived
-result has been reproduced exactly.
+Gemini outputs use `strict-json-v2` plus a configuration fingerprint in filenames.
+GPT uses the same namespace and strict parser; its default budget remains unequal and no seed
+is sent. Use a matched budget for a future matched-budget hypothesis. Configurations bind corpus,
+panel, prompts, model, temperature, and sampling; terminal parse failures remain missing.
+Transport errors retry within bounds. Repeated seeds do not guarantee identical provider outputs.
+Revised collectors never resume historical checkpoints.
 
-## Local checks
+## Checks
 
-```bash
-python -m unittest discover -s tests -v
-```
-
-The tests exercise the real producer/validator/join with stubbed provider
-transports and temporary synthetic corpora. They need no keys or network.
+`python -m unittest discover -s tests -v` uses real producers/consumers with stubbed transports.
+It checks metrics, tied extrema, paired denominators, null screening, parsing, aggregation,
+checkpoint isolation, artifact immutability, and output collisions. Optional SciPy checks tau-b.

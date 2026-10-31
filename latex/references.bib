@@ -29,17 +29,16 @@
   doi     = {10.1017/pan.2023.2}
 }
 
-% VERIFIED 2026-06-08 via arXiv API (id 2411.10109, 11 authors, order confirmed).
-% Strongest recent grounded-agent result: predicts STATED attitudes (GSS) from a 2h interview per
-% person -- the attitude+grounding contrast to our cheap-persona, revealed-engagement failure.
+% The original version is cited for its specific test--retest comparison.
+% Version-specific citation: original v1 supplies the 85% comparison.
 @misc{park2024agents,
-  title         = {{LLM Agents Grounded in Self-Reports Enable General-Purpose Simulation of Individuals}},
-  author        = {Park, Joon Sung and Zou, Carolyn Q. and Kamphorst, Jonne and Egan, Niles and Shaw, Aaron and Hill, Benjamin Mako and Cai, Carrie and Morris, Meredith Ringel and Liang, Percy and Willer, Robb and Bernstein, Michael S.},
-  year          = {2024},
-  eprint        = {2411.10109},
+  title = {Generative Agent Simulations of 1,000 People},
+  author = {Park, Joon Sung and Zou, Carolyn Q. and Shaw, Aaron and Hill, Benjamin Mako and Cai, Carrie and Morris, Meredith Ringel and Willer, Robb and Liang, Percy and Bernstein, Michael S.},
+  year = {2024},
+  eprint = {2411.10109v1},
   archivePrefix = {arXiv},
-  primaryClass  = {cs.AI},
-  note          = {Circulated as ``Generative Agent Simulations of 1,000 People''}
+  primaryClass = {cs.AI},
+  url = {https://arxiv.org/abs/2411.10109v1}
 }
 
 % VERIFIED 2026-06-08 via arXiv (2503.16527, 4 authors, Columbia, order confirmed).
@@ -165,7 +164,7 @@
 }
 
 % VERIFIED 2026-06-03 via Crossref 10.18653/v1/2023.emnlp-main.669.
-% Caricature in LLM persona simulations — supports the "personas inject bias" interpretation.
+% Caricature in LLM persona simulations; contextual evidence, not a mechanism test here.
 @inproceedings{cheng2023compost,
   title     = {{CoMPosT}: Characterizing and Evaluating Caricature in {LLM} Simulations},
   author    = {Cheng, Myra and Piccardi, Tiziano and Yang, Diyi},
@@ -209,8 +208,7 @@
 }
 
 % VERIFIED 2026-06-04 via DBLP (conf/iclr/GuptaSDKCSK24, 7 authors, order confirmed); arXiv
-% 2311.04892. Corroborates the mechanism: persona conditioning surfaces bias and degrades LLM
-% performance on objective tasks.
+% 2311.04892. Prior work on reasoning biases; not a mechanism test for this study.
 @inproceedings{gupta2024bias,
   title         = {Bias Runs Deep: Implicit Reasoning Biases in Persona-Assigned {LLMs}},
   author        = {Gupta, Shashank and Shrivastava, Vaishnavi and Deshpande, Ameet and Kalyan, Ashwin and Clark, Peter and Sabharwal, Ashish and Khot, Tushar},
@@ -231,4 +229,49 @@
   month       = {11},
   note        = {In collaboration with the John S. and James L. Knight Foundation. Accessed 2026-06-03},
   url         = {https://www.pewresearch.org/journalism/2013/11/14/news-use-across-social-media-platforms/}
+}
+
+% Verified 2026-10-31 against publisher/ACL records; see docs/audit/bibliography.json.
+@article{goodman1954,
+  title = {Measures of Association for Cross Classifications},
+  author = {Goodman, Leo A. and Kruskal, William H.},
+  journal = {Journal of the American Statistical Association},
+  volume = {49},
+  number = {268},
+  pages = {732--764},
+  year = {1954},
+  doi = {10.1080/01621459.1954.10501231}
+}
+@article{kendall1945ties,
+  title = {The Treatment of Ties in Ranking Problems},
+  author = {Kendall, M. G.},
+  journal = {Biometrika},
+  volume = {33},
+  number = {3},
+  pages = {239--251},
+  year = {1945},
+  doi = {10.1093/biomet/33.3.239}
+}
+@inproceedings{wu2020mind,
+  title = {{MIND}: A Large-scale Dataset for News Recommendation},
+  author = {Wu, Fangzhao and Qiao, Ying and Chen, Jiun-Hung and Wu, Chuhan and Qi, Tao and Lian, Jianxun and Liu, Danyang and Xie, Xing and Gao, Jianfeng and Wu, Winnie and Zhou, Ming},
+  booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics},
+  year = {2020},
+  pages = {3597--3606},
+  doi = {10.18653/v1/2020.acl-main.331}
+}
+@inproceedings{lakkaraju2013name,
+  title = {What's in a Name? Understanding the Interplay between Titles, Content, and Communities in Social Media},
+  author = {Lakkaraju, Himabindu and McAuley, Julian and Leskovec, Jure},
+  booktitle = {Proceedings of the Seventh International AAAI Conference on Weblogs and Social Media},
+  year = {2013},
+  pages = {311--320},
+  doi = {10.1609/icwsm.v7i1.14408},
+  note = {2013 proceedings; publisher portal migration date is 2021}
+}
+@misc{nistBonferroni,
+  author = {{NIST/SEMATECH}},
+  title = {e-Handbook of Statistical Methods: Bonferroni's Method},
+  howpublished = {\url{https://www.itl.nist.gov/div898/handbook/prc/section4/prc473.htm}},
+  note = {Accessed 2026-10-31; used for the multiplicity principle, not the binomial approximation}
 }

@@ -1,44 +1,28 @@
 \section{Method Under Test}
 \label{sec:system}
+The study harness scores each headline with either a demographic persona or a generic reader.
+It operates independently of any commercial product. The fixed ten-persona JSON takes inspiration
+from Upworthy-era U.S.\ social-media demographics~\citep{holcomb2013newsuse}. These descriptors
+do not specify a deterministic behavioral-profile generator or establish representativeness.
 
-We evaluate persona-based copy simulation as a \emph{method}, instantiated as a controlled
-research harness rather than any specific deployed product: given a piece of copy and an audience,
-the harness instantiates a panel of synthetic personas and elicits each persona's reaction, then
-aggregates these into a ranking. We make the instantiation fully explicit (personas, prompt, and
-aggregation below) so the result is attributable to the technique, not to an opaque product
-configuration. The harness and all its inputs are released in the replication package.
-
-\paragraph{Persona panel.}
-The panel is a fixed, versioned set of $P=10$ personas (Appendix~\ref{sec:appendix}). To avoid
-authoring bias, the personas are authored from public demographics rather than reused from any
-product; they are constructed to represent the real Upworthy-era audience---U.S.\ social-media news consumers
-circa 2013--2015---using the demographic structure reported by Pew
-Research~\citep{holcomb2013newsuse} (age, gender, and platform mix, e.g.\ Facebook news
-consumers skewing female and Twitter news consumers skewing younger). Each persona is a short
-natural-language profile (age band, gender, primary platform, news-engagement level, and a
-behavioural description).
-
-\paragraph{Elicitation and the predicted score.}
-For each headline variant and each persona we query an instruction-tuned LLM
-(\texttt{gemini-3.1-flash-lite}; selected by the model comparison in Section~\ref{sec:setup}),
-conditioning on the persona profile and asking, in the persona's voice, how likely they are to
-click the headline. The model returns a structured \texttt{click\_intent} value in $[0,1]$.
-
-Crucially, the \textbf{predicted score} we evaluate is this \emph{click-intent}, aggregated by the
-\textbf{arithmetic mean} over the panel (and over Monte~Carlo draws):
+\paragraph{Elicitation and aggregation.}
+The prompt requests JSON with a \texttt{click\_intent} number in $[0,1]$
+(Appendix~\ref{sec:appendix}). The primary collector averages recorded observations:
 \[
-\texttt{pred\_score}(v) \;=\; \frac{1}{P D}\sum_{i=1}^{P}\sum_{d=1}^{D} \texttt{click\_intent}_{i,d}(v).
+\widehat{s}(v)=\frac{1}{|O_v|}\sum_{(i,d)\in O_v}y_{i,d}(v).
 \]
-We use the simple mean for interpretability; alternative aggregations (median, rank fusion) are a
-sensitivity dimension we leave to future work (Section~\ref{sec:discussion}). We elicit
-click-intent directly because the benchmark outcome is click-through (engagement); the construct
-alignment and its limits are analysed in Section~\ref{sec:discussion}. Within a package, variants
-are ranked by \texttt{pred\_score}; the no-persona baseline (Section~\ref{sec:setup}) uses the
-identical scoring and aggregation with a single generic reader and no demographic conditioning.
+With complete draws this equals the mean over personas and draws. With missing draws it can
+differ from the historical H5 mean, which weights draw-collapsed personas equally. H5 already
+evaluated alternative aggregations; they were not wholly left to future work.
 
-\paragraph{Sampling and reproducibility.}
-Generation uses temperature $0.8$ (the simulator's robust-sampling setting) with a fixed seed
-forwarded to the model; each Monte~Carlo draw uses a distinct seed, and every prediction record
-stores the model id, seed, temperature, draw count, and panel size for provenance. The reported
-primary estimate averages $D{=}3$ draws per persona to control seed-level sampling noise
-(Section~\ref{sec:setup}).
+\paragraph{Sampling and parsing.}
+The main Gemini configuration uses temperature $0.8$, three draws per persona and thirty generic
+baseline draws per variant. GPT-4.1 instead uses three draws per persona versus ten baseline draws.
+Gemini forwards generation seeds; the GPT runner sends none. Seeds alone cannot guarantee identical
+provider responses over time.
+
+The legacy parser could extract a first number, clamp values, and accept booleans. Invalid parsing
+could terminate without retry. Historical event frequencies are unknown. The revised collector
+accepts only a finite, non-boolean JSON number in range under the exact requested key. Invalid
+parses are recorded as terminal missing observations. Configuration hashes and a new protocol
+namespace prevent mixing new checkpoints with legacy scores.

@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-31",
+  "source_commit": "7c1ab46b5d881529b79769fb870ed1f2fb98619c",
+  "python": "3.12.3",
+  "tests": {
+    "command": "python3 -B -m unittest discover -s tests -v",
+    "count": 23,
+    "result": "OK",
+    "scipy_oracle": "executed"
+  },
+  "historical_artifacts": {
+    "reports": 14,
+    "dataset_manifests": 5,
+    "identical_to_pinned_git": true
+  },
+  "source_rebuild": {
+    "packages": 1695,
+    "variants": 6978,
+    "variant_records_identical": true,
+    "corrected_selected": 190
+  },
+  "gpt_legacy_replay": {
+    "all_report_fields_reproduced": true,
+    "absolute_tolerance": 1e-12,
+    "relative_tolerance": 1e-12,
+    "provider_calls": 0,
+    "absent_observations_left_missing": 286
+  },
+  "gpt_corrected_reproduction": {
+    "byte_identical_replay": true,
+    "panel": 190,
+    "baseline": 189,
+    "paired": 189,
+    "original_response_validation": false
+  },
+  "exports": {
+    "all_generated_assets_byte_stable": true,
+    "sha256": {
+      "latex/variables.tex": "127eab0462d733fd1fdb33faa4232f4e1103c898e9f534793457ca62002cfe1c",
+      "latex/reanalysis_variables.tex": "26dcea8b68ab995e286c601fcd4a9e1a080e6ebf1068b1f49d11ab30b15e12f3",
+      "latex/tables/corrected_gpt.tex": "d4ed16ec91f273403c24890be5cfa0728f4cf41d1ebd368ae8553a18caffe56a",
+      "latex/tables/validity.tex": "8e61603854f02edd4069390871e78d77cb9164233602d930d4a0bb8b0489b214",
+      "latex/tables/cross_model_gap.tex": "8fe1f4cadc485f429792b1bd58f0e1569923fb82934338e90e55acedaddb449e",
+      "latex/tables/persona_panel.tex": "737d67d729ce5509b761d00a2d3afe8350c645ebac3b433b3a78fd9b2ee4b8c2",
+      "latex/tables/error_examples.tex": "a485ce0ae75baaf53e1199d51843e01d8facd3b9099d32f54663a43b9bb48da7",
+      "latex/tables/model_comparison.tex": "32b99265b2cb048c866e2b5474f07b1c9dfa5b9ad2b16841c2efd9deb0bda80a",
+      "latex/tables/replication.tex": "5a90143dcc9d6bf71ed5cbfacd38278c24617a750044d9cf9cfd448491c55c33",
+      "latex/tables/h5_aggregation.tex": "2c5a83161c864308a087f78b18b8507f15fa081502cd74d6042600d5cae20e67",
+      "latex/figures/reliability.pdf": "4ed7161204cfa276e53246034e9f718534b5ae202fddbe2aeedf188b3dad232a",
+      "latex/figures/comparison.pdf": "100631c9f2f3b36f61c2ca12bb138feced0d4224668a165c7332ad497b1371c4"
+    }
+  },
+  "latex": {
+    "build": "pdflatex / bibtex / pdflatex / pdflatex with SOURCE_DATE_EPOCH=1793404800",
+    "errors": 0,
+    "warnings": 0,
+    "overfull_boxes": 0,
+    "underfull_boxes": "present; visual layout reviewed",
+    "pdf_sha256": "e9dd5dafc40704cfe84c55378e18bcabc4eb8fe259206b205b646654d7df64d6",
+    "pages": 10,
+    "visual_review": "contact sheet of all 10 pages; detailed revised schematic and corrected-results table; no clipping"
+  },
+  "references": {
+    "total": 24,
+    "unresolved": [],
+    "uncited": [],
+    "unresolved_crossrefs": [],
+    "orphan_floats": []
+  },
+  "git_diff_check": "pass",
+  "scope": "implementation verification; not independent QA or publication approval"
+}
