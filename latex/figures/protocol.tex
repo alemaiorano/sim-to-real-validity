@@ -7,7 +7,7 @@
   >=Stealth, node distance=7mm and 8mm
 ]
 \node[box,fill=green!8] (data) {Observed variants\\and outcomes};
-\node[box,fill=blue!6,right=of data] (screen) {Versioned\\winner screen};
+\node[box,fill=blue!6,right=of data] (screen) {Winner\\screening};
 \node[box,fill=blue!6,above right=2mm and 8mm of screen] (panel) {Persona panel\\mean score};
 \node[box,fill=blue!6,below right=2mm and 8mm of screen] (base) {Generic reader\\mean score};
 \coordinate (mid) at ($(panel.east)!0.5!(base.east)$);
@@ -19,8 +19,8 @@
 \draw[->] (base.east) -- (metrics.south west);
 \end{tikzpicture}
 \caption{Comparison protocol. Outcomes determine selection; the two scoring arms are compared
-within selected packages. Archived outputs use gamma and the legacy screen. The primary experiment and retrospective
-diagnostic additionally report tau-b and simultaneous selection. Selection does not establish
+within selected packages. Supplementary aggregates use gamma and the top-versus-runner-up screen. The primary experiment
+and GPT checkpoint analysis additionally report tau-b and simultaneous selection. Selection does not establish
 that excluded packages are unpredictable.}
 \label{fig:protocol}
 \end{figure*}

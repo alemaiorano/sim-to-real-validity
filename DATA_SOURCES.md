@@ -1,7 +1,7 @@
 # Data sources and versioned ingestion
 
 Corpora are public third-party sources. Full corpora are not committed as Git blobs; the separate
-replication bundle retains the exact exploratory inputs used for the new experiment. Original manifests under
+replication bundle retains the exact exploratory inputs used for the primary experiment. Original manifests under
 `datasets/` remain evidence of the original locks; changing analysis code does not rewrite them.
 Reexporting aggregated reports is distinct from regenerating corpora or recomputing statistics.
 

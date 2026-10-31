@@ -1,6 +1,6 @@
 # Replication and verification
 
-For exact new-report reproduction use CPython 3.12.3 on Linux/WSL
+For exact primary-report reproduction use CPython 3.12.3 on Linux/WSL
 (the collector/replay imports POSIX `fcntl`),
 `pip install -r requirements.txt`; PDF compilation also needs
 `pdflatex` and `bibtex`. Run commands from the repository root.
@@ -23,7 +23,7 @@ not included as Git blobs or provided by a public download URL in this package.
 
 Run the exporters listed in README. They verify hashes before reading historical reports.
 `generate_reanalysis_assets.py` separately reads the committed historical GPT derivative and selection
-diagnostic. `generate_recollection_assets.py` reads the new raw-backed matched-experiment reports,
+diagnostic. `generate_recollection_assets.py` reads the primary raw-backed matched-experiment reports,
 verifies their hashes and plan identity, and refuses unfinished observations. This verifies displayed numbers, not all original raw observations.
 
 ```bash
@@ -57,7 +57,7 @@ for existing scores. Use a new output directory and future collection plan for a
 The preserved source history, original corpus and response journals remain authoritative for
 existing results. No scientific result is silently regenerated from changed headline text.
 
-## 2. Offline historical GPT replay and corrected diagnostic
+## 2. Offline GPT checkpoint replay and analysis
 
 The recovered checkpoint is included in the separate replication bundle at
 `historical-gpt41/checkpoint.jsonl`; it is not a Git repository blob. Required SHA256 values:
@@ -91,7 +91,7 @@ stored scalar validity cannot establish whether the permissive historical parser
 invalid responses. The new parser cannot repair those scores retrospectively.
 The analysis retains the historical 30-panel/10-baseline sampling budget.
 
-## 3. Analyze supplied predictions with corrected estimators
+## 3. Analyze supplied predictions with explicit metric identities
 
 ```bash
 python scripts/02_run_personas.py --validate-only --predictions /path/to/panel.jsonl
@@ -114,9 +114,10 @@ These commands do not reconstruct missing historical Gemini observations. Some h
 summaries lack a dedicated original raw-to-report producer. Original implementations remain
 accessible at the pinned Git commit, not as silent legacy branches in the corrected estimators.
 
-## 4. New matched-budget experiment: replay without API calls
+## 4. Primary matched-budget experiment: replay without API calls
 
-This is a new collection, not a reconstruction of the missing historical Gemini generations.
+The primary and supplementary comparisons have separate collection protocols. Primary
+observations do not reconstruct missing supplementary Gemini generations.
 The frozen protocol is `paired-raw-retained-v2`, source commit
 `cba15e9cd676ba9c871f873e1b6ad3bc7b094996`, with the explicit content-filter continuation
 amendment at `b1836a5de5ae727e7650b82a4f1bc38039ee6556`. The original plan and pre-amendment
@@ -129,13 +130,13 @@ The standalone replication bundle contains:
 - `derived/`: final raw-replay reports and reviewer CSVs with response hashes, variant means,
   package metrics, coverage, and exclusions.
 - `historical-gpt41/`: recovered original scalar checkpoint and historical replay evidence.
-- `matched-v1/`: compatibility probes, explicitly excluded from scientific v2 results.
+- `matched-v1/`: compatibility probes, explicitly excluded from the scientific results.
 - Git bundles containing frozen collection source and final paper/exporter source.
 - `ARTIFACT_README.txt`, validation evidence, file checksum manifest and archive checksum.
 
 Verify the archive checksum before extraction, then run `sha256sum -c SHA256SUMS` from the
 extracted artifact root. Restore source with `git clone --branch
-research/sim-to-real-v2-2026-10-31 SOURCE_FINAL.bundle source` (substitute the actual
+research/manuscript-revision-2026-10-31 SOURCE_FINAL.bundle source` (substitute the actual
 bundle path). Work from `source`; the original pinned producer is available in its history.
 Use the recorded CPython 3.12.3 environment. Floating-point `sum` changed in Python 3.12;
 older interpreters are not asserted to reproduce exact ranks/bytes. Set a shell variable to the extracted artifact directory:

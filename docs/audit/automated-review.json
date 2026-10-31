@@ -1,0 +1,30 @@
+{
+  "source_commit": "d0af68fbfbe0655b8c1ecbdc4ea9dd1da6d557e9",
+  "pdf_sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
+  "tool_source_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
+  "review_prompt_version": "v3",
+  "native_exit": 0,
+  "native_meta_decision": "Accept",
+  "overall_score": 7,
+  "confidence": 4,
+  "calls": 13,
+  "accounted_usd_conservative_not_invoice": 0.8168355,
+  "scientific_provider_calls": 0,
+  "guard_raw_passed": false,
+  "guard_TikZ_encoding_false_positives": 6,
+  "native_claim_counts": {
+    "supported_count": 3,
+    "unsupported_count": 1,
+    "uncertain_count": 0
+  },
+  "native_reference_counts": {
+    "resolved": 23,
+    "total": 25,
+    "author_mismatches": 0
+  },
+  "manually_verified_primary_web_references_reused": 2,
+  "native_potential_hallucinations": 0,
+  "raw_review": "docs/audit/automated-review-review.md",
+  "adjudication": "docs/audit/automated-review-adjudication.md",
+  "semantics": "Automated advisory, not journal acceptance or an independent human gate. Raw failed guard and unsupported summary paraphrase preserved and adjudicated. Current manuscript PDF is unchanged from reviewed source; later changes are public evidence/documentation only. SDK-object journals remain in separate retained companion."
+}

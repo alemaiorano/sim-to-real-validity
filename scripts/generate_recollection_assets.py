@@ -48,7 +48,7 @@ def main():
     for backend, report in reports.items():
         primary = report["primary"]
         caption = (
-            f"New {models[backend]} comparison on {report['n_primary_packages']} complete packages "
+            f"Primary {models[backend]} comparison on {report['n_primary_packages']} complete packages "
             f"from the {report['n_eligible_packages']}-package selected cohort. "
             "Every retained variant has all planned observations in both arms. "
             "Counts are metric-specific valid panel/baseline/paired packages. "
