@@ -1,0 +1,22 @@
+{
+  "base_commit": "c1b031eac61f740242cff3c9fdaca1f474930d8b",
+  "scope": "Publication-only identity removal and private/public evidence separation; one disclosure sentence changed, scientific manuscript otherwise identical.",
+  "current_public_tracked_names_and_contents_checked": 146,
+  "private_review_tool_identity_absent_from_current_public_names_contents_and_extracted_PDF": true,
+  "unchanged_scientific_payloads": 93,
+  "all_table_figure_data_estimator_test_and_result_macro_bytes_unchanged": true,
+  "only_manuscript_edit_is_generic_automated_feedback_disclosure": true,
+  "public_metadata_derivatives_preserve_all_nonreview_fields": true,
+  "unmodified_original_files_retained_privately": 21,
+  "original_source_history_retained_privately": true,
+  "public_Git_history_rewritten": false,
+  "historical_public_commits_may_contain_previous_identity": true,
+  "PDF": {
+    "pages": 14,
+    "bytes": 379863,
+    "sha256": "bac4161aa6a13dbd4e1a93c5d8cbf0ca87b040f0141bf8e8ced0538d828f979e",
+    "no_build_ref_overfull_glyph_errors": true
+  },
+  "scientific_model_calls": 0,
+  "broad_test_provider_rerun": false
+}
