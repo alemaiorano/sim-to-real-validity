@@ -21,7 +21,7 @@ def sha(path):
 
 def risk_dates(rows, package_ids):
     """Use original naive calendar dates; archive timezone is undocumented."""
-    dates = {pid: set() for pid in package_ids}
+    dates = {pid: set() for pid in sorted(package_ids)}
     for row in rows:
         pid = row['clickability_test_id'].strip()
         if pid in dates:
