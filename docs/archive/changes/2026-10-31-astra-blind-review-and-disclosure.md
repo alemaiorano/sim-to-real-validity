@@ -18,7 +18,7 @@ unquantified dependence/stopping impact and missing supplementary lineage remain
 AI Tools Disclosure follows the actual language-model/web-search itemization, responsibility and
 experimental-model distinction in the other local papers. Generic tool-family names avoid importing
 unsupported model versions. Internal effort labels are preserved in audit records rather than the
-manuscript. automated-review feedback remains disclosed. Prior native review evidence keeps its exact
+manuscript. Automated review assistance remains disclosed generically. Prior native review evidence keeps its exact
 PDF/source target and is not relabeled as a review of the edited manuscript.
 
 Only scientific text, one prompt-field table exporter and evidence/documentation change. Numerical

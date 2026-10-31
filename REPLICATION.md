@@ -136,7 +136,7 @@ The standalone replication bundle contains:
 
 Verify the archive checksum before extraction, then run `sha256sum -c SHA256SUMS` from the
 extracted artifact root. Restore source with `git clone --branch
-research/manuscript-revision-2026-10-31 SOURCE_FINAL.bundle source` (substitute the actual
+research/public-review-disclosure-2026-10-31 SOURCE_FINAL.bundle source` (substitute the actual
 bundle path). Work from `source`; the original pinned producer is available in its history.
 Use the recorded CPython 3.12.3 environment. Floating-point `sum` changed in Python 3.12;
 older interpreters are not asserted to reproduce exact ranks/bytes. Set a shell variable to the extracted artifact directory:
