@@ -1,24 +1,17 @@
-% Abstract — every number is a macro from variables.tex (auto-generated). No raw digits.
 \begin{abstract}
-Marketers increasingly use large language models (LLMs) as ``synthetic personas'' to predict how
-an audience will react to a piece of copy before it ships, encouraged by evidence that
-profile-conditioned LLMs mimic human samples. But is that prediction actually valid against real
-behaviour---and does the persona machinery help? We present a sim-to-real validity study using the
-Upworthy Research Archive---thousands of headline A/B tests on shared real traffic, with measured
-click-through---as held-out ground truth. We compare a ten-persona panel, grounded in the real
-audience's demographics, against a no-persona zero-shot baseline that simply asks the model how
-likely a typical reader is to click. Two findings stand out. First,
-\textbf{ground-truth reliability is the binding constraint}: most A/B tests have no statistically
-distinguishable winner, so validity can only be measured on the reliable subset ($n=\nPackages{}$).
-Second, and counter to the persona-simulation premise,
-\textbf{persona conditioning degrades predictive validity}: the no-persona baseline ranks variants
-markedly better (Kendall $\tau=\baseTau{}$, a medium effect; top-1 accuracy \baseTopOne{}) than the
-persona panel ($\tau=\kendallTau{}$; top-1 \topOneAcc{}), with non-overlapping confidence
-intervals. Asking the model directly taps an accurate population-level prior; forcing it to
-role-play specific personas injects bias and noise. The result replicates across three independent
-Upworthy splits, holds in direction on a different-domain news dataset, and is robust to seed,
-prompt phrasing, and model choice---across three Gemini tiers and a different model family (OpenAI
-gpt-4.1, significant paired gap). The takeaway: for predicting aggregate engagement, a plain LLM
-ranker beats persona simulation---synthetic personas are not merely a weak predictor, they are
-worse than not using them. All numbers regenerate from a public, artifact-first replication package.
+Do demographic personas improve an LLM's prediction of audience engagement? We compare a fixed
+ten-persona panel with a generic-reader baseline on Upworthy headlines, with additional news and
+Reddit comparisons. This revision corrects metric identity, selection, ties, and claims in the
+original release. Historical Upworthy estimates favor the baseline: Goodman--Kruskal
+$\gamma=\baseGamma{}$ versus $\goodmanGamma{}$, and top-1 \baseTopOne{} versus \topOneAcc{}.
+These used a post-selection one-sided winner screen and first-index tie breaking; they remain
+historical results, not corrected Kendall estimates. The baseline does not dominate every dataset:
+Reddit top-1 and captured lift favor the panel. A retrospective GPT-4.1 diagnostic uses a two-sided,
+multiplicity-adjusted winner screen, explicit metric denominators, and expected credit for tied
+choices. On \correctedPairedN{} paired packages, its baseline advantage persists. This diagnostic
+reuses recorded post-parser values, retains unequal sampling budgets, and cannot validate original
+responses. Historical Gemini observations were unavailable for equivalent reanalysis. The evidence
+supports a baseline comparison for the tested configurations, not a general causal claim about
+persona harm. Public reports support numerical verification; complete historical reproduction
+from raw observations remains incomplete.
 \end{abstract}

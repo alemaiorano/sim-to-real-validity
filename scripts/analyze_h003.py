@@ -1,66 +1,60 @@
 #!/usr/bin/env python3
-"""H003 (RQ2): does the simulator's predictive validity rise with the
-ground-truth signal strength of the A/B test? Now answerable across the FULL p-range because
-predictions cover all 1695 packages (not only significant ones).
-
-signal_strength = 1 - winner_p_one_sided ; per-package validity = per-package Spearman rho
-and per-package top-1 hit. Correlate signal vs validity with bootstrap CIs. → reports/h003.json
-"""
-from __future__ import annotations
-
-import importlib.util
+"""RQ2 on complete recorded predictions, with a denominator per association."""
+import argparse
 import json
+import random
 from pathlib import Path
+from analysis_io import write_json
+from analyze_replication import load
+import compute_validity as cv
+from winner_filter import evaluate_winner, POLICY
 
-PAPER_DIR = Path(__file__).resolve().parents[1]
-DATASETS = PAPER_DIR / "datasets"
-spec = importlib.util.spec_from_file_location("cv", PAPER_DIR / "scripts" / "compute_validity.py")
-cv = importlib.util.module_from_spec(spec); spec.loader.exec_module(cv)
+
+def correlation_summary(pairs, iters=5000):
+    pairs = [(x, y) for x, y in pairs if x is not None and y is not None]
+    if len(pairs) < 2:
+        return {"spearman": None, "ci95": None, "n_valid": len(pairs), "n_bootstrap_valid": 0}
+    a, b = map(list, zip(*pairs))
+    point = cv.spearman(a, b)
+    if point is None:
+        return {"spearman": None, "ci95": None, "n_valid": len(pairs), "n_bootstrap_valid": 0}
+    rnd = random.Random(42)
+    values = []
+    for _ in range(iters):
+        chosen = [rnd.randrange(len(pairs)) for _ in pairs]
+        value = cv.spearman([a[i] for i in chosen], [b[i] for i in chosen])
+        if value is not None:
+            values.append(value)
+    values.sort()
+    interval = [values[int(.025 * len(values))], values[int(.975 * len(values))]] if values else None
+    return {"spearman": point, "ci95": interval, "n_valid": len(pairs), "n_bootstrap_valid": len(values)}
 
 
-def main() -> None:
-    corpus = json.loads(next(c for c in sorted(DATASETS.glob("upworthy-subset-*.json"))
-                             if not c.name.endswith(".manifest.json")).read_text())
-    preds = {}
-    for line in (PAPER_DIR / "data" / "sim_predictions.jsonl").open():
-        r = json.loads(line); preds[(r["package_id"], r["variant_id"])] = float(r["pred_score"])
-
-    signal, per_rho, per_hit = [], [], []
-    for pkg in corpus:
-        keys = [(pkg["package_id"], v["variant_id"]) for v in pkg["variants"]]
-        if not all(k in preds for k in keys):
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--corpus", type=Path, required=True)
+    parser.add_argument("--predictions", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    corpus = json.loads(args.corpus.read_text())
+    predictions = load(args.predictions)
+    rho_pairs, hit_pairs = [], []
+    covered = 0
+    for package in corpus:
+        keys = [(package["package_id"], v["variant_id"]) for v in package["variants"]]
+        if not all(k in predictions for k in keys):
             continue
-        real = [v["real_ctr"] for v in pkg["variants"]]
-        pred = [preds[k] for k in keys]
-        rho = cv.spearman(real, pred)
-        if rho is None:
-            continue
-        signal.append(1 - pkg["winner_p_one_sided"])
-        per_rho.append(rho)
-        per_hit.append(float(cv.top1(real, pred)))
-
-    # Spearman(signal, validity) + bootstrap CI on that statistic
-    import random
-    def boot_corr(a, b, iters=5000, seed=42):
-        rnd = random.Random(seed); n = len(a); out = []
-        for _ in range(iters):
-            idx = [rnd.randrange(n) for _ in range(n)]
-            c = cv.spearman([a[i] for i in idx], [b[i] for i in idx])
-            if c is not None:
-                out.append(c)
-        out.sort()
-        return [out[int(0.025*len(out))], out[int(0.975*len(out))]]
-
-    c_rho = cv.spearman(signal, per_rho)
-    c_hit = cv.spearman(signal, per_hit)
-    rep = {
-        "n_packages": len(signal),
-        "signal_strength_range": [min(signal), max(signal)],
-        "corr_signal_vs_per_package_rho": {"spearman": c_rho, "ci95": boot_corr(signal, per_rho)},
-        "corr_signal_vs_top1_hit": {"spearman": c_hit, "ci95": boot_corr(signal, per_hit)},
-    }
-    (PAPER_DIR / "reports" / "h003.json").write_text(json.dumps(rep, indent=2))
-    print(json.dumps(rep, indent=2))
+        covered += 1
+        real = [v["real_ctr"] for v in package["variants"]]
+        pred = [predictions[k] for k in keys]
+        signal = 1 - evaluate_winner(package["variants"])["adjusted_p"]
+        rho_pairs.append((signal, cv.spearman(real, pred)))
+        hit_pairs.append((signal, cv.top1(real, pred)))
+    write_json(args.output, {"analysis_schema": cv.METRIC_POLICY, "winner_filter_policy": POLICY,
+                            "signal_definition": "one_minus_simultaneous_adjusted_p",
+                            "n_complete_packages": covered,
+                            "signal_vs_rho": correlation_summary(rho_pairs),
+                            "signal_vs_top1": correlation_summary(hit_pairs)})
 
 
 if __name__ == "__main__":

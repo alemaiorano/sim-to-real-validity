@@ -1,0 +1,23 @@
+{
+  "historical_source_commit": "7c1ab46b5d881529b79769fb870ed1f2fb98619c",
+  "corpus_sha256": "523034f1fd86d4a432a57b29eb25230418dba119c3367ec04622815114cc9f85",
+  "checkpoint_sha256": "da6128db7ec7ead14aecd2269d25969e750f54bc1996e64c1cff78fd32614529",
+  "producer_sha256": {
+    "scripts/reanalyze_checkpoint.py": "2cc52db24bf9ab847c7fe4d8e47899254240425eaead5b2b72ea00175b93540d",
+    "scripts/compute_validity.py": "aaccfc01dc6672b6f6eddbb418685d0cd55630d55f33dda9d1635640ac9309c7",
+    "scripts/tier2_crossmodel.py": "1fbd935a3f8b299e2b982197075c28fc91f93d8350a798bbb4f6003677dc1db9",
+    "scripts/winner_filter.py": "6dea65e32a5b7c43eec6c43826fa77b9f24f1ed027f2a2e9b2667bf48ab7bceb",
+    "scripts/analysis_io.py": "f6d427be0cd27184a6594a1833dade168f5586b09ee770140d9dcd2d6e0aea32",
+    "scripts/compare_winner_filters.py": "82e6d8212a578baa991bf3066386a6b2bb9cec57cef51f7b8a06e02c0977026f",
+    "scripts/replay_historical_gpt.py": "e82553576ad9faf4f233bdf063890c6b49509096c2f2c03329a7131be519b945",
+    "scripts/generate_reanalysis_assets.py": "c2f11a09e59df588147f1988d56c75626db7d7a6e282e66d1bc8a1dfc0fa84d7"
+  },
+  "artifacts_sha256": {
+    "gpt41.json": "f7e53ebd58596e758d2759ebb09cd638482472916f2aa8d31a3e2ad1a22e914d",
+    "legacy_gpt_verification.json": "a8f25330b137065c7d6fdef4be89e4196c13351a39a90f77ac8f7d3086822e4a",
+    "corpus_rebuild_verification.json": "6ab2a9af88ce405957ae293ea8980a61623541194f8d007908c5eeef6ca9c3e3",
+    "filter_comparison.json": "1ec56349123eb6c31dfb20adf9f6c2986c904c01641f97de70be985f2aed4b46"
+  },
+  "status": "partial offline reanalysis of legacy post-parser scores; no independent replication",
+  "commands": "REPLICATION.md sections 1-3"
+}

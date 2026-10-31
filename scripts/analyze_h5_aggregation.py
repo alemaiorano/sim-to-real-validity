@@ -1,39 +1,25 @@
 #!/usr/bin/env python3
-"""H5 — does a smarter aggregation rule recover persona-panel validity?
-
-The primary result (compute_validity.py) aggregates the panel with a plain ARITHMETIC
-MEAN over all persona x draw observations per variant, giving Kendall tau ~= 0.084 and
-top-1 ~= 34.6% on the n=399 reliable-winner Upworthy packages -- well below the no-persona
-baseline (tau ~= 0.361, top-1 ~= 49.2%). The paper flags "single aggregation rule" as an
-untested design choice. This script tests alternatives on the SAME per-persona observations,
-so it requires NO new API calls.
-
-Per-persona raw scores live in the resumable checkpoint written by run_predictions.py:
-  data/predictions/.checkpoint-gemini-3_1-flash-lite-sig3.jsonl
-  (399 reliable-winner packages x 10 personas x 3 draws = 44,782 observations)
-Ground-truth CTR + reliable-winner flag come from data/joined.csv.
-
-Aggregation rules compared (all WITHIN package, the only audience-comparable unit):
-  mean        panel arithmetic mean over persona x draw  (reproduces the paper's number)
-  median      panel median (robust to per-persona outliers)
-  trimmed20   10% trimmed mean each tail (disagreement-aware, drops extremes)
-  zmean       per-persona z-score across the package's variants, then mean
-              (removes per-persona scale/level bias before pooling)
-  borda       rank fusion: each persona ranks the variants, sum ranks (Borda count)
-  condorcet   pairwise majority (Copeland): variant score = #pairwise wins across personas
-
-Writes reports/h5_aggregation.json and reports/h5_aggregation.csv. The no-persona baseline
-and the published panel-mean are reported as reference rows. Fails loudly if inputs absent.
+"""Compare aggregation rules on explicitly supplied recorded observations, without provider calls.
+The historical mean weights collapsed personas equally; mean_observation separately mirrors the
+primary collector. Only corrected-policy joined inputs and new output destinations are accepted.
+Historical raw parsing cannot be validated from these scalar scores.
 """
 from __future__ import annotations
 
+import argparse
 import csv
 import importlib.util
 import json
+import math
 import statistics
 import sys
 from collections import defaultdict
 from pathlib import Path
+from analysis_io import write_json
+from winner_filter import POLICY
+from importlib import import_module
+
+load_predictions = import_module("03_build_joined").load_predictions
 
 PAPER_DIR = Path(__file__).resolve().parents[1]
 JOINED = PAPER_DIR / "data" / "joined.csv"
@@ -44,7 +30,7 @@ REPORTS = PAPER_DIR / "reports"
 
 spec = importlib.util.spec_from_file_location("cv", PAPER_DIR / "scripts" / "compute_validity.py")
 cv = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(cv)  # reuse kendall_tau / spearman / top1 / bottom1 / bootstrap_ci
+spec.loader.exec_module(cv)  # canonical ranking estimators
 
 
 def fail(msg: str) -> None:
@@ -52,41 +38,51 @@ def fail(msg: str) -> None:
     sys.exit(1)
 
 
-def load_ground_truth() -> dict[str, dict[str, float]]:
-    """significant-winner packages only -> {package_id: {variant_id: real_ctr}}."""
-    if not JOINED.exists():
-        fail(f"missing {JOINED}; run 03_build_joined.py")
-    gt: dict[str, dict[str, float]] = defaultdict(dict)
-    for r in csv.DictReader(JOINED.open()):
-        if int(r.get("winner_significant", 0)):
-            gt[r["package_id"]][r["variant_id"]] = float(r["real_ctr"])
+def load_ground_truth(path):
+    gt = defaultdict(dict)
+    for row in csv.DictReader(Path(path).open()):
+        if row.get("winner_filter_policy") != POLICY:
+            raise ValueError("joined input must carry corrected selection policy")
+        if row["winner_selected"] == "1":
+            gt[row["package_id"]][row["variant_id"]] = float(row["real_ctr"])
     return {k: v for k, v in gt.items() if len(v) >= 2}
 
 
-def load_per_persona() -> dict[str, dict[str, dict[str, float]]]:
-    """checkpoint -> {package: {variant: {persona: mean-over-draws score}}}."""
-    if not CKPT.exists():
-        fail(f"missing per-persona checkpoint {CKPT}")
-    raw: dict[tuple[str, str, str], list[float]] = defaultdict(list)
-    for line in CKPT.open():
+def load_observations(path):
+    raw = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    seen = set()
+    for line in Path(path).read_text().splitlines():
         if not line.strip():
             continue
-        r = json.loads(line)
-        raw[(r["package_id"], r["variant_id"], r["persona_id"])].append(float(r["value"]))
-    out: dict[str, dict[str, dict[str, float]]] = defaultdict(lambda: defaultdict(dict))
-    for (pkg, var, persona), vals in raw.items():
-        out[pkg][var][persona] = sum(vals) / len(vals)
-    return out
+        row = json.loads(line)
+        key = (row["package_id"], row["variant_id"], row["persona_id"], row["draw"])
+        if key in seen:
+            raise ValueError("duplicate per-persona observation")
+        seen.add(key)
+        if row.get("status") == "invalid_or_unavailable" and row["value"] is None:
+            continue
+        value = row["value"]
+        if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= 1:
+            raise ValueError("invalid per-persona score")
+        raw[key[0]][key[1]][key[2]].append(value)
+    return raw
 
 
-def load_baseline_pred() -> dict[str, dict[str, float]]:
+def collapse_personas(observations):
+    return {pkg: {var: {persona: sum(scores) / len(scores) for persona, scores in people.items()}
+                  for var, people in variants.items()} for pkg, variants in observations.items()}
+
+
+def mean_observation(variants):
+    return {var: sum(score for scores in people.values() for score in scores) /
+                 sum(len(scores) for scores in people.values()) for var, people in variants.items()}
+
+
+def load_baseline_pred(path) -> dict[str, dict[str, float]]:
     """no-persona baseline final preds -> {package: {variant: pred_score}}."""
-    if not BASELINE.exists():
-        fail(f"missing baseline preds {BASELINE}")
-    out: dict[str, dict[str, float]] = defaultdict(dict)
-    for line in BASELINE.open():
-        r = json.loads(line)
-        out[r["package_id"]][r["variant_id"]] = float(r["pred_score"])
+    out = defaultdict(dict)
+    for (pid, vid), value in load_predictions(path).items():
+        out[pid][vid] = value
     return out
 
 
@@ -133,7 +129,9 @@ def agg_zmean(per_persona: dict[str, dict[str, float]]) -> dict[str, float]:
         sd = statistics.pstdev(vals)
         for var, s in vmap.items():
             contrib[var].append((s - mu) / sd if sd > 0 else 0.0)
-    return {var: (sum(cs) / len(cs) if cs else 0.0) for var, cs in
+    if not contrib:
+        return {}
+    return {var: (sum(cs) / len(cs) if cs else None) for var, cs in
             ((v, contrib.get(v, [])) for v in variants)}
 
 
@@ -151,6 +149,8 @@ def _persona_ballots(per_persona: dict[str, dict[str, float]]) -> tuple[list[str
 def agg_borda(per_persona: dict[str, dict[str, float]]) -> dict[str, float]:
     """Rank fusion: each persona ranks variants; Borda points summed (ties share avg points)."""
     variants, ballots = _persona_ballots(per_persona)
+    if not ballots:
+        return {}
     score = {v: 0.0 for v in variants}
     for vmap in ballots:
         ranks = cv._ranks([vmap[v] for v in variants])  # 1=lowest score
@@ -162,6 +162,8 @@ def agg_borda(per_persona: dict[str, dict[str, float]]) -> dict[str, float]:
 def agg_condorcet(per_persona: dict[str, dict[str, float]]) -> dict[str, float]:
     """Copeland: for each ordered pair, count personas preferring it; variant score = #pairwise wins."""
     variants, ballots = _persona_ballots(per_persona)
+    if not ballots:
+        return {}
     wins = {v: 0.0 for v in variants}
     for i in range(len(variants)):
         for j in range(i + 1, len(variants)):
@@ -188,90 +190,35 @@ RULES = {
 }
 
 
-def evaluate(gt: dict[str, dict[str, float]],
-             pred_by_pkg: dict[str, dict[str, float]]) -> dict:
-    """compute_validity-style metrics over packages with full prediction coverage."""
-    taus, rhos, hits, lifts = [], [], [], []
-    n = 0
+def evaluate(gt, pred_by_pkg, iters=cv.BOOTSTRAP_ITERS):
+    packages = {}
     for pkg, real_map in gt.items():
-        pred_map = pred_by_pkg.get(pkg)
-        if not pred_map or not all(v in pred_map for v in real_map):
+        pred = pred_by_pkg.get(pkg, {})
+        if not all(v in pred and pred[v] is not None for v in real_map):
             continue
-        n += 1
-        variants = list(real_map.keys())
-        real = [real_map[v] for v in variants]
-        pred = [pred_map[v] for v in variants]
-        t = cv.kendall_tau(real, pred)
-        s = cv.spearman(real, pred)
-        if t is not None:
-            taus.append(t)
-        if s is not None:
-            rhos.append(s)
-        hits.append(cv.top1(real, pred))
-        best, worst = max(real), min(real)
-        if best > worst:
-            picked = real[max(range(len(pred)), key=lambda i: pred[i])]
-            lifts.append((picked - worst) / (best - worst))
-    return {
-        "n_packages": n,
-        "kendall_tau": {"mean": sum(taus) / len(taus), "ci95": cv.bootstrap_ci(taus)},
-        "spearman_rho": {"mean": sum(rhos) / len(rhos), "ci95": cv.bootstrap_ci(rhos)},
-        "top1_accuracy": {"mean": sum(hits) / len(hits),
-                          "ci95": cv.bootstrap_ci([float(h) for h in hits])},
-        "lift_captured": {"mean": sum(lifts) / len(lifts), "ci95": cv.bootstrap_ci(lifts)},
-    }
+        packages[pkg] = [(real_map[v], pred[v]) for v in real_map]
+    return {"n_eligible": len(gt), "n_missing_prediction_coverage": len(gt) - len(packages),
+            **cv.analyze(packages, iters)}
 
 
-def main() -> None:
-    gt = load_ground_truth()
-    per_persona = load_per_persona()
-    baseline = load_baseline_pred()
-
-    results: dict[str, dict] = {}
-
-    # reference: no-persona baseline on the same reliable-winner packages
-    results["baseline_no_persona"] = evaluate(gt, baseline)
-
-    # each persona aggregation rule
-    for name, fn in RULES.items():
-        pred_by_pkg = {pkg: fn(pp) for pkg, pp in per_persona.items()}
-        results[name] = evaluate(gt, pred_by_pkg)
-
-    REPORTS.mkdir(parents=True, exist_ok=True)
-    payload = {
-        "_doc": "H5: alternative persona aggregation rules vs panel mean and no-persona baseline. "
-                "Same per-persona observations as the primary result; no new API calls.",
-        "source_checkpoint": CKPT.name,
-        "n_reliable_winner_packages": len(gt),
-        "results": results,
-    }
-    (REPORTS / "h5_aggregation.json").write_text(json.dumps(payload, indent=2))
-
-    # flat CSV for the paper table
-    with (REPORTS / "h5_aggregation.csv").open("w", newline="") as fh:
-        w = csv.writer(fh)
-        w.writerow(["rule", "n", "kendall_tau", "tau_lo", "tau_hi",
-                    "top1", "top1_lo", "top1_hi", "lift", "lift_lo", "lift_hi"])
-        order = ["baseline_no_persona", "mean", "median", "trimmed20", "zmean", "borda", "condorcet"]
-        for name in order:
-            r = results[name]
-            w.writerow([name, r["n_packages"],
-                        f"{r['kendall_tau']['mean']:.3f}", f"{r['kendall_tau']['ci95'][0]:.3f}",
-                        f"{r['kendall_tau']['ci95'][1]:.3f}",
-                        f"{r['top1_accuracy']['mean']:.3f}", f"{r['top1_accuracy']['ci95'][0]:.3f}",
-                        f"{r['top1_accuracy']['ci95'][1]:.3f}",
-                        f"{r['lift_captured']['mean']:.3f}", f"{r['lift_captured']['ci95'][0]:.3f}",
-                        f"{r['lift_captured']['ci95'][1]:.3f}"])
-
-    # console summary
-    print(f"[h5] n={len(gt)} reliable-winner packages | metrics with 95% bootstrap CI\n")
-    print(f"{'rule':<20} {'kendall_tau':>22} {'top1':>20}")
-    for name in ["baseline_no_persona", "mean", "median", "trimmed20", "zmean", "borda", "condorcet"]:
-        r = results[name]
-        t, tc = r["kendall_tau"]["mean"], r["kendall_tau"]["ci95"]
-        h, hc = r["top1_accuracy"]["mean"], r["top1_accuracy"]["ci95"]
-        print(f"{name:<20} {t:>7.3f} [{tc[0]:.3f},{tc[1]:.3f}] {h:>9.3f} [{hc[0]:.3f},{hc[1]:.3f}]")
-    print("\nwrote reports/h5_aggregation.json + reports/h5_aggregation.csv")
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--joined", type=Path, required=True)
+    parser.add_argument("--checkpoint", type=Path, required=True)
+    parser.add_argument("--baseline", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    gt = load_ground_truth(args.joined)
+    raw = load_observations(args.checkpoint)
+    per_persona = collapse_personas(raw)
+    results = {"baseline_no_persona": evaluate(gt, load_baseline_pred(args.baseline)),
+               "mean_observation": evaluate(gt, {pkg: mean_observation(vs) for pkg, vs in raw.items()})}
+    for name, aggregate in RULES.items():
+        results[name] = evaluate(gt, {pkg: aggregate(vs) for pkg, vs in per_persona.items()})
+    write_json(args.output, {"analysis_schema": cv.METRIC_POLICY, "winner_filter_policy": POLICY,
+                            "mean_identity": "equal_persona_weight_after_draw_collapse",
+                            "mean_observation_identity": "equal_recorded_observation_weight",
+                            "results": results})
 
 
 if __name__ == "__main__":

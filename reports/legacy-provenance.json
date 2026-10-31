@@ -1,0 +1,25 @@
+{
+  "source_commit": "7c1ab46b5d881529b79769fb870ed1f2fb98619c",
+  "statistic": "Goodman-Kruskal gamma; historical fields named tau/kendall_tau are mislabeled",
+  "winner_selection": "observed top versus runner-up, one-sided pooled-proportion z p<0.05, no simultaneous correction",
+  "decision_ties": "first-index; separate fair-credit report uses rounded all-tied packages only",
+  "correlation_n_valid": "not retained in aggregated reports; do not infer from total n or rounded tie rate",
+  "generation_parser": "legacy permissive parser; original response validity not established",
+  "status": "historical aggregates, not corrected estimands",
+  "files": {
+    "baseline_comparison.json": "00371d26b6095956d595f0e011c085d678e30c9d1ece020b1cef2b1fd2e8b1dd",
+    "baseline_ties.json": "76625f5090b83784d150759f4af47679789b5ac7666719b4774f36d2cc9cf689",
+    "correlation.json": "0182594bbb1f1565152981398d463cd755796dc6b8ea4bfb0652754e109bfaf1",
+    "cross_model_gap.json": "76bb2c7e757de2d6fbc548cab74c81747b17a7ea9ddeca808b75a22f644af370",
+    "crossfamily_gpt41.json": "bab2539460870beae9ee5d5d3150d2beecfb3fa27381623faae96d70b072b86f",
+    "error_analysis.json": "8857cb519119550cc3405270d58d47491082ee0a20385fac4914a4d56b9e1410",
+    "h003.json": "af4044f776dc6e10bf235ed91961ae43c664a1af6ed399ae04ec34b7d03d5a2a",
+    "h5_aggregation.csv": "30e2eea3192171671a7264b45822b90319f0277a4ffc82eee8b878f09353cd85",
+    "h5_aggregation.json": "483e4224b07a7855ee757080527e58f2580de02b0d2b27319030abd0eb356a4e",
+    "h5_aggregation_report.md": "f25f482d2ad4ca69f74ddaa6cff67c9c49fb9d36a62db2cb3e706fcb74a2a298",
+    "pilot_model_comparison.json": "d5932d14bf8a9765eb8491601add34d4c94004a9698c608b28f9605ba0e1c9a6",
+    "power_analysis.json": "d0a7d42067025678ddeebd3306d2d7a55644b894045bd323aa2719ad2624ad8c",
+    "replication.json": "0c00409ccd8a216f1a1920578c104a1d7212050085c3b979f126632c72666e5e",
+    "stability.json": "a2e7144c96d884766a7d51d260f003bd4d9291407900898ceab69cea76a79688"
+  }
+}
