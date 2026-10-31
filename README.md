@@ -63,7 +63,7 @@ remain unavailable. Primary observations and supplementary scores retain separat
 artifacts via [CLAIMS_TO_ARTIFACTS.csv](CLAIMS_TO_ARTIFACTS.csv) and the
 [source-driven evidence ledger](docs/audit/full-text-claim-ledger.json). The [native automated-review review](docs/audit/automated-review-review.md) and
 [technical adjudication](docs/audit/automated-review-adjudication.md) are preserved separately.
-Earlier methodological and review records remain under `docs/` with explicit source targets.
+A [fresh Astra high manuscript review](docs/audit/astra-blind-review-2026-10-31.md) received no prior conversation or audits; its [implementation disposition](docs/audit/astra-review-disposition.json) records the resulting clarifications and remaining limits. The native automated-review review covers its explicitly pinned earlier PDF; it is not an exact review of subsequent text changes. Earlier methodological and review records remain under `docs/` with explicit source targets.
 
 Code: [MIT](LICENSE). Aggregate results, fixed panel, manifests and generated assets:
 [CC BY 4.0](LICENSE-DATA.md). Third-party corpora retain their own licenses and are not

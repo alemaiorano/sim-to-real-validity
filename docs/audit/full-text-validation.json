@@ -1,101 +1,31 @@
 {
-  "base_commit": "b808b66486c2d5427f57768da4a7416d8e4d9841",
-  "scope": "One coherent manuscript; editorial framing, caption/figure labels and public metadata. Numerical reports, estimator/collector source, test source and bibliography unchanged.",
-  "current_evidence": "docs/audit/manuscript-presentation.json",
+  "base_commit": "9c6cfe78d3a50d80c7143c736a28dfecda3c7a33",
+  "scope": "Source-backed response to one fresh Astra/high manuscript-only review and disclosure alignment; no new scientific observations or empirical estimates.",
   "coverage": {
-    "paragraphs": 56,
+    "paragraphs": 60,
     "tables": 11,
     "figures": 3,
     "cited_references": 25
   },
-  "pdf": {
-    "sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
-    "bytes": 367434,
-    "pages": 13,
-    "overfull": false,
-    "undefined_refs_or_cites": false,
-    "JSON_placeholder_literal_glyphs_verified": true
+  "PDF": {
+    "pages": 14,
+    "sha256": "1adea53075dbe2a8b263c03105073a7526ed678fe4b076bb1d9a6e9c90e27b8a",
+    "bytes": 379859,
+    "build_no_undefined_overfull_missing_glyphs": true,
+    "literal_JSON_placeholder_verified": true
   },
-  "reused_evidence": "docs/audit/history/pre-presentation-b808b66-full-text-validation.json",
-  "reuse_boundary": "Prior formula/CSV/raw-replay/bibliography evidence applies to identical pinned source and data only. Earlier native reviews cover their original hashes. Current review above covers this exact PDF, and the clean-clone check reran all 47 offline tests.",
-  "scientific_provider_calls": 0,
-  "no_assertion_of_actual_journal_review": true,
-  "clean_clone_reproduction": {
-    "target_commit": "d0af68fbfbe0655b8c1ecbdc4ea9dd1da6d557e9",
-    "clone_started_clean": true,
-    "checks": [
-      {
-        "command": "make verify",
-        "exit_code": 0,
-        "log": "clean-clone-1-verify.log"
-      },
-      {
-        "command": "make reproduce",
-        "exit_code": 0,
-        "log": "clean-clone-2-reproduce.log"
-      },
-      {
-        "command": "make verify",
-        "exit_code": 0,
-        "log": "clean-clone-3-verify.log"
-      },
-      {
-        "command": "make test",
-        "exit_code": 0,
-        "log": "clean-clone-4-test.log"
-      },
-      {
-        "command": "make checksums",
-        "exit_code": 0,
-        "log": "clean-clone-5-checksums.log"
-      }
-    ],
-    "same_catalog_after_regeneration": true,
-    "checksum_probe_detected_changed_Makefile": true,
-    "checksum_probe_restored_and_verified": true,
-    "clone_finished_clean": true,
-    "payload_files": 144,
-    "pdf_sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
-    "tests_passed": 47,
-    "provider_calls": 0
-  },
-  "source_only_archive_reproduction": {
-    "source_commit": "d0af68fbfbe0655b8c1ecbdc4ea9dd1da6d557e9",
-    "source_archive": "paper-source.tar.gz",
-    "source_archive_sha256": "f8b96bf2b694d0fc757e13a01d214258355502bcd921e12ec772fd2ff5d3e071",
-    "source_files": 30,
-    "rebuilt_PDF_byte_identical": true,
-    "pdf_sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
-    "SOURCE_DATE_EPOCH": 1793404800
-  },
-  "automated-review": {
-    "source_commit": "d0af68fbfbe0655b8c1ecbdc4ea9dd1da6d557e9",
-    "pdf_sha256": "5a765385cdafd3c5bbc34f1ad22755ad3c83578dff5f76861e93f6445dabd519",
-    "tool_source_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
-    "review_prompt_version": "v3",
-    "native_exit": 0,
-    "native_meta_decision": "Accept",
-    "overall_score": 7,
-    "confidence": 4,
-    "calls": 13,
-    "accounted_usd_conservative_not_invoice": 0.8168355,
-    "scientific_provider_calls": 0,
-    "guard_raw_passed": false,
-    "guard_TikZ_encoding_false_positives": 6,
-    "native_claim_counts": {
-      "supported_count": 3,
-      "unsupported_count": 1,
-      "uncertain_count": 0
-    },
-    "native_reference_counts": {
-      "resolved": 23,
-      "total": 25,
-      "author_mismatches": 0
-    },
-    "manually_verified_primary_web_references_reused": 2,
-    "native_potential_hallucinations": 0,
-    "raw_review": "docs/audit/automated-review-review.md",
-    "adjudication": "docs/audit/automated-review-adjudication.md",
-    "semantics": "Automated advisory, not journal acceptance or an independent human gate. Raw failed guard and unsupported summary paraphrase preserved and adjudicated. Current manuscript PDF is unchanged from reviewed source; later changes are public evidence/documentation only. SDK-object journals remain in separate retained companion."
-  }
+  "current_verification": "docs/audit/astra-review-validation.json",
+  "blind_review": "docs/audit/astra-blind-review-2026-10-31.md",
+  "finding_disposition": "docs/audit/astra-review-disposition.json",
+  "prior_verification": "docs/audit/history/pre-astra-9c6cfe7-full-text-validation.json",
+  "reuse_boundary": "Prior47 offline tests apply only to unchanged estimator/collector/test payloads; no broad suite/provider rerun for documentation and prompt-field table export.",
+  "bibliography_primary_source_checks_reused_for_identical_bib": true,
+  "prior_native_automated-review_review": "docs/audit/automated-review.json",
+  "native_review_boundary": "Earlier native review targets its source/PDF pins. It has not been rerun or relabeled as an exact review of this changed manuscript.",
+  "scientific_provider_generations": 0,
+  "remaining_limits": [
+    "Public raw bundle deposition pending",
+    "Related experiment dependence and editorial stopping impact not quantified",
+    "Missing supplementary raw/lineage and exclusion identities not reconstructed"
+  ]
 }
