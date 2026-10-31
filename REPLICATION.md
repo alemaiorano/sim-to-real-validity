@@ -121,7 +121,7 @@ The standalone replication bundle contains:
 
 Verify the archive checksum before extraction, then run `sha256sum -c SHA256SUMS` from the
 extracted artifact root. Restore source with `git clone --branch
-research/sim-to-real-corrections-2026-10-31 SOURCE_FINAL.bundle source` (substitute the actual
+research/sim-to-real-v2-2026-10-31 SOURCE_FINAL.bundle source` (substitute the actual
 bundle path). Work from `source`; the original pinned producer is available in its history.
 Use the recorded CPython 3.12.3 environment. Floating-point `sum` changed in Python 3.12;
 older interpreters are not asserted to reproduce exact ranks/bytes. Set a shell variable to the extracted artifact directory:
@@ -148,6 +148,13 @@ visible. Score budgets are matched **within model**. Azure requested three choic
 symmetrically in both arms; Gemini requested one. Choices are not presumed independent.
 The report intervals resample packages and condition on selection and recorded generations.
 Available-observation sensitivity has different coverage and must not replace the primary result.
+
+Exact request bodies are authoritative for generation parameters. Both backends explicitly
+send temperature0.8 and a request seed. Neither backend explicitly sets top-p or frequency /
+presence penalties; no fixed numerical provider default is asserted. Gemini's thinking level
+is MINIMAL. Azure sends three choices per request symmetrically in both arms. The complete
+first-person, third-person and baseline prompt strings are in the versioned collector and
+retained requests, not inferred from the illustrative appendix template.
 
 No API key is needed for these operations. The frozen plan includes historical absolute backup
 locations as provenance; offline replay does not require those directories. Blank reviewer CSV
