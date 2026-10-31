@@ -139,6 +139,18 @@ class RecollectionTests(unittest.TestCase):
         self.assertEqual(report["terminal_observations"], 120)
         self.assertEqual(report["n_primary_packages"], 0)
         self.assertEqual(report["collection_amendments"], [document])
+        import csv
+        from export_recollection_observations import export
+        report_path = self.run / "amended-report.json"
+        report_path.write_text(json.dumps(report))
+        export(self.run, "azure", report_path, self.run / "amended-reviewer")
+        with (self.run / "amended-reviewer/observations.csv").open() as stream:
+            exported = list(csv.DictReader(stream))
+        self.assertEqual(len(exported), 120)
+        self.assertEqual(sum(r["score"] == "" for r in exported), 6)
+        self.assertTrue(all(r["backend"] == "azure" for r in exported))
+        with (self.run / "amended-reviewer/variant-means.csv").open() as stream:
+            self.assertTrue(all(r["included_primary"] == "0" for r in csv.DictReader(stream)))
         again = rc.Collection(self.run, "azure", {}, lambda _: self.fail("terminal request repeated"),
                               amendment_path=amendment)
         self.assertTrue(again.execute()["complete"])
@@ -177,6 +189,40 @@ class RecollectionTests(unittest.TestCase):
         changed = {**document, "code_sha256": {"scripts/compute_validity.py": "changed"}}
         with self.assertRaises(ValueError):
             rc.validate_amendment(self.plan, document["plan_sha256"], "azure", changed, raw)
+
+    def test_reviewer_exports_preserve_choice_lineage_and_undefined_metrics(self):
+        import csv
+        from export_recollection_observations import export
+        raw = json.dumps({"choices": [
+            {"index": i, "finish_reason": "stop", "message": {
+                "content": json.dumps({"click_intent": .2 * (i + 1)})}}
+            for i in [2, 0, 1]], "usage": {"prompt_tokens": 20, "completion_tokens": 30},
+            "model": "fixture-gpt", "id": "fixture"}).encode()
+        rc.Collection(self.run, "azure", {}, lambda _: (200, raw, {})).execute()
+        report = replay(self.run, "azure")
+        report_path = self.run / "report.json"
+        report_path.write_text(json.dumps(report))
+        target = self.run / "reviewer"
+        export(self.run, "azure", report_path, target)
+        with (target / "observations.csv").open() as stream:
+            observations = list(csv.DictReader(stream))
+        self.assertEqual(len(observations), 120)
+        for row in observations:
+            self.assertEqual(row["backend"], "azure")
+            self.assertAlmostEqual(float(row["score"]), .2 * (int(row["choice_index"]) + 1))
+            self.assertTrue(row["response_sha256"])
+        with (target / "package-metrics.csv").open() as stream:
+            metrics = list(csv.DictReader(stream))
+        self.assertEqual(len(metrics), 3)
+        self.assertTrue(all(row["kendall_tau_b"] == "" for row in metrics))
+        self.assertEqual(float(metrics[0]["top1_accuracy"]), .5)
+        with self.assertRaises(FileExistsError):
+            export(self.run, "azure", report_path, target)
+        report["n_primary_packages"] = 0
+        report_path.write_text(json.dumps(report))
+        with self.assertRaises(ValueError):
+            export(self.run, "azure", report_path, self.run / "wrong")
+        self.assertFalse((self.run / "wrong").exists())
 
     def test_budget_prevents_dispatch(self):
         self.plan["backends"]["gemini"]["cap_usd"] = "0"
