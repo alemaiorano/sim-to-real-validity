@@ -1472,7 +1472,7 @@
   ],
   "source_sha256": {
     "DATA_SOURCES.md": "ba31b57460c62684add691262c1a453aeb3763a120d18ce0cd3df729a319ed1f",
-    "REPLICATION.md": "aa2b02d7e6df3c4a7b4163672583e6039992d54710d55c5c78c958b0178c8d03",
+    "REPLICATION.md": "eb2dc1a6a4f521968cbf25be15d2442a5392ebaef5fa1664994ced34a0dcdc0a",
     "SCOPE.md": "a773f103a7bc314b77302fea860848ec176579420eee13b2d670b20fcfa8430b",
     "data/persona_panel.json": "3ff13e5eb82486ed0de24ccfad7e6a0844de053c29f5f056fb636432b329aaac",
     "datasets/mind-subset-2026-06-03.manifest.json": "adfb96a0c2a272e0b9f9aa7f8025b3b6fa6e788fd177dba1ce49ca9dacaef921",
