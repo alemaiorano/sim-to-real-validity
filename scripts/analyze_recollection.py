@@ -8,7 +8,7 @@ from pathlib import Path
 
 from analysis_io import write_json
 import compute_validity as cv
-from recollect import digest, encoded, interpret, request_body, cost, PROTOCOL
+from recollect import digest, encoded, interpret, request_body, cost, PROTOCOL, validate_amendment
 
 
 def replay(run, backend):
@@ -32,6 +32,7 @@ def replay(run, backend):
     tokens = [0, 0]
     accounted = Decimal(0)
     rows = 0
+    amendments = []
     journal_bytes = (run / f"{backend}.events.jsonl").read_bytes()
     if journal_bytes and not journal_bytes.endswith(b"\n"):
         raise ValueError("incomplete journal record; analyze a completed snapshot")
@@ -93,6 +94,12 @@ def replay(run, backend):
                             raise ValueError("multiple terminal outcomes for one observation")
                         outcomes[observation["task_id"]] = score
                     versions[str(parsed["model_version"]) if parsed else "unknown"] += len(scores)
+            elif row["event"] == "amendment":
+                document = validate_amendment(plan, digest((run / "plan.json").read_bytes()),
+                                              backend, row["amendment"], journal_bytes)
+                if amendments or row["sequence"] != document["base_journal_rows"] or row["previous"] != document["base_last_event_sha256"]:
+                    raise ValueError("duplicate or displaced amendment")
+                amendments.append(document)
             else:
                 raise ValueError("unknown journal event")
     interrupted = set(dispatches) - responded
@@ -128,7 +135,7 @@ def replay(run, backend):
                 complete[arm][pid] = available[arm][pid]
     primary = {arm: cv.analyze(complete[arm]) for arm in complete}
     primary["paired_gap"] = cv.paired_analysis(complete["panel"], complete["baseline"])
-    return {"protocol": PROTOCOL, "backend": backend, "model_requested": plan["backends"][backend]["model"],
+    return {"protocol": PROTOCOL, "collection_amendments": amendments, "backend": backend, "model_requested": plan["backends"][backend]["model"],
             "plan_sha256": digest((run / "plan.json").read_bytes()),
             "journal_sha256": digest(journal_bytes),
             "journal_snapshot": str(snapshot_path.relative_to(run)), "journal_snapshot_bytes": len(journal_bytes),

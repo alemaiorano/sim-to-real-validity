@@ -93,6 +93,91 @@ class RecollectionTests(unittest.TestCase):
         resumed = rc.Collection(self.run, "gemini", {}, lambda _: self.fail("completed observations repeated"))
         self.assertTrue(resumed.execute()["complete"])
 
+    def write_content_amendment(self):
+        raw = (self.run / "azure.events.jsonl").read_bytes()
+        rows = [json.loads(line) for line in raw.splitlines()]
+        document = {"policy": "content-filter-terminal-v1", "protocol": rc.PROTOCOL,
+            "plan_sha256": rc.digest((self.run / "plan.json").read_bytes()),
+            "base_journal_bytes": len(raw), "base_journal_sha256": rc.digest(raw),
+            "base_journal_rows": len(rows), "base_last_event_sha256": rows[-1]["sha256"],
+            "source_commit": "f" * 40, "code_sha256": {}}
+        for directory in [self.run, self.backup]:
+            (directory / "amendment.json").write_bytes(rc.encoded(document))
+        return self.run / "amendment.json", document
+
+    @staticmethod
+    def content_refusal():
+        return json.dumps({"error": {"code": "content_filter", "innererror": {
+            "code": "ResponsibleAIPolicyViolation"}}}).encode()
+
+    def test_explicit_content_amendment_keeps_refusal_missing_and_preserves_cost(self):
+        original = rc.Collection(self.run, "azure", {}, lambda _: (400, self.content_refusal(), {}))
+        first = original.execute()
+        self.assertTrue(first["stopped"])
+        prefix = (self.run / "azure.events.jsonl").read_bytes()
+        blocked = set(original.done)
+        self.assertEqual(len(blocked), 1)
+        spent = original.spent
+        amendment, document = self.write_content_amendment()
+        raw = json.dumps({"choices": [{"index": i, "finish_reason": "stop",
+            "message": {"content": '{"click_intent":0.6}'}} for i in range(3)],
+            "usage": {"prompt_tokens": 20, "completion_tokens": 30}, "model": "fixture"}).encode()
+        calls = []
+        def transport(body):
+            calls.append(body)
+            return (400, self.content_refusal(), {}) if len(calls) == 1 else (200, raw, {})
+        resumed = rc.Collection(self.run, "azure", {}, transport, amendment_path=amendment)
+        self.assertEqual(resumed.done, blocked)
+        self.assertEqual(resumed.spent, spent)
+        self.assertFalse(resumed.stop.is_set())
+        self.assertTrue(resumed.execute()["complete"])
+        self.assertEqual(len(calls), 39)
+        self.assertTrue((self.run / "azure.events.jsonl").read_bytes().startswith(prefix))
+        self.assertEqual((self.run / "azure.events.jsonl").read_bytes(),
+                         (self.backup / "azure.events.jsonl").read_bytes())
+        report = replay(self.run, "azure")
+        self.assertEqual(report["terminal_observations"], 120)
+        self.assertEqual(report["n_primary_packages"], 0)
+        self.assertEqual(report["collection_amendments"], [document])
+        again = rc.Collection(self.run, "azure", {}, lambda _: self.fail("terminal request repeated"),
+                              amendment_path=amendment)
+        self.assertTrue(again.execute()["complete"])
+        self.assertEqual(sum(r["event"] == "amendment" for r in again.journal.rows()), 1)
+        with self.assertRaises(ValueError):
+            rc.Collection(self.run, "azure", {}, transport)
+
+    def test_content_amendment_does_not_clear_other_permanent_stops(self):
+        for status in [400, 401, 403, 404]:
+            with self.subTest(status=status):
+                self.tearDown()
+                self.setUp()
+                rc.Collection(self.run, "azure", {}, lambda _: (400, self.content_refusal(), {})).execute()
+                amendment, _ = self.write_content_amendment()
+                resumed = rc.Collection(self.run, "azure", {},
+                    lambda _, status=status: (status, b'{"error":{"code":"other"}}', {}),
+                    amendment_path=amendment)
+                result = resumed.execute(limit=1)
+                self.assertTrue(result["stopped"])
+                self.assertEqual(result["halt_reason"], "permanent_http_error")
+                self.assertEqual(result["attempts"], 2)
+                halted = rc.Collection(self.run, "azure", {}, lambda _: self.fail("permanent stop bypassed"),
+                                       amendment_path=amendment)
+                self.assertTrue(halted.execute()["stopped"])
+
+    def test_amendment_rejects_changed_prefix_and_scientific_dependencies(self):
+        rc.Collection(self.run, "azure", {}, lambda _: (400, self.content_refusal(), {})).execute()
+        path, document = self.write_content_amendment()
+        raw = (self.run / "azure.events.jsonl").read_bytes()
+        changed = {**document, "base_journal_sha256": "0" * 64}
+        with self.assertRaises(ValueError):
+            rc.validate_amendment(self.plan, document["plan_sha256"], "azure", changed, raw)
+        with self.assertRaises(ValueError):
+            rc.validate_amendment(self.plan, document["plan_sha256"], "gemini", document, raw)
+        self.plan["code_sha256"] = {"scripts/compute_validity.py": "original"}
+        changed = {**document, "code_sha256": {"scripts/compute_validity.py": "changed"}}
+        with self.assertRaises(ValueError):
+            rc.validate_amendment(self.plan, document["plan_sha256"], "azure", changed, raw)
+
     def test_budget_prevents_dispatch(self):
         self.plan["backends"]["gemini"]["cap_usd"] = "0"
         self.write_plan()

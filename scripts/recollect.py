@@ -293,13 +293,52 @@ def interpret(backend, raw, expected_choices=1):
                 "token_counts": None, "model_version": None, "response_id": None}
 
 
+def is_content_filter(backend, status, raw):
+    """A typed provider refusal is a missing observation, never a retry invitation."""
+    if backend != "azure" or status != 400:
+        return False
+    try:
+        error = json.loads(raw)["error"]
+        return (error["code"] == "content_filter" and
+                error["innererror"]["code"] == "ResponsibleAIPolicyViolation")
+    except (ValueError, TypeError, KeyError):
+        return False
+
+
+def validate_amendment(plan, plan_sha256, backend, document, journal_bytes):
+    """Bind a narrow technical amendment to an immutable pre-amendment raw prefix."""
+    if (backend != "azure" or document["policy"] != "content-filter-terminal-v1" or
+            document["protocol"] != PROTOCOL or document["plan_sha256"] != plan_sha256):
+        raise ValueError("incompatible content-filter amendment")
+    count = document["base_journal_bytes"]
+    if type(count) is not int or count < 1 or count > len(journal_bytes):
+        raise ValueError("invalid amendment prefix length")
+    prefix = journal_bytes[:count]
+    if not prefix.endswith(b"\n") or digest(prefix) != document["base_journal_sha256"]:
+        raise ValueError("changed pre-amendment journal")
+    rows = [json.loads(line) for line in prefix.splitlines()]
+    if len(rows) != document["base_journal_rows"] or rows[-1]["sha256"] != document["base_last_event_sha256"]:
+        raise ValueError("changed amendment boundary")
+    if not any(r["event"] == "result" and is_content_filter(backend, r["http_status"],
+               base64.b64decode(r["response_body_base64"], validate=True)) for r in rows):
+        raise ValueError("amendment lacks its triggering typed refusal")
+    if set(document["code_sha256"]) != set(plan["code_sha256"]):
+        raise ValueError("changed amendment dependency set")
+    for name, expected in plan["code_sha256"].items():
+        if name not in {"scripts/recollect.py", "scripts/analyze_recollection.py"} and document["code_sha256"][name] != expected:
+            raise ValueError("amendment changed a scientific dependency")
+    if len(document["source_commit"]) != 40:
+        raise ValueError("amendment source needs a full commit SHA")
+    return document
+
+
 def cost(counts, settings):
     return (Decimal(counts[0]) * Decimal(settings["accounting_input_per_million"]) +
             Decimal(counts[1]) * Decimal(settings["accounting_output_per_million"])) / Decimal(1000000)
 
 
 class Collection:
-    def __init__(self, run, backend, credentials, transport=None):
+    def __init__(self, run, backend, credentials, transport=None, amendment_path=None):
         self.run = Path(run)
         self.plan = json.loads((self.run / "plan.json").read_text())
         self.tasks = json.loads((self.run / f"requests-{backend}.json").read_text())
@@ -325,7 +364,19 @@ class Collection:
             raise ValueError("changed task plan")
         if digest(encoded(json.loads((self.run / "tasks.json").read_text()))) != self.plan["task_plan_sha256"]:
             raise ValueError("changed observation plan")
-        for name, expected in self.plan["code_sha256"].items():
+        self.amendment = None
+        self.plan_sha256 = digest((self.run / "plan.json").read_bytes())
+        if amendment_path is not None:
+            amendment_path = Path(amendment_path)
+            if amendment_path.resolve().parent != self.run.resolve():
+                raise ValueError("amendment must be retained with the run")
+            raw_document = amendment_path.read_bytes()
+            if raw_document != (self.backup / amendment_path.name).read_bytes():
+                raise ValueError("changed amendment mirror")
+            self.amendment = validate_amendment(self.plan, self.plan_sha256, backend,
+                json.loads(raw_document), (self.run / f"{backend}.events.jsonl").read_bytes())
+        expected_code = self.amendment["code_sha256"] if self.amendment else self.plan["code_sha256"]
+        for name, expected in expected_code.items():
             if digest((ROOT / name).read_bytes()) != expected:
                 raise ValueError("changed collector dependency: " + name)
         for name, expected in self.plan["input_sha256"].items():
@@ -344,7 +395,8 @@ class Collection:
         self.interval = max(1 / self.plan["initial_requests_per_second"],
                             60 / (.9 * self.settings["requests_per_minute"]))
         self.token_limit = None
-        self.plan_sha256 = digest((self.run / "plan.json").read_bytes())
+        amendment_seen = False
+        known_refusal_seen = False
         for row in self.journal.rows():
             if row["event"] == "manifest":
                 if row["plan_sha256"] != self.plan_sha256 or row["backend"] != backend:
@@ -357,7 +409,12 @@ class Collection:
                 reserved = self.pending.pop(row["attempt_id"])
                 self.spent += Decimal(row["accounted_usd"]) if row["accounted_usd"] is not None else reserved
                 reason = row.get("halt_reason")
-                if row.get("http_status") in [400, 401, 403, 404]:
+                known_refusal = self.amendment is not None and is_content_filter(backend,
+                    row.get("http_status"), base64.b64decode(row["response_body_base64"], validate=True))
+                known_refusal_seen |= known_refusal
+                if known_refusal and reason == "permanent_http_error":
+                    reason = None
+                if row.get("http_status") in [400, 401, 403, 404] and not known_refusal:
                     reason = reason or "permanent_http_error"
                 if row["accounted_usd"] is not None and Decimal(row["accounted_usd"]) > reserved:
                     reason = reason or "reservation_underestimated"
@@ -367,6 +424,17 @@ class Collection:
                 self.limit_headers(row.get("response_headers", {}), row.get("http_status"), 0)
                 if row["terminal"]:
                     self.done.add(row["task_id"])
+            elif row["event"] == "amendment":
+                if (amendment_seen or self.amendment is None or row["amendment"] != self.amendment or
+                        row["sequence"] != self.amendment["base_journal_rows"] or
+                        row["previous"] != self.amendment["base_last_event_sha256"]):
+                    raise ValueError("wrong or unacknowledged journal amendment")
+                amendment_seen = True
+        if self.amendment is not None and not amendment_seen:
+            if (not known_refusal_seen or self.halt_reason is not None or
+                    digest(self.journal.path.read_bytes()) != self.amendment["base_journal_sha256"]):
+                raise ValueError("cannot amend another stop or an unpinned journal suffix")
+            self.journal.append({"event": "amendment", "amendment": self.amendment})
         # An interrupted dispatch may already have been billed: do not repeat it silently.
         for row in list(self.journal.rows()):
             if row["event"] == "dispatch" and row["attempt_id"] in self.pending:
@@ -487,7 +555,8 @@ class Collection:
                                                 "x-ratelimit-remaining-tokens", "retry-after-ms",
                                                 "x-ms-retry-after-ms", "x-ratelimit-reset-requests",
                                                 "x-ratelimit-reset-tokens"}}
-            halt_reason = ("permanent_http_error" if status in [400, 401, 403, 404] else
+            halt_reason = ("permanent_http_error" if status in [400, 401, 403, 404] and
+                           not (self.amendment and is_content_filter(self.backend, status, raw)) else
                            "reservation_underestimated" if charge is not None and charge > reservation else None)
             self.record({"event": "result", "attempt_id": attempt_id, "task_id": task["task_id"],
                                  "terminal": not retry, "http_status": status, "error_type": error_type,
@@ -549,6 +618,7 @@ def main():
     c.add_argument("--backend", choices=["gemini", "azure"], required=True)
     c.add_argument("--env-file", type=Path, required=True)
     c.add_argument("--limit", type=int)
+    c.add_argument("--content-filter-amendment", type=Path)
     args = parser.parse_args()
     if args.command == "collect" and args.limit is not None and args.limit < 0:
         parser.error("--limit must be nonnegative")
@@ -557,7 +627,8 @@ def main():
     else:
         lock_file = (args.run_dir / f".{args.backend}.lock").open("a")
         fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        collector = Collection(args.run_dir, args.backend, read_credentials(args.env_file))
+        collector = Collection(args.run_dir, args.backend, read_credentials(args.env_file),
+                               amendment_path=args.content_filter_amendment)
         print(json.dumps(collector.execute(args.limit)), flush=True)
 
 
