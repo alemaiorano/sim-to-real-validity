@@ -1,0 +1,57 @@
+{
+  "paper_source_base_commit": "f4a3219831a4ad1504b23416259ec57762b189a1",
+  "archive": "submission/arxiv-source.tar.gz",
+  "archive_sha256": "1dcc652d11b0f97a049d1094422ee3eaaa59df015ad348f4cfdbd513813beb79",
+  "archive_bytes": 46280,
+  "archive_members": 30,
+  "main_tex_at_archive_root": true,
+  "bibliography_snapshot_and_figures_included": true,
+  "no_compiled_article_PDF_logs_history_or_private_data_in_archive": true,
+  "archive_member_bytes_match_canonical_source": true,
+  "isolated_build_uses_only_extracted_inputs_and_TeX_distribution": true,
+  "shell_escape_disabled": true,
+  "source_search_paths_isolated": true,
+  "PDF_sha256": "bac4161aa6a13dbd4e1a93c5d8cbf0ca87b040f0141bf8e8ced0538d828f979e",
+  "PDF_pages": 14,
+  "PDF_byte_identical_to_canonical": true,
+  "no_unresolved_refs_cites_missing_glyphs_or_overflow": true,
+  "private_tool_identity_absent_from_inputs_and_PDF": true,
+  "numerical_tables_figures_macro_data_and_scientific_manuscript_bytes_unchanged": true,
+  "bibtex_snapshot_regenerates_identically": true,
+  "commands": [
+    [
+      "pdflatex",
+      "-no-shell-escape",
+      "-halt-on-error",
+      "-interaction=nonstopmode",
+      "-recorder",
+      "main"
+    ],
+    [
+      "bibtex",
+      "main"
+    ],
+    [
+      "pdflatex",
+      "-no-shell-escape",
+      "-halt-on-error",
+      "-interaction=nonstopmode",
+      "-recorder",
+      "main"
+    ],
+    [
+      "pdflatex",
+      "-no-shell-escape",
+      "-halt-on-error",
+      "-interaction=nonstopmode",
+      "-recorder",
+      "main"
+    ]
+  ],
+  "source_date_epoch": 1793404800,
+  "TeX_version": "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)",
+  "bibliography_primary_source_checks_reused_for_identical_bib": true,
+  "scientific_provider_calls": 0,
+  "actual_arxiv_server_preview_not_run": true,
+  "arxiv_upload_or_submission_performed": false
+}
