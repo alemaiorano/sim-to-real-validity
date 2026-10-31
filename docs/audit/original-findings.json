@@ -1,0 +1,520 @@
+[
+  {
+    "id": "A01",
+    "severity": "alta",
+    "kind": "defeito metodológico confirmado",
+    "title": "Seleção do vencedor antes do teste unilateral altera a calibração",
+    "evidence": [
+      {
+        "path": "scripts/01_ingest_upworthy.py",
+        "line": 139,
+        "quote": "    ordered = sorted(variants, key=lambda v: -v[\"real_ctr\"])",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/01_ingest_upworthy.py#L139"
+      },
+      {
+        "path": "scripts/01_ingest_upworthy.py",
+        "line": 142,
+        "quote": "    return (p < 0.05, p)",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/01_ingest_upworthy.py#L142"
+      },
+      {
+        "path": "latex/sections/05-setup.tex",
+        "line": 17,
+        "quote": "one-sided two-proportion $z$-test ($p<0.05$). The \\textbf{primary analysis} uses the",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/05-setup.tex#L17"
+      }
+    ],
+    "observed": "O mesmo resultado observado escolhe a direção vencedora e fornece o teste unilateral top versus runner-up. Em 100.000 experimentos sintéticos com duas variantes binomiais idênticas (n=10.000 por braço, CTR real=0,05, seed 20261030), a função publicada aceita 10.095 casos (10,095%).",
+    "expected": "Uma interpretação inferencial ao nível de 5% precisa considerar a seleção da direção e, quando houver múltiplas variantes, a seleção entre opções.",
+    "impact": "O conjunto chamado confiável não tem a calibração nominal sugerida pelo texto. Corrigir o filtro pode mudar os 399 casos e as estimativas primárias.",
+    "reproduction": "run-audit-checks.py → probes.selection_under_null, chamando a função real tag_winner_significance.",
+    "correction": "Definir a inferência pretendida; para duas opções, usar contraste bilateral ou direção realmente pré-especificada. Para várias opções, considerar comparação simultânea ou seleção e confirmação separadas. Reaplicar o filtro à população preservada e recalcular métricas com as mesmas predições.",
+    "confidence": "alta",
+    "counterevidence": "O código descreve explicitamente o procedimento unilateral. A contraprova não estima a taxa de falsos vencedores nos dados reais nem demonstra que todos os 399 casos são inválidos.",
+    "historical_impact": "não quantificado sem corpora e predições originais"
+  },
+  {
+    "id": "A02",
+    "severity": "alta",
+    "kind": "incompatibilidade confirmada entre métrica e descrição",
+    "title": "A função chamada Kendall tau calcula gamma de Goodman e Kruskal",
+    "evidence": [
+      {
+        "path": "scripts/compute_validity.py",
+        "line": 73,
+        "quote": "def kendall_tau(a: list[float], b: list[float]) -> float | None:",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/compute_validity.py#L73"
+      },
+      {
+        "path": "scripts/compute_validity.py",
+        "line": 86,
+        "quote": "    return (conc - disc) / denom if denom else None",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/compute_validity.py#L86"
+      },
+      {
+        "path": "latex/sections/03-framework.tex",
+        "line": 23,
+        "quote": "winner accuracy (did the predicted best variant match the real best), Kendall's",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/03-framework.tex#L23"
+      }
+    ],
+    "observed": "A fórmula (C−D)/(C+D) ignora pares empatados. Para [1,2,3] e [1,1,2], a função retorna 1,0; scipy.stats.kendalltau com tau-b retorna 0,816496580927726.",
+    "expected": "O nome, a citação, o tratamento de empates e a interpretação de magnitude devem corresponder ao estimador calculado.",
+    "impact": "Alcança tabelas, figura comparativa, macros e conclusões baseadas na correlação. Bandas convencionais de outra correlação não se transferem automaticamente a gamma.",
+    "reproduction": "run-audit-checks.py → probes.gamma_vs_tau_b; implementação publicada versus SciPy.",
+    "correction": "Escolher explicitamente gamma ou tau-b. Se mantiver gamma, corrigir nomes, fonte e interpretação; se adotar tau-b, recalcular todas as análises afetadas e definir o tratamento dos casos indefinidos.",
+    "confidence": "alta",
+    "counterevidence": "A fórmula pode coincidir com Kendall em dados sem empates. Top-1 é uma métrica distinta e não depende dessa troca de fórmula.",
+    "historical_impact": "diferença completa entre estimadores ainda não recalculada"
+  },
+  {
+    "id": "A03",
+    "severity": "alta",
+    "kind": "contrato de denominador e de empate inconsistente",
+    "title": "A média exclui indefinidos e a análise de empates usa outra regra",
+    "evidence": [
+      {
+        "path": "scripts/compute_validity.py",
+        "line": 121,
+        "quote": "        if t is not None:",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/compute_validity.py#L121"
+      },
+      {
+        "path": "scripts/compute_validity.py",
+        "line": 135,
+        "quote": "        \"n_packages\": n_pkg,",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/compute_validity.py#L135"
+      },
+      {
+        "path": "scripts/analyze_baseline_ties.py",
+        "line": 40,
+        "quote": "        is_degen = len(set(round(x, 6) for x in pr)) == 1",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/analyze_baseline_ties.py#L40"
+      },
+      {
+        "path": "scripts/analyze_baseline_ties.py",
+        "line": 43,
+        "quote": "            top1_fair += 1.0 / len(pr)            # expected credit under random tie-break",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/analyze_baseline_ties.py#L43"
+      }
+    ],
+    "observed": "O n informado inclui pacotes que não entram nas médias de correlação. O relatório de empate arredonda scores para seis casas; a correlação e top-1 usam valores exatos. [0,5;0,5000001] é degenerado no relatório e produz coeficiente 1,0 na função de ranking. A correção 'fair' trata apenas pacotes totalmente empatados segundo aquela regra.",
+    "expected": "Cada métrica deve expor população efetiva, exclusões e regra de empate. Uma correção apresentada como justa precisa delimitar quais empates trata.",
+    "impact": "A comparação pode usar populações condicionais diferentes. O relatório tie_rate=0,1784 não demonstra que exatamente 71 pacotes saíram da média nem sustenta, sozinho, que toda a diferença é um limite inferior conservador.",
+    "reproduction": "run-audit-checks.py → probes.near_tie_definition; leitura de analyze() e analyze_baseline_ties.py.",
+    "correction": "Exportar n_total, n_valid por métrica, exclusões por motivo e populações comuns. Harmonizar ou explicitar regras de empate, incluindo empates parciais no topo. Não converter indefinidos automaticamente em zero sem definir o estimando.",
+    "confidence": "alta",
+    "counterevidence": "Excluir um coeficiente matematicamente indefinido não é um erro por si só. O problema é a descrição incompleta do denominador e a incompatibilidade das regras.",
+    "historical_impact": "contagem exata de indefinidos não recuperável apenas dos agregados"
+  },
+  {
+    "id": "A04",
+    "severity": "importante",
+    "kind": "justificativa estatística insuficiente e referência numérica desatualizada",
+    "title": "A análise de poder usa outro tipo de estatística e um efeito antigo",
+    "evidence": [
+      {
+        "path": "scripts/power_analysis.py",
+        "line": 30,
+        "quote": "    return math.ceil((( Z_A + Z_B) / math.atanh(r)) ** 2 + 3)",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/power_analysis.py#L30"
+      },
+      {
+        "path": "scripts/power_analysis.py",
+        "line": 84,
+        "quote": "            \"p0=0.312,p1=0.363 (observed +5.1pp)\": n_for_proportion(0.312, 0.363),",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/power_analysis.py#L84"
+      },
+      {
+        "path": "scripts/power_analysis.py",
+        "line": 88,
+        "quote": "        \"current_primary_n_significant\": 124,",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/power_analysis.py#L88"
+      },
+      {
+        "path": "latex/sections/05-setup.tex",
+        "line": 44,
+        "quote": "observed top-1 margin. Using all eligible packages supplies $n=\\nPackages{}$ reliable packages,",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/05-setup.tex#L44"
+      }
+    ],
+    "observed": "A fórmula de Fisher-z é aplicada como justificativa de n para a média de coeficientes calculados dentro de pacotes. O cálculo top-1 usa p0=0,312 e p1=0,363; os valores finais são 0,304484425349087 e 0,3458646616541353. Inserindo os valores finais na mesma aproximação, o n é 991, não 663.",
+    "expected": "O cálculo de poder deve corresponder ao estimando e ao contraste efetivamente analisados. Um efeito piloto pode ser usado no planejamento, mas precisa ser identificado como tal.",
+    "impact": "n=347 não demonstra diretamente poder de 80% para a média de concordâncias dentro dos pacotes. A frase sobre a margem observada usa números de planejamento.",
+    "reproduction": "run-audit-checks.py → probes.power_top1; reports/power_analysis.json; função n_for_correlation.",
+    "correction": "Identificar como planejamento os números históricos. Justificar o poder para o estimando real, idealmente usando a variabilidade por pacote e o contraste pareado. Justificar separadamente bandas de efeito para a métrica escolhida.",
+    "confidence": "alta",
+    "counterevidence": "991 é um diagnóstico ao reutilizar a mesma aproximação, não uma nova recomendação definitiva de amostra. A conclusão de que top-1 do painel versus acaso estava subdimensionado continua igual.",
+    "historical_impact": "não demonstra que o contraste baseline versus painel seja não significativo"
+  },
+  {
+    "id": "A05",
+    "severity": "importante",
+    "kind": "lacuna de evidência publicada",
+    "title": "Robustez ao prompt é declarada sem artefato identificável",
+    "evidence": [
+      {
+        "path": "latex/sections/06-results.tex",
+        "line": 86,
+        "quote": "is it a prompt artefact: a third-person persona framing and a reworded baseline leave both sides",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/06-results.tex#L86"
+      },
+      {
+        "path": "latex/sections/06-results.tex",
+        "line": 87,
+        "quote": "essentially unchanged---the persona panel stays weak under either framing and the baseline stays",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/06-results.tex#L87"
+      },
+      {
+        "path": "scripts/run_predictions.py",
+        "line": 85,
+        "quote": "    if variant == \"third_person\":  # third-person framing (tests if first-person role-play drives it)",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/run_predictions.py#L85"
+      },
+      {
+        "path": "scripts/run_predictions.py",
+        "line": 77,
+        "quote": "        if variant == \"appeal\":  # reworded baseline (prompt-robustness ablation)",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/run_predictions.py#L77"
+      }
+    ],
+    "observed": "As duas variantes existem no código. A busca nos 14 relatórios publicados não encontra um resultado identificável para a comparação third_person ou appeal com o controle.",
+    "expected": "Uma conclusão empírica de estabilidade precisa apontar população, configuração, resultado e incerteza da comparação.",
+    "impact": "A frase 'so the gap is not driven by the specific wording' excede a evidência publicamente auditável.",
+    "reproduction": "Inventário completo reports/* e busca de third_person, appeal, prompt sensitivity e reworded; evidência retida em evidence/claim-coverage.json.",
+    "correction": "Recuperar e identificar o experimento já realizado, com controles comparáveis e orçamento; se não existir evidência suficiente, retirar ou qualificar a afirmação. A presença da opção no CLI não basta.",
+    "confidence": "alta quanto à ausência no pacote",
+    "counterevidence": "Não prova que a experiência nunca ocorreu fora do pacote; não autoriza uma nova execução paga.",
+    "historical_impact": "não observável no material publicado"
+  },
+  {
+    "id": "A06",
+    "severity": "importante",
+    "kind": "diferença confirmada de estimadores e atribuição não demonstrada",
+    "title": "H5 muda a ponderação quando os números de draws diferem",
+    "evidence": [
+      {
+        "path": "scripts/run_predictions.py",
+        "line": 239,
+        "quote": "                        \"pred_score\": sum(scores) / len(scores),",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/run_predictions.py#L239"
+      },
+      {
+        "path": "scripts/analyze_h5_aggregation.py",
+        "line": 78,
+        "quote": "        out[pkg][var][persona] = sum(vals) / len(vals)",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/analyze_h5_aggregation.py#L78"
+      },
+      {
+        "path": "scripts/analyze_h5_aggregation.py",
+        "line": 108,
+        "quote": "            out[var] = sum(vals) / len(vals)",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/analyze_h5_aggregation.py#L108"
+      },
+      {
+        "path": "latex/tables/h5_aggregation.tex",
+        "line": 4,
+        "quote": "  \\caption{H5 --- robustness to the aggregation rule. Six rules applied to the \\emph{same} per-persona observations on the reliable-winner packages ($n=399$), with the no-persona baseline as reference. No rule recovers baseline validity: every persona CI upper bound sits below the baseline. Median best mitigates the panel mean's outlier sensitivity ($\\tau$ $0.084\\!\\to\\!0.141$), while rank-fusion (Borda) and pairwise majority (Condorcet) --- which use only persona \\emph{orderings} --- do not help, locating the failure in genuine mis-ordering rather than per-persona scale. The mean-row top-1 is recomputed here from draw-collapsed per-persona scores and can differ from Table~\\ref{tab:validity}'s multi-draw primary estimate by a single package through tie-breaking; the rank coefficient $\\tau$ is identical. 95\\% bootstrap CIs.}",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/tables/h5_aggregation.tex#L4"
+      }
+    ],
+    "observed": "O primário pesa cada observação igualmente; H5 colapsa por persona e depois pesa cada persona igualmente. Em contraprova com contagens distintas, A passa de 0,70 no primário para 0,50 em H5, enquanto B=0,60; a ordem inverte sem empate. Os relatórios mostram top-1 0,3458646616541353 versus 0,3483709273182957 e gamma 0,08432405800826852 versus 0,08410923523705478.",
+    "expected": "A linha identificada como reprodução do primário deve usar o mesmo estimador ou delimitar a mudança. A origem histórica da divergência precisa ser demonstrada.",
+    "impact": "Não se pode atribuir a diferença apenas ao desempate com base nos agregados; há outro mecanismo possível implementado no código.",
+    "reproduction": "run-audit-checks.py → probes.aggregation_unequal_draws; comparar reports/correlation.json e reports/h5_aggregation.json/results/mean.",
+    "correction": "Explicitar pesos e política de draws faltantes; comparar predições por variante nos dois caminhos. Corrigir a referência ao primário ou reproduzir seu estimador antes da comparação de agregadores.",
+    "confidence": "alta no mecanismo; limitada no efeito histórico",
+    "counterevidence": "A legenda já reconhece a diferença de um acerto. Com o mesmo número de draws por persona os estimadores são matematicamente equivalentes, ressalvada a aritmética de ponto flutuante. A contraprova não identifica a causa do pacote histórico divergente.",
+    "historical_impact": "diferença agregada observada; causa exata pendente"
+  },
+  {
+    "id": "A07",
+    "severity": "importante",
+    "kind": "defeito confirmado no instrumento; impacto histórico desconhecido",
+    "title": "Parser aceita números sem intenção válida e não repete todas as falhas de parsing",
+    "evidence": [
+      {
+        "path": "scripts/run_predictions.py",
+        "line": 103,
+        "quote": "        m = _FLOAT.search(text or \"\")",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/run_predictions.py#L103"
+      },
+      {
+        "path": "scripts/run_predictions.py",
+        "line": 101,
+        "quote": "        return v if 0.0 <= v <= 1.0 else max(0.0, min(1.0, v))",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/run_predictions.py#L101"
+      },
+      {
+        "path": "scripts/run_predictions.py",
+        "line": 132,
+        "quote": "            return parse_click_intent(text)",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/run_predictions.py#L132"
+      },
+      {
+        "path": "latex/sections/09-appendix.tex",
+        "line": 40,
+        "quote": "LLM JSON parse failures are rare ($<1\\%$ of calls) and retried; a package enters the metrics only",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/09-appendix.tex#L40"
+      }
+    ],
+    "observed": "'I am 68 years old and cannot estimate this.' e JSON com click_intent=7 viram score 1,0. Em transporte simulado que retorna 'No estimate possible.', call_model(retries=3) chama o transporte uma vez e retorna None, sem retry.",
+    "expected": "A política precisa distinguir score válido, formato inválido, valor fora de faixa e falha de geração; a afirmação de retry deve corresponder ao comportamento.",
+    "impact": "Uma resposta inadequada pode entrar como intenção máxima, e o número informado de falhas de parsing não mede necessariamente todas as saídas inválidas. A frase geral de que falhas de parsing são repetidas é incorreta nesse caminho.",
+    "reproduction": "run-audit-checks.py → probes.parser; evidence/parser-retry-probe.json, com transporte real substituído por stub e zero chamadas externas.",
+    "correction": "Definir validação e retry explícitos no parser proprietário; preservar resposta e estado de parsing. Investigar saídas históricas antes de concluir efeito sobre as estimativas.",
+    "confidence": "alta no comportamento; desconhecida na incidência histórica",
+    "counterevidence": "O teste publicado de pred_score fora da faixa valida o arquivo final e passa; não prova que a resposta original não tenha sido convertida pelo parser. Não há demonstração de que os exemplos sintéticos ocorreram no estudo.",
+    "historical_impact": "não quantificado; respostas originais não incluídas"
+  },
+  {
+    "id": "A08",
+    "severity": "importante",
+    "kind": "inferências que excedem o desenho",
+    "title": "Ausência de significância e dispersão semelhante não provam os mecanismos descritos",
+    "evidence": [
+      {
+        "path": "latex/sections/06-results.tex",
+        "line": 13,
+        "quote": "  reliable winner; the rest cannot be predicted by construction.}",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/06-results.tex#L13"
+      },
+      {
+        "path": "latex/sections/07-discussion.tex",
+        "line": 9,
+        "quote": "a ten-persona panel does not recover it, because each response is biased rather than merely noisy",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/07-discussion.tex#L9"
+      },
+      {
+        "path": "latex/sections/07-discussion.tex",
+        "line": 18,
+        "quote": "\\emph{systematic mis-ordering}, not indecision. In \\nBaseRightPersonaWrong{} of \\eaNPackages{}",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/07-discussion.tex#L18"
+      }
+    ],
+    "observed": "O artigo transforma ausência de vencedor significativo em impossibilidade de prever. Também usa SDs dentro do pacote de 0,0543 (painel) e 0,0538 (baseline) para sustentar erro sistemático em vez de ruído.",
+    "expected": "Não rejeitar uma hipótese nula não prova ausência de sinal. Igualdade aproximada de dispersão não identifica a decomposição de viés e variância nem o mecanismo causal.",
+    "impact": "Afeta resumo, motivação do filtro e discussão causal; não exige que os números das tabelas estejam errados.",
+    "reproduction": "Conferir as passagens citadas e reports/error_analysis.json/discriminativeness_within_pkg_sd.",
+    "correction": "Limitar a afirmação ao que não foi detectado pelo procedimento e apresentar o mecanismo de viés como hipótese compatível, até existir evidência que discrimine explicações.",
+    "confidence": "alta",
+    "counterevidence": "O artigo reconhece limitações e invoca literatura plausível sobre caricatura. Essa literatura contextualiza, mas não identifica o mecanismo neste experimento.",
+    "historical_impact": "afirmação excessiva identificada; sem novo efeito estimado"
+  },
+  {
+    "id": "A09",
+    "severity": "importante",
+    "kind": "contradição textual e de legenda confirmada",
+    "title": "A generalização sobre superioridade em todos os datasets contradiz Reddit",
+    "evidence": [
+      {
+        "path": "latex/sections/06-results.tex",
+        "line": 76,
+        "quote": "baseline captures more than the panel in every dataset (Table~\\ref{tab:replication}).",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/06-results.tex#L76"
+      },
+      {
+        "path": "latex/tables/replication.tex",
+        "line": 4,
+        "quote": "  \\caption{Replication across three independent Upworthy splits and two further platforms/domains (MIND news, 2019; Reddit title reposts, 2008--12). The no-persona baseline beats or matches the persona panel everywhere; the advantage is large on controlled copy A/B tests, small on cross-article news, and vanishes on Reddit where upvotes are not title-predictable (both $\\tau\\approx0$). Lift = fraction of achievable CTR lift captured by the top-1 pick (persona/baseline). Kendall $\\tau$ on significant-winner packages. For cross-dataset comparability all rows use a single draw per persona; the exploratory split's multi-draw primary estimate is in Table~\\ref{tab:validity}.}",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/tables/replication.tex#L4"
+      },
+      {
+        "path": "latex/tables/replication.tex",
+        "line": 15,
+        "quote": "    Reddit titles (2008--12) & 600 & -0.009 & -0.026 & $-0.017$ & 0.45/0.33 \\\\",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/tables/replication.tex#L15"
+      }
+    ],
+    "observed": "No Reddit, top-1 painel=0,4033333333333333 e baseline=0,3021702838063439; lift painel=0,45237653159402574 e baseline=0,3332432961304047. Os intervalos publicados não se sobrepõem nessas duas métricas. Na correlação os pontos são −0,009005397894286784 e −0,025911528515773177, com intervalos sobrepostos.",
+    "expected": "Texto e legenda precisam distinguir dataset e métrica; ausência de diferença clara em correlação não demonstra equivalência.",
+    "impact": "A tabela transcreve os resultados, mas a frase sobre todo dataset e uma leitura abrangente da legenda estão erradas.",
+    "reproduction": "reports/replication.json/reddit-titles; latex/tables/replication.tex.",
+    "correction": "Descrever o Reddit como exceção favorável ao painel em top-1/lift; restringir a conclusão forte aos contextos suportados. Não dizer que superioridade se conserva em tau no Reddit.",
+    "confidence": "alta",
+    "counterevidence": "A vantagem do baseline nas três divisões Upworthy continua presente nos relatórios. Intervalos separados entre braços não substituem uma nova análise pareada do contraste.",
+    "historical_impact": "contradição confirmada nos resultados existentes"
+  },
+  {
+    "id": "A10",
+    "severity": "importante",
+    "kind": "exceções de protocolo e de denominador omitidas",
+    "title": "A descrição geral de orçamento e seeds não se aplica ao GPT 4.1",
+    "evidence": [
+      {
+        "path": "latex/sections/05-setup.tex",
+        "line": 53,
+        "quote": "receives the same per-variant query budget as the panel ($P{\\times}D=30$ samples per variant, here",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/05-setup.tex#L53"
+      },
+      {
+        "path": "latex/sections/07-discussion.tex",
+        "line": 70,
+        "quote": "full protocol on a different family (OpenAI \\xfModel{}) reproduces it on all \\xfN{} reliable-winner",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/07-discussion.tex#L70"
+      },
+      {
+        "path": "latex/sections/07-discussion.tex",
+        "line": 71,
+        "quote": "packages---the no-persona baseline again outranks the persona panel (Kendall $\\tau$ \\xfBaselineTau{}",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/07-discussion.tex#L71"
+      },
+      {
+        "path": "scripts/tier2_crossmodel.py",
+        "line": 63,
+        "quote": "        \"temperature\": temperature, \"max_tokens\": 20,",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/tier2_crossmodel.py#L63"
+      }
+    ],
+    "observed": "crossfamily_gpt41.json informa draws=3 para dez personas, baseline_draws=10, painel n=399, baseline n=395 e paired_gap.n_paired=395. O corpo da requisição não envia seed. O texto usa a macro xfN=399 ao descrever a replicação do protocolo completo.",
+    "expected": "Cada comparação deve descrever orçamento e população efetiva; a política de seeds precisa delimitar exceções por backend.",
+    "impact": "O leitor pode inferir orçamento igual e comparação em todos os 399 pacotes. A descrição do método é mais abrangente que o script e o relatório.",
+    "reproduction": "reports/crossfamily_gpt41.json e corpo de call_azure; latex/variables.tex/xfN versus xfPairedN.",
+    "correction": "Explicitar 30 versus 10 chamadas, 399 versus 395 pacotes e ausência de seed nesse experimento. Usar n pareado ao interpretar o gap.",
+    "confidence": "alta",
+    "counterevidence": "O relatório contém contraste pareado com IC que exclui zero em 395 pacotes. Menor orçamento não garante monotonicamente pior desempenho, portanto não prova favorecimento estatístico do painel.",
+    "historical_impact": "assimetria confirmada; contrafactual de orçamento igual não medido"
+  },
+  {
+    "id": "A11",
+    "severity": "menor",
+    "kind": "contradição editorial confirmada",
+    "title": "Agregações já executadas continuam descritas como trabalho futuro",
+    "evidence": [
+      {
+        "path": "latex/sections/04-system.tex",
+        "line": 33,
+        "quote": "sensitivity dimension we leave to future work (Section~\\ref{sec:discussion}). We elicit",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/04-system.tex#L33"
+      },
+      {
+        "path": "latex/sections/06-results.tex",
+        "line": 101,
+        "quote": "artefact of this one choice, we re-aggregate the \\emph{same} per-persona observations under six",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/06-results.tex#L101"
+      },
+      {
+        "path": "latex/tables/h5_aggregation.tex",
+        "line": 4,
+        "quote": "  \\caption{H5 --- robustness to the aggregation rule. Six rules applied to the \\emph{same} per-persona observations on the reliable-winner packages ($n=399$), with the no-persona baseline as reference. No rule recovers baseline validity: every persona CI upper bound sits below the baseline. Median best mitigates the panel mean's outlier sensitivity ($\\tau$ $0.084\\!\\to\\!0.141$), while rank-fusion (Borda) and pairwise majority (Condorcet) --- which use only persona \\emph{orderings} --- do not help, locating the failure in genuine mis-ordering rather than per-persona scale. The mean-row top-1 is recomputed here from draw-collapsed per-persona scores and can differ from Table~\\ref{tab:validity}'s multi-draw primary estimate by a single package through tie-breaking; the rank coefficient $\\tau$ is identical. 95\\% bootstrap CIs.}",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/tables/h5_aggregation.tex#L4"
+      }
+    ],
+    "observed": "A seção 4 deixa mediana e rank fusion para trabalho futuro; resultados e Tabela 3 apresentam seis agregadores executados.",
+    "expected": "Método, resultados e trabalho futuro precisam descrever o mesmo escopo final.",
+    "impact": "Inconsistência de versão textual, sem alteração numérica necessária.",
+    "reproduction": "Ler as três passagens citadas no mesmo alvo.",
+    "correction": "Atualizar a seção 4 para apontar a análise H5 já incluída.",
+    "confidence": "alta",
+    "counterevidence": "A análise e a tabela existem no pacote; não é ausência de execução.",
+    "historical_impact": "editorial"
+  },
+  {
+    "id": "A12",
+    "severity": "importante",
+    "kind": "lacuna de amostragem publicada",
+    "title": "A seleção dos 600 pacotes Reddit não está identificada",
+    "evidence": [
+      {
+        "path": "datasets/reddit-subset-2026-06-04.manifest.json",
+        "line": 9,
+        "quote": "  \"n_packages_significant_winner\": 5393,",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/datasets/reddit-subset-2026-06-04.manifest.json#L9"
+      },
+      {
+        "path": "latex/tables/replication.tex",
+        "line": 15,
+        "quote": "    Reddit titles (2008--12) & 600 & -0.009 & -0.026 & $-0.017$ & 0.45/0.33 \\\\",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/tables/replication.tex#L15"
+      },
+      {
+        "path": "scripts/run_predictions.py",
+        "line": 174,
+        "quote": "        corpus = corpus[: args.packages]",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/scripts/run_predictions.py#L174"
+      }
+    ],
+    "observed": "O manifesto contém 7.332 pacotes, 5.393 com vencedor significativo, enquanto reports/replication.json avalia 600 do painel e 599 do baseline. Não há manifesto específico da população de predições que documente essa passagem.",
+    "expected": "Uma subamostra pode ser legítima, mas a seleção precisa ter regra, IDs e cobertura registrados.",
+    "impact": "O recorte Reddit não pode ser reconstruído com certeza somente a partir do manifesto do corpus e dos agregados; não há base para classificá-lo como amostra aleatória.",
+    "reproduction": "Comparar o manifesto com reports/replication.json/reddit-titles e inventário de arquivos publicados.",
+    "correction": "Recuperar os IDs avaliados e registrar como foram escolhidos, incluindo cobertura de ambos os braços. Não preencher o critério retrospectivamente por suposição.",
+    "confidence": "alta quanto à lacuna",
+    "counterevidence": "Os 600 podem ser um recorte intencional e legítimo; não há evidência de cherry-picking ou erro nos 600 resultados.",
+    "historical_impact": "representatividade e regra de seleção não verificáveis"
+  },
+  {
+    "id": "A13",
+    "severity": "importante",
+    "kind": "limitação de reconstrução e redação ambígua",
+    "title": "Reexportação funciona mas não equivale à reconstrução histórica das estatísticas",
+    "evidence": [
+      {
+        "path": "latex/main.tex",
+        "line": 66,
+        "quote": "replication package sufficient to regenerate every reported number. Only the raw per-persona LLM",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/main.tex#L66"
+      },
+      {
+        "path": "latex/main.tex",
+        "line": 67,
+        "quote": "generations (large volume) are withheld; the harness reproduces them. The replication package is",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/main.tex#L67"
+      },
+      {
+        "path": "REPLICATION.md",
+        "line": 76,
+        "quote": "and `stability.json` have no dedicated recomputation script in this package.",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/REPLICATION.md#L76"
+      },
+      {
+        "path": "SCOPE.md",
+        "line": 11,
+        "quote": "OpenAI study runners are included. Reexporting a report is distinct from",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/SCOPE.md#L11"
+      }
+    ],
+    "observed": "Sete tabelas e macros são reexportados exatamente. As predições históricas por variante e os checkpoints não estão incluídos. REPLICATION.md delimita que baseline_comparison.json, cross_model_gap.json e stability.json não têm produtor dedicado de reconstrução no pacote.",
+    "expected": "A disponibilidade deve distinguir reconstrução das estatísticas a partir de observações, reexportação de agregados e nova coleta pelo provedor.",
+    "impact": "A redação pode fazer o leitor atribuir uma reprodutibilidade estatística histórica maior que a demonstrada; esse limite impede fechar a magnitude dos efeitos de A01–A03.",
+    "reproduction": "Executar os exportadores e confrontar Data and Code Availability, SCOPE.md e REPLICATION.md.",
+    "correction": "Preservar os tiers documentados e trazê-los claramente para o paper; delimitar que arquivos históricos são retidos/publicados e quais produtores faltam. Quando possível, fornecer predições agregadas sem conteúdo proprietário e os produtores existentes.",
+    "confidence": "alta",
+    "counterevidence": "A promessa de regenerar apresentações de números é verdadeira: oito saídas são idênticas. O pacote já declara honestamente os tiers; não foi encontrada ausência dos exportadores prometidos.",
+    "historical_impact": "limite de auditabilidade; não demonstra dados fabricados"
+  },
+  {
+    "id": "A14",
+    "severity": "importante",
+    "kind": "omissão bibliográfica confirmada",
+    "title": "Faltam as fontes primárias de MIND e Reddit na bibliografia",
+    "evidence": [
+      {
+        "path": "latex/sections/05-setup.tex",
+        "line": 35,
+        "quote": "subcategory) and Reddit title reposts (2008--12, same image and subreddit, different titles). The",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/latex/sections/05-setup.tex#L35"
+      },
+      {
+        "path": "DATA_SOURCES.md",
+        "line": 4,
+        "quote": "**not redistributed** in this package, to respect their original licenses. Each",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/DATA_SOURCES.md#L4"
+      },
+      {
+        "path": "DATA_SOURCES.md",
+        "line": 55,
+        "quote": "Lakkaraju et al., ICWSM 2013.",
+        "url": "https://github.com/alemaiorano/sim-to-real-validity/blob/7c1ab46b5d881529b79769fb870ed1f2fb98619c/DATA_SOURCES.md#L55"
+      }
+    ],
+    "observed": "Há 19 entradas bibliográficas e todas as chaves usadas resolvem; nenhuma entrada identifica a publicação primária de MIND ou a de SNAP Reddit, embora ambas as bases sustentem resultados.",
+    "expected": "Bases empíricas devem ter identificação e referência primária vinculadas ao método.",
+    "impact": "A procedência científica dos dois datasets está incompleta no paper; a frase de DATA_SOURCES.md de que cada base é citada em references.bib é excessiva.",
+    "reproduction": "Inventariar latex/references.bib e conferir as citações da seção 5. A fonte MIND é Wu et al., ACL 2020, DOI 10.18653/v1/2020.acl-main.331.",
+    "correction": "Adicionar e citar as fontes primárias dos dois datasets; manter os manifests e informar a adaptação realizada.",
+    "confidence": "alta",
+    "counterevidence": "O pacote nomeia as bases e fornece instruções de obtenção. Todas as 19 referências já presentes tiveram títulos e autoria confirmados; a omissão não é falsificação dessas referências.",
+    "historical_impact": "atribuição e rastreabilidade bibliográfica"
+  }
+]

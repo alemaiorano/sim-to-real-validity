@@ -1,28 +1,26 @@
 #!/usr/bin/env python3
-r"""Tier-2 cross-model replication: persona panel vs no-persona baseline on Upworthy CTR ranking,
-using a NON-Gemini model (Azure OpenAI gpt-4.1) to test whether the headline finding
-(no-persona baseline >= persona panel) holds across model families.
-
-Faithful to the primary protocol: reuses build_prompt + parse_click_intent from run_predictions.py
-(identical prompts/parsing) and the within-package metrics from compute_validity.py. Only the model
-backend differs. Within-package ranking vs real CTR; package-level bootstrap CIs.
-
-Credentials are read only from AZURE_OPENAI_* environment variables, never printed.
-Checkpoints and regenerated summaries default to data/predictions/crossfamily/.
+"""Collect a new strict-parser cross-family comparison, or analyze recorded scores offline.
+Historical sampling used 30 panel observations versus 10 baseline draws per variant.
+No generation seed is sent. New versioned checkpoints never resume historical files.
+Credentials come only from AZURE_OPENAI_* environment variables.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
+import math
+from collections import defaultdict
 import importlib.util
 import json
 import os
 import sys
-import threading
 import time
 import urllib.request
 import urllib.error
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from analysis_io import write_json, new_output
+from winner_filter import evaluate_winner, POLICY
 
 PAPER = Path(__file__).resolve().parents[1]
 DATASETS = PAPER / "datasets"
@@ -36,7 +34,7 @@ def _load(modname: str):
 
 
 rp = _load("run_predictions")       # build_prompt, parse_click_intent
-cv = _load("compute_validity")      # kendall_tau, spearman, top1, bootstrap_ci
+cv = _load("compute_validity")      # corrected metric owner
 
 
 def fail(m: str) -> None:
@@ -81,148 +79,124 @@ def call_azure(url: str, key: str, model: str, prompt: str, temperature: float,
     return None
 
 
+def checkpoint_packages(corpus, rows, *, legacy_scores=False, config_sha256=None):
+    """Aggregate recorded observations once; never invoke a provider."""
+    lookup = {p["package_id"]: {v["variant_id"] for v in p["variants"]} for p in corpus}
+    personas = {p["id"] for p in json.loads(PANEL.read_text())["personas"]}
+    values = defaultdict(list)
+    seen = set()
+    for row in rows:
+        key = (row["pkg"], row["var"], row["who"], row["draw"])
+        if key in seen:
+            raise ValueError("duplicate checkpoint observation")
+        seen.add(key)
+        if row["pkg"] not in lookup or row["var"] not in lookup[row["pkg"]] or row["who"] not in personas | {"baseline"}:
+            raise ValueError("checkpoint observation outside corpus/panel")
+        if type(row["draw"]) is not int or row["draw"] < 0:
+            raise ValueError("invalid checkpoint draw")
+        if not legacy_scores and (row.get("collection_protocol") != rp.COLLECTION_PROTOCOL or row.get("config_sha256") != config_sha256):
+            raise ValueError("checkpoint protocol/configuration mismatch")
+        if not legacy_scores and (row.get("status") not in {"valid", "invalid_or_unavailable"} or
+                                  (row["status"] == "invalid_or_unavailable" and row["val"] is not None)):
+            raise ValueError("invalid checkpoint observation status")
+        if row.get("status") == "invalid_or_unavailable" and row["val"] is None:
+            continue
+        val = row["val"]
+        if type(val) not in (int, float) or not math.isfinite(val) or not 0 <= val <= 1:
+            raise ValueError("invalid recorded score")
+        arm = "baseline" if row["who"] == "baseline" else "panel"
+        values[(row["pkg"], row["var"], arm)].append(val)
+    selected = [p for p in corpus if evaluate_winner(p["variants"])["selected"]]
+    arms = {}
+    for arm in ["panel", "baseline"]:
+        packages = {}
+        for package in selected:
+            groups = [values.get((package["package_id"], v["variant_id"], arm), []) for v in package["variants"]]
+            if not all(groups):
+                continue
+            packages[package["package_id"]] = [(v["real_ctr"], sum(group) / len(group))
+                                               for v, group in zip(package["variants"], groups)]
+        arms[arm] = packages
+    return arms["panel"], arms["baseline"], len(selected)
+
+
+def checkpoint_analysis(corpus, rows, *, legacy_scores=False, config_sha256=None, iters=cv.BOOTSTRAP_ITERS):
+    panel, baseline, eligible = checkpoint_packages(corpus, rows, legacy_scores=legacy_scores, config_sha256=config_sha256)
+    return {"analysis_schema": cv.METRIC_POLICY, "winner_filter_policy": POLICY,
+            "n_eligible": eligible, "n_panel_missing_coverage": eligible - len(panel),
+            "n_baseline_missing_coverage": eligible - len(baseline),
+            "historical_post_parser_scores": legacy_scores,
+            "original_response_validity": "not_established" if legacy_scores else "strict_parser",
+            "persona_panel": cv.analyze(panel, iters), "no_persona_baseline": cv.analyze(baseline, iters),
+            "paired_gap": cv.paired_analysis(panel, baseline, iters)}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--packages", type=int, default=0, help="0=all significant-winner; else first N")
-    ap.add_argument("--draws", type=int, default=3, help="persona Monte-Carlo draws")
+    ap.add_argument("--packages", type=int, default=0)
+    ap.add_argument("--draws", type=int, default=3)
     ap.add_argument("--baseline-draws", type=int, default=10)
     ap.add_argument("--temperature", type=float, default=0.8)
     ap.add_argument("--concurrency", type=int, default=8)
     ap.add_argument("--corpus", default=str(DATASETS / "upworthy-subset-2026-06-03.json"))
-    ap.add_argument("--output-dir", type=Path, default=OUT_DIR,
-                    help="checkpoint and summary directory (default: local, gitignored)")
+    ap.add_argument("--output-dir", type=Path, default=OUT_DIR)
     args = ap.parse_args()
-    out_dir = args.output_dir
-
+    if min(args.draws, args.baseline_draws, args.concurrency) < 1 or args.packages < 0 or not math.isfinite(args.temperature):
+        ap.error("draws/concurrency must be positive; packages nonnegative; temperature finite")
     key, url, model = load_azure()
-    print("[tier2] backend=azure-openai (credentials loaded)")
-    corpus = [p for p in json.loads(Path(args.corpus).read_text()) if p.get("winner_significant")]
+    corpus = json.loads(Path(args.corpus).read_text())
+    corpus = [p for p in corpus if evaluate_winner(p["variants"])["selected"]]
     if args.packages > 0:
-        corpus = corpus[: args.packages]
+        corpus = corpus[:args.packages]
+    if not corpus:
+        fail("no packages selected")
     personas = json.loads(PANEL.read_text())["personas"]
-    out_dir.mkdir(parents=True, exist_ok=True)
+    config = {"protocol": rp.COLLECTION_PROTOCOL, "url": url, "model": model, "corpus": corpus,
+              "panel": personas, "temperature": args.temperature, "draws": args.draws,
+              "baseline_draws": args.baseline_draws}
+    config["prompt_sha256"] = hashlib.sha256(json.dumps(
+        [rp.build_prompt(p, "{headline}") for p in [*personas, {"id": "baseline"}]], sort_keys=True).encode()).hexdigest()
+    fingerprint = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
     safe = model.replace(".", "_").replace("/", "_").replace("\\", "_")
-    ckpt = out_dir / f".ckpt-upworthy-{safe}.jsonl"
-
-    # build all (pkg, var, who, draw) tasks; 'who' is persona id or 'baseline'
-    done: dict[tuple, list[float]] = {}
-    if ckpt.exists():
-        for line in ckpt.read_text().splitlines():
-            if line.strip():
-                r = json.loads(line); done.setdefault((r["pkg"], r["var"], r["who"]), []).append(r["val"])
-    seen = set()
-    if ckpt.exists():
-        for line in ckpt.read_text().splitlines():
-            if line.strip():
-                r = json.loads(line); seen.add((r["pkg"], r["var"], r["who"], r["draw"]))
-
+    stem = f"upworthy_{safe}-{rp.COLLECTION_PROTOCOL}-{fingerprint[:16]}"
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    output = args.output_dir / f"{stem}.json"
+    new_output(output)
+    ckpt = args.output_dir / f".ckpt-{stem}.jsonl"
+    rows = [json.loads(line) for line in ckpt.read_text().splitlines() if line.strip()] if ckpt.exists() else []
+    for row in rows:
+        if type(row["draw"]) is not int or not 0 <= row["draw"] < (args.baseline_draws if row["who"] == "baseline" else args.draws):
+            raise ValueError("checkpoint draw outside configuration")
+    checkpoint_packages(corpus, rows, config_sha256=fingerprint)
+    seen = {(r["pkg"], r["var"], r["who"], r["draw"]) for r in rows}
     tasks = []
-    for p in corpus:
-        for v in p["variants"]:
-            for persona in personas:
-                for d in range(args.draws):
-                    k = (p["package_id"], v["variant_id"], persona["id"], d)
-                    if k not in seen:
-                        tasks.append((p["package_id"], v["variant_id"], v["headline"], persona, d))
-            for d in range(args.baseline_draws):
-                k = (p["package_id"], v["variant_id"], "baseline", d)
-                if k not in seen:
-                    tasks.append((p["package_id"], v["variant_id"], v["headline"], {"id": "baseline"}, d))
-
-    print(f"[tier2] packages={len(corpus)} personas={len(personas)} "
-          f"draws={args.draws} baseline_draws={args.baseline_draws} -> {len(tasks)} calls to run")
-
-    lock = threading.Lock(); fh = ckpt.open("a"); ok = miss = 0
-    try:
-        with ThreadPoolExecutor(max_workers=args.concurrency) as ex:
-            futs = {ex.submit(call_azure, url, key, model, rp.build_prompt(per, h), args.temperature):
-                    (pid, vid, per["id"], d) for (pid, vid, h, per, d) in tasks}
-            for fut in as_completed(futs):
-                pid, vid, who, d = futs[fut]; val = fut.result()
-                if val is None:
-                    miss += 1; continue
-                ok += 1
-                with lock:
-                    fh.write(json.dumps({"pkg": pid, "var": vid, "who": who, "draw": d, "val": val}) + "\n"); fh.flush()
-                    done.setdefault((pid, vid, who), []).append(val)
-    finally:
-        fh.close()
-    print(f"[tier2] calls ok={ok} miss={miss}")
-
-    # aggregate per variant: persona panel mean (all personas x draws), baseline mean (draws)
-    def agg(pkg_id, var_id, who_filter):
-        vals = []
-        for (pk, vr, who), vs in done.items():
-            if pk == pkg_id and vr == var_id and who_filter(who):
-                vals += vs
-        return sum(vals) / len(vals) if vals else None
-
-    def metrics(pred_for):
-        taus, rhos, hits, lifts = [], [], [], []
-        n = 0
-        for p in corpus:
-            real = [v["real_ctr"] for v in p["variants"]]
-            pred = [pred_for(p["package_id"], v["variant_id"]) for v in p["variants"]]
-            if any(x is None for x in pred) or len(real) < 2:
-                continue
-            n += 1
-            t = cv.kendall_tau(real, pred); s = cv.spearman(real, pred)
-            if t is not None: taus.append(t)
-            if s is not None: rhos.append(s)
-            hits.append(cv.top1(real, pred))
-            best, worst = max(real), min(real)
-            if best > worst:
-                lifts.append((real[max(range(len(pred)), key=lambda i: pred[i])] - worst) / (best - worst))
-        return {"n_packages": n,
-                "kendall_tau": {"mean": sum(taus)/len(taus), "ci95": cv.bootstrap_ci(taus)},
-                "spearman_rho": {"mean": sum(rhos)/len(rhos), "ci95": cv.bootstrap_ci(rhos)},
-                "top1_accuracy": {"mean": sum(hits)/len(hits), "ci95": cv.bootstrap_ci([float(h) for h in hits])},
-                "lift_captured": {"mean": sum(lifts)/len(lifts), "ci95": cv.bootstrap_ci(lifts)}}
-
-    panel = metrics(lambda pk, vr: agg(pk, vr, lambda w: w != "baseline"))
-    base = metrics(lambda pk, vr: agg(pk, vr, lambda w: w == "baseline"))
-
-    # PAIRED per-package gap (the correct significance test for "baseline beats persona"):
-    # baseline-minus-persona on the SAME packages, then bootstrap the per-package difference.
-    pe_t, ba_t, pe_h, ba_h = [], [], [], []
-    for p in corpus:
-        real = [v["real_ctr"] for v in p["variants"]]
-        pp = [agg(p["package_id"], v["variant_id"], lambda w: w != "baseline") for v in p["variants"]]
-        bp = [agg(p["package_id"], v["variant_id"], lambda w: w == "baseline") for v in p["variants"]]
-        if len(real) < 2 or any(x is None for x in pp) or any(x is None for x in bp):
-            continue
-        pt, bt = cv.kendall_tau(real, pp), cv.kendall_tau(real, bp)
-        if pt is None or bt is None:
-            continue
-        pe_t.append(pt); ba_t.append(bt); pe_h.append(cv.top1(real, pp)); ba_h.append(cv.top1(real, bp))
-    gap_t = [b - a for a, b in zip(pe_t, ba_t)]
-    gap_h = [float(b - a) for a, b in zip(pe_h, ba_h)]
-    paired = {"n_paired": len(gap_t),
-              "gap_tau": {"mean": sum(gap_t)/len(gap_t) if gap_t else 0.0,
-                          "ci95": cv.bootstrap_ci(gap_t) if gap_t else [0, 0]},
-              "gap_top1": {"mean": sum(gap_h)/len(gap_h) if gap_h else 0.0,
-                           "ci95": cv.bootstrap_ci(gap_h) if gap_h else [0, 0]}}
-    out = {
-        "paired_gap": paired,
-        "_doc": "Tier-2 cross-model replication of sim-to-real on Upworthy with a non-Gemini model.",
-        "model": model, "backend": "azure-openai", "temperature": args.temperature,
-        "draws": args.draws, "baseline_draws": args.baseline_draws,
-        "persona_panel": panel, "no_persona_baseline": base,
-        "gap_tau": base["kendall_tau"]["mean"] - panel["kendall_tau"]["mean"],
-    }
-    (out_dir / f"upworthy_{safe}.json").write_text(json.dumps(out, indent=2))
-    print(f"\n[tier2] {model} on n={panel['n_packages']} reliable-winner packages:")
-    print(f"  persona panel : tau={panel['kendall_tau']['mean']:.3f} {panel['kendall_tau']['ci95']} "
-          f"top1={panel['top1_accuracy']['mean']:.3f}")
-    print(f"  no-persona base: tau={base['kendall_tau']['mean']:.3f} {base['kendall_tau']['ci95']} "
-          f"top1={base['top1_accuracy']['mean']:.3f}")
-    pg = paired["gap_tau"]; ph = paired["gap_top1"]
-    print(f"  PAIRED gap (base-persona) over n={paired['n_paired']} packages:")
-    print(f"    tau  gap = {pg['mean']:+.3f} 95%CI{pg['ci95']}  "
-          f"({'SIGNIFICANT' if pg['ci95'][0] > 0 else 'n.s. (CI includes 0)'})")
-    print(f"    top1 gap = {ph['mean']:+.3f} 95%CI{ph['ci95']}  "
-          f"({'SIGNIFICANT' if ph['ci95'][0] > 0 else 'n.s. (CI includes 0)'})")
-    print(f"  wrote {out_dir / f'upworthy_{safe}.json'}")
+    for package in corpus:
+        for variant in package["variants"]:
+            for persona in [*personas, {"id": "baseline"}]:
+                draws = args.baseline_draws if persona["id"] == "baseline" else args.draws
+                for draw in range(draws):
+                    task_key = (package["package_id"], variant["variant_id"], persona["id"], draw)
+                    if task_key not in seen:
+                        tasks.append((task_key, rp.build_prompt(persona, variant["headline"])))
+    with ckpt.open("a") as stream, ThreadPoolExecutor(max_workers=args.concurrency) as executor:
+        futures = {executor.submit(call_azure, url, key, model, prompt, args.temperature): task_key
+                   for task_key, prompt in tasks}
+        for future in as_completed(futures):
+            pid, vid, who, draw = futures[future]
+            val = future.result()
+            row = {"pkg": pid, "var": vid, "who": who, "draw": draw, "val": val,
+                   "status": "valid" if val is not None else "invalid_or_unavailable",
+                   "collection_protocol": rp.COLLECTION_PROTOCOL, "config_sha256": fingerprint}
+            stream.write(json.dumps(row) + "\n")
+            stream.flush()
+            rows.append(row)
+    report = checkpoint_analysis(corpus, rows, config_sha256=fingerprint)
+    report.update(model=model, backend="azure-openai", temperature=args.temperature,
+                  draws=args.draws, baseline_draws=args.baseline_draws,
+                  generation_seed=None, collection_protocol=rp.COLLECTION_PROTOCOL,
+                  config_sha256=fingerprint)
+    write_json(output, report)
+    print(f"wrote {output}")
 
 
 if __name__ == "__main__":

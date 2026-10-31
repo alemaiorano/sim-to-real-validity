@@ -1,0 +1,37 @@
+{
+  "checked": "2026-10-31",
+  "scope": "changed and new references; unchanged identities reuse pinned original audit",
+  "references": [
+    {
+      "key": "goodman1954",
+      "url": "https://www.tandfonline.com/doi/abs/10.1080/01621459.1954.10501231",
+      "verified": "1954; Goodman/Kruskal; JASA49(268):732-764"
+    },
+    {
+      "key": "kendall1945ties",
+      "url": "https://doi.org/10.1093/biomet/33.3.239",
+      "verified": "Crossref record; M.G.Kendall; Biometrika33(3):239-251;1945"
+    },
+    {
+      "key": "wu2020mind",
+      "url": "https://aclanthology.org/2020.acl-main.331/",
+      "verified": "ACL metadata;11authors and order;2020;3597-3606"
+    },
+    {
+      "key": "lakkaraju2013name",
+      "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/14408",
+      "verified": "3authors;2013 issue;311-320;later portal migration date distinguished"
+    },
+    {
+      "key": "park2024agents",
+      "url": "https://arxiv.org/abs/2411.10109v1",
+      "verified": "original title;9authors order;85% claim version-bound; corroborated by author Stanford HAI brief",
+      "corroboration": "https://hai.stanford.edu/policy/simulating-human-behavior-with-ai-agents"
+    },
+    {
+      "key": "nistBonferroni",
+      "url": "https://www.itl.nist.gov/div898/handbook/prc/section4/prc473.htm",
+      "verified": "general multiplicity inequality only; not a source for binomial z calibration"
+    }
+  ]
+}

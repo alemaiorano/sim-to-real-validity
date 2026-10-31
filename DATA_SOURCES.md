@@ -1,73 +1,93 @@
-# Data Sources
+# Data sources and versioned ingestion
 
-The corpora used in the paper are **public third-party datasets**. They are
-**not redistributed** in this package, to respect their original licenses. Each
-is cited in `latex/references.bib`. The aggregated artifacts under `reports/`
-are sufficient to verify every number in the paper **without** re-downloading
-the raw data; the steps below are only needed to rebuild `reports/` from
-scratch (analysis/deep tiers — see `REPLICATION.md`).
+Corpora are public third-party sources. Full corpora are not committed as Git blobs; the separate
+replication bundle retains the exact exploratory inputs used for the new experiment. Original manifests under
+`datasets/` remain evidence of the original locks; changing analysis code does not rewrite them.
+Reexporting aggregated reports is distinct from regenerating corpora or recomputing statistics.
 
-Verify every download against its committed manifest in `datasets/`
-(`source_sha256` for the raw file, `corpus_sha256` for the regenerated subset).
-All commands run from the repository root.
+## Upworthy
 
-## 1. Upworthy Research Archive (primary ground truth) — OSF project `jd64p`
-
-Matias et al., *Scientific Data* 2021, DOI `10.1038/s41597-021-00934-7`.
-Three splits are used: exploratory (primary), confirmatory, holdout.
+Matias et al., Scientific Data (2021), DOI
+[10.1038/s41597-021-00934-7](https://doi.org/10.1038/s41597-021-00934-7),
+[OSF project](https://osf.io/jd64p/).
 
 ```bash
 mkdir -p data/upworthy_raw
-curl -sL "https://osf.io/download/3vqmp/" -o data/upworthy_raw/upworthy-exploratory.csv   # ~14 MB
-curl -sL "https://osf.io/download/vy8mj/" -o data/upworthy_raw/upworthy-confirmatory.csv  # ~66 MB
-curl -sL "https://osf.io/download/ynf3k/" -o data/upworthy_raw/upworthy-holdout.csv       # ~14 MB
-
-# verify the exploratory source hash against datasets/upworthy-subset-2026-06-03.manifest.json
+curl -fL https://osf.io/download/3vqmp/ -o data/upworthy_raw/upworthy-exploratory.csv
+curl -fL https://osf.io/download/vy8mj/ -o data/upworthy_raw/upworthy-confirmatory.csv
+curl -fL https://osf.io/download/ynf3k/ -o data/upworthy_raw/upworthy-holdout.csv
 sha256sum data/upworthy_raw/upworthy-exploratory.csv
-#   expected source_sha256: 8368313b060f4015a0c6fb34e6d788163cee29554144aba9390b14922eb9d8ce
-
-# regenerate the locked corpora (each must match its manifest corpus_sha256)
-python scripts/01_ingest_upworthy.py --input data/upworthy_raw/upworthy-exploratory.csv
-python scripts/01_ingest_upworthy.py --input data/upworthy_raw/upworthy-confirmatory.csv --name upworthy-confirmatory
-python scripts/01_ingest_upworthy.py --input data/upworthy_raw/upworthy-holdout.csv     --name upworthy-holdout
 ```
 
-> **Citation integrity:** confirm the Upworthy bib entry's authorship against DOI
-> `10.1038/s41597-021-00934-7` (Crossref) before any submission. Do not trust
-> hand-entered authors.
+The original exploratory source SHA256 is
+`8368313b060f4015a0c6fb34e6d788163cee29554144aba9390b14922eb9d8ce`.
+The original derived corpus SHA256 is
+`523034f1fd86d4a432a57b29eb25230418dba119c3367ec04622815114cc9f85`.
 
-## 2. MIND — Microsoft News Dataset (cross-domain replication)
+The [2024 author correction](https://doi.org/10.1038/s41597-024-03600-w) and
+[archive documentation](https://upworthy.natematias.com/about-the-archive.html) identify a
+randomization-risk window, 25 June 2013 through 10 January 2014 inclusive. The retained CSV lacks
+risk flags. Calendar-date overlap includes 318/1,695 corpus packages and 42/190 newly selected
+packages. These identify window membership, not proven defects of every individual experiment.
+The primary reports remain unchanged; a separate post-hoc sensitivity excludes these dates from
+complete primary packages, using no new provider calls. It retains 148 Gemini and 147 GPT-4.1
+packages. Outside-window dates are not a guarantee of valid randomization. The data and adjusted
+screen do not alone establish causal headline effects.
 
-Via HuggingFace `jchoi0406/MINDNews` (gated → needs an HF token in `HF_TOKEN`).
+For exact historical restoration, use the producer at pinned commit
+`7c1ab46b5d881529b79769fb870ed1f2fb98619c` in a separate checkout, then verify the
+original manifest. The revised builder intentionally produces a **different schema/hash**:
 
 ```bash
-mkdir -p data/mind_raw
-export HF_TOKEN="<your-huggingface-token>"
-for f in news.tsv behaviors.tsv; do
-  curl -sL -H "Authorization: Bearer $HF_TOKEN" \
-    "https://huggingface.co/datasets/jchoi0406/MINDNews/resolve/main/$f" -o "data/mind_raw/$f"
-done
-python scripts/build_mind_corpus.py   # must match datasets/mind-subset-2026-06-03.manifest.json
+python scripts/01_ingest_upworthy.py --input data/upworthy_raw/upworthy-exploratory.csv \
+  --output-dir /new/path/upworthy-corrected
 ```
 
-## 3. SNAP Reddit submissions (cross-platform robustness)
+It preserves quoted multiline CSV fields and supplies the simultaneous winner policy.
+It produces 1,695 packages/6,978 variants and the same 190 selected package IDs. All recorded
+click, impression and CTR values agree with the locked corpus. One retained headline contains
+an embedded linebreak that was removed by the earlier locked-input preprocessing; the current
+reader preserves it. Its package is outside both the 399-package archived selection and the
+190-package primary cohort. This is a different text/schema/hash derivative with its own manifest.
+For existing generations, use the exact locked corpus and its recorded SHA256; do not substitute
+fresh ingestion output. See REPLICATION.md for exact-input restoration and replay.
 
-Lakkaraju et al., ICWSM 2013.
+## MIND
+
+Wu et al., ACL 2020, DOI
+[10.18653/v1/2020.acl-main.331](https://aclanthology.org/2020.acl-main.331/).
+Primary dataset information: [Microsoft News Dataset](https://msnews.github.io/).
+The historical package used the HuggingFace `jchoi0406/MINDNews` mirror; access is subject to
+that host's current terms. Restore `news.tsv` and `behaviors.tsv` under `data/mind_raw/`
+and verify the historical manifest. The combined source hash uses file bytes in news/behaviors order.
 
 ```bash
-mkdir -p data/reddit_raw
-curl -sL "http://snap.stanford.edu/data/redditSubmissions.csv.gz" -o data/reddit_raw/redditSubmissions.csv.gz
-gunzip -f data/reddit_raw/redditSubmissions.csv.gz
-python scripts/build_reddit_corpus.py   # must match datasets/reddit-subset-2026-06-04.manifest.json
+python scripts/build_mind_corpus.py --output-dir /new/path/mind-corrected
 ```
 
-## Retrieval notes
+## Reddit reposts
 
-- Exact citation details are in `latex/references.bib`.
-- The locked corpus JSONs are gitignored (large, fully regenerable); only the
-  manifests are committed for provenance. `git check-ignore datasets/upworthy-subset-2026-06-03.json`
-  confirms the corpora are local-only.
-- The system under test is driven by Google Gemini (`gemini-3.1-flash-lite`
-  primary, with `gemini-2.5-flash` / `gemini-3.5-flash` cross-tier comparators,
-  and OpenAI `gpt-4.1` as a cross-family check). The deep tier needs
-  `GEMINI_API_KEY` in the environment — see `REPLICATION.md`.
+Lakkaraju, McAuley, and Leskovec, ICWSM 2013, DOI
+[10.1609/icwsm.v7i1.14408](https://ojs.aaai.org/index.php/ICWSM/article/view/14408).
+The publisher portal shows a later migration date; the proceedings are from 2013.
+Dataset: [SNAP Reddit submissions](https://snap.stanford.edu/data/web-Reddit.html).
+
+Restore the source CSV under `data/reddit_raw/redditSubmissions.csv` and verify its original
+manifest before use.
+
+```bash
+python scripts/build_reddit_corpus.py --output-dir /new/path/reddit-corrected
+```
+
+This grouping is observational and does not isolate causal title effects. The original manifest
+has 5,393 selected packages, while evaluated historical coverage is 600 panel/599 baseline.
+The released artifacts do not document that subset-selection procedure.
+
+## Preservation and availability
+
+New builders require an absent destination directory and preserve historical locks.
+Only manifests, not full corpora, are committed. The separate replication bundle includes the
+exact exploratory CSV and derived corpus, panel, and recovered historical GPT scalar checkpoint.
+The historical GPT file contains post-parser scores, not original provider response texts.
+Exact input hashes and commands are in REPLICATION. New generation cannot recover missing
+historical observations exactly.

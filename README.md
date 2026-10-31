@@ -1,145 +1,76 @@
-# sim-to-real-validity 🎯
+# Do Synthetic Personas Predict Real Audience Response?
 
-[![License: MIT](https://img.shields.io/badge/Code%20License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![License: CC BY 4.0](https://img.shields.io/badge/Data%20License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Paper: arXiv](https://img.shields.io/badge/arXiv-2609.25010-b31b1b)](https://arxiv.org/abs/2609.25010)
+This is the **public Git replication package for the v2 manuscript**:
+*Do Synthetic Personas Predict Real Audience Response? A Headline-Ranking Study with a
+Generic-Reader Baseline*.
 
-> **Do synthetic personas predict real audience response? An artifact-first sim-to-real validity study.**
+[Paper PDF](latex/main.pdf) · [arXiv preprint](https://arxiv.org/abs/2609.25010) ·
+[Replication guide](REPLICATION.md) · [Distribution scope](SCOPE.md) · [Citation](CITATION.cff)
 
-This repository is the **public replication package** for the research paper:
+The repository update and the submission of a new arXiv version are separate. This package
+provides source, aggregate artifacts and executable reexport. Full raw replay additionally
+requires the separately retained companion bundle; it is not downloadable from this repository.
 
-**"Do Synthetic Personas Predict Real Audience Response? A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy Simulation"**.
+## Reproduce from Git without API keys
 
-[Read the preprint](https://arxiv.org/abs/2609.25010) ·
-[DOI: 10.48550/arXiv.2609.25010](https://doi.org/10.48550/arXiv.2609.25010).
+Use CPython 3.12.3 on Linux/WSL, GNU Make and a LaTeX distribution providing `pdflatex`/`bibtex`
+(for example, TeX Live with the article's standard packages). Exact PDF byte comparisons use the
+recorded TeX Live 2023 environment; other supported toolchains can differ in PDF metadata/fonts.
 
-Every numerical macro and table regenerates from the versioned result
-artifacts. The PDF rebuilds using the included figures; regenerating the
-reliability figure also needs the public Upworthy corpus. Both the Gemini
-and Azure OpenAI study harnesses are included, together with the fixed
-persona panel. Raw per-persona generations are not redistributed.
-
----
-
-## 🎯 Core Contributions
-
-Marketers increasingly use LLMs as "synthetic personas" to predict how an
-audience will react to copy before it ships. This paper tests whether that
-prediction is **valid against real behaviour**, and whether the persona
-machinery actually helps, along three lines:
-
-1. **Held-out ground truth.** The [Upworthy Research Archive](https://osf.io/jd64p/)
-   (Matias et al., *Scientific Data* 2021): thousands of headline A/B tests
-   shown to the *same* real traffic, giving a within-package relative-ranking
-   ground truth robust to absolute-scale differences.
-2. **A controlled harness, not a product.** A fixed ten-persona panel grounded
-   in the real audience's demographics (Pew/Holcomb 2013) vs. a no-persona
-   zero-shot baseline that simply asks the model how likely a typical reader is
-   to click. Same model, same corpus, same metrics.
-3. **Artifact-first evaluation.** Bootstrap confidence intervals, three
-   independent Upworthy splits, a cross-domain news replication, and a
-   cross-model-family check (OpenAI gpt-4.1) — all regenerated from versioned
-   result artifacts under `reports/`.
-
----
-
-## 🚀 Quick Start
-
-Every numerical macro and table regenerates from the committed artifacts in
-`reports/`. **No API keys or raw-data downloads are required to rebuild the
-PDF with the included figures.**
-
-### Prerequisites
-- Python ≥ 3.11 (`pip install -r requirements.txt` → numpy, matplotlib)
-- A LaTeX distribution with `pdflatex` + `bibtex` (TeX Live or MiKTeX) to rebuild the PDF
-
-### Reproduce the paper assets (no API key)
 ```bash
-git clone https://github.com/alemaiorano/sim-to-real-validity.git
+git clone -c core.autocrlf=false https://github.com/alemaiorano/sim-to-real-validity.git
 cd sim-to-real-validity
-pip install -r requirements.txt
-
-# re-derive every macro and table from the committed result artifacts
-python scripts/generate_paper_variables.py
-python scripts/generate_validity_table.py
-python scripts/generate_replication_table.py
-python scripts/generate_crossmodel_table.py
-python scripts/generate_pilot_table.py
-python scripts/generate_h5_table.py
-python scripts/generate_supplementary_tables.py
-
-# rebuild the PDF
-cd latex && pdflatex -interaction=nonstopmode main && bibtex main \
-  && pdflatex -interaction=nonstopmode main && pdflatex -interaction=nonstopmode main
+python3 -m pip install -r requirements.txt
+make verify
+make reproduce
+make verify
+make test
 ```
 
-Output: `latex/main.pdf`. To regenerate the analysis artifacts themselves
-(`reports/*.json`) or re-run the LLM harness from scratch, see
-[`REPLICATION.md`](REPLICATION.md). See [`SCOPE.md`](SCOPE.md) for exactly what
-is and is not included.
+For the v2 proposal before integration into the default branch, first run
+`git switch research/sim-to-real-v2-2026-10-31`.
 
----
+`make reproduce` runs the ten existing exporters and compiles the paper with the fixed
+`SOURCE_DATE_EPOCH`. Included empirical figures are used unchanged; regenerating the archived
+screen histogram requires the exact locked Upworthy corpus. `make verify` checks the listed Git
+payload files against `REPLICATION_SHA256SUMS`; the Git commit identifies the checksum file itself.
+`make test` exercises the offline producers and consumers with stubbed transports. No model
+inference, private checkpoint, database or data download is needed for this workflow.
+Python's standard library owns the statistical estimators; NumPy/Matplotlib support figures/tests.
+SciPy is an optional independent test oracle. The individual commands remain in REPLICATION.md. Exact checksum verification after rebuilding
+requires the recorded toolchain; a different LaTeX version can produce a different PDF even
+when its numerical content agrees.
 
-## 📊 Empirical Evidence
+## Results and boundaries
 
-The package reproduces the paper's headline result: on the reliable subset of
-A/B tests (those with a statistically distinguishable winner), **persona
-conditioning degrades predictive validity** — the no-persona baseline ranks
-variants markedly better, with non-overlapping confidence intervals.
+The study compares a fixed ten-persona panel with a generic-reader baseline. The new experiment
+allocates thirty scores per arm and variant within each model. Its primary comparisons favor the
+baseline on valid ranks, expected top-1 and captured lift. A post-hoc exclusion of the archive's
+randomization-risk period retains positive top-1/lift contrasts, while Gemini tau-b and Spearman
+intervals include zero. Bottom-1 intervals include zero in both models. Archived Reddit decision
+metrics favor the panel. These are conditional results for the specified panel/cohort/protocol,
+not a universal or causal conclusion.
 
-| Finding | Persona panel (P=10) | No-persona baseline |
-| :--- | :---: | :---: |
-| **Kendall τ (rank concordance)** | 0.084 [0.020, 0.147] | **0.361 [0.289, 0.430]** |
-| **Top-1 accuracy** | 34.6% | **49.2%** |
-| Reliable packages (n) | 399 | 399 |
-| Variants | 1,494 | 1,494 |
+| Location | Contents |
+|---|---|
+| `latex/` | Current paper/PDF, generated tables/macros and figures |
+| `reports/` | Immutable archived aggregate reports |
+| `reanalysis/2026-10-31/` | Retrospective GPT scalar diagnostic and selection/replay provenance |
+| `recollection/2026-10-31/` | New matched-budget reports and six-metric post-hoc period sensitivity |
+| `data/persona_panel.json` | Fixed panel input |
+| `datasets/*.manifest.json` | Original corpus locks and input hashes; full corpora are not Git blobs |
+| `scripts/`, `tests/` | Statistical owners, exporters, collection/replay tools and offline checks |
 
-Robustness: the direction replicates across three independent Upworthy splits,
-holds on a different-domain news dataset (MIND), and reproduces on a different
-model family (OpenAI gpt-4.1: baseline τ = 0.300, top-1 49.1%) with a
-significant paired gap. **Takeaway:** for predicting aggregate engagement, a
-plain LLM ranker beats persona simulation.
+Archived comparisons and retrospective GPT diagnostics retain their own budgets, screening and
+tie policies. Historical Gemini observations, original GPT response texts and some subset lineage
+remain unavailable. New generations are a separate experiment. All numerical results trace to
+artifacts via [CLAIMS_TO_ARTIFACTS.csv](CLAIMS_TO_ARTIFACTS.csv) and the
+[source-driven evidence ledger](docs/audit/full-text-claim-ledger.json). The [native automated-review review](docs/audit/automated-review-v2-review.md) and
+[technical adjudication](docs/audit/automated-review-v2-adjudication.md) are preserved separately.
+Earlier methodological and review records remain under `docs/` with explicit source targets.
 
----
-
-## 🔬 Research & Replication
-
-This repository is a **verification-grade, harness-included** artifact package:
-
-- **`latex/`** — LaTeX manuscript sources with auto-generated tables/figures, `references.bib`, and the compiled `main.pdf`.
-- **`scripts/`** — corpus ingestion, Gemini (`run_predictions.py`) and Azure OpenAI (`tier2_crossmodel.py`) study harnesses, validity statistics, error analysis, and table/figure exporters.
-- **`reports/`** — versioned aggregated result artifacts (correlation, signal strength, replication, cross-model gap, error analysis). These support the paper's numerical claims.
-- **`data/persona_panel.json`** — the fixed, versioned ten-persona panel (the system under test).
-- **`datasets/*.manifest.json`** — locked corpus manifests (sha256 + sampling params) for provenance; the corpora themselves are public and regenerable, not re-hosted.
-- **`SCOPE.md`** — artifact scope and IP boundary (what is included, excluded, and why).
-- **`CLAIMS_TO_ARTIFACTS.csv`** — claim-by-claim map from the paper to the backing artifacts.
-- **`DATA_SOURCES.md`** — retrieval + checksum instructions for the public corpora.
-
-### Basic reproduction command
-```bash
-python scripts/generate_paper_variables.py && python scripts/generate_validity_table.py
-```
-
-### Artifact-first contract (enforced by the scripts)
-1. No hand-edited numbers — every macro in `latex/variables.tex` is regenerated from `reports/*.json`.
-2. No hand-edited tables — every `latex/tables/*.tex` is a script output.
-3. No orphan floats — every `\label` is `\ref`'d in the body.
-4. Missing data is a hard blocker — scripts fail loudly, never synthesize placeholders.
-
----
-
-## 📄 Citation
-
-If you use this package or the sim-to-real validity protocol, please cite our work:
-
-```text
-Maiorano, A. C. (2026). Do Synthetic Personas Predict Real Audience Response?
-A Sim-to-Real Study Where a No-Persona Baseline Beats Persona-Based Copy
-Simulation. arXiv:2609.25010. https://doi.org/10.48550/arXiv.2609.25010
-```
-
-## 📄 License
-
-- Code and scripts: MIT License (see `LICENSE`).
-- Aggregated artifacts, persona panel, manifests, generated figures/tables: CC BY 4.0 (see `LICENSE-DATA.md`).
-- The Upworthy / MIND / SNAP-Reddit corpora are third-party and are not redistributed here — see `DATA_SOURCES.md`.
+Code: [MIT](LICENSE). Aggregate results, fixed panel, manifests and generated assets:
+[CC BY 4.0](LICENSE-DATA.md). Third-party corpora retain their own licenses and are not
+redistributed here; see [DATA_SOURCES.md](DATA_SOURCES.md). The full companion and the public Git
+package have distinct distribution scopes. [Retention and recovery](RETENTION.md) documents the
+separately retained archive versions and tested restore procedure.

@@ -1,17 +1,16 @@
 \section{Conclusion}
+This fixed demographic persona panel should be compared with a generic-reader LLM baseline.
+The primary new raw-retained comparison favors the baseline on valid rank comparisons, expected
+top-1 and captured lift in both tested configurations. In the post-hoc sensitivity excluding the
+archive's documented randomization-risk period, top-1 and lift gaps retain positive pointwise
+intervals, but Gemini tau-b and Spearman intervals include zero. The rank advantage is therefore
+not uniformly supported across these cohorts and estimators. In the primary comparison, expected top-1 baseline-minus-panel gaps
+are \newGeminiGapTopOne{} percentage points for Gemini and \newGptGapTopOne{} for GPT-4.1.
+Bottom-1 intervals include zero; a blanket advantage across metrics is not established.
+Historical Reddit top-1 and lift favor the panel.
 
-We tested whether persona-based copy simulation predicts how a real audience ranks
-marketing copy, using the Upworthy A/B-test archive as held-out ground truth, and whether the
-persona machinery helps at all. Two findings stand out. First, ground-truth reliability is the
-binding constraint: most A/B tests lack a statistically distinguishable winner, so validity can
-only be assessed on the reliable subset. Second---counter to the premise of persona
-simulation---conditioning on personas \emph{degrades} predictive validity: a no-persona zero-shot
-ranker achieves a medium-sized rank correlation ($\tau=\baseTau{}$) and \baseTopOne{} top-1
-accuracy, while the demographically grounded ten-persona panel reaches only $\tau=\kendallTau{}$
-and \topOneAcc{}, with non-overlapping confidence intervals. For predicting aggregate engagement,
-the lesson is to query the model's population-level prior directly rather than role-play specific
-personas. This does not rule out personas for goals where heterogeneity matters (segmentation,
-qualitative objection-finding), but for ranking copy by expected clicks they are, today, worse
-than not using them. The artifact-first replication package makes every number reproducible, and
-the protocol---reliability filtering, construct-matched elicitation, and a no-persona
-baseline---transfers to stronger ground truth and to other copy domains.
+The comparison uses distinct rank metrics, expected tie credit, and explicit valid and paired counts.
+We provide a simultaneous winner screen and an offline raw-replay artifact in the accompanying local
+replication bundle, prepared for deposition. Rank estimates condition on valid coefficients, and all intervals condition on
+selected packages and recorded generations. Historical Gemini observations remain unavailable. The new experiment neither establishes
+a general causal mechanism nor shows universal persona harm.

@@ -1,0 +1,252 @@
+{
+  "base_commit": "1d99c5a8d6964f9b7ddb191cf6523bb91b584330",
+  "original_findings": [
+    {
+      "id": "A01",
+      "original_title": "Seleção do vencedor antes do teste unilateral altera a calibração",
+      "disposition": "implemented_with_historical_limit",
+      "action_and_limit": "Shared bilateral/all-pairs Bonferroni screen and approximate assumptions;190subset399 verified. Historical all-split changes cannot be quantified from missing Gemini scores.",
+      "evidence": [
+        "scripts/winner_filter.py",
+        "latex/sections/05-setup.tex"
+      ]
+    },
+    {
+      "id": "A02",
+      "original_title": "A função chamada Kendall tau calcula gamma de Goodman e Kruskal",
+      "disposition": "implemented",
+      "action_and_limit": "Gamma renamed honestly in historical presentation; actual tau-b is separate. Original raw reports remain unchanged.",
+      "evidence": [
+        "scripts/compute_validity.py",
+        "scripts/historical_results.py",
+        "latex/sections/03-framework.tex"
+      ]
+    },
+    {
+      "id": "A03",
+      "original_title": "A média exclui indefinidos e a análise de empates usa outra regra",
+      "disposition": "implemented_with_historical_limit",
+      "action_and_limit": "Per-metric totals/valid/undefined/IDs and paired intersections; uniform expected extrema credit. Old exact excluded counts cannot be inferred from rounded71ties.",
+      "evidence": [
+        "scripts/compute_validity.py",
+        "recollection/2026-10-31/gemini.json",
+        "latex/sections/06-results.tex"
+      ]
+    },
+    {
+      "id": "A04",
+      "original_title": "A análise de poder usa outro tipo de estatística e um efeito antigo",
+      "disposition": "unsupported_claim_removed",
+      "action_and_limit": "Prospective80percent power/effect-size calibration for package means removed; archived planning retained without substituting991as new sample requirement.",
+      "evidence": [
+        "latex/sections/05-setup.tex",
+        "reports/power_analysis.json"
+      ]
+    },
+    {
+      "id": "A05",
+      "original_title": "Robustez ao prompt é declarada sem artefato identificável",
+      "disposition": "evidence_gap_disclosed",
+      "action_and_limit": "No prompt-robustness outcome claimed; CLI variants alone do not prove an experiment. Artifact remains unrecovered.",
+      "evidence": [
+        "latex/sections/05-setup.tex",
+        "latex/sections/07-discussion.tex"
+      ]
+    },
+    {
+      "id": "A06",
+      "original_title": "H5 muda a ponderação quando os números de draws diferem",
+      "disposition": "implemented_with_historical_limit",
+      "action_and_limit": "Mean-by-observation and mean-by-persona distinct; missing-draw counterexample and new H5 reference. Actual cause of historical difference remains unknown.",
+      "evidence": [
+        "scripts/analyze_h5_aggregation.py",
+        "latex/tables/h5_aggregation.tex"
+      ]
+    },
+    {
+      "id": "A07",
+      "original_title": "Parser aceita números sem intenção válida e não repete todas as falhas de parsing",
+      "disposition": "implemented_with_historical_limit",
+      "action_and_limit": "Strict exact-key finite nonboolean JSONnumber; no clamp/number salvage; invalids retained without semantic replacement; raw+namespace+source hashes saved. Cannot repair historical accepted scalars retrospectively.",
+      "evidence": [
+        "scripts/run_predictions.py",
+        "scripts/recollect.py",
+        "tests/test_recollection.py"
+      ]
+    },
+    {
+      "id": "A08",
+      "original_title": "Ausência de significância e dispersão semelhante não provam os mecanismos descritos",
+      "disposition": "unsupported_claim_removed",
+      "action_and_limit": "No nonsignificant-implies-unpredictable or bias-versus-noise identified mechanism; intent/platform/image/temporal confounds and selection are explicit.",
+      "evidence": [
+        "latex/sections/07-discussion.tex",
+        "latex/sections/03-framework.tex"
+      ]
+    },
+    {
+      "id": "A09",
+      "original_title": "A generalização sobre superioridade em todos os datasets contradiz Reddit",
+      "disposition": "implemented_and_email_readjudicated",
+      "action_and_limit": "Reddit paneltop1/lift exceedbaseline. Its gamma point also exceedsbaseline; the email tau-only-dominance sentence is unsupported, and zero-includingCIs do not prove equivalence.",
+      "evidence": [
+        "reports/replication.json",
+        "latex/sections/06-results.tex",
+        "latex/tables/replication.tex"
+      ]
+    },
+    {
+      "id": "A10",
+      "original_title": "A descrição geral de orçamento e seeds não se aplica ao GPT 4.1",
+      "disposition": "implemented_with_historical_limit",
+      "action_and_limit": "Historical30/10,399/395,paired395,no sentGPTseed explicit. New separate30/30 experiment retains request seeds/raws; no monotonic performance guarantee from spending more.",
+      "evidence": [
+        "reports/crossfamily_gpt41.json",
+        "latex/sections/04-system.tex",
+        "latex/sections/06-results.tex"
+      ]
+    },
+    {
+      "id": "A11",
+      "original_title": "Agregações já executadas continuam descritas como trabalho futuro",
+      "disposition": "implemented",
+      "action_and_limit": "Six historical aggregation results no longer future-only work.",
+      "evidence": [
+        "latex/sections/04-system.tex",
+        "latex/tables/h5_aggregation.tex"
+      ]
+    },
+    {
+      "id": "A12",
+      "original_title": "A seleção dos 600 pacotes Reddit não está identificada",
+      "disposition": "evidence_gap_disclosed",
+      "action_and_limit": "600/599evaluatedReddit versus5393selectedmanifest; exact selectionIDs and rule remain unavailable. Not presented as random/representative or silently reconstructed.",
+      "evidence": [
+        "DATA_SOURCES.md",
+        "latex/sections/05-setup.tex",
+        "latex/sections/07-discussion.tex"
+      ]
+    },
+    {
+      "id": "A13",
+      "original_title": "Reexportação funciona mas não equivale à reconstrução histórica das estatísticas",
+      "disposition": "implemented_with_historical_limit",
+      "action_and_limit": "Reexport, old scalar replay and new raw-replay distinct; full source/input/raw/analysis bundle restored from protected Windows copy and reproduced with no credentials. Some historical producers/raw remain missing.",
+      "evidence": [
+        "REPLICATION.md",
+        "SCOPE.md",
+        "RETENTION.md",
+        "latex/main.tex"
+      ]
+    },
+    {
+      "id": "A14",
+      "original_title": "Faltam as fontes primárias de MIND e Reddit na bibliografia",
+      "disposition": "implemented",
+      "action_and_limit": "Primary MIND and Reddit publications cited with ordered authors checked afresh. Upworthy2024correction additionally cited;25references.",
+      "evidence": [
+        "latex/references.bib",
+        "docs/audit/full-text-bibliography.json"
+      ]
+    }
+  ],
+  "accepted_plan_main_sections": [
+    {
+      "section": 1,
+      "disposition": "implemented or explicitly scoped, not universal historical revalidation",
+      "evidence": [
+        "reports/legacy-provenance.json",
+        "latex/sections/01-introduction.tex",
+        "recollection/2026-10-31/provenance.json"
+      ]
+    },
+    {
+      "section": 2,
+      "disposition": "implemented or explicitly scoped, not universal historical revalidation",
+      "evidence": [
+        "scripts/compute_validity.py",
+        "scripts/winner_filter.py",
+        "tests/test_corrections.py",
+        "tests/test_replication.py"
+      ]
+    },
+    {
+      "section": 3,
+      "disposition": "implemented or explicitly scoped, not universal historical revalidation",
+      "evidence": [
+        "latex/sections/05-setup.tex",
+        "latex/sections/07-discussion.tex",
+        "latex/sections/09-appendix.tex"
+      ]
+    },
+    {
+      "section": 4,
+      "disposition": "implemented or explicitly scoped, not universal historical revalidation",
+      "evidence": [
+        "scripts/run_predictions.py",
+        "scripts/analyze_h5_aggregation.py",
+        "scripts/recollect.py",
+        "tests/test_recollection.py"
+      ]
+    },
+    {
+      "section": 5,
+      "disposition": "implemented or explicitly scoped, not universal historical revalidation",
+      "evidence": [
+        "REPLICATION.md",
+        "SCOPE.md",
+        "CLAIMS_TO_ARTIFACTS.csv",
+        "DATA_SOURCES.md",
+        "latex/references.bib"
+      ]
+    },
+    {
+      "section": 6,
+      "disposition": "implemented or explicitly scoped, not universal historical revalidation",
+      "evidence": [
+        "docs/audit/full-text-claim-ledger.json",
+        "docs/audit/full-text-bibliography.json",
+        "RETENTION.md"
+      ]
+    }
+  ],
+  "v3_closure_bullets": [
+    "No selection chronology inferred from statistical results",
+    "Uniform top/bottom credit for partial/full ties; constant outcomes liftundefined; emptymeans/CIsNone; permetricpairedN",
+    "H5mean remains equalpersona; observation reference distinct",
+    "RecoveredGPTpostparser replay before diagnostic; cannot validate originalresponse text",
+    "Exclusive destinations and parser/config namespaces; legacy artifacts protected"
+  ],
+  "PA01_PA06_evidence_boundary": "Accepted plan-v3 closure text and consensus are retained. The full individually numbered preliminary review is not separately available as raw bytes; no missing PA-specific wording was reconstructed from memory.",
+  "email_readjudications": [
+    "Reddit signed gamma point favorspanel too; do not accept tau-only dominance",
+    "Rounded71ties do not identify exact gamma denominator; zero imputation changes estimand",
+    "Smaller query budget does not guarantee worse observed performance",
+    "Population versus sample SD convention is not itself a data error"
+  ],
+  "new_findings": [
+    {
+      "id": "FT01",
+      "action": "Cite2024randomizationcorrection; quantifywindowoverlap; preserveprimary and addposthocsensitivity; disclose Gemini tau/rho uncertainty"
+    },
+    {
+      "id": "FT02",
+      "action": "Replace current-release wording by accompanying local replicationbundle prepared forpublicdeposition"
+    },
+    {
+      "id": "FT03",
+      "action": "Remove unverified cheapest/common100IDs/one-draw statements; explicit marginal-versus-paired historical gaps"
+    },
+    {
+      "id": "FT04",
+      "action": "Disclose websiteheadline-imageclicks versus socialmedia2014prompt and date-framing mismatch"
+    },
+    {
+      "id": "FT05",
+      "action": "Versioned local deletion/write guards + destructive-copy recoverydrill + userchosenOneDrive sync; no GCScreation or immutable/offsite-guarantee overclaim"
+    }
+  ],
+  "new_generations_this_audit": 0,
+  "all_requested_software_text_actions_accounted_for": true,
+  "historical_evidence_gaps_are_not_marked_reconstructed": true
+}

@@ -1,0 +1,110 @@
+{
+  "base_commit": "1326962cd6e3b4bb41f889737ffcbc8516655171",
+  "objective": "Standalone v2 and independent formula/code checks; not a new scientific experiment",
+  "formula_oracle": {
+    "all_passed": true,
+    "counts": {
+      "vector_pairs": 7371,
+      "winner_packages": 1000,
+      "bootstrap_cases": 6,
+      "paired_metrics": 6
+    },
+    "methods": "SciPy tau-b/Spearman, contingency quadrants gamma, explicit uniform-extreme decisions, independent Pearson chi-square pooled-z equivalence, NumPy resample-order-statistic intervals and paired validity IDs",
+    "source_sha256": {
+      "scripts/compute_validity.py": "aaccfc01dc6672b6f6eddbb418685d0cd55630d55f33dda9d1635640ac9309c7",
+      "scripts/winner_filter.py": "6dea65e32a5b7c43eec6c43826fa77b9f24f1ed027f2a2e9b2667bf48ab7bceb",
+      "scripts/analyze_recollection.py": "38aff73849e22d379937889f46322920a4dae151a7dfeda680f39e773be2de2c",
+      "scripts/analyze_randomization_window.py": "f6ebcb3383fde53adae0265b65b77433b75a2b1ca218cc2f09da408e4970ecb4",
+      "scripts/tier2_crossmodel.py": "1fbd935a3f8b299e2b982197075c28fc91f93d8350a798bbb4f6003677dc1db9",
+      "scripts/analyze_h5_aggregation.py": "2fcce673e324df824c9da24c4d1bbb7520537e7cd1800146884d3bc5065cad64",
+      "scripts/03_build_joined.py": "83742c85cb001b6bc3f932d4a6bace2c174ff98a0cc6a34a307c9e2ada0e8f57"
+    },
+    "provider_calls": 0
+  },
+  "csv_reader_finding": {
+    "all_recorded_variant_counts_rates_equal_to_independent_csv_aggregation": true,
+    "source_rows": 22666,
+    "source_invalid_counts": 0,
+    "variant_records": 6978,
+    "headline_text_differences": [
+      {
+        "package_id": "5429d6e75f7828ebff000066",
+        "variant_id": "5429d6e75f7828ebff000066#3",
+        "locked_headline": "They Needed To Feel Her Pain, So She Locked Them In ARoom And Told Her Story",
+        "newline_preserving_headline": "They Needed To Feel Her Pain, So She Locked Them In A\nRoom And Told Her Story"
+      }
+    ],
+    "affected_package_in_legacy399": false,
+    "affected_package_in_new190": false,
+    "same_new190_ids": true,
+    "current_ingester_preserves_multiline_fields": true,
+    "existing_input_corpus_and_primary_reports_never_modified": true,
+    "new_csv_derivative_used_for_saved_scores": false,
+    "provider_calls": 0
+  },
+  "editorial_policy": "Remove own audit/erratum/error-correction narrative from manuscript; preserve statistical false-positive terminology, external published Author Correction title, incident/missing-data/posthoc/conditional limitations. Audit and version provenance remain outside paper.",
+  "historical_and_primary_numerical_reports_unchanged": true,
+  "automated-review": {
+    "initial_run": {
+      "reviewed_source_commit": "58051e9c1553e5712c8606f260e8ddbb9a9e7582",
+      "pdf_sha256": "bb46041c0f214ab0a83af3d85ae9bc5b4bc3f0d33ad7989fceabc882b1d9251a",
+      "tool_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
+      "exit_code": 0,
+      "meta_decision": "Weak Accept",
+      "overall_score": 6,
+      "confidence": 4,
+      "calls": 13,
+      "guard_passed": true,
+      "references_automatically_resolved": 23,
+      "references_total": 25,
+      "references_manual_primary_resolution": 2,
+      "claims_checker_counts": {
+        "supported": 3,
+        "unsupported": 0,
+        "uncertain": 1
+      },
+      "advisory_limits": "Review contains false positives and overbroad paraphrases; source/numeric evidence adjudication retained separately. No blanket scientific-acceptance claim.",
+      "artifacts": "v2-audit/automated-review-e2e and v2-audit/automated-review_ADJUDICATION.md",
+      "new_scientific_generations": 0
+    },
+    "final_run": {
+      "source_commit": "25a8b2c47f0090852abbc9ad23412e91ea3bffaf",
+      "pdf_sha256": "03d0a905d62521fd32a70d796556562df91790f6a4bd2ec2e70bb468c8127c02",
+      "final_native_exit": 0,
+      "final_meta_decision": "Weak Accept",
+      "overall_score": 6,
+      "confidence": 4,
+      "final_calls": 13,
+      "final_guard_raw_passed": false,
+      "final_guard_encoding_TikZ_false_positives": 6,
+      "native_claim_counts": {
+        "supported": 3,
+        "unsupported": 1,
+        "uncertain": 0
+      },
+      "native_reference_counts": {
+        "resolved": 23,
+        "total": 25,
+        "author_mismatches": 0
+      },
+      "manual_reference_primary_resolution": 2,
+      "tool_source_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
+      "review_prompt_version": "v3",
+      "manuscript_version": "v2",
+      "raw_review": "docs/audit/automated-review-v2-review.md",
+      "adjudication": "docs/audit/automated-review-v2-adjudication.md",
+      "semantics": "Native advisory review, not human editorial acceptance. Raw failed encoding/claim signals are preserved and adjudicated; no blanket PASS is asserted. Full SDK journals stay in the separate retained companion."
+    }
+  },
+  "retention": "New complete version in OneDrive and protected local vaults; previous versions never overwritten.",
+  "rendering_amendment": {
+    "previous_pdf_sha256": "bb46041c0f214ab0a83af3d85ae9bc5b4bc3f0d33ad7989fceabc882b1d9251a",
+    "final_pdf_sha256": "03d0a905d62521fd32a70d796556562df91790f6a4bd2ec2e70bb468c8127c02",
+    "same_numerical_tables_and_statistical_source": true,
+    "change": "Two short verbatim spans render JSON placeholder as literal ASCII quotes/underscore/angle brackets; no main font/schema/prompt/scientific result changes.",
+    "rendered_json_marker": "<number between 0 and 1>",
+    "no_overfull_or_undefined": true,
+    "first_review_retained": true,
+    "final_native_review_will_rerun": true
+  }
+}

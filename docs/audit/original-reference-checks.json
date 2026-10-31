@@ -1,0 +1,424 @@
+{
+  "entries": [
+    {
+      "key": "argyleSiliconSampling",
+      "expected_surnames": [
+        "Argyle",
+        "Busby",
+        "Fulda",
+        "Gubler",
+        "Rytting",
+        "Wingate"
+      ],
+      "expected_title": "Out of One, Many: Using Language Models to Simulate Human Samples",
+      "checked_utc": "2026-10-31T10:03:48.690163+00:00",
+      "url": "https://api.crossref.org/works/10.1017%2Fpan.2023.2",
+      "resolved_title": "Out of One, Many: Using Language Models to Simulate Human Samples",
+      "resolved_surnames": [
+        "Argyle",
+        "Busby",
+        "Fulda",
+        "Gubler",
+        "Rytting",
+        "Wingate"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "cheng2023compost",
+      "expected_surnames": [
+        "Cheng",
+        "Piccardi",
+        "Yang"
+      ],
+      "expected_title": "CoMPosT: Characterizing and Evaluating Caricature in LLM Simulations",
+      "checked_utc": "2026-10-31T10:03:48.700293+00:00",
+      "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2023.emnlp-main.669",
+      "resolved_title": "CoMPosT: Characterizing and Evaluating Caricature in LLM Simulations",
+      "resolved_surnames": [
+        "Cheng",
+        "Piccardi",
+        "Yang"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "cohen1988power",
+      "expected_surnames": [
+        "Cohen"
+      ],
+      "expected_title": "Statistical Power Analysis for the Behavioral Sciences",
+      "checked_utc": "2026-10-31T10:03:48.699745+00:00",
+      "url": "https://api.crossref.org/works/10.4324%2F9780203771587",
+      "resolved_title": "Statistical Power Analysis for the Behavioral Sciences",
+      "resolved_surnames": [
+        "Cohen"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "cronbach1955construct",
+      "expected_surnames": [
+        "Cronbach",
+        "Meehl"
+      ],
+      "expected_title": "Construct validity in psychological tests",
+      "checked_utc": "2026-10-31T10:03:48.698249+00:00",
+      "url": "https://api.crossref.org/works/10.1037%2Fh0040957",
+      "resolved_title": "Construct validity in psychological tests.",
+      "resolved_surnames": [
+        "Cronbach",
+        "Meehl"
+      ],
+      "author_match": true,
+      "title_similarity": 0.9879518072289156,
+      "status": "match"
+    },
+    {
+      "key": "dominguezolmedo2024questioning",
+      "expected_surnames": [
+        "Dominguez-Olmedo",
+        "Hardt",
+        "Mendler-D{\\\"u}nner"
+      ],
+      "expected_title": "Questioning the Survey Responses of Large Language Models",
+      "checked_utc": "2026-10-31T10:03:48.703509+00:00",
+      "url": "https://api.crossref.org/works/10.52202%2F079017-1458",
+      "resolved_title": "Questioning the Survey Responses of Large Language Models",
+      "resolved_surnames": [
+        "Dominguez-Olmedo",
+        "Hardt",
+        "Mendler-Dünner"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "efron1979bootstrap",
+      "expected_surnames": [
+        "Efron"
+      ],
+      "expected_title": "Bootstrap Methods: Another Look at the Jackknife",
+      "checked_utc": "2026-10-31T10:03:48.697488+00:00",
+      "url": "https://api.crossref.org/works/10.1214%2Faos%2F1176344552",
+      "resolved_title": "Bootstrap Methods: Another Look at the Jackknife",
+      "resolved_surnames": [
+        "Efron"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "gupta2024bias",
+      "expected_surnames": [
+        "Gupta",
+        "Shrivastava",
+        "Deshpande",
+        "Kalyan",
+        "Clark",
+        "Sabharwal",
+        "Khot"
+      ],
+      "expected_title": "Bias Runs Deep: Implicit Reasoning Biases in Persona-Assigned LLMs",
+      "checked_utc": "2026-10-31T10:03:48.703883+00:00",
+      "url": "https://arxiv.org/abs/2311.04892",
+      "resolved_title": "Bias Runs Deep: Implicit Reasoning Biases in Persona-Assigned LLMs",
+      "resolved_full_names": [
+        "Gupta, Shashank",
+        "Shrivastava, Vaishnavi",
+        "Deshpande, Ameet",
+        "Kalyan, Ashwin",
+        "Clark, Peter",
+        "Sabharwal, Ashish",
+        "Khot, Tushar"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "holcomb2013newsuse",
+      "expected_surnames": [
+        "Holcomb",
+        "Gottfried",
+        "Mitchell"
+      ],
+      "expected_title": "News Use Across Social Media Platforms",
+      "checked_utc": "2026-10-31T10:03:48.706574+00:00",
+      "url": "https://www.pewresearch.org/journalism/2013/11/14/news-use-across-social-media-platforms/",
+      "resolved_full_names": [
+        "Jesse Holcomb",
+        "Jeffrey Gottfried",
+        "Amy Mitchell"
+      ],
+      "matched_positions": [
+        4381,
+        4550,
+        4730
+      ],
+      "author_match": true,
+      "status": "match"
+    },
+    {
+      "key": "hu2024persona",
+      "expected_surnames": [
+        "Hu",
+        "Collier"
+      ],
+      "expected_title": "Quantifying the Persona Effect in LLM Simulations",
+      "checked_utc": "2026-10-31T10:03:48.703100+00:00",
+      "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2024.acl-long.554",
+      "resolved_title": "Quantifying the Persona Effect in LLM Simulations",
+      "resolved_surnames": [
+        "Hu",
+        "Collier"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "kendall1938",
+      "expected_surnames": [
+        "Kendall"
+      ],
+      "expected_title": "A New Measure of Rank Correlation",
+      "checked_utc": "2026-10-31T10:03:48.694457+00:00",
+      "url": "https://api.crossref.org/works/10.1093%2Fbiomet%2F30.1-2.81",
+      "resolved_title": "A NEW MEASURE OF RANK CORRELATION",
+      "resolved_surnames": [
+        "KENDALL"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "kohavi2009controlled",
+      "expected_surnames": [
+        "Kohavi",
+        "Longbotham",
+        "Sommerfield",
+        "Henne"
+      ],
+      "expected_title": "Controlled experiments on the web: survey and practical guide",
+      "checked_utc": "2026-10-31T10:03:48.697880+00:00",
+      "url": "https://api.crossref.org/works/10.1007%2Fs10618-008-0114-1",
+      "resolved_title": "Controlled experiments on the web: survey and practical guide",
+      "resolved_surnames": [
+        "Kohavi",
+        "Longbotham",
+        "Sommerfield",
+        "Henne"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "li2025personacatch",
+      "expected_surnames": [
+        "Li",
+        "Chen",
+        "Namkoong",
+        "Peng"
+      ],
+      "expected_title": "LLM Generated Persona is a Promise with a Catch",
+      "checked_utc": "2026-10-31T10:03:48.691364+00:00",
+      "url": "https://arxiv.org/abs/2503.16527",
+      "resolved_title": "LLM Generated Persona is a Promise with a Catch",
+      "resolved_full_names": [
+        "Li, Ang",
+        "Chen, Haozhe",
+        "Namkoong, Hongseok",
+        "Peng, Tianyi"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "matiasUpworthy",
+      "expected_surnames": [
+        "Matias",
+        "Munger",
+        "Le Quere",
+        "Ebersole"
+      ],
+      "expected_title": "The Upworthy Research Archive, a time series of 32,487 experiments in U.S. media",
+      "checked_utc": "2026-10-31T10:03:48.689440+00:00",
+      "url": "https://api.crossref.org/works/10.1038%2Fs41597-021-00934-7",
+      "resolved_title": "The Upworthy Research Archive, a time series of 32,487 experiments in U.S. media",
+      "resolved_surnames": [
+        "Matias",
+        "Munger",
+        "Le Quere",
+        "Ebersole"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "park2024agents",
+      "expected_surnames": [
+        "Park",
+        "Zou",
+        "Kamphorst",
+        "Egan",
+        "Shaw",
+        "Hill",
+        "Cai",
+        "Morris",
+        "Liang",
+        "Willer",
+        "Bernstein"
+      ],
+      "expected_title": "LLM Agents Grounded in Self-Reports Enable General-Purpose Simulation of Individuals",
+      "checked_utc": "2026-10-31T10:03:48.691168+00:00",
+      "url": "https://arxiv.org/abs/2411.10109",
+      "resolved_title": "LLM Agents Grounded in Self-Reports Enable General-Purpose Simulation of Individuals",
+      "resolved_full_names": [
+        "Park, Joon Sung",
+        "Zou, Carolyn Q.",
+        "Kamphorst, Jonne",
+        "Egan, Niles",
+        "Shaw, Aaron",
+        "Hill, Benjamin Mako",
+        "Cai, Carrie",
+        "Morris, Meredith Ringel",
+        "Liang, Percy",
+        "Willer, Robb",
+        "Bernstein, Michael S."
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "robertson2023negativity",
+      "expected_surnames": [
+        "Robertson",
+        "Pr{\\\"o}llochs",
+        "Schwarzenegger",
+        "P{\\\"a}rnamets",
+        "Van Bavel",
+        "Feuerriegel"
+      ],
+      "expected_title": "Negativity drives online news consumption",
+      "checked_utc": "2026-10-31T10:03:48.699046+00:00",
+      "url": "https://api.crossref.org/works/10.1038%2Fs41562-023-01538-4",
+      "resolved_title": "Negativity drives online news consumption",
+      "resolved_surnames": [
+        "Robertson",
+        "Pröllochs",
+        "Schwarzenegger",
+        "Pärnamets",
+        "Van Bavel",
+        "Feuerriegel"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "spearman1904",
+      "expected_surnames": [
+        "Spearman"
+      ],
+      "expected_title": "The Proof and Measurement of Association between Two Things",
+      "checked_utc": "2026-10-31T10:03:48.694691+00:00",
+      "url": "https://api.crossref.org/works/10.2307%2F1412159",
+      "resolved_title": "The Proof and Measurement of Association between Two Things",
+      "resolved_surnames": [
+        "Spearman"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "ye2024lola",
+      "expected_surnames": [
+        "Ye",
+        "Yoganarasimhan",
+        "Zheng"
+      ],
+      "expected_title": "LOLA: LLM-Assisted Online Learning Algorithm for Content Experiments",
+      "checked_utc": "2026-10-31T10:03:48.699968+00:00",
+      "url": "https://arxiv.org/abs/2406.02611",
+      "resolved_title": "LOLA: LLM-Assisted Online Learning Algorithm for Content Experiments",
+      "resolved_full_names": [
+        "Ye, Zikun",
+        "Yoganarasimhan, Hema",
+        "Zheng, Yufeng"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    },
+    {
+      "key": "zheng2024helpful",
+      "expected_surnames": [
+        "Zheng",
+        "Pei",
+        "Logeswaran",
+        "Lee",
+        "Jurgens"
+      ],
+      "expected_title": "When ``A Helpful Assistant'' Is Not Really Helpful: Personas in System Prompts Do Not Improve Performances of Large Language Models",
+      "checked_utc": "2026-10-31T10:03:48.700565+00:00",
+      "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2024.findings-emnlp.888",
+      "resolved_title": "When ”A Helpful Assistant” Is Not Really Helpful: Personas in System Prompts Do Not Improve Performances of Large Language Models",
+      "resolved_surnames": [
+        "Zheng",
+        "Pei",
+        "Logeswaran",
+        "Lee",
+        "Jurgens"
+      ],
+      "author_match": true,
+      "title_similarity": 0.9769230769230769,
+      "status": "match"
+    },
+    {
+      "key": "ziems2024css",
+      "expected_surnames": [
+        "Ziems",
+        "Held",
+        "Shaikh",
+        "Chen",
+        "Zhang",
+        "Yang"
+      ],
+      "expected_title": "Can Large Language Models Transform Computational Social Science?",
+      "checked_utc": "2026-10-31T10:03:48.698672+00:00",
+      "url": "https://api.crossref.org/works/10.1162%2Fcoli_a_00502",
+      "resolved_title": "Can Large Language Models Transform Computational Social\n                    Science?",
+      "resolved_surnames": [
+        "Ziems",
+        "Held",
+        "Shaikh",
+        "Chen",
+        "Zhang",
+        "Yang"
+      ],
+      "author_match": true,
+      "title_similarity": 1.0,
+      "status": "match"
+    }
+  ],
+  "counts": {
+    "match": 19,
+    "needs_adjudication": 0,
+    "unavailable": 0
+  }
+}

@@ -9,7 +9,7 @@ real headline clickability in a recent, different domain; unlike Upworthy it com
 articles within a topic, so content (not only wording) varies — documented as a threat.
 
 Output: datasets/mind-subset-<DATE>.json (same schema: packages -> variants with
-headline, impressions, clicks, real_ctr; winner_significant tag). Fails loudly if inputs absent.
+headline, impressions, clicks, real_ctr; winner_selected and winner_filter_policy tags). Fails loudly if inputs absent.
 """
 from __future__ import annotations
 
@@ -20,9 +20,11 @@ import math
 import random
 import sys
 from pathlib import Path
+from winner_filter import evaluate_winner, POLICY
+from analysis_io import write_json
 
 SEED = 42
-LOCK_DATE = "2026-06-03"
+LOCK_DATE = "2026-10-31"
 MIN_IMPRESSIONS = 200      # per-headline, for CTR reliability (MIND per-article counts are lower than Upworthy)
 MIN_VARIANTS = 2
 MAX_VARIANTS_PER_PKG = 10  # cap a subcategory package to its top-N by impressions (keep comparisons tight)
@@ -34,15 +36,13 @@ OUT = PAPER_DIR / "datasets" / f"mind-subset-{LOCK_DATE}.json"
 def fail(m): print(f"[mind][FATAL] {m}", file=sys.stderr); sys.exit(1)
 
 
-def p_one(c1, n1, c2, n2):
-    p = (c1 + c2) / (n1 + n2); se = math.sqrt(p * (1 - p) * (1/n1 + 1/n2))
-    return 1.0 if se == 0 else 0.5 * (1 - math.erf(((c1/n1 - c2/n2)/se) / math.sqrt(2)))
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true", help="only print viability counts")
+    ap.add_argument("--output-dir", type=Path, required=True, help="new corpus directory; historical locks are never overwritten")
     args = ap.parse_args()
+    if args.output_dir.exists():
+        raise FileExistsError(args.output_dir)
     news_f, beh_f = RAW / "news.tsv", RAW / "behaviors.tsv"
     if not (news_f.exists() and beh_f.exists()):
         fail(f"missing MIND files in {RAW}")
@@ -90,29 +90,30 @@ def main():
         vs = sorted(vs, key=lambda v: -v["impressions"])[:MAX_VARIANTS_PER_PKG]
         if len(vs) < MIN_VARIANTS:
             continue
-        ordered = sorted(vs, key=lambda v: -v["real_ctr"])
-        pp = p_one(ordered[0]["clicks"], ordered[0]["impressions"],
-                   ordered[1]["clicks"], ordered[1]["impressions"])
+        decision = evaluate_winner(vs)
         corpus.append({"package_id": f"sub:{sub}", "subcategory": sub, "variants": vs,
-                       "winner_significant": pp < 0.05, "winner_p_one_sided": round(pp, 5)})
+                       "winner_selected": decision["selected"], "winner_adjusted_p": decision["adjusted_p"],
+                       "winner_filter_policy": POLICY})
 
-    n_sig = sum(1 for c in corpus if c["winner_significant"])
+    n_sig = sum(1 for c in corpus if c["winner_selected"])
     print(f"[mind] {len(corpus)} subcategory-packages (>= {MIN_VARIANTS} headlines, "
           f">= {MIN_IMPRESSIONS} impressions), {n_sig} with a significant winner; "
           f"{sum(len(c['variants']) for c in corpus)} variants")
     if args.dry_run:
         return
-    OUT.write_text(json.dumps(corpus, indent=2, ensure_ascii=False))
-    (OUT.with_suffix(".manifest.json")).write_text(json.dumps({
+    args.output_dir.mkdir(parents=True, exist_ok=False)
+    output = args.output_dir / OUT.name
+    write_json(output, corpus)
+    write_json(output.with_suffix(".manifest.json"), {
         "source": "MIND (Microsoft News Dataset, Nov 2019) via HF jchoi0406/MINDNews",
         "source_sha256": src_sha, "lock_date": LOCK_DATE, "seed": SEED,
         "min_impressions": MIN_IMPRESSIONS, "max_variants_per_pkg": MAX_VARIANTS_PER_PKG,
         "grouping": "by news subcategory (topic-controlled); compares different articles (caveat)",
-        "n_packages": len(corpus), "n_packages_significant_winner": n_sig,
+        "n_packages": len(corpus), "n_packages_selected": n_sig, "winner_filter_policy": POLICY,
         "n_variants": sum(len(c["variants"]) for c in corpus),
-        "corpus_sha256": hashlib.sha256(OUT.read_bytes()).hexdigest(),
-    }, indent=2))
-    print(f"[mind] wrote {OUT}")
+        "corpus_sha256": hashlib.sha256(output.read_bytes()).hexdigest(),
+    })
+    print(f"[mind] wrote {output}")
 
 
 if __name__ == "__main__":

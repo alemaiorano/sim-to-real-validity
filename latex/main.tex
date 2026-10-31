@@ -30,10 +30,12 @@
 
 % Numbers come ONLY from variables.tex (auto-generated). Never hand-type a number.
 \input{variables}
+\input{reanalysis_variables}
+\input{recollection_variables}
+\input{window_sensitivity_variables}
 
 \title{Do Synthetic Personas Predict Real Audience Response?\\
-A Sim-to-Real Study Where a No-Persona Baseline\\
-Beats Persona-Based Copy Simulation}
+A Headline-Ranking Study with a Generic-Reader Baseline}
 
 \author{Alexandre Cristov\~ao Maiorano\\
 \texttt{alexandre@lumytics.com}}
@@ -59,36 +61,34 @@ Beats Persona-Based Copy Simulation}
 \input{sections/08-conclusion}
 
 \section*{Data and Code Availability}
-The Upworthy Research Archive~\citep{matiasUpworthy} is publicly available; we redistribute only a
-locked subset manifest (content hash + sampling parameters), not the source data. The complete
-simulation harness (personas, prompts, aggregation), all analysis, ingestion, and
-figure/table-generation scripts, and aggregated result artifacts are released as an artifact-first
-replication package sufficient to regenerate every reported number. Only the raw per-persona LLM
-generations (large volume) are withheld; the harness reproduces them. The replication package is
-available at \url{https://github.com/alemaiorano/sim-to-real-validity}.
+The package at \url{https://github.com/alemaiorano/sim-to-real-validity} includes sources,
+exporters, aggregate historical reports, the fixed panel, and original corpus manifests.
+Reexporting these reports reproduces their displayed numbers, not their generation from raw
+observations. Original reports are hash-pinned and unchanged. Retrospective GPT-4.1 analyses,
+input hashes, and offline replay verification are in \texttt{reanalysis/2026-10-31/}.
+A separate replication bundle retains the recovered historical GPT scalar checkpoint, exact
+exploratory inputs, and the new matched-budget experiment: all raw response bytes, request and
+observation plans, immutable journal snapshots, coverage, package metrics, and source history.
+Committed new aggregate reports and hash provenance are in \texttt{recollection/2026-10-31/}.
+Offline raw replay needs no provider account. Historical Gemini observations remain missing; new
+generations do not restore them. \texttt{REPLICATION.md} distinguishes these evidence tiers.
+The accompanying replication bundle is prepared locally for deposition; it is not yet
+available at the public repository URL.
 
 \section*{Ethics and Conflict of Interest}
-The study uses a public, de-identified archive of A/B-tested headlines; no human subjects were
-recruited and all personas are synthetic. The author has a commercial interest in copy-simulation
-tools; this evaluates the general method (a controlled harness), not a specific product, and we
-mitigate the conflict by pre-registering thresholds, reporting all outcomes (including the null
-top-1 result and the downward revision from the pilot), and releasing the replication package.
+The study uses public archive data and synthetic personas; no new human subjects were recruited.
+The author has a commercial interest in copy-simulation tools. This evaluates a study harness
+rather than a specific product. Disclosure, archived adverse results, explicit limitations, and
+available historical artifacts and the accompanying local bundle support scrutiny; an unverified preregistration chronology is not presented
+as a safeguard.
 
 \section*{AI Tools Disclosure}
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Language models:} Claude Opus 4.8 (Anthropic, via Claude Code) and the GPT-5
-  family (OpenAI, via Codex) were used to generate and review code implementations and to refine
-  manuscript text. The method under test is driven by Google Gemini models
-  (\texttt{gemini-3.1-flash-lite} as the primary evaluation workhorse, with
-  \texttt{gemini-2.5-flash} and \texttt{gemini-3.5-flash} as cross-tier robustness comparators)
-  and by OpenAI \texttt{gpt-4.1} as the independent cross-family replication model.
-
-  \item \textbf{Web search:} MCP Tavily integration was used to support literature review and
-  fact-checking during manuscript preparation.
-\end{itemize}
-All work was carried out under full human oversight and accountability; all experimental results
-derive from executed code over the public benchmark, and all citations were verified against
-Crossref/arXiv.
+AI assistants, including Claude, GPT-family tools, Codex, and an Astra high reviewer, were used
+for code, analysis, literature checks, manuscript preparation, and methodological review. These tools do not supply
+independent empirical validation; the author remains responsible for the work.
+The evaluated models include the historical configurations and the new Gemini 3.1 Flash-Lite
+and Azure GPT-4.1 collection. Returned model metadata are retained with each response; the new
+run uses provider aliases rather than claiming immutable future model behavior.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

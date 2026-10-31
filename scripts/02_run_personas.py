@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -50,7 +51,7 @@ def validate(predictions: Path = PREDICTIONS) -> None:
                     fail(f"line {i}: missing required field '{field}'")
                 if not isinstance(rec[field], typ):
                     fail(f"line {i}: field '{field}' has wrong type")
-                if field == "pred_score" and not (0.0 <= float(rec[field]) <= 1.0):
+                if field == "pred_score" and (type(rec[field]) not in (int, float) or not math.isfinite(rec[field]) or not 0.0 <= rec[field] <= 1.0):
                     fail(f"line {i}: pred_score {rec[field]} out of [0,1]")
             seen_packages.add(rec["package_id"])
             n += 1
@@ -61,7 +62,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--validate-only", action="store_true",
                     help="validate the selected per-variant predictions against the contract")
-    ap.add_argument("--predictions", type=Path, default=PREDICTIONS,
+    ap.add_argument("--predictions", type=Path, required=True,
                     help="prediction JSONL (default: primary persona panel)")
     args = ap.parse_args()
     if args.validate_only:

@@ -1,75 +1,41 @@
 #!/usr/bin/env python3
-"""Qualitative/quantitative error analysis (RQ: why do personas hurt?).
-
-Uses existing artifacts (persona = data/predictions/gemini-3_1-flash-lite-sig3.jsonl, baseline =
-data/predictions/gemini-3_1-flash-lite-baseline.jsonl, corpus). Computes:
-  (1) discriminativeness: mean within-package SD of pred_score for baseline vs persona
-      (if personas compress scores, they wash out signal -> caricature/averaging effect);
-  (2) example packages where the baseline ranks the real winner #1 but the persona panel does not,
-      for a qualitative supplementary table.
-Outputs reports/error_analysis.json.
-"""
-from __future__ import annotations
-
+"""Descriptive disagreement diagnostics; spread does not identify a mechanism."""
+import argparse
 import json
 import statistics
 from pathlib import Path
-
-PAPER_DIR = Path(__file__).resolve().parents[1]
-DATASETS = PAPER_DIR / "datasets"
-
-
-def load(path: Path) -> dict:
-    d = {}
-    for line in path.open():
-        r = json.loads(line)
-        d[(r["package_id"], r["variant_id"])] = float(r["pred_score"])
-    return d
+from analysis_io import write_json
+from analyze_replication import load, packages
+import compute_validity as cv
+from winner_filter import POLICY
 
 
-def main() -> None:
-    corpus = json.loads(next(c for c in sorted(DATASETS.glob("upworthy-subset-*.json"))
-                             if not c.name.endswith(".manifest.json")).read_text())
-    sig = [p for p in corpus if p.get("winner_significant")]
-    persona = load(PAPER_DIR / "data" / "predictions" / "gemini-3_1-flash-lite-sig3.jsonl")
-    base = load(PAPER_DIR / "data" / "predictions" / "gemini-3_1-flash-lite-baseline.jsonl")
-
-    base_sd, persona_sd = [], []
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--corpus", type=Path, required=True)
+    parser.add_argument("--panel", type=Path, required=True)
+    parser.add_argument("--baseline", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    corpus = json.loads(args.corpus.read_text())
+    panel, eligible = packages(corpus, load(args.panel))
+    baseline, _ = packages(corpus, load(args.baseline))
+    shared = sorted(panel.keys() & baseline.keys())
+    spreads = {"panel": [], "baseline": []}
     examples = []
-    for pkg in sig:
-        keys = [(pkg["package_id"], v["variant_id"]) for v in pkg["variants"]]
-        if not (all(k in persona for k in keys) and all(k in base for k in keys)):
-            continue
-        real = [v["real_ctr"] for v in pkg["variants"]]
-        bp = [base[k] for k in keys]
-        pp = [persona[k] for k in keys]
-        if len(real) < 2:
-            continue
-        base_sd.append(statistics.pstdev(bp))
-        persona_sd.append(statistics.pstdev(pp))
-        # example: baseline picks real winner, persona does not
-        real_best = max(range(len(real)), key=lambda i: real[i])
-        if (max(range(len(bp)), key=lambda i: bp[i]) == real_best
-                and max(range(len(pp)), key=lambda i: pp[i]) != real_best):
-            examples.append({
-                "package_id": pkg["package_id"],
-                "winner_headline": pkg["variants"][real_best]["headline"][:90],
-                "winner_real_ctr": round(real[real_best], 4),
-                "n_variants": len(real),
-            })
-
-    report = {
-        "n_packages": len(base_sd),
-        "discriminativeness_within_pkg_sd": {
-            "baseline_mean_sd": round(statistics.mean(base_sd), 4),
-            "persona_mean_sd": round(statistics.mean(persona_sd), 4),
-            "interpretation": "lower SD = scores compressed = less discriminative",
-        },
-        "n_baseline_right_persona_wrong": len(examples),
-        "examples": examples[:15],
-    }
-    (PAPER_DIR / "reports" / "error_analysis.json").write_text(json.dumps(report, indent=2))
-    print(json.dumps(report, indent=2)[:1200])
+    for key in shared:
+        real = [v[0] for v in panel[key]]
+        pp, bp = [v[1] for v in panel[key]], [v[1] for v in baseline[key]]
+        spreads["panel"].append(statistics.pstdev(pp))
+        spreads["baseline"].append(statistics.pstdev(bp))
+        if cv.top1(real, bp) > cv.top1(real, pp):
+            examples.append({"package_id": key, "panel_expected_top1": cv.top1(real, pp),
+                             "baseline_expected_top1": cv.top1(real, bp)})
+    write_json(args.output, {"winner_filter_policy": POLICY, "n_eligible": eligible,
+                            "n_paired": len(shared), "mean_within_package_sd": {
+                                arm: statistics.mean(vals) if vals else None for arm, vals in spreads.items()},
+                            "interpretation": "descriptive spread only; does not distinguish bias from noise",
+                            "baseline_higher_expected_top1": examples})
 
 
 if __name__ == "__main__":
