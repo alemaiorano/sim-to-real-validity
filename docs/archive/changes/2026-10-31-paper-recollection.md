@@ -20,10 +20,17 @@ preferred model after seeing outcomes. Generalization to those datasets remains 
   endpoints returned HTTP 200 before generation. Record returned versions on every response.
 - Each variant: 10 personas × 3 observations, compared with 30 generic-reader observations.
   Each model therefore plans 36,060 observations; total 72,120.
+- Azure's observed quota is 150 requests/minute. Protocol v2 uses n=3 symmetrically:
+  ten requests per arm/variant, three choices each, 12,020 Azure requests total. Interleave
+  requests, assign unique request/choice indices and require exactly indices 0–2. Do not
+  assume the choices are independent or this request protocol is operationally identical
+  to Gemini's single-choice requests. Usage is charged once per request; reserve output
+  for all three choices. Each Azure request has one seed, not an invented seed per choice.
 - Temperature 0.8, JSON mode, strict finite nonboolean parser. Gemini uses documented MINIMAL
   thinking; Azure GPT-4.1 has no reasoning budget. This is a new protocol, not historical replay.
 - Fixed seeded package/variant order, randomized order within each baseline/panel pair,
-  contemporaneous interleaving, shared pair seed 42+pair index when supported.
+  contemporaneous interleaving, shared pair seed 42+pair index when supported. In Azure v2
+  the pair index is the ten-request group index; Gemini retains thirty sample pairs.
 - No outcome-dependent stopping or model/prompt selection. Technical compatibility probes are
   retained separately if configuration changes are needed. Semantic failures are terminal.
 - Primary comparison requires the complete planned per-persona and baseline observations for
@@ -47,6 +54,16 @@ response or failure, token usage, response ID, version, seed, timestamps and HTT
 Keep append-only journals, configuration/input/source hashes, exact sampling plan, parser output,
 per-variant aggregates, package metrics, code and reproduction commands. Resume from retained
 events; never silently recollect completed observations or discard a failed attempt.
+Honor known RPM, reported TPM and retry-after including milliseconds; a permanent HTTP error
+or underestimated reservation remains halted after restart. Analyze and hash the same retained
+snapshot; never attribute a report to a later, concurrently appended journal.
+
+Four compatibility observations from source d70581d7a19042170042198d9eb6780b05927335
+were HTTP200/valid (two per model), but are retained separately as protocol-v1 diagnostics.
+Their conservative liabilities (Gemini0.0001830/Azure0.001144USD) are deducted from v2's caps.
+They are not pooled into v2 scientific results. Review found and repaired durable-stop,
+snapshot identity and pacing defects before any full collection. Counterexamples are retained
+as producer/replay tests. No API calls were made by the read-only reviewer.
 
 Canonical sink: `/home/maioale/eval-artifacts/marketing-simulator/paper-recollection/2026-10-31/`.
 Keep a second durable copy outside worktrees under `/home/maioale/research-backups/`, then make
