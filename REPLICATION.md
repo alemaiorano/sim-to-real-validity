@@ -5,6 +5,17 @@ For exact primary-report reproduction use CPython 3.12.3 on Linux/WSL
 `pip install -r requirements.txt`; PDF compilation also needs
 `pdflatex` and `bibtex`. Run commands from the repository root.
 
+## Public source history and archival identifiers
+
+`PUBLIC_SOURCE_REVISIONS.json` maps the original recorded commit identifiers to the maintained
+public history. Plans, raw journals and immutable reports keep their archival IDs. A changed
+commit ID does not imply changed scientific code: the producer revisions used for replay have
+identical Git trees. The historical GPT replay resolves its archival ID through this map and
+checks the complete producer tree before reading files. Its output retains the original archive
+ID and producer-file hashes, allowing byte comparison with the preserved verification report.
+Use a fresh full clone for the maintained public history; do not merge or push an older clone.
+Private original bundles remain available for exact archival-source restoration.
+
 ## 1. Reexport reports and build the PDF
 
 The public Git package supports this section without a private checkpoint or raw corpus:
@@ -136,7 +147,7 @@ The standalone replication bundle contains:
 
 Verify the archive checksum before extraction, then run `sha256sum -c SHA256SUMS` from the
 extracted artifact root. Restore source with `git clone --branch
-research/public-review-disclosure-2026-10-31 SOURCE_FINAL.bundle source` (substitute the actual
+main SOURCE_FINAL.bundle source` (substitute the actual
 bundle path). Work from `source`; the original pinned producer is available in its history.
 Use the recorded CPython 3.12.3 environment. Floating-point `sum` changed in Python 3.12;
 older interpreters are not asserted to reproduce exact ranks/bytes. Set a shell variable to the extracted artifact directory:

@@ -20,6 +20,25 @@ ROOT = Path(__file__).resolve().parents[1]
 FILES = ["scripts/tier2_crossmodel.py", "scripts/run_predictions.py",
          "scripts/compute_validity.py", "data/persona_panel.json", "reports/crossfamily_gpt41.json"]
 
+def producer_revision():
+    """Locate the public copy of the archival producer, verifying the entire tree."""
+    mapping = json.loads((ROOT / "PUBLIC_SOURCE_REVISIONS.json").read_text())
+    if mapping.get("schema") != 1:
+        raise ValueError("unsupported public source revision map")
+    rows = [row for row in mapping["revisions"] if row["archival_commit"] == PIN]
+    if len(rows) != 1:
+        raise ValueError("archival producer requires exactly one public revision")
+    row = rows[0]
+    if row["archival_tree"] != row["public_tree"]:
+        raise ValueError("public producer tree differs from the archival tree")
+    revision = row["public_commit"]
+    actual_tree = subprocess.check_output(
+        ["git", "rev-parse", revision + "^{tree}"], cwd=ROOT, text=True).strip()
+    if actual_tree != row["archival_tree"]:
+        raise ValueError("public producer does not match the pinned archival tree")
+    return revision
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus", type=Path, required=True)
@@ -40,10 +59,11 @@ def main():
         if row["pkg"] not in legacy_ids or not 0 <= row["draw"] < (10 if row["who"] == "baseline" else 3):
             raise ValueError("row outside the historical selected draw population")
     producer_hashes = {}
+    revision = producer_revision()
     with tempfile.TemporaryDirectory() as directory:
         tree = Path(directory)
         for name in FILES:
-            content = subprocess.check_output(["git", "show", PIN + ":" + name], cwd=ROOT)
+            content = subprocess.check_output(["git", "show", revision + ":" + name], cwd=ROOT)
             producer_hashes[name] = hashlib.sha256(content).hexdigest()
             path = tree / name
             path.parent.mkdir(parents=True, exist_ok=True)

@@ -1,6 +1,6 @@
 {
   "base_commit": "c1b031eac61f740242cff3c9fdaca1f474930d8b",
-  "scope": "Publication-only identity removal and private/public evidence separation; one disclosure sentence changed, scientific manuscript otherwise identical.",
+  "scope": "Publication history rewrite and archival producer lookup, no numerical algorithm changes.",
   "coverage": {
     "paragraphs": 60,
     "tables": 11,
@@ -13,7 +13,7 @@
     "sha256": "bac4161aa6a13dbd4e1a93c5d8cbf0ca87b040f0141bf8e8ced0538d828f979e",
     "no_build_ref_overfull_glyph_errors": true
   },
-  "current_verification": "docs/audit/publication-disclosure-validation.json",
+  "current_verification": "docs/audit/public-history-validation.json",
   "blind_review": "docs/audit/astra-blind-review-2026-10-31.md",
   "finding_disposition": "docs/audit/astra-review-disposition.json",
   "prior_verification": "docs/audit/history/pre-astra-9c6cfe7-full-text-validation.json",
@@ -25,5 +25,7 @@
     "Public raw bundle deposition pending",
     "Related experiment dependence and editorial stopping impact not quantified",
     "Missing supplementary raw/lineage and exclusion identities not reconstructed"
-  ]
+  ],
+  "public_source_revisions": "PUBLIC_SOURCE_REVISIONS.json",
+  "history_replay_proof": "Historical scalar checkpoint replay is byte-identical using a public revision with the complete original producer tree. Archived report/source IDs remain unchanged."
 }

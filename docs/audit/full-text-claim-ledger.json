@@ -116,6 +116,7 @@
       "status": "qualified",
       "adjudication": "Every displayed estimate expands from hash-backed macros. Cohorts, valid rank pairs, conditional intervals, period-exclusion rank uncertainty, Reddit exception and no universal/causal recovery claim are explicit.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/ai-disclosure-template-sources.json",
         "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/astra-review-disposition.json",
@@ -131,7 +132,9 @@
         "recollection/2026-10-31/window_sensitivity.provenance.json",
         "reports/h003.json",
         "reports/legacy-provenance.json",
-        "scripts/analyze_randomization_window.py"
+        "scripts/analyze_randomization_window.py",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -187,6 +190,7 @@
       "status": "qualified",
       "adjudication": "Supplementary archived aggregates/scalar diagnostic retain different screens, budgets and tie rules; they cannot validate absent raw response texts. Primary observations define their own protocol.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "data/persona_panel.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
@@ -198,7 +202,9 @@
         "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/recollect.py",
+        "scripts/replay_historical_gpt.py",
         "scripts/run_predictions.py",
+        "tests/test_public_source_revisions.py",
         "tests/test_recollection.py"
       ]
     },
@@ -212,6 +218,7 @@
       "status": "study_scope",
       "adjudication": "RQ1/2/3 name the questions addressed by displayed artifacts; no empirical outcome or representative-audience assumption is introduced.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
@@ -220,7 +227,9 @@
         "recollection/2026-10-31/gemini.json",
         "recollection/2026-10-31/provenance.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -389,6 +398,7 @@
       "status": "qualified",
       "adjudication": "Supplementary Gemini30/30 and GPT30/10 are distinguished from new within-model30/30; seeds are sent at request level and do not imply deterministic replay.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "data/persona_panel.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
@@ -397,7 +407,9 @@
         "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/recollect.py",
+        "scripts/replay_historical_gpt.py",
         "scripts/run_predictions.py",
+        "tests/test_public_source_revisions.py",
         "tests/test_recollection.py"
       ]
     },
@@ -411,6 +423,7 @@
       "status": "qualified",
       "adjudication": "Legacy parser salvage/clamp/bool/retry behavior read from7c1; strict exact-key finite nonboolean parser and explicit terminal missing are tested. No supplementary incidence is inferred.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "data/persona_panel.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
@@ -419,7 +432,9 @@
         "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/recollect.py",
+        "scripts/replay_historical_gpt.py",
         "scripts/run_predictions.py",
+        "tests/test_public_source_revisions.py",
         "tests/test_recollection.py"
       ]
     },
@@ -527,12 +542,15 @@
       "status": "supported",
       "adjudication": "Old chosen-winner versus runner-up one-sided test is exact7c1 code; direction-selection null probe shows nominal one-sided interpretation is invalid.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -620,6 +638,7 @@
       "status": "qualified",
       "adjudication": "No standardized effect-size bands, prospective package-mean power or equivalence is asserted. Earlier planning artifact stays outside the paper empirical claims; preregistration chronology remains unestablished.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/ai-disclosure-template-sources.json",
         "docs/audit/astra-primary-source-evidence.json",
         "docs/audit/astra-review-disposition.json",
@@ -629,7 +648,9 @@
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -642,12 +663,15 @@
       "status": "qualified",
       "adjudication": "Existing report inventory shows exactly those robustness comparisons; missing prompt results/Reddit subset history are disclosed, not invented.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -791,12 +815,15 @@
       "status": "qualified",
       "adjudication": "Supplementary primary gamma/top1 are report reexports only under old screen/tie rule. Marginal intervals are not used as a paired test or Cohen effect band.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -814,6 +841,7 @@
       "status": "qualified",
       "adjudication": "Supplementary p statistic/histogram is not calibrated winner probability; original399/1695 selection and all-package gamma verify against unchanged inputs/reports.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "datasets/mind-subset-2026-06-03.manifest.json",
         "datasets/reddit-subset-2026-06-04.manifest.json",
         "docs/audit/astra-review-disposition.json",
@@ -827,7 +855,9 @@
         "reports/legacy-provenance.json",
         "scripts/01_ingest_upworthy.py",
         "scripts/build_mind_corpus.py",
-        "scripts/build_reddit_corpus.py"
+        "scripts/build_reddit_corpus.py",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -845,6 +875,7 @@
       "status": "qualified",
       "adjudication": "Original pinned7c1 H003 producer uses1-p_one_sided, complete score coverage and defined within-package Spearman before including even top1, with5000 planned resamples. Stored1678/.058668/CI unchanged; actual omitted IDs/reasons cannot be recovered without missing predictions. Exposure and variant-count confounding disclosed; no intrinsic predictability conclusion.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
@@ -852,8 +883,10 @@
         "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/compute_validity.py",
+        "scripts/replay_historical_gpt.py",
         "scripts/winner_filter.py",
         "tests/test_corrections.py",
+        "tests/test_public_source_revisions.py",
         "tests/test_randomization_window.py",
         "tests/test_replication.py"
       ]
@@ -873,12 +906,15 @@
       "status": "qualified",
       "adjudication": "Available Upworthy/MIND/Reddit aggregate directions are described without identifying a dataset effect across unreconciled protocols. Original intervals/metrics unchanged; subset/draw/ID gaps remain explicit.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -894,12 +930,15 @@
       "status": "qualified",
       "adjudication": "Three-seed populationSD recomputed; no general-variability estimate. Three tier point contrasts exist but commonIDs/validcounts are unavailable; no universal robustness.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -912,6 +951,7 @@
       "status": "qualified",
       "adjudication": "Rounded tie report is not exact rank denominator; no zero imputation or conservative-bound gap is adopted.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
@@ -919,8 +959,10 @@
         "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/compute_validity.py",
+        "scripts/replay_historical_gpt.py",
         "scripts/winner_filter.py",
         "tests/test_corrections.py",
+        "tests/test_public_source_revisions.py",
         "tests/test_randomization_window.py",
         "tests/test_replication.py"
       ]
@@ -935,6 +977,7 @@
       "status": "qualified",
       "adjudication": "All six H5reportedgamma means below baseline. Weighting difference is real in code, but cause of historic discrepancy and bias/noise mechanism remain unestablished.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
@@ -942,8 +985,10 @@
         "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/compute_validity.py",
+        "scripts/replay_historical_gpt.py",
         "scripts/winner_filter.py",
         "tests/test_corrections.py",
+        "tests/test_public_source_revisions.py",
         "tests/test_randomization_window.py",
         "tests/test_replication.py"
       ]
@@ -961,12 +1006,15 @@
       "status": "qualified",
       "adjudication": "Recovered59474scalar checkpoint replay matches archived crossfamily fields;399/395coverage,30/10samples and absence of sent seed are read from producer. Not raw response validation.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -985,12 +1033,15 @@
       "status": "qualified",
       "adjudication": "Corrected old GPT190/189/189and shown positive pairedCIs verified; still post-parser/unequal budgets. No corrected supplementary Gemini estimate is invented.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -1003,6 +1054,7 @@
       "status": "qualified",
       "adjudication": "Recommendation to include generic baseline follows observed comparisons; primary result and weakened Gemini period-restricted rank contrast both stated. Supplementary Reddit differs.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
@@ -1014,7 +1066,9 @@
         "recollection/2026-10-31/window_sensitivity.provenance.json",
         "reports/h003.json",
         "reports/legacy-provenance.json",
-        "scripts/analyze_randomization_window.py"
+        "scripts/analyze_randomization_window.py",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -1071,6 +1125,7 @@
       "status": "qualified",
       "adjudication": "Missing old responses/producers, unequal request protocols, aliases/seeds, temporal pause, filtering, selected cohort and absent prompt/prereg/subset evidence are explicit limitations.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "data/persona_panel.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
@@ -1082,7 +1137,9 @@
         "reports/legacy-provenance.json",
         "scripts/analyze_randomization_window.py",
         "scripts/recollect.py",
+        "scripts/replay_historical_gpt.py",
         "scripts/run_predictions.py",
+        "tests/test_public_source_revisions.py",
         "tests/test_recollection.py"
       ]
     },
@@ -1096,6 +1153,7 @@
       "status": "interpretation",
       "adjudication": "Aggregate reexport, checkpoint analysis and raw replay are distinct evidential operations in one study; no new statistical conclusion or publication-version narrative is introduced.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
@@ -1104,7 +1162,9 @@
         "recollection/2026-10-31/gemini.json",
         "recollection/2026-10-31/provenance.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -1120,6 +1180,7 @@
       "status": "qualified",
       "adjudication": "Top1 point gaps15.7/19.7pp are primary, sensitivity also disclosed with Gemini tau/rho uncertain. Bottom1 not established and Reddit exception remains; no uniform rank/metric dominance.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
@@ -1131,7 +1192,9 @@
         "recollection/2026-10-31/window_sensitivity.provenance.json",
         "reports/h003.json",
         "reports/legacy-provenance.json",
-        "scripts/analyze_randomization_window.py"
+        "scripts/analyze_randomization_window.py",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -1219,6 +1282,7 @@
       "status": "supported",
       "adjudication": "Old available-scalar versus primary all-planned coverage; source/config hashes, Azure shared request seed and no invented per-choice seed all match code/raw.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "data/persona_panel.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
@@ -1227,7 +1291,9 @@
         "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/recollect.py",
+        "scripts/replay_historical_gpt.py",
         "scripts/run_predictions.py",
+        "tests/test_public_source_revisions.py",
         "tests/test_recollection.py"
       ]
     },
@@ -1257,6 +1323,7 @@
       "status": "qualified",
       "adjudication": "MIND appearances/click labels/subcategory grouping200minimum10cap and Reddit pooled titlevotes300minimum10cap match original and current pinned builders/manifests. Supplied logs are not a common exposure window/audience; evaluated subset lineage remains incomplete.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "datasets/mind-subset-2026-06-03.manifest.json",
         "datasets/reddit-subset-2026-06-04.manifest.json",
         "docs/audit/astra-review-disposition.json",
@@ -1270,7 +1337,9 @@
         "reports/legacy-provenance.json",
         "scripts/01_ingest_upworthy.py",
         "scripts/build_mind_corpus.py",
-        "scripts/build_reddit_corpus.py"
+        "scripts/build_reddit_corpus.py",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -1283,12 +1352,15 @@
       "status": "qualified",
       "adjudication": "Pilot/cross-tier artifacts retained; no verified sharedIDs/cost data, no CI-overlap equivalence or cheapest-model assertion, and untraceable preliminary pilot is removed.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
         "reanalysis/2026-10-31/gpt41.json",
         "reanalysis/2026-10-31/legacy_gpt_verification.json",
         "reports/h003.json",
-        "reports/legacy-provenance.json"
+        "reports/legacy-provenance.json",
+        "scripts/replay_historical_gpt.py",
+        "tests/test_public_source_revisions.py"
       ]
     },
     {
@@ -1301,6 +1373,7 @@
       "status": "qualified",
       "adjudication": "Selected supplementary cases and fixed persona descriptions traced to report/JSON; headline prefixes/CTR/nvariants independently match corpus. Original modelranking remains supplementary report evidence, not new reconstructed predictions.",
       "evidence": [
+        "PUBLIC_SOURCE_REVISIONS.json",
         "data/persona_panel.json",
         "docs/audit/astra-review-disposition.json",
         "docs/audit/original-findings.json",
@@ -1309,7 +1382,9 @@
         "reports/h003.json",
         "reports/legacy-provenance.json",
         "scripts/recollect.py",
+        "scripts/replay_historical_gpt.py",
         "scripts/run_predictions.py",
+        "tests/test_public_source_revisions.py",
         "tests/test_recollection.py"
       ]
     },
@@ -1471,8 +1546,9 @@
     }
   ],
   "source_sha256": {
-    "DATA_SOURCES.md": "ba31b57460c62684add691262c1a453aeb3763a120d18ce0cd3df729a319ed1f",
-    "REPLICATION.md": "eb2dc1a6a4f521968cbf25be15d2442a5392ebaef5fa1664994ced34a0dcdc0a",
+    "DATA_SOURCES.md": "fb9f0701295f4c65459b4cb00f5a150e4962a05171651a6bdc33a44f22bed620",
+    "PUBLIC_SOURCE_REVISIONS.json": "f57e558a0e531a122d653b7baae46fcfbacfe1673626b9a1a434947b5ab83f24",
+    "REPLICATION.md": "c43fbc85d63cf433b8d7733b5565c66c060efe429b2d26ca17a9d8c4aa5f7fd3",
     "SCOPE.md": "a773f103a7bc314b77302fea860848ec176579420eee13b2d670b20fcfa8430b",
     "data/persona_panel.json": "3ff13e5eb82486ed0de24ccfad7e6a0844de053c29f5f056fb636432b329aaac",
     "datasets/mind-subset-2026-06-03.manifest.json": "adfb96a0c2a272e0b9f9aa7f8025b3b6fa6e788fd177dba1ce49ca9dacaef921",
@@ -1542,9 +1618,11 @@
     "scripts/generate_validity_table.py": "91ed46b865b458f42bceeba17a87b361c7eafe5e39666d855e7d3314d6714930",
     "scripts/generate_window_sensitivity_assets.py": "08918550fb29697e6da8738a116bdb4632fd41d4a9d3b22dd60797a1b4428946",
     "scripts/recollect.py": "49dd1464434113c7ad0113f7a7f6013311822b46e464c64def4ca3ac46d66d69",
+    "scripts/replay_historical_gpt.py": "921b9db7e87c828b14f5db34e2d20b1af04266dc22bb8e60f4ba8ea7575bc488",
     "scripts/run_predictions.py": "0977faaad6ceb4f73ce3aec4c6bb7bd3c070929f519ed286efb2e3e30d748419",
     "scripts/winner_filter.py": "6dea65e32a5b7c43eec6c43826fa77b9f24f1ed027f2a2e9b2667bf48ab7bceb",
     "tests/test_corrections.py": "a8acfee6b2600abeb200d46153886716039e336847408bacb33bac465b69b757",
+    "tests/test_public_source_revisions.py": "33150d8a4ca276f1b0d19cadd6567ac802eedaa9f31d37cf730cb307c2fcbfa6",
     "tests/test_randomization_window.py": "73cc85a13a2bccafb9f1430f1fe70374d39158354c1497a0a98fd29a2d901234",
     "tests/test_recollection.py": "496936bb515700979d63b87889f0a564986ba8d9e71641d58c2cc8b319e867b2",
     "tests/test_replication.py": "08c556e37fed3180e3db15ea9be3b48021604307f4bcbed6d7c5b0ded1a1a4ca"

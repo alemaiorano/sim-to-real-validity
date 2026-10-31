@@ -9,7 +9,7 @@
     "scripts/winner_filter.py": "6dea65e32a5b7c43eec6c43826fa77b9f24f1ed027f2a2e9b2667bf48ab7bceb",
     "scripts/analysis_io.py": "f6d427be0cd27184a6594a1833dade168f5586b09ee770140d9dcd2d6e0aea32",
     "scripts/compare_winner_filters.py": "82e6d8212a578baa991bf3066386a6b2bb9cec57cef51f7b8a06e02c0977026f",
-    "scripts/replay_historical_gpt.py": "e82553576ad9faf4f233bdf063890c6b49509096c2f2c03329a7131be519b945",
+    "scripts/replay_historical_gpt.py": "921b9db7e87c828b14f5db34e2d20b1af04266dc22bb8e60f4ba8ea7575bc488",
     "scripts/generate_reanalysis_assets.py": "a22595cffeec350c167c5d59dad0de406cb5f80a0e4becafe54e1d2e668b2bb2"
   },
   "artifacts_sha256": {
@@ -33,5 +33,14 @@
     "previous_sha256": "46bbe3f8411c5b10f1ed603164aefbda2765e687a548af685e34c62b2fc584a6",
     "current_sha256": "a22595cffeec350c167c5d59dad0de406cb5f80a0e4becafe54e1d2e668b2bb2",
     "change": "Caption names the checkpoint analysis by protocol/evidence role; report bytes, estimators and all numerical cells unchanged."
+  },
+  "publication_history_source_resolution": {
+    "map": "PUBLIC_SOURCE_REVISIONS.json",
+    "archival_source_commit": "7c1ab46b5d881529b79769fb870ed1f2fb98619c",
+    "public_source_commit": "4bf8e1e8b4f6284796168cba0aaea0f2a9ae0856",
+    "producer_tree_identical": true,
+    "replay_script_previous_sha256": "e82553576ad9faf4f233bdf063890c6b49509096c2f2c03329a7131be519b945",
+    "replay_script_current_sha256": "921b9db7e87c828b14f5db34e2d20b1af04266dc22bb8e60f4ba8ea7575bc488",
+    "data_numerical_methods_and_original_report_identifiers_unchanged": true
   }
 }

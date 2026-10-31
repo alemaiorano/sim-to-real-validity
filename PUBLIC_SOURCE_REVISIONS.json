@@ -1,0 +1,237 @@
+{
+  "schema": 1,
+  "scope": "Publication-only history maintenance. Original scientific archive identifiers remain in immutable plans/reports. Public revisions below locate their retained files after history redaction. Original full history is retained privately.",
+  "revisions": [
+    {
+      "archival_commit": "1326962cd6e3b4bb41f889737ffcbc8516655171",
+      "public_commit": "b5045f6c548e6e4fd0c04860be74b67f771cdd16",
+      "archival_tree": "d3951159c1337673ab14216bc9f4f4e439988df8",
+      "public_tree": "d3951159c1337673ab14216bc9f4f4e439988df8",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "134209ff3ba4e49b647a472dade75223da5dbf2e",
+      "public_commit": "3f4635343b5fb07e901740ce0c764e023862d629",
+      "archival_tree": "b85142150a7f8bfd0d6c422b8902bdf434532ff0",
+      "public_tree": "57918adf799ef2eae0e69234bd00dcf9ab573f75",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "1d99c5a8d6964f9b7ddb191cf6523bb91b584330",
+      "public_commit": "041fd3e5204c92313cfaec617b88189b4cb61f7d",
+      "archival_tree": "85ed94e6d2a6b04d6fef37c5e0fccc706a2ab58c",
+      "public_tree": "85ed94e6d2a6b04d6fef37c5e0fccc706a2ab58c",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "20bbf2576f8efa76ac04eec07820d5af76264389",
+      "public_commit": "2f05b7367e44563da21136712bffddaaf6111f04",
+      "archival_tree": "2cc4be9fefcfe6b1efde044fb4dd26bbb384c199",
+      "public_tree": "2cc4be9fefcfe6b1efde044fb4dd26bbb384c199",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "25a8b2c47f0090852abbc9ad23412e91ea3bffaf",
+      "public_commit": "09d1ddc49d6c6bf0d1c97ffdabc16fb172dd28b4",
+      "archival_tree": "3b734f15a6348196b44f1d230aeb71e5c6042956",
+      "public_tree": "69109e276bc8499a89debc4a03fb1108d8852702",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "273f223c45db11a879d6924fd2febce34892a853",
+      "public_commit": "73212c81646d6e9a9856bd81e7d0d2f8a3c1bb8b",
+      "archival_tree": "cd42430fb858465088c3a6f306db63c7a61dff16",
+      "public_tree": "cd42430fb858465088c3a6f306db63c7a61dff16",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "30c3e32805262eac540cd0ffd244099d7df60a74",
+      "public_commit": "f86c950aa96b0e6bfd63afe56daff90893b84396",
+      "archival_tree": "dba71e81b48fbf8a937f0ede97da01f5f3bb82f4",
+      "public_tree": "b5573a7dba533c7abfdd9a08b3f1367e8ebca47f",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "32e9d9a36f6e1a709dea9322ea9e082f50940edd",
+      "public_commit": "7d797b0960145430740657187ef1865f296c44da",
+      "archival_tree": "d8ee51e5b141d423d84620a2ed52480f863dd16a",
+      "public_tree": "d8ee51e5b141d423d84620a2ed52480f863dd16a",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "3b688e586712cf042f763b1f0b223c9d78a8d696",
+      "public_commit": "60965a97bc5070b0d839f4ab5f1b5ffb585f8df2",
+      "archival_tree": "ed73f71bf384a3172508588a07490eb0e06bc493",
+      "public_tree": "ed73f71bf384a3172508588a07490eb0e06bc493",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "3e1e32baa2e5fb85cd843a6ea8ad27379f055db6",
+      "public_commit": "e889c440c4e79a7841f6c4eb9bdedaf3d5849987",
+      "archival_tree": "31a614b19ee3654840ee19aa9f87d95a8664c6f5",
+      "public_tree": "31a614b19ee3654840ee19aa9f87d95a8664c6f5",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "4361ffd58da163f8a289d5d7c78234248662e896",
+      "public_commit": "588ca06cf3fb39f171238d11abf9254627c9e538",
+      "archival_tree": "cd42430fb858465088c3a6f306db63c7a61dff16",
+      "public_tree": "cd42430fb858465088c3a6f306db63c7a61dff16",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "459c755e0778817e471512f0f14c89f6880f08ca",
+      "public_commit": "105d7c331f59417c8960785d79a380c56ad37878",
+      "archival_tree": "a7d9c2a17881a8f278b2dc2e8623ede4813588ff",
+      "public_tree": "abecd188b9cb97b7fdd88a31d4b13f405d83ccb9",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "4e2b6352a5aaed38fe620dfaabcf2e80f83bc6e0",
+      "public_commit": "56fde6a3dc72482560bbdd25236c7fc12e4f8281",
+      "archival_tree": "e368338f6b959828ffcb2c9bdb65971786d725c6",
+      "public_tree": "538f86df9f36915a96caf5bdca4339daafa620b7",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "58051e9c1553e5712c8606f260e8ddbb9a9e7582",
+      "public_commit": "2bb9b1ae21f62437b9f77212607b98075de7a437",
+      "archival_tree": "d24979a99d2cbea5170635a2a9a7ae3b79edc0fc",
+      "public_tree": "5e292993e0e1fe30d1ba9c3c5b919e285c7fc76c",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "6f96957ccdb8c57d2e067d8617cddce3f31b213f",
+      "public_commit": "00e50b170f783c829eb29a554ea4780ff5090333",
+      "archival_tree": "44f65fb5998d0ccc5ecbda529d9add749f50ba92",
+      "public_tree": "29b87d93a9adc6f0893e6d76f5278f0e676ceb17",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "7c1ab46b5d881529b79769fb870ed1f2fb98619c",
+      "public_commit": "4bf8e1e8b4f6284796168cba0aaea0f2a9ae0856",
+      "archival_tree": "516444ea215854c5c84499fda0f0f6580c8e9e85",
+      "public_tree": "516444ea215854c5c84499fda0f0f6580c8e9e85",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "8e00366dfd72d0a299e59839ba1fc0901fc425be",
+      "public_commit": "b85fc709c281b6f0a3ad3ccf74095b69aa126dfb",
+      "archival_tree": "dfbaa6fee7820af0bdebdb56fdc04fe48b42d333",
+      "public_tree": "52c434d0d1c49ce429815213092aefc723f075ba",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "9c6cfe78d3a50d80c7143c736a28dfecda3c7a33",
+      "public_commit": "6219005e45f30e3eec94d09f008ad6cda408b39a",
+      "archival_tree": "e368338f6b959828ffcb2c9bdb65971786d725c6",
+      "public_tree": "538f86df9f36915a96caf5bdca4339daafa620b7",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "a04f6582ee9ff72023618db108f6a63ccb3a073d",
+      "public_commit": "e01651e3cd20af30bbde538dd2241a5a3d1639bf",
+      "archival_tree": "b08329d2716c9b6e5fa2d65d573562b6f92d2019",
+      "public_tree": "b08329d2716c9b6e5fa2d65d573562b6f92d2019",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "aff670933321acac7d1492797df1490bb8eee56b",
+      "public_commit": "f96ec4eb62430cd68bb3083d29a9569a6096c665",
+      "archival_tree": "55ab6a6cc4324de09fcbaef272fefe648f8c289e",
+      "public_tree": "f578102334f8edac8b6f9c201331a128a4d5860b",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "b1836a5de5ae727e7650b82a4f1bc38039ee6556",
+      "public_commit": "7ef797421995345c0be9465464809e6cdd24458e",
+      "archival_tree": "b4dfe8de3e63778192dce46581f1ee5da428f354",
+      "public_tree": "b4dfe8de3e63778192dce46581f1ee5da428f354",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "b808b66486c2d5427f57768da4a7416d8e4d9841",
+      "public_commit": "4979d0064b646ee576d23a06a158fbb91d122227",
+      "archival_tree": "55ab6a6cc4324de09fcbaef272fefe648f8c289e",
+      "public_tree": "f578102334f8edac8b6f9c201331a128a4d5860b",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "c0bf42a80cff7a5e6562498cff2731cfe5d6454c",
+      "public_commit": "c77abfdfbee564e52c3b15b5c97c0c0cb07a9476",
+      "archival_tree": "63a3f016246ce72460390e63ee431985edc04855",
+      "public_tree": "16617b6acf0c8994cf979ff748506780816d55f8",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "c1b031eac61f740242cff3c9fdaca1f474930d8b",
+      "public_commit": "c57af50feff7cfbb2ecd07f2eb2f84535c57b71c",
+      "archival_tree": "b85142150a7f8bfd0d6c422b8902bdf434532ff0",
+      "public_tree": "57918adf799ef2eae0e69234bd00dcf9ab573f75",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "c252e7641eea506a7b9cb263bfe7683139ddb4a4",
+      "public_commit": "2c1d88022a446a08de6d037c0e16a46ae2b856b2",
+      "archival_tree": "7bee5e3d43c2fd0f26dd6686ad46fa0bdc1785db",
+      "public_tree": "7bee5e3d43c2fd0f26dd6686ad46fa0bdc1785db",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "c48e26b1bff33b6a9cce9a98063ccd630447e3a7",
+      "public_commit": "42384ceee105f78f7ac98fc5f3b2ed810df0fb74",
+      "archival_tree": "c3ee1c0ff2fc25d5baae9cf40c4cc06a4ba54541",
+      "public_tree": "aec4b36da14115f4144abb95e6858cf035096814",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "cba15e9cd676ba9c871f873e1b6ad3bc7b094996",
+      "public_commit": "0d8973220320152e5cfd9a415771c3e88f37ff50",
+      "archival_tree": "d9fcab861d6826422155d817834609479ef294f2",
+      "public_tree": "d9fcab861d6826422155d817834609479ef294f2",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "d0af68fbfbe0655b8c1ecbdc4ea9dd1da6d557e9",
+      "public_commit": "fc0634ff35cc1733298fdfe347e7dab7d6a3ad50",
+      "archival_tree": "9cee0cd3de16e132e93c14b4d00bd202767dcb3d",
+      "public_tree": "f71272581e02e28e5b7282472a57b5bd27fcd8c3",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "d70581d7a19042170042198d9eb6780b05927335",
+      "public_commit": "a28818027ffa8da529d35378b7d1f0f4f91958b1",
+      "archival_tree": "69c65d7eb836af9e9f69220040d3b63e70dea0c8",
+      "public_tree": "69c65d7eb836af9e9f69220040d3b63e70dea0c8",
+      "tree_bytes_unchanged": true
+    },
+    {
+      "archival_commit": "dce397a3da83585b4edbf95622346a339310e117",
+      "public_commit": "34179d2c50b5a7432cc67d695d7106f711131f24",
+      "archival_tree": "172c39c18a192302bc19e7de04bedb42735cb67b",
+      "public_tree": "536ebdcbf0a57f21e85e9415575670cf43493a27",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "e98d3dd8693c3abdb281a0f01c7a9e39aaab5446",
+      "public_commit": "a07fa32a6908b11029f22a7054b752c4d10f8396",
+      "archival_tree": "fa2af704f3b8acbc059b2ae32aaaa4f92fab304b",
+      "public_tree": "b32601f03d421312d936b9bd0ae59d7d105d9da6",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "f07aed6016dbb52e46fa0ebbebcc2762eafa1e8b",
+      "public_commit": "eecf52d378643cd110c1fad789089f7a2d95e9ea",
+      "archival_tree": "9144f2ee5f425b83e1dc1b20cf18f7f065162d4e",
+      "public_tree": "19a2dc6141c8e3a401d4cc1fd6a6bd7cf9a852b7",
+      "tree_bytes_unchanged": false
+    },
+    {
+      "archival_commit": "f9a3dbef1ca2dfdfbdd34c850771d489f477624b",
+      "public_commit": "2807626acd9e5ddcdeeb75c14a6d3dc5e5ab4c26",
+      "archival_tree": "a54c85430f5ea415317440ff09f81ff7ce1ef69a",
+      "public_tree": "3d7b63a4fab2bab02f9417bfca3ba869223d1b9f",
+      "tree_bytes_unchanged": false
+    }
+  ]
+}

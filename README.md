@@ -37,6 +37,11 @@ SciPy is an optional independent test oracle. The individual commands remain in 
 requires the recorded toolchain; a different LaTeX version can produce a different PDF even
 when its numerical content agrees.
 
+Historical archive IDs are preserved in data provenance. After publication-only history
+maintenance, use [PUBLIC_SOURCE_REVISIONS.json](PUBLIC_SOURCE_REVISIONS.json) to locate their
+corresponding public revisions. The replay producer checks the complete unchanged Git tree.
+Start with a fresh clone; merging an older clone can reintroduce removed publication metadata.
+
 ## Results and boundaries
 
 The study compares a fixed ten-persona panel with a generic-reader baseline. The primary experiment
@@ -65,7 +70,7 @@ artifacts via [CLAIMS_TO_ARTIFACTS.csv](CLAIMS_TO_ARTIFACTS.csv) and the
 [fresh Astra high manuscript review](docs/audit/astra-blind-review-2026-10-31.md) received no prior
 conversation or audits; its [implementation disposition](docs/audit/astra-review-disposition.json)
 records the resulting clarifications and remaining limits. Internal automated-review operation
-records are retained privately. Public methodological records under `docs/` identify their source targets.
+records and implementation identities are retained privately; disclose such assistance generically. Public methodological records under `docs/` identify their source targets.
 
 Code: [MIT](LICENSE). Aggregate results, fixed panel, manifests and generated assets:
 [CC BY 4.0](LICENSE-DATA.md). Third-party corpora retain their own licenses and are not

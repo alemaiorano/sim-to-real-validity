@@ -34,9 +34,10 @@ complete primary packages, using no new provider calls. It retains 148 Gemini an
 packages. Outside-window dates are not a guarantee of valid randomization. The data and adjusted
 screen do not alone establish causal headline effects.
 
-For exact historical restoration, use the producer at pinned commit
-`7c1ab46b5d881529b79769fb870ed1f2fb98619c` in a separate checkout, then verify the
-original manifest. The revised builder intentionally produces a **different schema/hash**:
+For exact historical restoration, use the producer whose archival ID is
+`7c1ab46b5d881529b79769fb870ed1f2fb98619c`. In the maintained public history, resolve that ID
+through `PUBLIC_SOURCE_REVISIONS.json` and check out its byte-identical producer tree; the
+original ID is retained in private archival bundles. Verify the original manifest. The revised builder intentionally produces a **different schema/hash**:
 
 ```bash
 python scripts/01_ingest_upworthy.py --input data/upworthy_raw/upworthy-exploratory.csv \
