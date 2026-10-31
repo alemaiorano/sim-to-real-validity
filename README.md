@@ -7,6 +7,8 @@ Generic-Reader Baseline*.
 [Paper PDF](latex/main.pdf) · [arXiv preprint](https://arxiv.org/abs/2609.25010) ·
 [Replication guide](REPLICATION.md) · [Distribution scope](SCOPE.md) · [Citation](CITATION.cff)
 
+[arXiv source archive](submission/arxiv-source.tar.gz) · [Upload/build instructions](submission/README.md)
+
 This package provides the manuscript source, aggregate artifacts and executable reexport. Full raw replay additionally
 requires the separately retained companion bundle; it is not downloadable from this repository.
 
@@ -36,6 +38,10 @@ Python's standard library owns the statistical estimators; NumPy/Matplotlib supp
 SciPy is an optional independent test oracle. The individual commands remain in REPLICATION.md. Exact checksum verification after rebuilding
 requires the recorded toolchain; a different LaTeX version can produce a different PDF even
 when its numerical content agrees.
+
+It also refreshes the deterministic arXiv source archive, bibliography snapshot and file manifest
+under `submission/`. `make arxiv` invokes this same build. The archive compiles independently
+from its root `main.tex`; it contains paper inputs rather than repository code or raw observations.
 
 Historical archive IDs are preserved in data provenance. After publication-only history
 maintenance, use [PUBLIC_SOURCE_REVISIONS.json](PUBLIC_SOURCE_REVISIONS.json) to locate their

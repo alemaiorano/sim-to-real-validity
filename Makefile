@@ -2,7 +2,7 @@ PYTHON ?= python3
 SOURCE_DATE_EPOCH ?= 1793404800
 export SOURCE_DATE_EPOCH
 
-.PHONY: verify assets reproduce test checksums
+.PHONY: verify assets reproduce arxiv test checksums
 
 verify:
 	sha256sum -c REPLICATION_SHA256SUMS
@@ -24,6 +24,9 @@ reproduce: assets
 	cd latex && bibtex main
 	cd latex && pdflatex -halt-on-error -interaction=nonstopmode main
 	cd latex && pdflatex -halt-on-error -interaction=nonstopmode main
+	$(PYTHON) scripts/build_arxiv_package.py
+
+arxiv: reproduce
 
 test:
 	$(PYTHON) -B -m unittest discover -s tests -v
