@@ -30,11 +30,14 @@ two-sided pooled $z$ tests. For $k$ variants the comparison family contains $m=k
 pairs. All winner--opponent comparisons must pass $\alpha/m$, with $\alpha=0.05$.
 The screening statistic is $\min(1,m\max_{j\ne w}p_{wj})$. Bonferroni's inequality motivates the
 adjustment~\citep{nistBonferroni}. The nominal bound is approximate and per package, conditional on
-independent binomial observations and adequate normal approximation. It is not an across-package
+independent binomial observations, fixed sampling horizons, and adequate normal approximation. It is not an across-package
 false-discovery guarantee or proof of a population winner. Repeated exposures and Reddit voting
 further limit these assumptions. In the locked corpus \newSelectedN{} packages pass, all within
 the supplementary selected set described below. A stricter screen does not demonstrate that removed packages had
-false winners.
+false winners. The archive documents editorial stopping based on accumulating results~\citep{matiasUpworthy}.
+Fixed-horizon $p$-values need not remain calibrated under that stopping policy; Bonferroni does
+not repair invalid input $p$-values. The screen defines a reproducible cohort, without a verified
+five-percent winner-error guarantee for these archived tests.
 
 \paragraph{Supplementary winner screen.}
 The supplementary aggregate comparisons use the observed best variant and runner-up,
@@ -68,7 +71,8 @@ The primary analysis retains a package only when every planned observation is va
 arms for all its variants. This also makes equal-persona and observation-weighted panel means
 identical. Failures are never replaced with additional semantic draws; bounded retries address
 transient transport failures only. Available-observation arm summaries are reported separately as sensitivity
-analyses, with their own coverage. The primary policy is stricter than the scalar-checkpoint analysis
+analyses, with their own coverage, in the \texttt{available\_observation\_sensitivity} field of
+the committed Gemini and Azure reports in \texttt{recollection/2026-10-31/}. The primary policy is stricter than the scalar-checkpoint analysis
 requirement of at least one valid score per variant. Operational compatibility probes are retained
 separately and excluded. An Azure prompt refusal initially triggered a global HTTP400 stop. Before comparative analysis,
 a documented technical amendment classified only the confirmed content-filter refusal type as
@@ -80,13 +84,19 @@ The fixed cohort closes before inspecting comparative performance;
 there is no outcome-dependent stopping or choice of model after observing results.
 
 \paragraph{Estimation and denominators.}
-Package metrics are averaged without size weighting. Raw-backed reports include
+Primary package metrics are averaged without size weighting. The displayed means describe the recorded
+packages. Bootstrap intervals summarize between-package resampling variability conditional on
+the selection rule and recorded scores; interpreting them for a population of similarly selected
+experiments additionally assumes that these packages are exchangeable independent units. Raw-backed reports include
 $n_{\mathrm{total}},n_{\mathrm{valid}},n_{\mathrm{undefined}}$ and metric-specific package IDs.
 Each paired gap uses packages valid in both arms for that metric. Empty estimates are undefined,
-not zero. Percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$
+not zero. Primary and period-exclusion percentile bootstrap CIs use $10{,}000$ package resamples, seed $42$
 \citep{efron1979bootstrap}. They condition on selection and recorded scores and omit generation,
 selection, and outcome-measurement uncertainty. These are pointwise estimation intervals, not
-simultaneous guarantees across metrics or models. Supplementary aggregate coefficient-specific valid counts
+simultaneous guarantees across metrics or models. Resampling treats experiment IDs as independent
+units. The archive also records follow-up tests with shared content~\citep{matiasUpworthy};
+related IDs may therefore be dependent. The intervals do not adjust for such dependence, and
+their coverage as population confidence intervals is not established. Supplementary aggregate coefficient-specific valid counts
 are not fully recorded; coverage totals are not those denominators.
 
 \paragraph{Planning and robustness scope.}
