@@ -1,56 +1,76 @@
 # Do Synthetic Personas Predict Real Audience Response?
 
-Version 2 working manuscript for arXiv:2609.25010. The study compares a fixed ten-persona
-panel with a generic-reader baseline in a matched-budget Gemini/GPT-4.1 experiment. Exact raw
-responses, plans, coverage, metric-specific paired IDs and offline replay are retained.
-This local version has not been submitted or publicly deposited.
+This is the **public Git replication package for the v2 manuscript**:
+*Do Synthetic Personas Predict Real Audience Response? A Headline-Ranking Study with a
+Generic-Reader Baseline*.
 
-The primary comparison favors the baseline on valid ranks, expected top-1 and captured lift.
-A post-hoc exclusion of Upworthy's documented randomization-risk period retains positive
-top-1/lift contrasts, while Gemini tau-b and Spearman intervals include zero. Bottom-1
-intervals include zero in both models. Archived Reddit decision metrics favor the panel.
-Results concern the specified panel/cohort/protocol and do not identify a causal mechanism.
+[Paper PDF](latex/main.pdf) · [arXiv preprint](https://arxiv.org/abs/2609.25010) ·
+[Replication guide](REPLICATION.md) · [Distribution scope](SCOPE.md) · [Citation](CITATION.cff)
 
-Supplementary archived aggregates and the retrospective GPT-4.1 scalar diagnostic retain
-their own budgets, screen and tie semantics. Historical Gemini observations and original
-GPT response texts remain unavailable. New generations are a separate experiment.
+The repository update and the submission of a new arXiv version are separate. This package
+provides source, aggregate artifacts and executable reexport. Full raw replay additionally
+requires the separately retained companion bundle; it is not downloadable from this repository.
 
-The [PDF](latex/main.pdf) presents the methods and their limitations as a standalone study.
-The [source-driven evidence ledger](docs/audit/full-text-claim-ledger.json) traces its text
-and captions. Earlier [method/provenance records](docs/archive/changes/2026-10-31-paper-corrections.md),
-[accepted plan](docs/audit/plan-v3.txt) and [Astra consensus](docs/audit/astra-consensus.txt)
-remain preserved outside the paper. Formula checks and the automated-review execution are recorded
-in the [v2 changeset](docs/archive/changes/2026-10-31-paper-v2-formula-review.md).
+## Reproduce from Git without API keys
 
-## Reproduction
-
-See [REPLICATION.md](REPLICATION.md). Reexport requires no API or private checkpoint:
+Use CPython 3.12.3 on Linux/WSL, GNU Make and a LaTeX distribution providing `pdflatex`/`bibtex`
+(for example, TeX Live with the article's standard packages). Exact PDF byte comparisons use the
+recorded TeX Live 2023 environment; other supported toolchains can differ in PDF metadata/fonts.
 
 ```bash
-python scripts/generate_paper_variables.py
-python scripts/generate_validity_table.py
-python scripts/generate_replication_table.py
-python scripts/generate_crossmodel_table.py
-python scripts/generate_pilot_table.py
-python scripts/generate_h5_table.py
-python scripts/generate_supplementary_tables.py
-python scripts/generate_reanalysis_assets.py
-python scripts/generate_recollection_assets.py
-python scripts/generate_window_sensitivity_assets.py
-python -m unittest discover -s tests -v
+git clone -c core.autocrlf=false https://github.com/alemaiorano/sim-to-real-validity.git
+cd sim-to-real-validity
+python3 -m pip install -r requirements.txt
+make verify
+make reproduce
+make verify
+make test
 ```
 
-Historical inputs are hash-pinned in `reports/legacy-provenance.json`. Corrected analyses
-require new destinations and refuse to overwrite historical reports. Statistical runtime uses
-the Python standard library; figure generation and null-screen tests use NumPy/Matplotlib.
-SciPy is an optional test oracle. The new raw-backed experiment was collected separately from
-all historical checkpoints. Exact recomputation uses saved response bytes and requires no API call.
-Provider aliases and seeds do not guarantee identical future generations.
+For the v2 proposal before integration into the default branch, first run
+`git switch research/sim-to-real-v2-2026-10-31`.
 
-The study harness is separate from any commercial product. Code: MIT. Aggregated artifacts:
-CC BY 4.0. Large raw evidence and the exploratory inputs are retained in a separate replication
-bundle rather than committed as Git blobs. This local revision and its bundle have not been
-publicly published or submitted.
+`make reproduce` runs the ten existing exporters and compiles the paper with the fixed
+`SOURCE_DATE_EPOCH`. Included empirical figures are used unchanged; regenerating the archived
+screen histogram requires the exact locked Upworthy corpus. `make verify` checks the listed Git
+payload files against `REPLICATION_SHA256SUMS`; the Git commit identifies the checksum file itself.
+`make test` exercises the offline producers and consumers with stubbed transports. No model
+inference, private checkpoint, database or data download is needed for this workflow.
+Python's standard library owns the statistical estimators; NumPy/Matplotlib support figures/tests.
+SciPy is an optional independent test oracle. The individual commands remain in REPLICATION.md. Exact checksum verification after rebuilding
+requires the recorded toolchain; a different LaTeX version can produce a different PDF even
+when its numerical content agrees.
 
-[Retention and recovery](RETENTION.md) documents versioned OneDrive copies, protected local
-vaults, checksum verification and the exercised restore drill.
+## Results and boundaries
+
+The study compares a fixed ten-persona panel with a generic-reader baseline. The new experiment
+allocates thirty scores per arm and variant within each model. Its primary comparisons favor the
+baseline on valid ranks, expected top-1 and captured lift. A post-hoc exclusion of the archive's
+randomization-risk period retains positive top-1/lift contrasts, while Gemini tau-b and Spearman
+intervals include zero. Bottom-1 intervals include zero in both models. Archived Reddit decision
+metrics favor the panel. These are conditional results for the specified panel/cohort/protocol,
+not a universal or causal conclusion.
+
+| Location | Contents |
+|---|---|
+| `latex/` | Current paper/PDF, generated tables/macros and figures |
+| `reports/` | Immutable archived aggregate reports |
+| `reanalysis/2026-10-31/` | Retrospective GPT scalar diagnostic and selection/replay provenance |
+| `recollection/2026-10-31/` | New matched-budget reports and six-metric post-hoc period sensitivity |
+| `data/persona_panel.json` | Fixed panel input |
+| `datasets/*.manifest.json` | Original corpus locks and input hashes; full corpora are not Git blobs |
+| `scripts/`, `tests/` | Statistical owners, exporters, collection/replay tools and offline checks |
+
+Archived comparisons and retrospective GPT diagnostics retain their own budgets, screening and
+tie policies. Historical Gemini observations, original GPT response texts and some subset lineage
+remain unavailable. New generations are a separate experiment. All numerical results trace to
+artifacts via [CLAIMS_TO_ARTIFACTS.csv](CLAIMS_TO_ARTIFACTS.csv) and the
+[source-driven evidence ledger](docs/audit/full-text-claim-ledger.json). The [native automated-review review](docs/audit/automated-review-v2-review.md) and
+[technical adjudication](docs/audit/automated-review-v2-adjudication.md) are preserved separately.
+Earlier methodological and review records remain under `docs/` with explicit source targets.
+
+Code: [MIT](LICENSE). Aggregate results, fixed panel, manifests and generated assets:
+[CC BY 4.0](LICENSE-DATA.md). Third-party corpora retain their own licenses and are not
+redistributed here; see [DATA_SOURCES.md](DATA_SOURCES.md). The full companion and the public Git
+package have distinct distribution scopes. [Retention and recovery](RETENTION.md) documents the
+separately retained archive versions and tested restore procedure.

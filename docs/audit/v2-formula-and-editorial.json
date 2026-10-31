@@ -67,7 +67,34 @@
       "artifacts": "v2-audit/automated-review-e2e and v2-audit/automated-review_ADJUDICATION.md",
       "new_scientific_generations": 0
     },
-    "final_run": "Separate native e2e after verbatim rendering fix; final raw reports and exact target pins are external in v2-audit/final-automated-review/"
+    "final_run": {
+      "source_commit": "25a8b2c47f0090852abbc9ad23412e91ea3bffaf",
+      "pdf_sha256": "03d0a905d62521fd32a70d796556562df91790f6a4bd2ec2e70bb468c8127c02",
+      "final_native_exit": 0,
+      "final_meta_decision": "Weak Accept",
+      "overall_score": 6,
+      "confidence": 4,
+      "final_calls": 13,
+      "final_guard_raw_passed": false,
+      "final_guard_encoding_TikZ_false_positives": 6,
+      "native_claim_counts": {
+        "supported": 3,
+        "unsupported": 1,
+        "uncertain": 0
+      },
+      "native_reference_counts": {
+        "resolved": 23,
+        "total": 25,
+        "author_mismatches": 0
+      },
+      "manual_reference_primary_resolution": 2,
+      "tool_source_commit": "b3e35a36218697fe32cc0bb82c5d8165e9b924d3",
+      "review_prompt_version": "v3",
+      "manuscript_version": "v2",
+      "raw_review": "docs/audit/automated-review-v2-review.md",
+      "adjudication": "docs/audit/automated-review-v2-adjudication.md",
+      "semantics": "Native advisory review, not human editorial acceptance. Raw failed encoding/claim signals are preserved and adjudicated; no blanket PASS is asserted. Full SDK journals stay in the separate retained companion."
+    }
   },
   "retention": "New complete version in OneDrive and protected local vaults; previous versions never overwritten.",
   "rendering_amendment": {

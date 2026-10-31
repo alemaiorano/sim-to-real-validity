@@ -1285,13 +1285,13 @@
     }
   ],
   "source_sha256": {
-    "DATA_SOURCES.md": "63cfaad85314462493560a6fd4ac078364c6600c8b2cb44416a6b3a43b322adf",
-    "REPLICATION.md": "b66bccc480b36df266a6c53490ac47754932d3c1ed86f70dce29c12dd0ff926b",
-    "SCOPE.md": "5235cb11aa393c2b1b84a1dc9e66da0bcfa25716d5737c0639103e815ddaed12",
+    "DATA_SOURCES.md": "c53e7b7eeef1412f5e9c54f967e7bb63a7d015b16a4516ae302b9f175e88e697",
+    "REPLICATION.md": "a8643d5cb5629ce4d18732a15e1111c94125f6b8915b5467ed9dcc89509c16bd",
+    "SCOPE.md": "d4ee8f63e7a0348a77dcc931017757daa6bb0d9a06ccdae351815b67b0a92e33",
     "data/persona_panel.json": "3ff13e5eb82486ed0de24ccfad7e6a0844de053c29f5f056fb636432b329aaac",
     "docs/audit/full-text-bibliography.json": "0539f74f0bed8a1d77085499fe0629585f780a8d0bb47f7fe73da11cfdf30d0e",
     "docs/audit/original-findings.json": "c556184cbbfe8a2145bde9ea86624afc48cd6c657dea2ee52700eeb11d01c19e",
-    "docs/audit/v2-formula-and-editorial.json": "f47c7298350c47031480d4a8f75a1e2c5d79e02da1e3a80fde2bbfa77deece44",
+    "docs/audit/v2-formula-and-editorial.json": "19720955a4ba1c543a853d302a782af79fa00df8769179fbc51cef860e93c6cc",
     "latex/figures/comparison.pdf": "100631c9f2f3b36f61c2ca12bb138feced0d4224668a165c7332ad497b1371c4",
     "latex/figures/protocol.tex": "1de37061899342913bbb9a8941193d4626c898542f7fac94ed2c1b2677ae46c3",
     "latex/figures/reliability.pdf": "4ed7161204cfa276e53246034e9f718534b5ae202fddbe2aeedf188b3dad232a",

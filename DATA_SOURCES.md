@@ -43,10 +43,14 @@ python scripts/01_ingest_upworthy.py --input data/upworthy_raw/upworthy-explorat
   --output-dir /new/path/upworthy-corrected
 ```
 
-It retains the same headline/count construction and supplies the corrected winner policy.
-The correction check recovered 1,695 packages/6,978 variants with identical original variant
-data, and 190 passing packages. A new manifest accompanies the new corpus.
-Do not substitute this file for the original corpus in historical hash checks.
+It preserves quoted multiline CSV fields and supplies the simultaneous winner policy.
+It produces 1,695 packages/6,978 variants and the same 190 selected package IDs. All recorded
+click, impression and CTR values agree with the locked corpus. One retained headline contains
+an embedded linebreak that was removed by the earlier locked-input preprocessing; the current
+reader preserves it. Its package is outside both the 399-package archived selection and the
+190-package primary cohort. This is a different text/schema/hash derivative with its own manifest.
+For existing generations, use the exact locked corpus and its recorded SHA256; do not substitute
+fresh ingestion output. See REPLICATION.md for exact-input restoration and replay.
 
 ## MIND
 
